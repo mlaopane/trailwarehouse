@@ -1,0 +1,29 @@
+{
+  "name": "sportadventure",
+  "authors": [
+    "Mickaël LAO-PANE"
+  ],
+  "description": "All I need for my IFOCOP project",
+  "main": "",
+  "keywords": [
+    "ifocop",
+    "project",
+    "symfony",
+    "e-commerce"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "less": "^2.7.2",
+    "bootstrap": "^3.3.7",
+    "angular": "^1.6.3",
+    "ness": "^1.0.6"
+  }
+}
