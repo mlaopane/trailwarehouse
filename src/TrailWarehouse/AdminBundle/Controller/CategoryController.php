@@ -26,28 +26,49 @@ class CategoryController extends Controller
   /**
    *
    */
-  public function readAction()
+  public function readAction($id)
   {
-    $repo = $this->getDoctrine()->getRepository('AppBundle:Category');
-    $category = new Category();
+    $category = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Category')->find($id);
+
+    if ( $category ) {
+      // Do something
+    }
+
+    return $this->redirectToRoute('app_shop');
   }
 
   /**
    *
    */
-  public function updateAction()
+  public function updateAction($id)
   {
     $manager = $this->getDoctrine()->getManager();
-    $category = new Category();
+
+    $category = $manager->getRepository('TrailWarehouseAppBundle:Category')->find($id);
+
+    if ( $category ) {
+      $category->setName('Vestes');
+      $manager->flush();
+    }
+
+    return $this->redirectToRoute('app_shop');
   }
 
   /**
    *
    */
-  public function deleteAction()
+  public function deleteAction($id)
   {
     $manager = $this->getDoctrine()->getManager();
-    $category = new Category();
+
+    $category = $manager->getRepository('TrailWarehouseAppBundle:Category')->find($id);
+
+    if ( $category ) {
+      $manager->remove($category);
+      $manager->flush();
+    }
+
+    return $this->redirectToRoute('app_shop');
   }
 
 }

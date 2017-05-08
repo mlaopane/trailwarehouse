@@ -1,15 +1,25 @@
-create:
+category_create:
     path:     /category/create
-    defaults: { _controller: TrailWarehouseAdminBundle:Category:create }
+    defaults:
+        _controller: TrailWarehouseAdminBundle:Category:create
 
-read:
-    path:     /category/read
-    defaults: { _controller: TrailWarehouseAdminBundle:Category:read }
+category_read:
+    path:     /category/read/{id}
+    defaults:
+        _controller: TrailWarehouseAdminBundle:Category:read
+    requirements:
+        id: '\d+'
 
-update:
-    path:     /category/update
-    defaults: { _controller: TrailWarehouseAdminBundle:Category:update }
+category_update:
+    path:     /category/update/{id}
+    defaults:
+        _controller: TrailWarehouseAdminBundle:Category:update
+    requirements:
+        id: '\d+'
 
-delete:
-    path:     /category/delete
-    defaults: { _controller: TrailWarehouseAdminBundle:Category:delete }
+category_delete:
+    path:     /category/delete/{id}
+    defaults:
+        _controller: TrailWarehouseAdminBundle:Category:delete
+    requirements:
+        id: '\d+'
