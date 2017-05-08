@@ -1,3 +1,7 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+trail_warehouse_admin:
+    resource: "@TrailWarehouseAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+trail_warehouse_app:
+    resource: "@TrailWarehouseAppBundle/Resources/config/routing.yml"
+    prefix:   /
