@@ -1,0 +1,7 @@
+app_home:
+    path:     /
+    defaults: { _controller: TrailWarehouseAppBundle:Home:index }
+
+app_shop:
+    path:     /boutique
+    defaults: { _controller: TrailWarehouseAppBundle:Shop:index }

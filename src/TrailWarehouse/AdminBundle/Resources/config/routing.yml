@@ -1,0 +1,15 @@
+create:
+    path:     /category/create
+    defaults: { _controller: TrailWarehouseAdminBundle:Category:create }
+
+read:
+    path:     /category/read
+    defaults: { _controller: TrailWarehouseAdminBundle:Category:read }
+
+update:
+    path:     /category/update
+    defaults: { _controller: TrailWarehouseAdminBundle:Category:update }
+
+delete:
+    path:     /category/delete
+    defaults: { _controller: TrailWarehouseAdminBundle:Category:delete }

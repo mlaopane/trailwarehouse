@@ -1,0 +1,18 @@
+{% extends "TrailWarehouseCoreBundle::layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} : Shop
+{% endblock %}
+
+{% block body %}
+  <main>
+    <h1>Trail Warehouse : Boutique</h1>
+    <div class="">
+      <ul class="ness-list">
+      {% for category in categories %}
+        <li>{{ category.name | capitalize }}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </main>
+{% endblock %}

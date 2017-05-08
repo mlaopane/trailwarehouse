@@ -1,0 +1,28 @@
+{
+  "name": "trailwarehouse",
+  "version": "1.0.0",
+  "description": "Symfony Standard Edition ========================",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "server": "php bin/console server:run", 
+    "database": "php bin/console doctrine:database:create", 
+    "entity": "php bin/console doctrine:generate:entity", 
+    "schema-dump": "php bin/console doctrine:schema:update --dump-sql", 
+    "schema-force": "php bin/console doctrine:schema:update --force",
+    "bundle": "php bin/console generate:bundle",
+    "controller": "php bin/console generate:controller"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mlaopane/trailwarehouse.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mlaopane/trailwarehouse/issues"
+  },
+  "homepage": "https://github.com/mlaopane/trailwarehouse#readme"
+}
