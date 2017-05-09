@@ -36,6 +36,20 @@ class Product
     private $title;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id_family", type="integer")
+     */
+    private $id_family;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_brand", type="integer")
+     */
+    private $id_brand;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text")
@@ -217,5 +231,52 @@ class Product
     {
         return $this->dateCreation;
     }
-}
 
+    /**
+     * Set idFamily
+     *
+     * @param integer $idFamily
+     *
+     * @return Product
+     */
+    public function setIdFamily($idFamily)
+    {
+        $this->id_family = $idFamily;
+
+        return $this;
+    }
+
+    /**
+     * Get idFamily
+     *
+     * @return integer
+     */
+    public function getIdFamily()
+    {
+        return $this->id_family;
+    }
+
+    /**
+     * Set idBrand
+     *
+     * @param integer $idBrand
+     *
+     * @return Product
+     */
+    public function setIdBrand($idBrand)
+    {
+        $this->id_brand = $idBrand;
+
+        return $this;
+    }
+
+    /**
+     * Get idBrand
+     *
+     * @return integer
+     */
+    public function getIdBrand()
+    {
+        return $this->id_brand;
+    }
+}

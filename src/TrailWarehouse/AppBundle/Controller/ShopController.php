@@ -3,8 +3,6 @@
 namespace TrailWarehouse\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Entity\Product;
-use AppBundle\Entity\Category;
 
 class ShopController extends Controller
 {
@@ -17,4 +15,5 @@ class ShopController extends Controller
     return $this->render('TrailWarehouseAppBundle:Shop:index.html.twig', $data);
   }
 
+  
 }

@@ -8,7 +8,7 @@ use TrailWarehouse\AppBundle\Entity\Category;
 class CategoryController extends Controller
 {
   /**
-   *
+   * Create a category
    */
   public function createAction()
   {
@@ -24,7 +24,7 @@ class CategoryController extends Controller
   }
 
   /**
-   *
+   * Get a category
    */
   public function readAction($id)
   {
@@ -38,7 +38,7 @@ class CategoryController extends Controller
   }
 
   /**
-   *
+   * Update a category
    */
   public function updateAction($id)
   {
@@ -55,7 +55,7 @@ class CategoryController extends Controller
   }
 
   /**
-   *
+   * Delete a category
    */
   public function deleteAction($id)
   {

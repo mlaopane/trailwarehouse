@@ -5,12 +5,12 @@ namespace TrailWarehouse\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Category
+ * Size
  *
- * @ORM\Table(name="category")
- * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\CategoryRepository")
+ * @ORM\Table(name="size")
+ * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\SizeRepository")
  */
-class Category
+class Size
 {
     /**
      * @var int
@@ -44,7 +44,7 @@ class Category
      *
      * @param string $name
      *
-     * @return Category
+     * @return Size
      */
     public function setName($name)
     {
