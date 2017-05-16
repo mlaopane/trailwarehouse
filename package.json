@@ -7,10 +7,11 @@
     "test": "tests"
   },
   "scripts": {
-    "server": "php bin/console server:run", 
-    "database": "php bin/console doctrine:database:create", 
-    "entity": "php bin/console doctrine:generate:entity", 
-    "schema-dump": "php bin/console doctrine:schema:update --dump-sql", 
+    "less": "lessc web/less/style.less web/css/style.css", 
+    "server": "php bin/console server:run",
+    "database": "php bin/console doctrine:database:create",
+    "entity": "php bin/console doctrine:generate:entity",
+    "schema-dump": "php bin/console doctrine:schema:update --dump-sql",
     "schema-force": "php bin/console doctrine:schema:update --force",
     "bundle": "php bin/console generate:bundle",
     "controller": "php bin/console generate:controller"

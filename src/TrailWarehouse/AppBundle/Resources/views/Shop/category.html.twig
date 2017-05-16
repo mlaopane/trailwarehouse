@@ -1,0 +1,19 @@
+{% extends "TrailWarehouseAppBundle::layout.html.twig" %}
+
+{% block page_main %}
+
+  <div>
+  {% if products is empty %}
+    <div class="ness-block warning">
+      <span>Aucun produit disponible dans {{ category }}</span>
+    </div>
+  {% else %}
+    <ul class="ness-list">
+    {% for product in products %}
+      {{ product.title }}
+    {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+{% endblock %}

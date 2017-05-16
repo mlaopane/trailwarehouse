@@ -1,7 +1,25 @@
-app_home:
+home:
     path:     /
     defaults: { _controller: TrailWarehouseAppBundle:Home:index }
 
-app_shop:
+signup:
+    path:     /signup
+    defaults: { _controller: TrailWarehouseAppBundle:Client:signup }
+
+signin:
+    path:     /signin
+    defaults: { _controller: TrailWarehouseAppBundle:Client:signin }
+
+signout:
+    path:     /signout
+    defaults: { _controller: TrailWarehouseAppBundle:Client:signout }
+
+shop:
     path:     /boutique
-    defaults: { _controller: TrailWarehouseAppBundle:Shop:index }
+    defaults:
+        _controller: TrailWarehouseAppBundle:Shop:index
+
+shop_category:
+    path:     /boutique/{category}
+    defaults:
+        _controller: TrailWarehouseAppBundle:Shop:category

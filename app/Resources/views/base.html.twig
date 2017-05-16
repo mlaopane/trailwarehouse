@@ -1,14 +1,60 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('images/feet.png') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Welcome!{% endblock %}</title>
+  {% block stylesheets %}
+  {% endblock %}
+  <link rel="icon" type="image/x-icon" href="{{ asset('images/feet.png') }}" />
+</head>
+
+<body>
+{% block body %}
+
+  <div id="page" data-bg-url="{{ asset('images/page.jpg') }}">
+
+    <!-- # Page Header -->
+    <div id="page-header">
+    {% block page_header %}
+    {% endblock %}
+    </div>
+    <!-- Page Header # -->
+
+    <!-- # Page Navigation-->
+    <div id="page-nav" class="">
+    {% block page_nav %}
+    {% endblock %}
+    </div>
+    <!-- Page Navigation # -->
+
+    <!-- # Page Breadcrumb -->
+    <div id="page-breadcrumb" class="container">
+    {% block page_breadcrumb %}
+    {% endblock %}
+    </div>
+    <!-- Page Breadcrumb # -->
+
+    <!-- # Page Main -->
+    <div id="page-main" class="container">
+    {% block page_main %}
+    {% endblock %}
+    </div>
+    <!-- Page Main # -->
+
+    <!-- # Page Footer -->
+    <div id="page-footer" class="container">
+    {% block page_footer %}
+    {% endblock %}
+    </div>
+    <!-- Page Footer # -->
+
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+</body>
+
 </html>

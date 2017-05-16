@@ -1,10 +1,114 @@
 {% extends "::base.html.twig" %}
 
+
 {% block title %}
 Trail Warehouse
 {% endblock %}
 
+
 {% block stylesheets %}
+  <link href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('bower_components/ness/css/ness.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block javascripts %}
+  <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ asset('bower_components/ness/dist/ness.js') }}"></script>
+  <script src="{{ asset('bower_components/tether/dist/js/tether.min.js') }}" rel="stylesheet"></script>
+  <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}" rel="stylesheet"></script>
+  <script src="{{ asset('js/logo.js') }}"></script>
+{% endblock %}
+
+
+{% block page_header %}
+
+  <!-- # Page Header -->
+  <header data-bg-url="{{ asset('images/header.jpg') }}">
+
+    <!-- # Mask -->
+    <div class="ness-mask" data-mask-opacity="0.8"></div>
+    <!-- Mask # -->
+
+    <nav class="navbar ness-txt-white">
+
+      <!-- # Brand -->
+      <a id="brand" class="navbar-brand" href="{{ path('shop') }}">
+        <span id="brand-trail">Trail</span>&nbsp;<span id="brand-warehouse">Warehouse</span>
+      </a>
+      <!-- Brand # -->
+
+      <div id="menu-container" class="">
+
+        <!-- # Site Search -->
+        <div id="site-search">
+          <form class="ness-form-inline">
+            <input class="form-control mr-2" type="search" placeholder="Search">
+            <a class="ness-btn ness-btn-primary">Search</a>
+          </form>
+        </div>
+        <!-- Site Search # -->
+
+        <!-- # User Navigation -->
+        <nav id="menu-user" class="col-12 col-lg">
+          {% block user_nav %}
+          <ul class="">
+            <li class="nav-item">
+              <a href="{{ path('signup') }}">
+                <span class="glyphicon glyphicon-pencil"></span><span>Inscription</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ path('signin') }}">
+                <span class="glyphicon glyphicon-user"></span><span>Connexion</span>
+              </a>
+            </li>
+          </ul>
+          {% endblock %}
+        </nav>
+        <!-- User Navigation # -->
+
+    </div>
+
+    </nav>
+  </header>
+  <!-- Page Header # -->
+
+{% endblock %}
+
+
+{% block page_nav %}
+  <!-- # Page Navigation -->
+  <nav id=menu-category class="container">
+    {% block menu_category %}
+    {{ render(controller('TrailWarehouseAppBundle:Shop:menu')) }}
+    {% endblock %}
+  </nav>
+  <!-- Category Navigation # -->
+{% endblock %}
+
+{% block page_breadcrumb %}
+  <!-- # Page Navigation -->
+  <nav id="breadcrumb">
+    {% block breadcrumb %}
+    {% endblock %}
+  </nav>
+  <!-- Category Navigation # -->
+{% endblock %}
+
+{% block page_main %}
+  <!-- # Page Main -->
+  <main class="container">
+    "block page_main" -> Please override it
+  </main>
+  <!-- Page Main # -->
+{% endblock %}
+
+{% block page_footer %}
+  <!-- # Page Footer -->
+  <footer class="container">
+    "block page_footer" -> Please override it
+  </footer>
+  <!-- Page Footer # -->
 {% endblock %}

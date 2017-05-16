@@ -1,0 +1,62 @@
+/* Imports */
+
+@import "../bower_components/ness/less/color.less";
+@import "fonts.less";
+@import "glyphicons.less";
+@import "breakpoints.less";
+@import "page_header.less";
+@import "page_nav.less";
+@import "page_breadcrumb.less";
+@import "page_main.less";
+@import "page_footer.less";
+@import "carousels.less";
+@import "custom.less";
+
+
+body {
+  * {
+    box-sizing: border-box;
+  }
+}
+
+ul {
+  list-style-type: none;
+  padding: 0; margin: 0;
+  li {
+    transition: .2s;
+    a {
+      display: block;
+      padding: 12px;
+      text-decoration: none;
+      transition: .15s;
+    }
+  }
+}
+
+button {
+  &:focus {
+    outline: none;
+  }
+}
+
+/* Page */
+
+#page {
+  color: @blackgrey;
+  font-family: 'Fira Sans', 'Helvetica', 'Times New Roman', sans-serif;
+  transition: .2s;
+}
+
+.glyphicon {
+  margin: 0 8px;
+  &:first-child {
+    margin: 0 8px 0 0;
+  }
+  &:last-child {
+    margin: 0 0 0 8px;
+  }
+}
+
+.container {
+  transition: .2s;
+}

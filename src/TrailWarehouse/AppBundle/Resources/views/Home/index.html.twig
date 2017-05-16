@@ -1,9 +1,13 @@
 {% extends "TrailWarehouseAppBundle::layout.html.twig" %}
 
 {% block title %}
-  {{ parent() }} : Home
+  {{ parent() }} : Accueil
 {% endblock %}
 
-{% block body %}
-<h1>Trail Warehouse : Trail & Nature</h1>
+{% block page_main %}
+
+  <div class="">
+    <p><a class="ness-btn ness-btn-primary" href="{{ path('shop') }}">Accéder à la boutique</a></p>
+  </div>
+
 {% endblock %}
