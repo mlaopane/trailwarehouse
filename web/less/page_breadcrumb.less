@@ -1,10 +1,22 @@
 /* Custom Colors */
 
 @bg-breadcrumb: @lightgrey;
+@txt-breadcrumb: lighten(@blackgrey, 3%);
+@txt-breadcrumb-active: hsl(200, 25%, 50%);
 
 /* Page Breadcrumb */
 
 #page-breadcrumb {
   background: @bg-breadcrumb;
+  color: @txt-breadcrumb;
   padding: 0;
+  .breadcrumb-item {
+    &.active {
+      color: @txt-breadcrumb-active;
+      a {
+        font-family: 'Fira Sans Italic';
+        color: @txt-breadcrumb-active;
+      }
+    }
+  }
 }

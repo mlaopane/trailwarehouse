@@ -1,7 +1,26 @@
+{# TrailWarehouse > AppBundle > Resources > views > Shop > category.html.twig #}
+
 {% extends "TrailWarehouseAppBundle::layout.html.twig" %}
 
-{% block page_main %}
+{% block title %}
+  {{ parent() }} : {{ category | capitalize }}
+{% endblock %}
 
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{{ path('home') }}"><span class="glyphicon glyphicon-home"></span></a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="{{ path('shop') }}">Boutique</a>
+    </li>
+    <li class="breadcrumb-item active">
+      <a href="{{ path('shop_category', {category: category}) }}">{{ category | capitalize }}</a>
+    </li>
+  </ol>
+{% endblock %}
+
+{% block page_main %}
   <div>
   {% if products is empty %}
     <div class="ness-block warning">
@@ -13,7 +32,6 @@
       {{ product.title }}
     {% endfor %}
     </ul>
-  </div>
   {% endif %}
-
+  </div>
 {% endblock %}

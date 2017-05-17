@@ -11,7 +11,6 @@
 
 <body>
 {% block body %}
-
   <div id="page" data-bg-url="{{ asset('images/page.jpg') }}">
 
     <!-- # Page Header -->
@@ -43,14 +42,13 @@
     <!-- Page Main # -->
 
     <!-- # Page Footer -->
-    <div id="page-footer" class="container">
+    <div id="page-footer">
     {% block page_footer %}
     {% endblock %}
     </div>
     <!-- Page Footer # -->
 
   </div>
-
 {% endblock %}
 
 {% block javascripts %}
