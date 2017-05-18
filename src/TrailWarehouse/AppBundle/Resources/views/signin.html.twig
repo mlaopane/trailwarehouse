@@ -1,0 +1,57 @@
+{# TrailWarehouse > AppBundle > Resources > views > signin.html.twig #}
+
+<!-- Signin Modal -->
+<div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <!-- # Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Connexion à l'espace client</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Modal Header # -->
+
+      <!-- # Modal Body -->
+      <div class="modal-body">
+        <div class="form-container">
+
+          <!-- # Signin Form -->
+          <form id="signin-form" class="" action="" method="post">
+
+            <!-- # E-mail -->
+            <div class="form-group">
+              <label for="">Adresse électronique</label>
+              <div class="input-group">
+                <div class="input-group-addon">@</div>
+                <input id="signin-email" class="form-control" type="text" name="email" value="" placeholder="E-mail">
+              </div>
+            </div>
+            <!-- E-mail # -->
+
+            <!-- # Password -->
+            <div class="form-group">
+              <label for="">Mot de passe</label>
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                <input id="signin-password" class="form-control" type="password" name="password" value="" placeholder="Mot de passe">
+              </div>
+            </div>
+            <!-- Password # -->
+
+          </form>
+          <!-- Signin Form # -->
+
+        </div>
+      </div>
+      <!-- Modal Body # -->
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-cancel">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

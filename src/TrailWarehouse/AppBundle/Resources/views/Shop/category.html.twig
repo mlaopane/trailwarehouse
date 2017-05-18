@@ -2,9 +2,11 @@
 
 {% extends "TrailWarehouseAppBundle::layout.html.twig" %}
 
+
 {% block title %}
   {{ parent() }} : {{ category | capitalize }}
 {% endblock %}
+
 
 {% block breadcrumb %}
   <ol class="breadcrumb">
@@ -20,8 +22,9 @@
   </ol>
 {% endblock %}
 
+
 {% block page_main %}
-  <div>
+  <main id="page-category">
   {% if products is empty %}
     <div class="ness-block warning">
       <span>Aucun produit disponible dans {{ category }}</span>
@@ -33,5 +36,5 @@
     {% endfor %}
     </ul>
   {% endif %}
-  </div>
+</main>
 {% endblock %}

@@ -4,7 +4,7 @@
 @import "fonts.less";
 @import "glyphicons.less";
 @import "breakpoints.less";
-@import "custom.less";
+@import "variables.less";
 @import "carousels.less";
 @import "page.less";
 @import "page_header.less";
@@ -12,9 +12,15 @@
 @import "page_breadcrumb.less";
 @import "page_main.less";
 @import "page_footer.less";
+@import "modals.less";
 @import "shop.less";
 @import "category.less";
 
+/* Custom */
+
+@border-color: @steelgrey;
+
+/* Global */
 
 body {
   * {
@@ -52,6 +58,37 @@ button {
   }
 }
 
+
 .container {
   transition: .2s;
+}
+
+.border {
+  border: 1px solid @border-color;
+  &-bottom {
+    border-bottom: 1px solid @border-color;
+  }
+  &-bottom-only {
+    border: none;
+    border-bottom: 1px solid @border-color;
+  }
+  &-none {
+    border: none;
+  }
+}
+
+.hr {
+  background: url('../images/hr.png');
+  border: none;
+  height: 25px;
+}
+
+.mask {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  background: @blackgrey;
+  opacity: 0.75;
 }

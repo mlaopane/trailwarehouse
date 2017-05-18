@@ -1,16 +1,17 @@
 {
   "name": "trailwarehouse",
   "version": "1.0.0",
-  "description": "Symfony Standard Edition ========================",
+  "description": "Trail Warehouse e-shop made with Symfony",
   "main": "index.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "less": "lessc web/less/style.less web/css/style.css", 
+    "less": "lessc web/less/style.less web/css/style.css",
     "server": "php bin/console server:run",
     "database": "php bin/console doctrine:database:create",
     "entity": "php bin/console doctrine:generate:entity",
+    "entities": "php bin/console doctrine:generate:entities TrailWarehouse",
     "schema-dump": "php bin/console doctrine:schema:update --dump-sql",
     "schema-force": "php bin/console doctrine:schema:update --force",
     "bundle": "php bin/console generate:bundle",

@@ -2,9 +2,14 @@
 
 {% extends "::base.html.twig" %}
 
+
 {% block title %}
 Trail Warehouse
 {% endblock %}
+
+
+{% block body_bg_url %}{{ asset('images/page1.jpg') }}{% endblock %}
+{% block body_bg_color %}{{ '' }}{% endblock %}
 
 
 {% block stylesheets %}
@@ -28,50 +33,14 @@ Trail Warehouse
   <header data-bg-url="{{ asset('images/header.jpg') }}">
 
     <!-- # Mask -->
-    <div class="ness-mask" data-mask-opacity="0.80"></div>
+    <!-- <div class="ness-mask" data-opacity="0.75"></div> -->
+    <div class="mask"></div>
     <!-- Mask # -->
 
-    <nav class="navbar ness-txt-white">
+    <!-- # Navbar -->
+    {% include 'TrailWarehouseAppBundle::navbar.html.twig' %}
+    <!-- Navbar # -->
 
-      <!-- # Brand -->
-      <a id="brand" class="navbar-brand" href="{{ path('shop') }}">
-        <span id="brand-trail">Trail</span>&nbsp;<span id="brand-warehouse">Warehouse</span>
-      </a>
-      <!-- Brand # -->
-
-      <div id="menu-container" class="">
-
-        <!-- # Site Search -->
-        <div id="site-search">
-          <form class="ness-form-inline">
-            <input class="form-control mr-2" type="search" placeholder="Search">
-            <a class="ness-btn ness-btn-primary">Search</a>
-          </form>
-        </div>
-        <!-- Site Search # -->
-
-        <!-- # User Navigation -->
-        <nav id="menu-user" class="col-12 col-lg">
-          {% block user_nav %}
-          <ul class="">
-            <li class="nav-item">
-              <a href="{{ path('signup') }}">
-                <span class="glyphicon glyphicon-pencil"></span><span>Inscription</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ path('signin') }}">
-                <span class="glyphicon glyphicon-user"></span><span>Connexion</span>
-              </a>
-            </li>
-          </ul>
-          {% endblock %}
-        </nav>
-        <!-- User Navigation # -->
-
-    </div>
-
-    </nav>
   </header>
   <!-- Page Header # -->
 {% endblock %}
@@ -106,7 +75,7 @@ Trail Warehouse
 {% block page_footer %}
   <!-- # Page Footer -->
   <footer data-bg-url="{{ asset('images/header.jpg') }}">
-    <div class="ness-mask" data-mask-opacity="0.90"></div>
+    <div class="ness-mask" data-opacity="0.80"></div>
     <div class="row justify-content-center">
       TrailWarehouse &copy; 2017 - Contact - Mentions légales - A propos
     </div>

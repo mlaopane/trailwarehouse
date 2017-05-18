@@ -1,0 +1,54 @@
+/* Custom */
+
+// Header
+@bg-modal-header: @bluegreen;
+@txt-modal-header: white;
+@txt-modal-title: @txt-modal-header;
+
+// Body
+@bg-modal-body: @lightgrey;
+@txt-modal-body: @blackgrey;
+
+// Footer
+@bg-modal-footer: @bluegreen;
+@txt-modal-footer: white;
+@bg-btn-confirm: @bg-modal-header;
+@bg-btn-cancel: @lightgrey;
+
+/* Modals */
+
+.modal {
+  .modal-content {
+    background: transparent;
+    .modal-header {
+      background: @bg-modal-header;
+      border-radius: 0.3rem 0.3rem 0 0;
+      color: @txt-modal-header;
+      .modal-title {
+        color: @txt-modal-title;
+      }
+    }
+    .modal-body {
+      background: @bg-modal-body;
+      color: @txt-modal-body;
+    }
+    .modal-footer {
+      background: @bg-modal-footer;
+      border-radius: 0 0 0.3rem 0.3rem;
+      color: @txt-modal-footer;
+      .btn {
+        &-confirm {
+          background: @bg-btn-confirm;
+        }
+        &-cancel {
+          background: @bg-btn-cancel;
+        }
+      }
+    }
+    .glyphicon {
+      &:first-child, &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}

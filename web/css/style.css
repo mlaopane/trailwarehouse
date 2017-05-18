@@ -4,6 +4,7 @@
 /******************/
 /* Base */
 /* Extended */
+/* Special */
 /* Contextual */
 /* Links */
 /***** BG-COLORS *****/
@@ -943,12 +944,28 @@
 #news-carousel .carousel-indicators li.active {
   background: #ffffff;
 }
+/* Custom */
 /* Page */
 #page {
   color: #394246;
   font-family: 'Fira Sans', 'Helvetica', 'Times New Roman', sans-serif;
-  height: 100%;
+  min-height: 1024px;
   transition: .2s;
+}
+@media (min-width: 768px) {
+  #page {
+    min-height: 1365.33333333px;
+  }
+}
+@media (min-width: 992px) {
+  #page {
+    min-height: 432px;
+  }
+}
+@media (min-width: 1200px) {
+  #page {
+    min-height: 675px;
+  }
 }
 /* Custom colors */
 /* Page Header */
@@ -958,6 +975,7 @@
   width: 100%;
 }
 #page-header header {
+  position: relative;
   width: 100%;
 }
 @media (min-width: 576px) {
@@ -1106,6 +1124,8 @@
 #page-main {
   margin-bottom: 15px;
   padding: 15px 0;
+  min-height: 400px;
+  min-height: 500px;
 }
 #news {
   margin-bottom: 15px;
@@ -1114,24 +1134,70 @@
 /* Page Footer */
 #page-footer {
   padding: 0px 0px;
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
+  width: 100%;
 }
 #page-footer footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: #819098;
   font-size: 0.80rem;
   height: 50px;
   width: 100%;
 }
-#brands {
+/* Custom */
+/* Modals */
+.modal .modal-content {
+  background: transparent;
+}
+.modal .modal-content .modal-header {
+  background: #0EAA80;
+  border-radius: 0.3rem 0.3rem 0 0;
+  color: white;
+}
+.modal .modal-content .modal-header .modal-title {
+  color: white;
+}
+.modal .modal-content .modal-body {
+  background: #f4f5f6;
+  color: #394246;
+}
+.modal .modal-content .modal-footer {
+  background: #0EAA80;
+  border-radius: 0 0 0.3rem 0.3rem;
+  color: white;
+}
+.modal .modal-content .modal-footer .btn-confirm {
+  background: #0EAA80;
+}
+.modal .modal-content .modal-footer .btn-cancel {
+  background: #f4f5f6;
+}
+.modal .modal-content .glyphicon:first-child,
+.modal .modal-content .glyphicon:last-child {
+  margin: 0;
+}
+#page-shop h1,
+#page-shop h2,
+#page-shop h3 {
+  font-family: 'Carter One';
+}
+#page-shop #selections {
   background: white;
   margin: 0 0 15px 0;
 }
+#page-shop #brands {
+  background: white;
+  margin: 0 0 15px 0;
+}
+#page-shop #brands .brand {
+  padding: 4px;
+}
+#page-shop #brands .brand img {
+  width: 100%;
+}
+/* Custom */
+/* Global */
 body * {
   box-sizing: border-box;
 }
@@ -1163,4 +1229,31 @@ button:focus {
 }
 .container {
   transition: .2s;
+}
+.border {
+  border: 1px solid #d5dadd;
+}
+.border-bottom {
+  border-bottom: 1px solid #d5dadd;
+}
+.border-bottom-only {
+  border: none;
+  border-bottom: 1px solid #d5dadd;
+}
+.border-none {
+  border: none;
+}
+.hr {
+  background: url('../images/hr.png');
+  border: none;
+  height: 25px;
+}
+.mask {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  background: #394246;
+  opacity: 0.75;
 }

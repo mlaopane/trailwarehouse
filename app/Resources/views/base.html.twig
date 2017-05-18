@@ -9,9 +9,12 @@
   <link rel="icon" type="image/x-icon" href="{{ asset('images/feet.png') }}" />
 </head>
 
-<body>
+<body
+  data-bg-url="{% block body_bg_url %}{% endblock %}"
+  data-bg-color="{% block body_bg_color %}{% endblock %}"
+>
 {% block body %}
-  <div id="page" data-bg-url="{{ asset('images/page.jpg') }}">
+  <div id="page">
 
     <!-- # Page Header -->
     <div id="page-header">
