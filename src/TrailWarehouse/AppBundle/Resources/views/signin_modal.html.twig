@@ -1,4 +1,4 @@
-{# TrailWarehouse > AppBundle > Resources > views > signin.html.twig #}
+{# TrailWarehouse > AppBundle > Resources > views > signin_modal.html.twig #}
 
 <!-- Signin Modal -->
 <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -14,12 +14,14 @@
       </div>
       <!-- Modal Header # -->
 
-      <!-- # Modal Body -->
-      <div class="modal-body">
-        <div class="form-container">
+      <!-- # Form Container -->
+      <div class="form-container">
 
-          <!-- # Signin Form -->
-          <form id="signin-form" class="" action="" method="post">
+        <!-- # Signin Form -->
+        <form id="signin-form" class="" action="" method="post">
+
+          <!-- # Modal Body -->
+          <div class="modal-body">
 
             <!-- # E-mail -->
             <div class="form-group">
@@ -41,17 +43,22 @@
             </div>
             <!-- Password # -->
 
-          </form>
-          <!-- Signin Form # -->
+          </div>
+          <!-- Modal Body # -->
 
-        </div>
-      </div>
-      <!-- Modal Body # -->
+          <!-- # Modal Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-cancel" data-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-confirm">Se connecter</button>
+          </div>
+          <!-- Modal Footer # -->
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-cancel" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-cancel">Save changes</button>
+        </form>
+        <!-- Signin Form # -->
+
       </div>
+      <!-- Form Container # -->
+
     </div>
   </div>
 </div>

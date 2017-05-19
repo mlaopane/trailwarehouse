@@ -26,13 +26,13 @@
           <a href="{{ path('signup') }}" data-toggle="modal" data-target="#signup-modal">
             <span class="glyphicon glyphicon-pencil"></span><span>Inscription</span>
           </a>
-          {% include 'TrailWarehouseAppBundle::signup.html.twig' %}
+          {% include 'TrailWarehouseAppBundle::signup_modal.html.twig' %}
         </li>
         <li class="nav-item">
           <a href="{{ path('signin') }}" data-toggle="modal" data-target="#signin-modal">
             <span class="glyphicon glyphicon-user"></span><span>Connexion</span>
           </a>
-          {% include 'TrailWarehouseAppBundle::signin.html.twig' %}
+          {% include 'TrailWarehouseAppBundle::signin_modal.html.twig' %}
         </li>
       </ul>
       {% endblock %}

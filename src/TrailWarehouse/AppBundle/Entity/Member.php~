@@ -50,9 +50,9 @@ class Member
     private $password;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="role", type="integer")
+     * @ORM\Column(name="role", type="string", length=255)
      */
     private $role;
 
@@ -175,30 +175,6 @@ class Member
     public function getPassword()
     {
         return $this->password;
-    }
-
-    /**
-     * Set role
-     *
-     * @param integer $role
-     *
-     * @return Member
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return int
-     */
-    public function getRole()
-    {
-        return $this->role;
     }
 
     /**

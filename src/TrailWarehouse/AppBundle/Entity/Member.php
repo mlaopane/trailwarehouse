@@ -50,9 +50,9 @@ class Member
     private $password;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="role", type="integer")
+     * @ORM\Column(name="role", type="string", length=255)
      */
     private $role;
 
@@ -70,6 +70,12 @@ class Member
      */
     private $dateCreation;
 
+
+    public function __construct() {
+      $this->role         = 'user';
+      $this->isActive     = false;
+      $this->dateCreation = new \DateTime();
+    }
 
     /**
      * Get id
@@ -178,30 +184,6 @@ class Member
     }
 
     /**
-     * Set role
-     *
-     * @param integer $role
-     *
-     * @return Member
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return int
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
      * Set isActive
      *
      * @param boolean $isActive
@@ -247,5 +229,29 @@ class Member
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     *
+     * @return Member
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }

@@ -1,0 +1,5 @@
+var Nav = {
+  init: function() {
+    
+  }
+}

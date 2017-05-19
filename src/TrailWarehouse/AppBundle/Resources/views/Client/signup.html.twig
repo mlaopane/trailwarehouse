@@ -1,7 +1,88 @@
-{% extends "::base.html.twig" %}
+{# TrailWarehouse > AppBundle > Resources > views > signup.html.twig #}
 
-{% block title %}TrailWarehouseAppBundle:Client:signup{% endblock %}
+{% extends 'TrailWarehouseAppBundle::layout.html.twig' %}
 
-{% block body %}
-<h1>Welcome to the Client:signup page</h1>
+
+{% block title %}
+  {{ parent() }} : Inscription
+{% endblock %}
+
+
+{% block page_main %}
+  <main id="page-signup" class="px-7">
+
+    <!-- # Form Container -->
+    <div class="form-container mb-5">
+
+      <!-- # Signup Form -->
+      <form id="signup-form" class="" action="" method="post">
+
+        <div class="row">
+
+          <div class="col-12 col-md-6">
+
+            <!-- # Firstname -->
+            <div class="form-group mb-4">
+              <label for="" class="">Prénom*</label>
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                <input id="signin-firstname" class="form-control" type="text" name="firstname" value="" placeholder="Prénom">
+              </div>
+            </div>
+            <!-- Firstname # -->
+
+            <!-- # Lastname -->
+            <div class="form-group mb-4">
+              <label for="" class="">Nom de famille*</label>
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                <input id="signin-lastname" class="form-control" type="lastname" name="password" value="" placeholder="Nom de famille">
+              </div>
+            </div>
+            <!-- Lastname # -->
+
+          </div>
+
+          <div class="col-12 col-md-6">
+
+            <!-- # E-mail -->
+            <div class="form-group mb-4">
+              <label for="" class="">Adresse électronique*</label>
+              <div class="input-group">
+                <div class="input-group-addon">@</div>
+                <input id="signin-email" class="form-control" type="email" name="email" value="" placeholder="E-mail">
+              </div>
+            </div>
+            <!-- E-mail # -->
+
+            <!-- # Password -->
+            <div class="form-group mb-4">
+              <label for="" class="">Mot de passe*</label>
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                <input id="signin-password" class="form-control" type="password" name="password" value="" placeholder="Mot de passe">
+              </div>
+              <p class="form-text text-muted justify-self-end">Au moins 6 caractères</p>
+            </div>
+            <!-- Password # -->
+
+          </div>
+
+
+        </div>
+
+        <button type="submit" class="btn btn-confirm">S'inscrire</button>
+
+      </form>
+      <!-- Signin Form # -->
+
+    </div>
+    <!-- Form Container # -->
+
+    <!-- Form Symfony -->
+    <div class="">
+      {{ form(form) }}
+    </div>
+
+  </main>
 {% endblock %}

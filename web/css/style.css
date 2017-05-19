@@ -1145,8 +1145,24 @@
   height: 50px;
   width: 100%;
 }
+#page-signin .form-container,
+#page-signup .form-container {
+  border: 1px solid #505c62;
+  border-radius: 4px;
+  padding: 24px;
+}
 /* Custom */
 /* Modals */
+@media (min-width: 576px) {
+  .modal .modal-dialog {
+    margin: 40px auto;
+  }
+}
+@media (min-width: 992px) {
+  .modal .modal-dialog {
+    margin: 100px auto;
+  }
+}
 .modal .modal-content {
   background: transparent;
 }
@@ -1167,15 +1183,70 @@
   border-radius: 0 0 0.3rem 0.3rem;
   color: white;
 }
+.modal .modal-content .modal-footer .btn {
+  cursor: pointer;
+}
 .modal .modal-content .modal-footer .btn-confirm {
-  background: #0EAA80;
+  border: 1px solid #1173d4;
+  background: #2b8cee;
+  color: white;
+}
+.modal .modal-content .modal-footer .btn-confirm:hover {
+  background: #127ae2;
 }
 .modal .modal-content .modal-footer .btn-cancel {
   background: #f4f5f6;
+  border: 1px solid #bcc4c8;
+  color: #394246;
 }
-.modal .modal-content .glyphicon:first-child,
-.modal .modal-content .glyphicon:last-child {
+.modal .modal-content .modal-footer .btn-cancel:hover {
+  background: #e0e4e6;
+}
+.modal .modal-content .form-container {
+  border-radius: 0 0 .3rem .3rem;
+}
+.modal .modal-content .form-container .modal-body {
+  padding: 15px 24px;
+}
+.modal .modal-content form {
+  border-radius: 0 0 .3rem .3rem;
+}
+.form-container {
+  background: #f4f5f6;
+}
+.form-container .glyphicon:first-child,
+.form-container .glyphicon:last-child {
   margin: 0;
+}
+@media (min-width: 576px) {
+  .form-container {
+    font-size: .9rem;
+  }
+  .form-container .form-control {
+    font-size: .9rem;
+  }
+}
+.btn {
+  border-radius: 3px;
+  cursor: pointer;
+}
+.btn-cancel {
+  background: #f4f5f6;
+  color: #505c62;
+  border: 1px solid #819098;
+}
+.btn-cancel:hover {
+  background: #505c62;
+  border: 1px solid #394246;
+}
+.btn-confirm {
+  background: #2b8cee;
+  color: #f4f5f6;
+  border: 1px solid #1173d4;
+}
+.btn-confirm:hover {
+  background: #1173d4;
+  border: 1px solid #0d59a5;
 }
 #page-shop h1,
 #page-shop h2,

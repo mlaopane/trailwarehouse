@@ -12,12 +12,22 @@
 // Footer
 @bg-modal-footer: @bluegreen;
 @txt-modal-footer: white;
-@bg-btn-confirm: @bg-modal-header;
+@bg-btn-confirm: @darkblue;
+@txt-btn-confirm: white;
 @bg-btn-cancel: @lightgrey;
+@txt-btn-cancel: @blackgrey;
 
 /* Modals */
 
 .modal {
+  .modal-dialog {
+    @media (min-width: 576px) {
+      margin: 40px auto;
+    }
+    @media (min-width: 992px) {
+      margin: 100px auto;
+    }
+  }
   .modal-content {
     background: transparent;
     .modal-header {
@@ -37,18 +47,33 @@
       border-radius: 0 0 0.3rem 0.3rem;
       color: @txt-modal-footer;
       .btn {
+        cursor: pointer;
         &-confirm {
+          border: 1px solid darken(@bg-btn-confirm, 10%);
           background: @bg-btn-confirm;
+          color: @txt-btn-confirm;
+          &:hover {
+            background: darken(@bg-btn-confirm, 7%)
+          }
         }
         &-cancel {
           background: @bg-btn-cancel;
+          border: 1px solid darken(@bg-btn-cancel, 20%);
+          color: @txt-btn-cancel;
+          &:hover {
+            background: darken(@bg-btn-cancel, 7%)
+          }
         }
       }
     }
-    .glyphicon {
-      &:first-child, &:last-child {
-        margin: 0;
+    .form-container {
+      border-radius: 0 0 .3rem .3rem;
+      .modal-body {
+        padding: 15px 24px;
       }
+    }
+    form {
+      border-radius: 0 0 .3rem .3rem;
     }
   }
 }
