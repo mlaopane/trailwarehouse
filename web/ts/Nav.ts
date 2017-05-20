@@ -8,6 +8,7 @@ interface Signup {
   password: string;
   firstname: string;
   lastname: string;
+  
 }
 
 var SigninForm: Signin;

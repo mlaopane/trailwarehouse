@@ -11,13 +11,13 @@
 {% block breadcrumb %}
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a href="{{ path('home') }}"><span class="glyphicon glyphicon-home"></span></a>
+      <a href="{{ path('app_home') }}"><span class="glyphicon glyphicon-home"></span></a>
     </li>
     <li class="breadcrumb-item">
-      <a href="{{ path('shop') }}">Boutique</a>
+      <a href="{{ path('app_shop') }}">Boutique</a>
     </li>
     <li class="breadcrumb-item active">
-      <a href="{{ path('shop_category', {category: category}) }}">{{ category | capitalize }}</a>
+      <a href="{{ path('app_shop_category', {category: category}) }}">{{ category | capitalize }}</a>
     </li>
   </ol>
 {% endblock %}

@@ -1,25 +1,11 @@
-home:
-    path:     /
-    defaults: { _controller: TrailWarehouseAppBundle:Home:index }
+app_home_root:
+    resource: "@TrailWarehouseAppBundle/Resources/config/routing_home.yml"
+    prefix:   /
 
-signup:
-    path:     /signup
-    defaults: { _controller: TrailWarehouseAppBundle:Client:signup }
+app_shop_root:
+    resource: "@TrailWarehouseAppBundle/Resources/config/routing_shop.yml"
+    prefix:   /boutique
 
-signin:
-    path:     /signin
-    defaults: { _controller: TrailWarehouseAppBundle:Client:signin }
-
-signout:
-    path:     /signout
-    defaults: { _controller: TrailWarehouseAppBundle:Client:signout }
-
-shop:
-    path:     /boutique
-    defaults:
-        _controller: TrailWarehouseAppBundle:Shop:index
-
-shop_category:
-    path:     /boutique/{category}
-    defaults:
-        _controller: TrailWarehouseAppBundle:Shop:category
+app_client_root:
+    resource: "@TrailWarehouseAppBundle/Resources/config/routing_client.yml"
+    prefix:   /client

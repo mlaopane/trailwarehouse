@@ -1,0 +1,9 @@
+app_shop:
+    path:     /
+    defaults:
+        _controller: TrailWarehouseAppBundle:Shop:index
+
+app_shop_category:
+    path:     /{category}
+    defaults:
+        _controller: TrailWarehouseAppBundle:Shop:category

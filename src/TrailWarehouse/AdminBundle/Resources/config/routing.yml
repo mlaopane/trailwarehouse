@@ -1,25 +1,21 @@
-category_create:
-    path:     /category/create
-    defaults:
-        _controller: TrailWarehouseAdminBundle:Category:create
+# src > TrailWarehouse > AdminBundle > Resources > config > routing.yml
 
-category_read:
-    path:     /category/read/{id}
-    defaults:
-        _controller: TrailWarehouseAdminBundle:Category:read
-    requirements:
-        id: '\d+'
+admin_home_root:
+    resource: "@TrailWarehouseAdminBundle/Resources/config/routing_home.yml"
+    prefix:   /
 
-category_update:
-    path:     /category/update/{id}
-    defaults:
-        _controller: TrailWarehouseAdminBundle:Category:update
-    requirements:
-        id: '\d+'
+admin_member_root:
+    resource: "@TrailWarehouseAdminBundle/Resources/config/routing_member.yml"
+    prefix:   /member
 
-category_delete:
-    path:     /category/delete/{id}
-    defaults:
-        _controller: TrailWarehouseAdminBundle:Category:delete
-    requirements:
-        id: '\d+'
+admin_category_root:
+    resource: "@TrailWarehouseAdminBundle/Resources/config/routing_category.yml"
+    prefix:   /category
+
+admin_family_root:
+    resource: "@TrailWarehouseAdminBundle/Resources/config/routing_family.yml"
+    prefix:   /family
+
+admin_product_root:
+    resource: "@TrailWarehouseAdminBundle/Resources/config/routing_product.yml"
+    prefix:   /product

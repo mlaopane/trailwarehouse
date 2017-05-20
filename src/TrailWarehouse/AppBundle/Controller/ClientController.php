@@ -20,7 +20,6 @@ class ClientController extends Controller
    */
   public function signupAction(Request $request)
   {
-
     $data = [];
 
     // Create a Member
@@ -68,7 +67,6 @@ class ClientController extends Controller
     ];
 
     return $this->render('TrailWarehouseAppBundle:Client:signup.html.twig', $data);
-
   }
 
   /**

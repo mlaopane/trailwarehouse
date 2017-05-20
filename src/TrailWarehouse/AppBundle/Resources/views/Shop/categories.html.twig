@@ -1,5 +1,5 @@
 <ul class="col-12">
 {% for category in categories %}
-  <li><a href="{{ path('shop_category', {"category": category.name}) }}">{{ category.name | capitalize }}</a></li>
+  <li><a href="{{ path('app_shop_category', {"category": category.name}) }}">{{ category.name | capitalize }}</a></li>
 {% endfor %}
 </ul>

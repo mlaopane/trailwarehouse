@@ -1,0 +1,19 @@
+app_client_account:
+    path:     /espace-perso
+    defaults:
+        _controller: TrailWarehouseAppBundle:Client:account
+
+app_client_signup:
+    path:     /inscription
+    defaults:
+        _controller: TrailWarehouseAppBundle:Client:signup
+
+app_client_signin:
+    path:     /connexion
+    defaults:
+        _controller: TrailWarehouseAppBundle:Client:signin
+
+app_client_signout:
+    path:     /deconnexion
+    defaults:
+        _controller: TrailWarehouseAppBundle:Client:signout

@@ -1,0 +1,6 @@
+# src > TrailWarehouse > AdminBundle > Resources > config > routing_home.yml
+
+admin_home_root:
+    path:     /
+    defaults:
+        _controller: TrailWarehouseAdminBundle:Home:index

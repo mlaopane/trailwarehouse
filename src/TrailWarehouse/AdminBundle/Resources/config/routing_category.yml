@@ -1,0 +1,32 @@
+# src > TrailWarehouse > AdminBundle > Resources > config > routing_category.yml
+
+admin_category:
+    path:     /
+    defaults:
+        _controller: TrailWarehouseAdminBundle:Category:index
+
+admin_category_create:
+    path:     /create
+    defaults:
+        _controller: TrailWarehouseAdminBundle:Category:create
+
+admin_category_read:
+    path:     /read/{id}
+    defaults:
+        _controller: TrailWarehouseAdminBundle:Category:read
+    requirements:
+        id: '\d+'
+
+admin_category_update:
+    path:     /update/{id}
+    defaults:
+        _controller: TrailWarehouseAdminBundle:Category:update
+    requirements:
+        id: '\d+'
+
+admin_category_delete:
+    path:     /delete/{id}
+    defaults:
+        _controller: TrailWarehouseAdminBundle:Category:delete
+    requirements:
+        id: '\d+'

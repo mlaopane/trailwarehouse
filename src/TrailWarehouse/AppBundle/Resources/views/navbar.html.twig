@@ -3,7 +3,7 @@
 <nav class="navbar ness-txt-white">
 
   <!-- # Brand -->
-  <a id="brand" class="navbar-brand" href="{{ path('shop') }}">
+  <a id="brand" class="navbar-brand" href="{{ path('app_shop') }}">
     <span id="brand-trail">Trail</span>&nbsp;<span id="brand-warehouse">Warehouse</span>
   </a>
   <!-- Brand # -->
@@ -23,13 +23,13 @@
       {% block user_nav %}
       <ul class="">
         <li class="nav-item">
-          <a href="{{ path('signup') }}" data-toggle="modal" data-target="#signup-modal">
+          <a href="{{ path('app_client_signup') }}" data-toggle="modal" data-target="#signup-modal">
             <span class="glyphicon glyphicon-pencil"></span><span>Inscription</span>
           </a>
           {% include 'TrailWarehouseAppBundle::signup_modal.html.twig' %}
         </li>
         <li class="nav-item">
-          <a href="{{ path('signin') }}" data-toggle="modal" data-target="#signin-modal">
+          <a href="{{ path('app_client_signin') }}" data-toggle="modal" data-target="#signin-modal">
             <span class="glyphicon glyphicon-user"></span><span>Connexion</span>
           </a>
           {% include 'TrailWarehouseAppBundle::signin_modal.html.twig' %}
