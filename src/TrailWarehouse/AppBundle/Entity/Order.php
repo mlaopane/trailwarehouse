@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Purchase
  *
- * @ORM\Table(name="purchase")
- * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\PurchaseRepository")
+ * @ORM\Table(name="`order`")
+ * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\OrderRepository")
  */
-class Purchase
+class Order
 {
     /**
      * @var int

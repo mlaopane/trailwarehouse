@@ -8,7 +8,7 @@ class ShopController extends Controller
 {
 
   /**
-   * 'shop' Route
+   * 'app_shop'
    */
   public function indexAction()
   {
@@ -29,7 +29,7 @@ class ShopController extends Controller
   }
 
   /**
-   * 'shop_category' Route
+   * 'app_shop_category'
    * @param {string} $category
    */
   public function categoryAction($category)

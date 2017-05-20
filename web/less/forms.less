@@ -1,3 +1,5 @@
+// main: style.less
+
 @bg-btn-confirm: @blue;
 @bg-btn-confirm-hover: darken(@bg-btn-confirm, 10%);
 
@@ -8,10 +10,16 @@
       margin: 0;
     }
   }
+  .form-text {
+    font-size: .9rem;
+  }
   @media (min-width: 576px) {
     font-size: .9rem;
     .form-control {
       font-size: .9rem;
+    }
+    .form-text {
+      font-size: .8rem;
     }
   }
 }

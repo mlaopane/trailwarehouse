@@ -3,9 +3,20 @@
 security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-    providers:
-        in_memory:
-            memory: ~
+
+    encoders:
+        TrailWarehouse\AppBundle\Entity\Member: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN       : ROLE_USER
+        ROLE_SUPER_ADMIN : [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers :
+        in_memory :
+            memory :
+                users :
+                    user  : { password: user, roles : ['ROLE_USER'] }
+                    admin : { password: admin, roles: ['ROLE_ADMIN'] }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

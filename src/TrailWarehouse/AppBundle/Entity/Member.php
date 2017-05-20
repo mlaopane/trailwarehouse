@@ -71,12 +71,6 @@ class Member
     private $dateCreation;
 
 
-    public function __construct() {
-      $this->role         = 'user';
-      $this->isActive     = false;
-      $this->dateCreation = new \DateTime();
-    }
-
     /**
      * Get id
      *

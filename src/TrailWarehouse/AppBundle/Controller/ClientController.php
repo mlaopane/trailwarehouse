@@ -11,61 +11,45 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use TrailWarehouse\AppBundle\Entity\Member;
+use TrailWarehouse\AppBundle\Form\SignupType;
+use TrailWarehouse\AppBundle\Form\SigninType;
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 
 class ClientController extends Controller
 {
+  /* --------------------- */
+  /* *** Initilization *** */
+  /* --------------------- */
+
+  protected $member;
+
+  public function __construct() {
+    $this->member = new Member();
+  }
+
+  /* -------------- */
+  /* *** Routes *** */
+  /* -------------- */
 
   /**
    * 'signup' route
    */
   public function signupAction(Request $request)
   {
-    $data = [];
-
-    // Create a Member
-    $member = new Member();
-
-    // Create the form
-    $form = $this->get('form.factory')->createBuilder(FormType::class, $member)
-      ->add('firstname', TextType::class)
-      ->add('lastname', TextType::class)
-      ->add('email', EmailType::class)
-      ->add('password', PasswordType::class)
-      ->add('signup', SubmitType::class)
-      ->getForm()
-    ;
-
-    // IF XMLHttpRequest
-    if ($request->isXmlHttpRequest())
-    {
-      // Return
-      return new JsonResponse($data);
-    }
-
-    // IF the form has been submitted
+    $form = $this->get('form.factory')->create(SignupType::class, $this->member);
     if ($request->isMethod('post'))
     {
       $form->handleRequest($request);
-
-      // IF the form is OK
-      if ($form->isValid()) {
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($member);
-        $manager->flush();
-
+      if ($form->isValid())
+      {
+        $this->registerMember($this->member);
         $request->getSession()->getFlashBag()->add('notice', 'Votre inscription a été prise en compte');
-
-        return $this->redirectToRoute('shop');
-      }
-      else {
-        $request->getSession()->getFlashBag()->add('failure', 'Formulaire non valide');
+        return $this->redirectToRoute('app_shop');
       }
     }
-
     $data = [
       'form' => $form->createView(),
     ];
-
     return $this->render('TrailWarehouseAppBundle:Client:signup.html.twig', $data);
   }
 
@@ -74,12 +58,30 @@ class ClientController extends Controller
    */
   public function signinAction(Request $request)
   {
-    $data = [];
+    $form = $this->get('form.factory')->create(SigninType::class, $this->member);
+    if ($request->isMethod('post'))
+    {
+      $form->handleRequest($request);
+      if ($form->isValid())
+      {
+        $manager = $this->getDoctrine()->getManager();
+        $repository = $manager->getRepository('TrailWarehouseAppBundle:Member');
+        $db_member = $repository->findOneBy([
+          'email' => $this->member->getEmail(),
+          'password' => $this->member->getPassword(),
+        ]);
 
-    // Return
-    if ($request->isXmlHttpRequest()) {
-      return new JsonResponse($data);
+        if ($db_member == NULL)
+        {
+          return $this->redirectToRoute('app_client_signin');
+        }
+        $request->getSession()->getFlashBag()->add('notice', 'Bienvenue '. $this->member->getFirstname());
+        return $this->redirectToRoute('app_shop');
+      }
     }
+    $data = [
+      'form' => $form->createView(),
+    ];
     return $this->render('TrailWarehouseAppBundle:Client:signin.html.twig', $data);
   }
 
@@ -90,6 +92,25 @@ class ClientController extends Controller
   {
     // Return
     return $this->render('TrailWarehouseAppBundle:Home:index.html.twig');
+  }
+
+  /* -------------------------- */
+  /* *** Additional Methods *** */
+  /* -------------------------- */
+
+  /**
+   * @param {Member} $member
+   * Register a member into the database
+   */
+  protected function registerMember($member) {
+    $member
+      ->setRole('user')
+      ->setIsActive(false)
+      ->setDateCreation(new \DateTime())
+    ;
+    $manager = $this->getDoctrine()->getManager();
+    $manager->persist($member);
+    $manager->flush();
   }
 
 }

@@ -1,4 +1,4 @@
-{# TrailWarehouse > AppBundle > Resources > views > signup.html.twig #}
+{# TrailWarehouse > AppBundle > Resources > views > form.html.twig #}
 
 {% extends 'TrailWarehouseAppBundle::layout.html.twig' %}
 
@@ -12,77 +12,82 @@
   <main id="page-signup" class="px-7">
 
     <!-- # Form Container -->
-    <div class="form-container mb-5">
+    <div class="form-container mx-auto mb-5">
 
       <!-- # Signup Form -->
-      <form id="signup-form" class="" action="" method="post">
+      {{ form_start(form) }}
+        {{ form_errors(form) }}
 
+        <!-- # Row -->
         <div class="row">
 
+          <!-- # Col -->
           <div class="col-12 col-md-6">
 
             <!-- # Firstname -->
             <div class="form-group mb-4">
-              <label for="" class="">Prénom*</label>
+              {{ form_label(form.firstname, 'Prénom*') }}
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                <input id="signin-firstname" class="form-control" type="text" name="firstname" value="" placeholder="Prénom">
+                {{ form_widget(form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
               </div>
             </div>
             <!-- Firstname # -->
 
             <!-- # Lastname -->
             <div class="form-group mb-4">
-              <label for="" class="">Nom de famille*</label>
+              {{ form_label(form.lastname, 'Nom de famille*') }}
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                <input id="signin-lastname" class="form-control" type="lastname" name="password" value="" placeholder="Nom de famille">
+                {{ form_widget(form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Nom de famille'}}) }}
               </div>
             </div>
             <!-- Lastname # -->
 
           </div>
+          <!-- Col # -->
 
+          <!-- # Col -->
           <div class="col-12 col-md-6">
 
             <!-- # E-mail -->
             <div class="form-group mb-4">
-              <label for="" class="">Adresse électronique*</label>
+              {{ form_label(form.email, 'Adresse électronique*') }}
               <div class="input-group">
                 <div class="input-group-addon">@</div>
-                <input id="signin-email" class="form-control" type="email" name="email" value="" placeholder="E-mail">
+                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Adresse électronique'}}) }}
               </div>
             </div>
             <!-- E-mail # -->
 
             <!-- # Password -->
             <div class="form-group mb-4">
-              <label for="" class="">Mot de passe*</label>
+              {{ form_label(form.password, 'Mot de passe*') }}
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                <input id="signin-password" class="form-control" type="password" name="password" value="" placeholder="Mot de passe">
+                {{ form_widget(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
               </div>
-              <p class="form-text text-muted justify-self-end">Au moins 6 caractères</p>
+              <p class="form-text text-muted justify-self-end">Minimum 6 caractères</p>
             </div>
             <!-- Password # -->
 
           </div>
-
+          <!-- Col # -->
 
         </div>
+        <!-- Row # -->
 
-        <button type="submit" class="btn btn-confirm">S'inscrire</button>
+        <!-- # Submit -->
+        {{ form_widget(form.envoyer, {'attr': {'class':'btn btn-confirm'}}, 'S\'inscrire') }}
+        <!-- Submit # -->
 
-      </form>
-      <!-- Signin Form # -->
+        {{ form_rest(form) }}
+
+      {{ form_end(form) }}
+      <!-- Signup Form # -->
 
     </div>
     <!-- Form Container # -->
-
-    <!-- Form Symfony -->
-    <div class="">
-      {{ form(form) }}
-    </div>
 
   </main>
 {% endblock %}

@@ -12,45 +12,51 @@
   <main id="page-signin">
 
     <!-- # Form Container -->
-    <div class="form-container">
+    <div class="form-container mx-auto mb-5">
 
       <!-- # Signin Form -->
-      <form id="signin-form" class="" action="" method="post">
+      {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-        <!-- # Modal Body -->
-        <div class="modal-body">
+        <!-- # Row -->
+        <div class="row">
 
-          <!-- # E-mail -->
-          <div class="form-group">
-            <label for="">Adresse électronique</label>
-            <div class="input-group">
-              <div class="input-group-addon">@</div>
-              <input id="signin-email" class="form-control" type="text" name="email" value="" placeholder="E-mail">
+          <!-- # Col -->
+          <div class="col-12">
+
+            <!-- # E-mail -->
+            <div class="form-group mb-4">
+              {{ form_label(form.email, 'Adresse électronique*') }}
+              <div class="input-group">
+                <div class="input-group-addon">@</div>
+                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Adresse électronique'}}) }}
+              </div>
             </div>
-          </div>
-          <!-- E-mail # -->
+            <!-- E-mail # -->
 
-          <!-- # Password -->
-          <div class="form-group">
-            <label for="">Mot de passe</label>
-            <div class="input-group">
-              <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-              <input id="signin-password" class="form-control" type="password" name="password" value="" placeholder="Mot de passe">
+            <!-- # Password -->
+            <div class="form-group mb-4">
+              {{ form_label(form.password, 'Mot de passe*') }}
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                {{ form_widget(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+              </div>
             </div>
+            <!-- Password # -->
+
           </div>
-          <!-- Password # -->
+          <!-- Col # -->
 
         </div>
-        <!-- Modal Body # -->
+        <!-- Row # -->
 
-        <!-- # Modal Footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-cancel" data-dismiss="modal">Annuler</button>
-          <button type="submit" class="btn btn-confirm">Se connecter</button>
-        </div>
-        <!-- Modal Footer # -->
+        <!-- # Submit -->
+        {{ form_widget(form.envoyer, {'attr': {'class':'btn btn-confirm'}}, 'S\'inscrire') }}
+        <!-- Submit # -->
 
-      </form>
+        {{ form_rest(form) }}
+
+      {{ form_end(form) }}
       <!-- Signin Form # -->
 
     </div>
