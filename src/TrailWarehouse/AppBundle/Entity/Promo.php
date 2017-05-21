@@ -49,13 +49,6 @@ class Promo
      */
     private $dateEnd;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
-
 
     /**
      * Get id
@@ -163,27 +156,4 @@ class Promo
         return $this->dateEnd;
     }
 
-    /**
-     * Set isActive
-     *
-     * @param boolean $isActive
-     *
-     * @return Promo
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    /**
-     * Get isActive
-     *
-     * @return bool
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
-    }
 }

@@ -3,6 +3,7 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use TrailWarehouse\AppBundle\Entity\Member;
 
 /**
  * Coordinate
@@ -22,11 +23,10 @@ class Coordinate
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_user", type="integer")
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Member", inversedBy="coordinates")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $idUser;
+    private $member;
 
     /**
      * @var string
@@ -65,30 +65,6 @@ class Coordinate
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set idUser
-     *
-     * @param integer $idUser
-     *
-     * @return Coordinate
-     */
-    public function setIdUser($idUser)
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
-
-    /**
-     * Get idUser
-     *
-     * @return int
-     */
-    public function getIdUser()
-    {
-        return $this->idUser;
     }
 
     /**
@@ -185,5 +161,29 @@ class Coordinate
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set member
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Member $member
+     *
+     * @return Coordinate
+     */
+    public function setMember(Member $member)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    /**
+     * Get member
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Member
+     */
+    public function getMember()
+    {
+        return $this->member;
     }
 }

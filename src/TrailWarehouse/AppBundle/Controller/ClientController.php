@@ -37,7 +37,7 @@ class ClientController extends Controller
   public function signupAction(Request $request)
   {
     $form = $this->get('form.factory')->create(SignupType::class, $this->member);
-    if ($request->isMethod('post'))
+    if ($form->isSubmitted())
     {
       $form->handleRequest($request);
       if ($form->isValid())
@@ -59,7 +59,7 @@ class ClientController extends Controller
   public function signinAction(Request $request)
   {
     $form = $this->get('form.factory')->create(SigninType::class, $this->member);
-    if ($request->isMethod('post'))
+    if ($form->isSubmitted())
     {
       $form->handleRequest($request);
       if ($form->isValid())

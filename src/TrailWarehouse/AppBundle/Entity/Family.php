@@ -3,6 +3,8 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use TrailWarehouse\AppBundle\Entity\Category;
 
 /**
  * Family
@@ -28,6 +30,27 @@ class Family
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Brand")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $brand;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Category", cascade={"persist"})
+     */
+    private $categories;
+
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -61,5 +84,67 @@ class Family
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set brand
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Brand $brand
+     *
+     * @return Family
+     */
+    public function setBrand(\TrailWarehouse\AppBundle\Entity\Brand $brand)
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    /**
+     * Get brand
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Brand
+     */
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    /**
+     * Add category
+     *
+     * @param Category $category
+     *
+     * @return this
+     */
+    public function addCategory(Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param Category $category
+     *
+     * @return this
+     */
+    public function removeCategory(Category $category)
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * Get categories
+     *
+     * @return ArrayCollection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

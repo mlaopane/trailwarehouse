@@ -3,6 +3,9 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use TrailWarehouse\AppBundle\Entity\Color;
+use TrailWarehouse\AppBundle\Entity\Family;
+use TrailWarehouse\AppBundle\Entity\Size;
 
 /**
  * Product
@@ -36,18 +39,22 @@ class Product
     private $title;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_family", type="integer")
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_family;
+    private $family;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_brand", type="integer")
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Color", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_brand;
+    private $color;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Size", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $size;
 
     /**
      * @var string
@@ -64,24 +71,24 @@ class Product
     private $price;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="vat", type="decimal", precision=5, scale=4)
+     * @ORM\Column(name="stock", type="integer")
      */
-    private $vat;
+    private $stock;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="date_creation", type="datetime")
+     * @ORM\Column(name="visuel", type="string", length=255)
      */
-    private $dateCreation;
+    private $visuel;
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -185,98 +192,122 @@ class Product
     }
 
     /**
-     * Set vat
+     * Set stock
      *
-     * @param string $vat
+     * @param integer $stock
      *
      * @return Product
      */
-    public function setVat($vat)
+    public function setStock($stock)
     {
-        $this->vat = $vat;
+        $this->stock = $stock;
 
         return $this;
     }
 
     /**
-     * Get vat
+     * Get stock
+     *
+     * @return integer
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * Set visuel
+     *
+     * @param string $visuel
+     *
+     * @return Product
+     */
+    public function setVisuel($visuel)
+    {
+        $this->visuel = $visuel;
+
+        return $this;
+    }
+
+    /**
+     * Get visuel
      *
      * @return string
      */
-    public function getVat()
+    public function getVisuel()
     {
-        return $this->vat;
+        return $this->visuel;
     }
 
     /**
-     * Set dateCreation
+     * Set family
      *
-     * @param \DateTime $dateCreation
+     * @param \TrailWarehouse\AppBundle\Entity\Family $family
      *
      * @return Product
      */
-    public function setDateCreation($dateCreation)
+    public function setFamily(Family $family)
     {
-        $this->dateCreation = $dateCreation;
+        $this->family = $family;
 
         return $this;
     }
 
     /**
-     * Get dateCreation
+     * Get family
      *
-     * @return \DateTime
+     * @return \TrailWarehouse\AppBundle\Entity\Family
      */
-    public function getDateCreation()
+    public function getFamily()
     {
-        return $this->dateCreation;
+        return $this->family;
     }
 
     /**
-     * Set idFamily
+     * Set color
      *
-     * @param integer $idFamily
+     * @param \TrailWarehouse\AppBundle\Entity\Color $color
      *
      * @return Product
      */
-    public function setIdFamily($idFamily)
+    public function setColor(Color $color)
     {
-        $this->id_family = $idFamily;
+        $this->color = $color;
 
         return $this;
     }
 
     /**
-     * Get idFamily
+     * Get color
      *
-     * @return integer
+     * @return \TrailWarehouse\AppBundle\Entity\Color
      */
-    public function getIdFamily()
+    public function getColor()
     {
-        return $this->id_family;
+        return $this->color;
     }
 
     /**
-     * Set idBrand
+     * Set size
      *
-     * @param integer $idBrand
+     * @param \TrailWarehouse\AppBundle\Entity\Size $size
      *
      * @return Product
      */
-    public function setIdBrand($idBrand)
+    public function setSize(Size $size)
     {
-        $this->id_brand = $idBrand;
+        $this->size = $size;
 
         return $this;
     }
 
     /**
-     * Get idBrand
+     * Get size
      *
-     * @return integer
+     * @return \TrailWarehouse\AppBundle\Entity\Size
      */
-    public function getIdBrand()
+    public function getSize()
     {
-        return $this->id_brand;
+        return $this->size;
     }
 }

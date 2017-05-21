@@ -3,6 +3,7 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use TrailWarehouse\AppBundle\Entity\Family;
 
 /**
  * Rating
@@ -22,11 +23,12 @@ class Rating
     private $id;
 
     /**
-     * @var int
+     * @var Family
      *
-     * @ORM\Column(name="id_product", type="integer")
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $idProduct;
+    private $family;
 
     /**
      * @var string
@@ -58,30 +60,6 @@ class Rating
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set idProduct
-     *
-     * @param integer $idProduct
-     *
-     * @return Rating
-     */
-    public function setIdProduct($idProduct)
-    {
-        $this->idProduct = $idProduct;
-
-        return $this;
-    }
-
-    /**
-     * Get idProduct
-     *
-     * @return int
-     */
-    public function getIdProduct()
-    {
-        return $this->idProduct;
     }
 
     /**
@@ -154,5 +132,30 @@ class Rating
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+
+    /**
+     * Set family
+     *
+     * @param Family $family
+     *
+     * @return Rating
+     */
+    public function setFamily(Family $family)
+    {
+        $this->family = $family;
+
+        return $this;
+    }
+
+    /**
+     * Get family
+     *
+     * @return Family
+     */
+    public function getFamily()
+    {
+        return $this->family;
     }
 }

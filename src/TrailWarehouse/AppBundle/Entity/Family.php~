@@ -28,6 +28,11 @@ class Family
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Brand")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $brand;
 
     /**
      * Get id
@@ -61,5 +66,29 @@ class Family
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set brand
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Brand $brand
+     *
+     * @return Family
+     */
+    public function setBrand(\TrailWarehouse\AppBundle\Entity\Brand $brand)
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    /**
+     * Get brand
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Brand
+     */
+    public function getBrand()
+    {
+        return $this->brand;
     }
 }
