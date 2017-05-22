@@ -1,7 +1,7 @@
 {
   "name": "trailwarehouse",
   "version": "1.0.0",
-  "description": "Trail Warehouse e-shop made with Symfony",
+  "description": "Trail Warehouse e-shop made with Symfony 3.2.6",
   "main": "index.js",
   "directories": {
     "test": "tests"
