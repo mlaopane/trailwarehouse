@@ -2,3 +2,8 @@ app_home:
     path:     /
     defaults:
         _controller: TrailWarehouseAppBundle:Home:index
+
+app_home_error:
+    path:     /{slug}
+    defaults:
+        _controller: TrailWarehouseAppBundle:Error:index

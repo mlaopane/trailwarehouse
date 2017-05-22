@@ -24,9 +24,23 @@ class Size
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="value", type="string", length=100)
      */
-    private $name;
+    private $value;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="unit", type="string", length=50, nullable=true)
+     */
+    private $unit;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="unit_shortcut", type="string", length=5, nullable=true)
+     */
+    private $unitShortcut;
 
 
     /**
@@ -61,5 +75,77 @@ class Size
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set value
+     *
+     * @param string $value
+     *
+     * @return Size
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set unit
+     *
+     * @param string $unit
+     *
+     * @return Size
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return string
+     */
+    public function getUnit()
+    {
+        return $this->unit;
+    }
+
+    /**
+     * Set unitShortcut
+     *
+     * @param string $unitShortcut
+     *
+     * @return Size
+     */
+    public function setUnitShortcut($unitShortcut)
+    {
+        $this->unitShortcut = $unitShortcut;
+
+        return $this;
+    }
+
+    /**
+     * Get unitShortcut
+     *
+     * @return string
+     */
+    public function getUnitShortcut()
+    {
+        return $this->unitShortcut;
     }
 }

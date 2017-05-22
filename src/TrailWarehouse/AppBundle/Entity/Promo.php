@@ -31,7 +31,7 @@ class Promo
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="decimal", precision=5, scale=4)
+     * @ORM\Column(name="value", type="decimal", precision=3, scale=2)
      */
     private $value;
 

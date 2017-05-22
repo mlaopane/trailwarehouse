@@ -1,3 +1,5 @@
+// main: style.less
+
 /* Custom */
 
 @ratio: (16 / 9);
@@ -6,6 +8,7 @@
 /* Page */
 
 #page {
+  background: hsla(200, 10%, 20%, 0.1);
   color: @blackgrey;
   font-family: @main-font, 'Helvetica', 'Times New Roman', sans-serif;
   min-height: (@width-sm * @ratio);
@@ -19,4 +22,8 @@
     min-height: (@width-xl * @ratio_inverse);
   }
   transition: .2s;
+}
+
+.page-children {
+  background: darken(white, 2%);
 }

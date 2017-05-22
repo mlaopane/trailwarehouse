@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use TrailWarehouse\AppBundle\Entity\Member;
 use TrailWarehouse\AppBundle\Entity\Product;
+use TrailWarehouse\AppBundle\Entity\OrderProduct;
 
 /**
  * Order
@@ -38,6 +39,13 @@ class Order
      * @ORM\Column(name="date_creation", type="datetime")
      */
     private $dateCreation;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="TrailWarehouse\AppBundle\Entity\OrderProduct", mappedBy="order")
+     */
+    private $orderProducts;
 
 
     /**
@@ -96,6 +104,48 @@ class Order
     public function getMember()
     {
         return $this->member;
+    }
+
+    /**
+    * Add orderProduct
+    *
+    * @param OrderProduct
+    */
+    public function addOrderProduct(OrderProduct $orderProduct)
+    {
+        $this->orderProducts[] = $orderProduct;
+
+        return $this;
+    }
+
+    /**
+    * Remove orderProduct
+    *
+    * @param OrderProduct $orderProduct
+    */
+    public function removeOrderProduct(OrderProduct $orderProduct)
+    {
+        $this->orderProducts->removeElement($orderProduct);
+
+        return $this;
+    }
+
+    /**
+    * Get orderProducts
+    *
+    * @return ArrayCollection
+    */
+    public function getOrderProducts()
+    {
+        return $this->orderProducts;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->orderProducts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 }

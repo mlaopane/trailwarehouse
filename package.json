@@ -9,13 +9,16 @@
   "scripts": {
     "less": "lessc web/less/style.less web/css/style.css",
     "server": "php bin/console server:run",
+    "cache": "php bin/console cache:clear",
     "database": "php bin/console doctrine:database:create",
     "entity": "php bin/console doctrine:generate:entity",
     "entities": "php bin/console doctrine:generate:entities TrailWarehouse",
     "schema-dump": "php bin/console doctrine:schema:update --dump-sql",
     "schema-force": "php bin/console doctrine:schema:update --force",
     "bundle": "php bin/console generate:bundle",
-    "controller": "php bin/console generate:controller"
+    "controller": "php bin/console generate:controller",
+    "fixtures": "php bin/console doctrine:fixtures:load",
+    "dql": "php bin/console doctrine:query:dql"
   },
   "repository": {
     "type": "git",

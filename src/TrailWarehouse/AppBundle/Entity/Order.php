@@ -140,4 +140,12 @@ class Order
         return $this->orderProducts;
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->orderProducts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }

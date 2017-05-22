@@ -17,3 +17,8 @@ app_client_signout:
     path:     /deconnexion
     defaults:
         _controller: TrailWarehouseAppBundle:Client:signout
+
+app_client_error:
+    path:     /{slug}
+    defaults:
+        _controller: TrailWarehouseAppBundle:Error:index

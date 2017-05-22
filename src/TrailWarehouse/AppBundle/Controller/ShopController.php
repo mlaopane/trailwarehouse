@@ -12,7 +12,11 @@ class ShopController extends Controller
    */
   public function indexAction()
   {
-    $data = [];
+    $manager = $this->getDoctrine()->getManager();
+    $brands = $manager->getRepository('TrailWarehouseAppBundle:Brand')->findAll(['brand' => 'asc']);
+    $data = [
+      'brands' => $brands,
+    ];
     return $this->render('TrailWarehouseAppBundle:Shop:index.html.twig', $data);
   }
 
@@ -34,11 +38,25 @@ class ShopController extends Controller
    */
   public function categoryAction($category)
   {
-    $data['category'] = $category;
-
-    $products = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Product')->findAll();
-    $data['products'] = $products;
-
+    $category_not_found = true;
+    $categories = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Category')->findAll();
+    foreach ($categories as $key => $db_category) {
+      if ($db_category->getName() == $category) {
+        $category_not_found = false;
+        break;
+      }
+    }
+    if ($category_not_found) {
+      return $this->redirectToRoute('app_shop');
+    }
+    $db_category = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Category')
+        ->findOneBy(['name' => $category]);
+    $db_families = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Family')
+      ->findAll();
+    $data = [
+      'category' => $db_category,
+      'families' => $db_families,
+    ];
     return $this->render('TrailWarehouseAppBundle:Shop:category.html.twig', $data);
   }
 }

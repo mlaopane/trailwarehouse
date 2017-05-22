@@ -4,6 +4,11 @@ app_shop:
         _controller: TrailWarehouseAppBundle:Shop:index
 
 app_shop_category:
-    path:     /{category}
+    path:     /categorie-{category}
     defaults:
         _controller: TrailWarehouseAppBundle:Shop:category
+
+app_shop_error:
+    path:     /{slug}
+    defaults:
+        _controller: TrailWarehouseAppBundle:Error:index

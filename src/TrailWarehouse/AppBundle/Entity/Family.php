@@ -39,7 +39,7 @@ class Family
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Category", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Category")
      */
     private $categories;
 

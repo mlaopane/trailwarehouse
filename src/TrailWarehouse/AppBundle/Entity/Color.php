@@ -28,6 +28,13 @@ class Color
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="string", length=7)
+     */
+    private $value;
+
 
     /**
      * Get id
@@ -61,5 +68,29 @@ class Color
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set value
+     *
+     * @param string $value
+     *
+     * @return Color
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 }

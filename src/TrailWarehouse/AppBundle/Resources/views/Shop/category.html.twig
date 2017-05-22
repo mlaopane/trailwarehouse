@@ -4,7 +4,7 @@
 
 
 {% block title %}
-  {{ parent() }} : {{ category | capitalize }}
+  {{ parent() }} : {{ category.name | capitalize }}
 {% endblock %}
 
 
@@ -17,24 +17,46 @@
       <a href="{{ path('app_shop') }}">Boutique</a>
     </li>
     <li class="breadcrumb-item active">
-      <a href="{{ path('app_shop_category', {category: category}) }}">{{ category | capitalize }}</a>
+      <a href="{{ path('app_shop_category', {category: category.name}) }}">{{ category.name | capitalize }}</a>
     </li>
   </ol>
 {% endblock %}
 
 
 {% block page_main %}
-  <main id="page-category">
-  {% if products is empty %}
-    <div class="ness-block warning">
-      <span>Aucun produit disponible dans {{ category }}</span>
+  <main id="page-category" class="page">
+  {% if families is empty %}
+    <div class="ness-block warning mb-3">
+      <span>Aucun produit disponible dans {{ category.name | capitalize }}</span>
     </div>
   {% else %}
-    <ul class="ness-list">
-    {% for product in products %}
-      {{ product.title }}
-    {% endfor %}
-    </ul>
+    <!-- # Category Families -->
+    <div id="families" class="container px-2 py-3 mb-4">
+      <div class="row justify-content-center">
+        <h2 class="border-bottom mb-4">{{ category.name | capitalize }}</h2>
+      </div>
+      <div class="row px-0 px-lg-3 px-xl-5">
+      {% if families is not empty %}
+        {% for family in families %}
+          {% for f_category in family.categories %}
+            {% if f_category.name == category.name %}
+              <div class="col-12 col-md-6 col-lg-4 col-xl-3 px-xl-1">
+                <h4 class="row justify-content-center">{{ family.name | capitalize }} - {{ family.brand.name | upper }}</h4>
+                <div class="image-container row justify-content-center">
+                  <img src="{{ asset('images/no_picture.png') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}" class="round img-fluid">
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
+      </div>
+    </div>
+    <!-- Category Families # -->
+
+    <!-- Block -->
+    <div class="bg-faded p-3">Test</div>
+    <!-- Block -->
   {% endif %}
-</main>
+  </main>
 {% endblock %}

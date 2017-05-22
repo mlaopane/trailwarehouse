@@ -16,6 +16,7 @@ class LoadBrand implements FixtureInterface
     foreach ($data as $item_name) {
       $item = new Brand();
       $item->setName($item_name);
+      $item->setLogo('images/no_picture.png');
       $manager->persist($item);
     }
     $manager->flush();

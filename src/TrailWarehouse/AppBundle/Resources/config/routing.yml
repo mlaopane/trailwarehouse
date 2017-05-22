@@ -9,3 +9,8 @@ app_shop_root:
 app_client_root:
     resource: "@TrailWarehouseAppBundle/Resources/config/routing_client.yml"
     prefix:   /client
+
+app_error:
+    path:     /{slug}
+    defaults:
+        _controller: TrailWarehouseAppBundle:Error:index
