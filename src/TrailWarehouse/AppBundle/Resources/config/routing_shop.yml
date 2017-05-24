@@ -8,6 +8,11 @@ app_shop_category:
     defaults:
         _controller: TrailWarehouseAppBundle:Shop:category
 
+app_shop_family:
+    path:     /fiche-produit/{family}
+    defaults:
+        _controller: TrailWarehouseAppBundle:Shop:family
+
 app_shop_error:
     path:     /{slug}
     defaults:

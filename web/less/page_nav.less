@@ -1,9 +1,14 @@
+// main: style.less
+
 /* Custom colors */
 @bg-menu-category: @lightgrey;
-@bg-menu-category-hover: darken(@bg-menu-category, 40%);
-@txt-menu-category: lighten(@blackgrey, 3%);
+@bg-menu-category-hover: lighten(@bg-active-category, 4%);
+@bg-menu-category-active: lighten(@bg-active-category, 7%);
+@bg-active-category: lighten(@greenblue, 5%);
+@txt-menu-category: lighten(@blackgrey, 2%);
 @txt-menu-category-hover: @white;
 @border-menu-category: @steelgrey;
+@shadow-category-hover: darken(@bg-menu-category-hover, 20%);
 
 /* Page Navigation */
 
@@ -17,6 +22,7 @@
 #menu-category {
   background: @bg-menu-category;
   padding: 0;
+  transition: .15s;
   ul {
     display: flex;
     flex-flow: row nowrap;
@@ -32,17 +38,30 @@
         border-left-color: @border-menu-category;
         border-left-width: 1px;
       }
-      &:hover {
-        background: @bg-menu-category-hover;
-        border-color: transparent;
-        box-shadow: 0 0 3px 1px @black;
-        a {
-          color: @txt-menu-category-hover;
-        }
-      }
       a {
         color: @txt-menu-category;
         padding: 16px 12px;
+        &.active {
+          background: @bg-active-category;
+          color: white;
+          cursor: default;
+        }
+      }
+      &:hover {
+        z-index: 1;
+        a:not(.active) {
+          background: @bg-menu-category-hover;
+          box-shadow: 0px 0px 6px 1px @shadow-category-hover;
+          color: @txt-menu-category-hover;
+        }
+      }
+      &:active {
+        z-index: 1;
+        a:not(.active) {
+          background: @bg-menu-category-active;
+          box-shadow: 0px 0px 6px 1px @shadow-category-hover;
+          color: @txt-menu-category-hover;
+        }
       }
     }
   }
