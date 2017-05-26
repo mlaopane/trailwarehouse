@@ -1,9 +1,11 @@
 <?php
 
 namespace TrailWarehouse\AppBundle\Repository;
+use TrailWarehouse\AppBundle\Entity\Brand;
 use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Category;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\Entity;
 
 /**
  * FamilyRepository
@@ -13,26 +15,86 @@ use Doctrine\ORM\EntityRepository;
  */
 class FamilyRepository extends EntityRepository
 {
+
   /**
-   * @param {Array(Category)}
-   * @return {Array(Family)}
+   * @param $entity
+   * @return Family ...
    */
-  public function findByCategories(Array $categories) {
+  public function getBy($entity_name, $entity) {
     $builder = $this->_em->createQueryBuilder();
     $builder
       ->select('family')
+      ->addSelect('category')
+      ->addSelect('brand')
       ->from($this->_entityName, 'family')
-      ->innerJoin('family.categories', 'category')
+      ->innerJoin('family.category', 'category')
+      ->innerJoin('family.brand', 'brand')
+      ->where('family.'. $entity_name .' = :entity')
+      ->setParameter('entity', $entity)
     ;
-    foreach ($categories as $index => $category) {
+    return $builder
+      ->getQuery()
+      ->getArrayResult()
+    ;
+  }
+
+  /**
+  * @param string $entity_name
+  * @param Array $entities
+  * @return Family ...
+  */
+  public function getByArray($entity_name, Array $entities) {
+    $builder = $this->_em->createQueryBuilder();
+    $builder
+    ->select('family')
+    ->addSelect('category')
+    ->addSelect('brand')
+    ->from($this->_entityName, 'family')
+    ->innerJoin('family.category', 'category')
+    ->innerJoin('family.brand', 'brand')
+    ;
+    foreach ($entities as $entity) {
       $builder
-        ->orWhere('category.name = ?'. ($index + 1))
-        ->setParameter(($index + 1), $category->getName())
+        ->orWhere('family.'. $entity_name .' = :entity')
+        ->setParameter('entity', $entity)
       ;
     }
     return $builder
-      ->getQuery()
-      ->getResult()
+    ->getQuery()
+    ->getArrayResult()
     ;
   }
+
+  /**
+   * @param Category $category
+   * @return Family ...
+   */
+  public function getByCategory(Category $category) {
+    return $this->getBy('category', $category);
+  }
+
+  /**
+   * @param Brand $brand
+   * @return Family ...
+   */
+  public function getByBrand(Brand $brand) {
+    return $this->getBy('brand', $brand);
+  }
+
+  /**
+   * @param Category ... $categories
+   * @return Family ...
+   */
+  public function getByCategories(Category ...$categories) {
+    return $this->getByArray('category', $categories);
+  }
+
+  /**
+   * @param Brand ... $brands
+   * @return Array (Family)
+   */
+  public function getByBrands(Brand ...$brands) {
+    return $this->getByArray('brand', $brands);
+  }
+
 }

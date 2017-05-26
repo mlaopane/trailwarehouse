@@ -59,13 +59,6 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
-     */
-    private $description;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="price", type="decimal", precision=8, scale=3)
      */
     private $price;
@@ -141,30 +134,6 @@ class Product
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Product
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

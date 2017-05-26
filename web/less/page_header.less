@@ -1,3 +1,7 @@
+// main: style.less
+
+/* ------------------------- */
+
 /* Custom colors */
 
 @txt-brand-trail: darken(@green, 6%);
@@ -59,7 +63,8 @@
   display: flex;
   flex-flow: column;
   align-items: baseline;
-  @media (min-width: @width-sm) {
+  transition: 0.2s;
+  @media (min-width: @width-md) {
     flex-flow: row;
   }
 }
@@ -86,7 +91,6 @@
     display: flex;
     li {
       a {
-        // background: hsla(200, 20%, 15%, 0.15);
         border-radius: 4px;
         color: @lightgrey;
         &:hover {
@@ -103,6 +107,17 @@
           margin: 0 8px 0 0;
         }
       }
+    }
+  }
+  .glyphicon {
+    &:first-child {
+      margin: 0 8px 0 0;
+    }
+    &:last-child {
+      margin: 0 0 0 8px;
+    }
+    &:first-child:last-child {
+      margin: 0;
     }
   }
 }

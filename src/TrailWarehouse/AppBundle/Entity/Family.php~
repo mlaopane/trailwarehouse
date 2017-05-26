@@ -4,7 +4,7 @@ namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use TrailWarehouse\AppBundle\Entity\Category;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Family
@@ -31,26 +31,33 @@ class Family
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+
+    /**
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Brand")
      * @ORM\JoinColumn(nullable=false)
      */
     private $brand;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Category", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Category")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $categories;
-
+    private $category;
 
     /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(name="slug", type="string", length=255)
      *
      */
-    public function __construct()
-    {
-        $this->categories = new ArrayCollection();
-    }
+    private $slug;
+
 
     /**
      * Get id
@@ -87,6 +94,30 @@ class Family
     }
 
     /**
+    * Set description
+    *
+    * @param string $description
+    *
+    * @return Family
+    */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+    * Get description
+    *
+    * @return string
+    */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Set brand
      *
      * @param \TrailWarehouse\AppBundle\Entity\Brand $brand
@@ -111,40 +142,27 @@ class Family
     }
 
     /**
-     * Add category
+     * Set category
      *
-     * @param Category $category
+     * @param \TrailWarehouse\AppBundle\Entity\Category $category
      *
-     * @return this
+     * @return Family
      */
-    public function addCategory(Category $category)
+    public function setCategory(\TrailWarehouse\AppBundle\Entity\Category $category)
     {
-        $this->categories[] = $category;
+        $this->category = $category;
 
         return $this;
     }
 
     /**
-     * Remove category
+     * Get category
      *
-     * @param Category $category
-     *
-     * @return this
+     * @return \TrailWarehouse\AppBundle\Entity\Category
      */
-    public function removeCategory(Category $category)
+    public function getCategory()
     {
-        $this->categories->removeElement($category);
-
-        return $this;
+        return $this->category;
     }
 
-    /**
-     * Get categories
-     *
-     * @return ArrayCollection
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
 }

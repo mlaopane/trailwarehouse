@@ -1,5 +1,7 @@
 // main: style.less
 
+/* ------------ */
+
 /* Custom */
 
 @ratio: (16 / 9);
@@ -10,7 +12,7 @@
 #page {
   background: hsla(200, 10%, 20%, 0.1);
   color: @blackgrey;
-  font-family: @main-font, 'Helvetica', 'Times New Roman', sans-serif;
+  font-family: @main-font, @alt-font, 'Helvetica', 'Times New Roman', sans-serif;
   min-height: (@width-sm * @ratio);
   @media (min-width: @width-md) {
     min-height: (@width-md * @ratio);

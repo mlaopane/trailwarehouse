@@ -1,5 +1,7 @@
 // out: ../css/style.css, compress: true, sourceMap: false
 
+/* ------------------------- */
+
 /* Imports */
 
 @import "../bower_components/ness/less/color.less";
@@ -7,6 +9,7 @@
 @import "glyphicons.less";
 @import "breakpoints.less";
 @import "variables.less";
+@import "colors.less";
 @import "carousels.less";
 @import "page.less";
 @import "page_header.less";
@@ -59,17 +62,6 @@ em {
   font-family: @main-font-italic;
 }
 
-.glyphicon {
-  margin: 0 8px;
-  &:first-child {
-    margin: 0 8px 0 0;
-  }
-  &:last-child {
-    margin: 0 0 0 8px;
-  }
-}
-
-
 .container {
   transition: .2s;
 }
@@ -102,4 +94,10 @@ em {
   bottom: 0;
   background: @blackgrey;
   opacity: 0.75;
+}
+
+.image-container {
+  img {
+    height: 100%; width: 100%;
+  }
 }

@@ -22,7 +22,7 @@ class LoadFamily implements FixtureInterface
       foreach ($brands as $brand) {
         $item = new Family();
         $item->setBrand($brand);
-        $item->addCategory($category);
+        $item->setCategory($category);
         switch ($category->getName()) {
           case 'chaussures':
             $item->setName('Chaussures de trail');

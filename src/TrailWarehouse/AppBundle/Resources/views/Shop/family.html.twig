@@ -26,28 +26,25 @@
 
 {% block page_main %}
   <main id="page-category" class="page">
+
     <!-- # Category Families -->
-    <div id="families" class="container px-2 py-3 mb-4">
-      <div class="row justify-content-center">
-        <h2 class="border-bottom mb-4">{{ family.name | capitalize }}</h2>
-      </div>
+    <div id="families" class="container bg-whitegrey px-2 py-3 mb-4">
       <div class="row px-0 px-lg-3 px-xl-5">
-      {% if products is not empty %}
-        {% for product in products %}
+      {% if product is not null %}
         <div class="family col-12 col-md-6 col-lg-4 col-xl-3 py-2 px-xl-1">
           <h4 class="row justify-content-center">{{ product.title | capitalize }} - {{ product.family.brand.name | upper }}</h4>
           <div class="image-container row justify-content-center">
             <img src="{{ asset('images/no_picture.png') }}" alt="{{ product.title ~ ' - ' ~ product.family.brand.name }}" class="round img-fluid">
           </div>
         </div>
-        {% endfor %}
+      {% else %}
+        <div class="ness-block warning my-3 mx-auto">
+          <span>Aucun produit disponible</span>
+        </div>
+      {% endif %}
       </div>
     </div>
     <!-- Category Families # -->
 
-    <!-- Block -->
-    <div class="bg-faded p-3">Test</div>
-    <!-- Block -->
-  {% endif %}
   </main>
 {% endblock %}

@@ -12,7 +12,12 @@ class LoadBrand implements FixtureInterface
 {
   public function load(ObjectManager $manager)
   {
-    $data = ['merrell', 'new balance', 'vibram', 'salomon', 'inov-8', 'raidlight'];
+    $data = [
+      'merrell',
+      'new balance',
+      'salomon',
+      'vibram',
+    ];
     foreach ($data as $item_name) {
       $item = new Brand();
       $item->setName($item_name);

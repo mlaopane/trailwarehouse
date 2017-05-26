@@ -12,8 +12,9 @@ class ShopController extends Controller
    */
   public function indexAction()
   {
-    $manager = $this->getDoctrine()->getManager();
-    $brands = $manager->getRepository('TrailWarehouseAppBundle:Brand')->findAll(['brand' => 'asc']);
+    $doctrine = $this->getDoctrine();
+    $repo_brand = $doctrine->getRepository('TrailWarehouseAppBundle:Brand');
+    $brands = $repo_brand->findAll(['brand' => 'asc']);
     $data = [
       'brands' => $brands,
     ];
@@ -25,7 +26,9 @@ class ShopController extends Controller
    */
   public function menuAction($active_category = NULL)
   {
-    $categories = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Category')->findAll();
+    $doctrine = $this->getDoctrine();
+    $repo_category = $doctrine->getRepository('TrailWarehouseAppBundle:Category');
+    $categories = $repo_category->findAll();
     $data = [
       'categories' => $categories,
       'active_category' => $active_category,
@@ -40,27 +43,23 @@ class ShopController extends Controller
   public function categoryAction($category)
   {
     $doctrine = $this->getDoctrine();
+    $repo_category = $doctrine->getRepository('TrailWarehouseAppBundle:Category');
+    $repo_family = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
+
+    // Toutes les catégories
     if ($category == 'toutes') {
       $db_category['name'] = 'toutes';
-      $db_families = $doctrine->getRepository('TrailWarehouseAppBundle:Family')->findAll();
+      $db_families = $repo_family->findAll();
     }
+    // Une catégorie spécifique
     else {
-      $category_not_found = true;
-      $db_categories = $doctrine->getRepository('TrailWarehouseAppBundle:Category')->findAll();
-      foreach ($db_categories as $key => $db_category) {
-        if ($db_category->getName() == $category) {
-          $category_not_found = false;
-          break;
-        }
-      }
-      if ($category_not_found) {
+      $db_category = $repo_category->findOneBy(['name' => $category]);
+      if (empty($db_category)) {
         return $this->redirectToRoute('app_shop');
       }
-      $db_category = $doctrine->getRepository('TrailWarehouseAppBundle:Category')
-        ->findOneBy(['name' => $category]);
-      $db_families = $doctrine->getRepository('TrailWarehouseAppBundle:Family')
-        ->findByCategories([$db_category]);
+      $db_families = $repo_family->getByCategory($db_category);
     }
+
     $data = [
       'active_category' => $db_category,
       'families' => $db_families,
@@ -75,8 +74,12 @@ class ShopController extends Controller
   public function familyAction($family)
   {
     $doctrine = $this->getDoctrine();
+    $repository['family'] = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
+    $repository['product'] = $doctrine->getRepository('TrailWarehouseAppBundle:Product');
+
+    // Control if the family exists
     $family_not_found = true;
-    $db_families = $doctrine->getRepository('TrailWarehouseAppBundle:Family')->findAll();
+    $db_families = $repository['family']->findAll();
     foreach ($db_families as $loop_index => $db_family) {
       $dashed_family = str_replace('\'', '-', str_replace(' ', '-', $db_family->getName()));
       $dashed_family = mb_strtolower($dashed_family, 'UTF-8');
@@ -89,10 +92,12 @@ class ShopController extends Controller
     if ($family_not_found) {
       return $this->redirectToRoute('app_shop');
     }
-    $db_products = $doctrine->getRepository('TrailWarehouseAppBundle:Product')->findAll();
+
+    // At this point, the family does exist
+    $db_rand_product = $repository['product']->getOneRand();
     $data = [
       'family' => $family,
-      'products' => $db_products,
+      'product' => $db_rand_product,
     ];
     return $this->render('TrailWarehouseAppBundle:Shop:family.html.twig', $data);
   }

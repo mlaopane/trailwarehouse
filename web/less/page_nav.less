@@ -1,10 +1,12 @@
 // main: style.less
 
+/* ------------------------- */
+
 /* Custom colors */
-@bg-menu-category: @lightgrey;
-@bg-menu-category-hover: lighten(@bg-active-category, 4%);
-@bg-menu-category-active: lighten(@bg-active-category, 7%);
-@bg-active-category: lighten(@greenblue, 5%);
+@bg-menu-category: @whitegrey;
+@bg-menu-category-hover: lighten(@bg-active-category, 3%);
+@bg-menu-category-active: darken(@bg-active-category, 3%);
+@bg-active-category: lighten(@blue, 5%);
 @txt-menu-category: lighten(@blackgrey, 2%);
 @txt-menu-category-hover: @white;
 @border-menu-category: @steelgrey;
@@ -40,6 +42,7 @@
       }
       a {
         color: @txt-menu-category;
+        display: block;
         padding: 16px 12px;
         &.active {
           background: @bg-active-category;
@@ -48,6 +51,7 @@
         }
       }
       &:hover {
+        //border-color: @bg-menu-category-hover;
         z-index: 1;
         a:not(.active) {
           background: @bg-menu-category-hover;

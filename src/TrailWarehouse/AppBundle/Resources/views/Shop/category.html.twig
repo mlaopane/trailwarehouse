@@ -35,34 +35,51 @@
 
 
 {% block page_main %}
+  <!-- # Main -->
   <main id="page-category" class="page">
   {% if families is empty %}
+
+    <!-- # Alert -->
     <div class="ness-block warning mb-3">
       <span>Aucun produit disponible dans {{ active_category.name | capitalize }}</span>
     </div>
+    <!-- Alert # -->
+
   {% else %}
-    <!-- # Category Families -->
-    <div id="families" class="container px-2 py-3 mb-4">
-      <div class="row justify-content-center">
-        <h2 class="border-bottom mb-4">{{ active_category.name | capitalize }}</h2>
+
+    <!-- # Container -->
+    <div id="families-container" class="mb-4">
+
+      <!-- # Category Name -->
+      <div id="category-name" class="row no-gutters justify-content-center px-3 py-4 mb-3">
+        <h2 class="border-bottom">{{ active_category.name | capitalize }}</h2>
       </div>
-      <div class="row px-0 px-lg-3 px-xl-5">
-      {% if families is not empty %}
-        {% for family in families %}
-              <div class="family col-12 col-md-6 col-lg-4 col-xl-3 py-2 px-xl-1">
-                {% set url = family.name | lower | replace({' ':'-', '\'':'-'}) %}
-                <a href="{{ path('app_shop_family', {family: url}) }}">
-                  <h4 class="row justify-content-center">{{ family.name | capitalize }} - {{ family.brand.name | upper }}</h4>
-                  <div class="image-container row justify-content-center">
-                    <img src="{{ asset('images/no_picture.png') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}" class="round img-fluid">
-                  </div>
-                </a>
+      <!-- Category Name # -->
+
+      <div id="families" class="row no-gutters px-0 px-lg-2 px-xl-3 py-3">
+      {% for family in families %}
+        {% set url = family.name | lower | replace({' ':'-', '\'':'-'}) %}
+
+        <!-- # Family -->
+        <div class="family col-12 col-md-6 col-lg-4 col-xl-3 p-2">
+          <div class="card px-2">
+            <a href="{{ path('app_shop_family', {family: url}) }}">
+              <div class="image-container row no-gutters justify-content-center px-2">
+                <img src="{{ asset('images/no_picture.png') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}" class="round img-fluid">
               </div>
-        {% endfor %}
-      {% endif %}
+              <h4 class="card-title row no-gutters justify-content-center px-2">{{ family.name | capitalize }} - {{ family.brand.name | upper }}</h4>
+            </a>
+          </div>
+        </div>
+        <!-- # Family -->
+
+      {% endfor %}
       </div>
     </div>
     <!-- Category Families # -->
+
   {% endif %}
   </main>
+  <!-- # Main # -->
+
 {% endblock %}
