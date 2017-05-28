@@ -28,13 +28,8 @@ class CategoryController extends Controller
     public function getAllAction()
     {
       $repository = $this->getRepository();
-      $db_entities = $repository->findAll();
-      $entities = $this->serializer->serialize($db_entities, 'json');
-      $response = [
-        'status' => empty($entities) ? false : true,
-        'data' => $entities,
-      ];
-      return new JsonResponse($response);
+      $entities = $repository->findAll();
+      return new JsonResponse($this->serialize($entities));
     }
 
     /**
@@ -46,17 +41,7 @@ class CategoryController extends Controller
      */
     public function getAction(Category $category)
     {
-      $category = $this->serialize($category);
-      $response = [
-        'status' => NULL !== $category ? true : false,
-        // 'data' => [
-        //   'id' => $category->getId(),
-        //   'name' => $category->getName(),
-        //   'slug' => $category->getSlug(),
-        // ],
-        'data' => $category,
-      ];
-      return new JsonResponse($response);
+      return new JsonResponse($this->serialize($category));
     }
 
     /**
@@ -66,17 +51,16 @@ class CategoryController extends Controller
      */
     public function addAction()
     {
-      $manager = $this->getManager();
       $entity = new Category();
       if (true) {
-        $response['status'] = false;
+        return new JsonResponse(false);
       }
       else {
-        $response['status'] = true;
+        $manager = $this->getManager();
         $manager->persist($entity);
         $manager->flush();
+        return new JsonResponse(true);
       }
-      return new JsonResponse($response);
     }
 
     /**
@@ -87,15 +71,14 @@ class CategoryController extends Controller
     public function modifyAction(Category $category)
     {
       if (empty($category)) {
-        $response['status'] = false;
+        return new JsonResponse(false);
       }
       else {
-        $response['status'] = true;
         $manager = $this->getManager();
         $manager->persist($category);
         $manager->flush();
+        return new JsonResponse(true);
       }
-      return new JsonResponse($response);
     }
 
     /**
@@ -106,15 +89,14 @@ class CategoryController extends Controller
     public function removeAction(Category $category)
     {
       if (empty($category)) {
-        $response['status'] = false;
+        return new JsonResponse(false);
       }
       else {
-        $response['status'] = true;
         $manager = $this->getManager();
         $manager->remove($category);
         $manager->flush();
+        return new JsonResponse(true);
       }
-      return new JsonResponse($response);
     }
 
     /**
