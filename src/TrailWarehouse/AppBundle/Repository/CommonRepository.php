@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommonRepository extends EntityRepository
 {
+
   /**
    * Get random entities
    *

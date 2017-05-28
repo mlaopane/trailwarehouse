@@ -38,16 +38,16 @@ class Promo
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_start", type="datetime")
+     * @ORM\Column(name="start", type="datetime")
      */
-    private $dateStart;
+    private $start;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_end", type="datetime")
+     * @ORM\Column(name="end", type="datetime")
      */
-    private $dateEnd;
+    private $end;
 
 
     /**
@@ -108,52 +108,52 @@ class Promo
         return $this->value;
     }
 
+
     /**
-     * Set dateStart
+     * Set start
      *
-     * @param \DateTime $dateStart
+     * @param \DateTime $start
      *
      * @return Promo
      */
-    public function setDateStart($dateStart)
+    public function setStart($start)
     {
-        $this->dateStart = $dateStart;
+        $this->start = $start;
 
         return $this;
     }
 
     /**
-     * Get dateStart
+     * Get start
      *
      * @return \DateTime
      */
-    public function getDateStart()
+    public function getStart()
     {
-        return $this->dateStart;
+        return $this->start;
     }
 
     /**
-     * Set dateEnd
+     * Set end
      *
-     * @param \DateTime $dateEnd
+     * @param \DateTime $end
      *
      * @return Promo
      */
-    public function setDateEnd($dateEnd)
+    public function setEnd($end)
     {
-        $this->dateEnd = $dateEnd;
+        $this->end = $end;
 
         return $this;
     }
 
     /**
-     * Get dateEnd
+     * Get end
      *
      * @return \DateTime
      */
-    public function getDateEnd()
+    public function getEnd()
     {
-        return $this->dateEnd;
+        return $this->end;
     }
-
 }

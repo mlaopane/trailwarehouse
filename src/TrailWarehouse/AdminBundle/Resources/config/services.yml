@@ -1,4 +1,0 @@
-services:
-#    trail_warehouse_admin.example:
-#        class: TrailWarehouse\AdminBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]

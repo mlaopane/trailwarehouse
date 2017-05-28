@@ -16,8 +16,8 @@ class LoadPromo implements FixtureInterface
       [
         'code' => 'WELCOME10',
         'value' => 0.10,
-        'start' => new \DateTime('2017-05-23 00:00:00'),
-        'end' => new \DateTime('2018-05-23 00:00:00'),
+        'start' => new \DateTime('2017-06-05 00:00:00'),
+        'end' => new \DateTime('2018-06-05 00:00:00'),
       ],
       [
         'code' => 'SUMMER15',
@@ -36,8 +36,8 @@ class LoadPromo implements FixtureInterface
       $item = (new Promo())
         ->setCode($element['code'])
         ->setValue($element['value'])
-        ->setDateStart($element['start'])
-        ->setDateEnd($element['end'])
+        ->setStart($element['start'])
+        ->setEnd($element['end'])
       ;
       $manager->persist($item);
     }

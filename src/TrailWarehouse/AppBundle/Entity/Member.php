@@ -69,9 +69,9 @@ class Member implements UserInterface
     /**
     * @var \DateTime
     *
-    * @ORM\Column(name="date_creation", type="datetime")
+    * @ORM\Column(name="creation", type="datetime")
     */
-    private $dateCreation;
+    private $creation;
 
     /**
     * @var ArrayCollection
@@ -88,6 +88,28 @@ class Member implements UserInterface
     {
         $this->coordinates = new ArrayCollection();
     }
+
+
+    /* ---------- UserInterface ---------- */
+
+    public function getUsername() {
+        return null;
+    }
+
+    public function getRoles() {
+        return null;
+    }
+
+    public function getSalt() {
+        return null;
+    }
+
+    public function eraseCredentials() {
+        return null;
+    }
+
+
+    /* ---------- Getters & Setters ---------- */
 
     /**
     * Get id
@@ -220,54 +242,6 @@ class Member implements UserInterface
     }
 
     /**
-    * Set dateCreation
-    *
-    * @param \DateTime $dateCreation
-    *
-    * @return Member
-    */
-    public function setDateCreation($dateCreation)
-    {
-        $this->dateCreation = $dateCreation;
-
-        return $this;
-    }
-
-    /**
-    * Get dateCreation
-    *
-    * @return \DateTime
-    */
-    public function getDateCreation()
-    {
-        return $this->dateCreation;
-    }
-
-    /**
-    * Set role
-    *
-    * @param string $role
-    *
-    * @return Member
-    */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-    * Get role
-    *
-    * @return string
-    */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
     * Add coordinate
     *
     * @param Coordinate $coordinate
@@ -298,21 +272,52 @@ class Member implements UserInterface
         return $this->coordinates;
     }
 
-    /* *** UserInterface *** */
+    /**
+     * Set role
+     *
+     * @param string $role
+     *
+     * @return Member
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
 
-    public function getUsername() {
-        return null;
+        return $this;
     }
 
-    public function getRoles() {
-        return null;
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 
-    public function getSalt() {
-        return null;
+    /**
+     * Set creation
+     *
+     * @param \DateTime $creation
+     *
+     * @return Member
+     */
+    public function setCreation($creation)
+    {
+        $this->creation = $creation;
+
+        return $this;
     }
 
-    public function eraseCredentials() {
-        return null;
+    /**
+     * Get creation
+     *
+     * @return \DateTime
+     */
+    public function getCreation()
+    {
+        return $this->creation;
     }
+
 }

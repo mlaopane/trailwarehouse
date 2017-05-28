@@ -38,26 +38,26 @@ class ShopController extends Controller
 
   /**
    * 'app_shop_category'
-   * @param {string} $category
+   * @param {string} $slug
    */
-  public function categoryAction($category)
+  public function categoryAction($slug)
   {
     $doctrine = $this->getDoctrine();
-    $repo_category = $doctrine->getRepository('TrailWarehouseAppBundle:Category');
-    $repo_family = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
+    $repo['category'] = $doctrine->getRepository('TrailWarehouseAppBundle:Category');
+    $repo['family'] = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
 
     // Toutes les catégories
-    if ($category == 'toutes') {
+    if ($slug == 'toutes') {
       $db_category['name'] = 'toutes';
-      $db_families = $repo_family->findAll();
+      $db_families = $repo['family']->findAll();
     }
     // Une catégorie spécifique
     else {
-      $db_category = $repo_category->findOneBy(['name' => $category]);
+      $db_category = $repo['category']->findOneBySlug($slug);
       if (empty($db_category)) {
         return $this->redirectToRoute('app_shop');
       }
-      $db_families = $repo_family->getByCategory($db_category);
+      $db_families = $repo['family']->getByCategory($db_category);
     }
 
     $data = [
@@ -69,35 +69,25 @@ class ShopController extends Controller
 
   /**
    * 'app_shop_family'
-   * @param {string} $family
+   * @param {string} $slug
    */
-  public function familyAction($family)
+  public function familyAction($slug)
   {
     $doctrine = $this->getDoctrine();
     $repository['family'] = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
     $repository['product'] = $doctrine->getRepository('TrailWarehouseAppBundle:Product');
 
     // Control if the family exists
-    $family_not_found = true;
-    $db_families = $repository['family']->findAll();
-    foreach ($db_families as $loop_index => $db_family) {
-      $dashed_family = str_replace('\'', '-', str_replace(' ', '-', $db_family->getName()));
-      $dashed_family = mb_strtolower($dashed_family, 'UTF-8');
-      if ($dashed_family == $family) {
-        $family_not_found = false;
-        $family = $db_family;
-        break;
-      }
-    }
-    if ($family_not_found) {
+    $db_family = $repository['family']->findOneBySlug($slug);
+    if (empty($db_family)) {
       return $this->redirectToRoute('app_shop');
     }
 
     // At this point, the family does exist
-    $db_rand_product = $repository['product']->getOneRand();
+    $db_product = $repository['product']->getOneRand();
     $data = [
-      'family' => $family,
-      'product' => $db_rand_product,
+      'family' => $db_family,
+      'product' => $db_product,
     ];
     return $this->render('TrailWarehouseAppBundle:Shop:family.html.twig', $data);
   }

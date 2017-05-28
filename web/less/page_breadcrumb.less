@@ -3,20 +3,29 @@
 /* Custom Colors */
 
 @bg-breadcrumb: @whitegrey;
-@txt-breadcrumb: lighten(@blackgrey, 3%);
-@txt-breadcrumb-active: hsl(200, 25%, 50%);
+@txt-breadcrumb: @blackgrey;
+@txt-breadcrumb-active: darken(@blue, 10%);
+@txt-breadcrumb-hover: darken(@txt-breadcrumb-active, 3%);
 
 /* Page Breadcrumb */
 
 #page-breadcrumb {
   background: @bg-breadcrumb;
-  color: @txt-breadcrumb;
   padding: 0;
   .breadcrumb-item {
+    a {
+      color: @txt-breadcrumb;
+      font-family: 'Fira Sans Italic';
+    }
+    &:hover {
+      a {
+        color: @txt-breadcrumb-hover;
+      }
+    }
     &.active {
       color: @txt-breadcrumb-active;
       a {
-        font-family: 'Fira Sans Italic';
+        font-family: 'Fira Sans Bold';
         color: @txt-breadcrumb-active;
       }
     }

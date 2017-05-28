@@ -1,7 +1,3 @@
 trail_warehouse_app:
     resource: "@TrailWarehouseAppBundle/Resources/config/routing.yml"
     prefix:   /
-
-trail_warehouse_admin:
-    resource: "@TrailWarehouseAdminBundle/Resources/config/routing.yml"
-    prefix:   /admin

@@ -1,14 +1,22 @@
 app_home_root:
-    resource: "@TrailWarehouseAppBundle/Resources/config/routing_home.yml"
+    resource: "@TrailWarehouseAppBundle/Resources/config/Home/routing.yml"
     prefix:   /
 
+app_admin_root:
+    resource: "@TrailWarehouseAppBundle/Resources/config/Admin/routing.yml"
+    prefix:   /admin
+
 app_shop_root:
-    resource: "@TrailWarehouseAppBundle/Resources/config/routing_shop.yml"
+    resource: "@TrailWarehouseAppBundle/Resources/config/Shop/routing.yml"
     prefix:   /boutique
 
 app_client_root:
-    resource: "@TrailWarehouseAppBundle/Resources/config/routing_client.yml"
+    resource: "@TrailWarehouseAppBundle/Resources/config/Client/routing.yml"
     prefix:   /client
+
+app_api_root:
+    resource: "@TrailWarehouseAppBundle/Resources/config/Api/routing.yml"
+    prefix:   /api
 
 app_error:
     path:     /{slug}

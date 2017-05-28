@@ -4,12 +4,12 @@ app_shop:
         _controller: TrailWarehouseAppBundle:Shop:index
 
 app_shop_category:
-    path:     /categorie-{category}
+    path:     /categorie-{slug}
     defaults:
         _controller: TrailWarehouseAppBundle:Shop:category
 
 app_shop_family:
-    path:     /fiche-produit/{family}
+    path:     /fiche-produit/{slug}
     defaults:
         _controller: TrailWarehouseAppBundle:Shop:family
 

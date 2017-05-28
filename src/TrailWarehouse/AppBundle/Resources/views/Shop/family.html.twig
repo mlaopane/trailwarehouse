@@ -16,9 +16,11 @@
     <li class="breadcrumb-item">
       <a href="{{ path('app_shop') }}">Boutique</a>
     </li>
+    <li class="breadcrumb-item">
+      <a href="{{ path('app_shop_category', { slug : family.category.slug }) }}">{{ family.category.name | capitalize }}</a>
+    </li>
     <li class="breadcrumb-item active">
-      {% set url = family.name | lower | replace({' ':'-', '\'':'-'}) %}
-      <a href="{{ path('app_shop_family', {family: url}) }}">{{ family.name | capitalize }}</a>
+      <a>{{ family.name | capitalize }}</a>
     </li>
   </ol>
 {% endblock %}

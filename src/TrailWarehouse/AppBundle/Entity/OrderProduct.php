@@ -46,6 +46,15 @@ class OrderProduct
      */
     private $quantity;
 
+    /**
+     * @var int $total
+     *
+     * @ORM\Column(name="total", type="integer")
+     */
+    private $total;
+
+
+    /* ---------- Getters & Setters ---------- */
 
     /**
      * Get id
@@ -127,5 +136,30 @@ class OrderProduct
     public function getProduct()
     {
         return $this->product;
+    }
+
+
+    /**
+     * Set total
+     *
+     * @param integer $total
+     *
+     * @return OrderProduct
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * Get total
+     *
+     * @return integer
+     */
+    public function getTotal()
+    {
+        return $this->total;
     }
 }

@@ -34,11 +34,33 @@ class Order
     private $member;
 
     /**
+     * @var int $total
+     *
+     * @ORM\Column(name="total", type="integer")
+     */
+    private $total;
+
+    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_creation", type="datetime")
+     * @ORM\Column(name="creation", type="datetime")
      */
-    private $dateCreation;
+    private $creation;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="sending", type="datetime")
+     */
+    private $sending;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="delivery", type="datetime")
+     */
+    private $delivery;
+
 
     /**
      * @var ArrayCollection
@@ -47,6 +69,8 @@ class Order
      */
     private $orderProducts;
 
+
+    /* ---------- Getters & Setters ---------- */
 
     /**
      * Get id
@@ -148,4 +172,100 @@ class Order
         $this->orderProducts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+
+    /**
+     * Set creation
+     *
+     * @param \DateTime $creation
+     *
+     * @return Order
+     */
+    public function setCreation($creation)
+    {
+        $this->creation = $creation;
+
+        return $this;
+    }
+
+    /**
+     * Get creation
+     *
+     * @return \DateTime
+     */
+    public function getCreation()
+    {
+        return $this->creation;
+    }
+
+    /**
+     * Set sending
+     *
+     * @param \DateTime $sending
+     *
+     * @return Order
+     */
+    public function setSending($sending)
+    {
+        $this->sending = $sending;
+
+        return $this;
+    }
+
+    /**
+     * Get sending
+     *
+     * @return \DateTime
+     */
+    public function getSending()
+    {
+        return $this->sending;
+    }
+
+    /**
+     * Set delivery
+     *
+     * @param \DateTime $delivery
+     *
+     * @return Order
+     */
+    public function setDelivery($delivery)
+    {
+        $this->delivery = $delivery;
+
+        return $this;
+    }
+
+    /**
+     * Get delivery
+     *
+     * @return \DateTime
+     */
+    public function getDelivery()
+    {
+        return $this->delivery;
+    }
+
+    /**
+     * Set total
+     *
+     * @param integer $total
+     *
+     * @return Order
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * Get total
+     *
+     * @return integer
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
 }

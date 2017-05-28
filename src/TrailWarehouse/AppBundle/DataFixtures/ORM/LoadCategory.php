@@ -12,7 +12,13 @@ class LoadCategory implements FixtureInterface
 {
   public function load(ObjectManager $manager)
   {
-    $data = ['chaussures', 'vêtements', 'électronique', 'accessoires'];
+    $data = [
+      'chaussures',
+      'vêtements',
+      'électronique',
+      'accessoires',
+      'fake category',
+    ];
     foreach ($data as $item_name) {
       $item = new Category();
       $item->setName($item_name);

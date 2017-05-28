@@ -52,9 +52,9 @@ class Stat
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_creation", type="datetime")
+     * @ORM\Column(name="creation", type="datetime")
      */
-    private $dateCreation;
+    private $creation;
 
 
     /**
@@ -163,27 +163,28 @@ class Stat
         return $this->isMember;
     }
 
+
     /**
-     * Set dateCreation
+     * Set creation
      *
-     * @param \DateTime $dateCreation
+     * @param \DateTime $creation
      *
      * @return Stat
      */
-    public function setDateCreation($dateCreation)
+    public function setCreation($creation)
     {
-        $this->dateCreation = $dateCreation;
+        $this->creation = $creation;
 
         return $this;
     }
 
     /**
-     * Get dateCreation
+     * Get creation
      *
      * @return \DateTime
      */
-    public function getDateCreation()
+    public function getCreation()
     {
-        return $this->dateCreation;
+        return $this->creation;
     }
 }

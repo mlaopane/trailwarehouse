@@ -28,7 +28,7 @@
       <a href="{{ path('app_shop') }}">Boutique</a>
     </li>
     <li class="breadcrumb-item active">
-      <a href="{{ path('app_shop_category', {category: active_category.name}) }}">{{ active_category.name | capitalize }}</a>
+      <a href="{{ path('app_shop_category', {slug : active_category.name}) }}">{{ active_category.name | capitalize }}</a>
     </li>
   </ol>
 {% endblock %}
@@ -58,12 +58,11 @@
 
       <div id="families" class="row no-gutters px-0 px-lg-2 px-xl-3 py-3">
       {% for family in families %}
-        {% set url = family.name | lower | replace({' ':'-', '\'':'-'}) %}
 
         <!-- # Family -->
         <div class="family col-12 col-md-6 col-lg-4 col-xl-3 p-2">
           <div class="card px-2">
-            <a href="{{ path('app_shop_family', {family: url}) }}">
+            <a href="{{ path('app_shop_family', {slug: family.slug}) }}">
               <div class="image-container row no-gutters justify-content-center px-2">
                 <img src="{{ asset('images/no_picture.png') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}" class="round img-fluid">
               </div>
