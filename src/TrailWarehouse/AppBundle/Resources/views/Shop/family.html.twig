@@ -35,7 +35,13 @@
       {% if product is not null %}
         <div class="family col-12 col-md-6 col-lg-4 col-xl-3 py-2 px-xl-1">
           <h4 class="row justify-content-center">{{ product.family.name | capitalize }} - {{ product.family.brand.name | upper }}</h4>
-          <span class="row justify-content-center">{{ product.color.name | capitalize }} - {{ product.size.value }}</span>
+          <div class="row justify-content-center">{{ product.color.name | capitalize }} - {{ product.size.value }}</div>
+          {% if product.stock <= 0 %}
+            <div class="text-danger">Produit indisponible</div>
+          {% else %}
+            <div class="text-success">En Stock : {{ product.stock }}</div>
+          {% endif %}
+          <span class="text-success">Prix : {{ product.price }}</span>
           <div class="image-container row justify-content-center">
             <img src="{{ asset('images/no_picture.png') }}" alt="{{ product.family.name ~ ' - ' ~ product.family.brand.name }}" class="round img-fluid">
           </div>

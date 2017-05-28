@@ -12,7 +12,6 @@ use TrailWarehouse\AppBundle\Entity\Size;
  *
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\ProductRepository")
- * @ORM\HasLifecycleCallbacks
  */
 class Product
 {
@@ -75,11 +74,11 @@ class Product
     /* ----- Events ----- */
 
     /**
-     * @ORM\PrePersist
+     *
      */
     public function generateRef() {
       $slug['family'] = $this->getFamily()->getSlug();
-      $slug['size'] = $this->getSize()->getValue();
+      $slug['size'] = $this->getSize()->getSlug();
       $slug['color'] = $this->getColor()->getSlug();
       $ref = $slug['family'];
       $ref .= empty($slug['size']) ? '' : '-'.$slug['size'];

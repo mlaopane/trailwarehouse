@@ -59,10 +59,14 @@ class ProductController extends CommonController
         ->setSize($entities['size'])
         ->setPrice($request->request->get('price'))
         ->setStock($request->request->get('stock'))
+        ->generateRef()
       ;
-      $manager = $this->getManager();
-      $manager->persist($entity);
-      $manager->flush();
+      $db_entity = $this->getRepository()->findByRef($entity->getRef());
+      if (empty($db_entity)) {
+        $manager = $this->getManager();
+        $manager->persist($entity);
+        $manager->flush();
+      }
       return new JsonResponse(true);
     }
 
