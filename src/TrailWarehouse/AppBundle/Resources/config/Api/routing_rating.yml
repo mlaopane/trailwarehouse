@@ -1,35 +1,35 @@
-app_api_category_get_all :
+app_api_rating_get_all :
     path                 : /
     methods              : [GET]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Category:getAll
+        _controller      : TrailWarehouseAppBundle:Api/Rating:getAll
 
-app_api_category_get     :
+app_api_rating_get     :
     path                 : /{id}
     methods              : [GET]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Category:get
+        _controller      : TrailWarehouseAppBundle:Api/Rating:get
     requirements         :
         id               : '\d+'
 
-app_api_category_add     :
+app_api_rating_add     :
     path                 : /
     methods              : [POST]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Category:add
+        _controller      : TrailWarehouseAppBundle:Api/Rating:add
 
-app_api_category_modify  :
+app_api_rating_modify  :
     path                 : /{id}
     methods              : [POST]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Category:modify
+        _controller      : TrailWarehouseAppBundle:Api/Rating:modify
     requirements         :
         id               : '\d+'
 
-app_api_category_remove  :
+app_api_rating_remove  :
     path                 : /{id}
     methods              : [DELETE]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Category:remove
+        _controller      : TrailWarehouseAppBundle:Api/Rating:remove
     requirements         :
         id               : '\d+'

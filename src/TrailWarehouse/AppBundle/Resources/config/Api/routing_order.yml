@@ -1,35 +1,35 @@
-app_api_category_get_all :
+app_api_order_get_all :
     path                 : /
     methods              : [GET]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Category:getAll
+        _controller      : TrailWarehouseAppBundle:Api/Order:getAll
 
-app_api_category_get     :
+app_api_order_get     :
     path                 : /{id}
     methods              : [GET]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Category:get
+        _controller      : TrailWarehouseAppBundle:Api/Order:get
     requirements         :
         id               : '\d+'
 
-app_api_category_add     :
+app_api_order_add     :
     path                 : /
     methods              : [POST]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Category:add
+        _controller      : TrailWarehouseAppBundle:Api/Order:add
 
-app_api_category_modify  :
+app_api_order_modify  :
     path                 : /{id}
     methods              : [POST]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Category:modify
+        _controller      : TrailWarehouseAppBundle:Api/Order:modify
     requirements         :
         id               : '\d+'
 
-app_api_category_remove  :
+app_api_order_remove  :
     path                 : /{id}
     methods              : [DELETE]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Category:remove
+        _controller      : TrailWarehouseAppBundle:Api/Order:remove
     requirements         :
         id               : '\d+'

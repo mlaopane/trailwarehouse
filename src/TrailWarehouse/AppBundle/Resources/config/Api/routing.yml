@@ -1,3 +1,51 @@
 app_api_category_root :
-    resource : "@TrailWarehouseAppBundle/Resources/config/Api/routing_category.yml"
-    prefix   : /category
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_category.yml"
+    prefix            : /category
+
+app_api_brand_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_brand.yml"
+    prefix            : /brand
+
+app_api_family_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_family.yml"
+    prefix            : /family
+
+app_api_size_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_size.yml"
+    prefix            : /size
+
+app_api_color_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_color.yml"
+    prefix            : /color
+
+app_api_product_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_product.yml"
+    prefix            : /product
+
+app_api_rate_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_rate.yml"
+    prefix            : /rate
+
+app_api_rating_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_rating.yml"
+    prefix            : /rating
+
+app_api_order_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_order.yml"
+    prefix            : /order
+
+app_api_promo_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_promo.yml"
+    prefix            : /promo
+
+app_api_member_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_member.yml"
+    prefix            : /member
+
+app_api_coordinate_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_coordinate.yml"
+    prefix            : /coordinate
+
+app_api_stat_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_stat.yml"
+    prefix            : /stat
