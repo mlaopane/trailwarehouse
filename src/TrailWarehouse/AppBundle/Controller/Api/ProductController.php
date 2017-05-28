@@ -7,11 +7,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use TrailWarehouse\AppBundle\Entity\Category;
+use TrailWarehouse\AppBundle\Entity\Product;
 use TrailWarehouse\AppBundle\Controller\Api\CommonController;
-use TrailWarehouse\AppBundle\Form\CategoryType;
 
-class CategoryController extends CommonController
+class ProductController extends CommonController
 {
 
     /**
@@ -29,11 +28,11 @@ class CategoryController extends CommonController
     /**
      * GET Category
      *
-     * @param Category $entity
+     * @param Product $entity
      *
      * @return JsonResponse
      */
-    public function getAction(Category $entity)
+    public function getAction(Product $entity)
     {
       return new JsonResponse($this->serialize($entity));
     }
@@ -46,7 +45,21 @@ class CategoryController extends CommonController
     public function addAction(Request $request)
     {
       $entity = $this->getEntity();
-      $entity->setName($request->request->get('name'));
+      $entities = [];
+      $fields = ['family', 'color', 'size'];
+      foreach ($fields as $field) {
+        $entities[$field] = $this->getManager()
+          ->getRepository('TrailWarehouseAppBundle:'. ucfirst($field))
+          ->find($request->request->get($field))
+        ;
+      }
+      $entity
+        ->setFamily($entities['family'])
+        ->setColor($entities['color'])
+        ->setSize($entities['size'])
+        ->setPrice($request->request->get('price'))
+        ->setStock($request->request->get('stock'))
+      ;
       $manager = $this->getManager();
       $manager->persist($entity);
       $manager->flush();
@@ -56,17 +69,16 @@ class CategoryController extends CommonController
     /**
      * POST Category
      *
-     * @param Category $entity
+     * @param Product $entity
      *
      * @return JsonResponse
      */
-    public function modifyAction(Request $request, Category $entity)
+    public function modifyAction(Product $entity)
     {
       if (empty($entity)) {
         return new JsonResponse(false);
       }
       else {
-        $entity->setName($request->request->get('name'));
         $manager = $this->getManager();
         $manager->persist($entity);
         $manager->flush();
@@ -77,11 +89,11 @@ class CategoryController extends CommonController
     /**
      * DELETE Category
      *
-     * @param Category $entity
+     * @param Product $entity
      *
      * @return JsonResponse
      */
-    public function removeAction(Request $request, Category $entity)
+    public function removeAction(Product $entity)
     {
       if (empty($entity)) {
         return new JsonResponse(false);

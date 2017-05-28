@@ -3,17 +3,14 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Color
+ * Size
  *
- * @ORM\Table(name="color")
- * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\ColorRepository")
- * @UniqueEntity("slug")
+ * @ORM\Table(name="size")
+ * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\SizeRepository")
  */
-class Color
+class Size
 {
     /**
      * @var int
@@ -27,25 +24,24 @@ class Color
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=100, unique=true)
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="value", type="string", length=7)
+     * @ORM\Column(name="value", type="string", length=100)
      */
     private $value;
 
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(name="slug", type="string", length=191, unique=true)
-     *
+     * @ORM\Column(name="unit", type="string", length=50, nullable=true)
      */
-    private $slug;
+    private $unit;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="unit_shortcut", type="string", length=5, nullable=true)
+     */
+    private $unitShortcut;
+
 
     /**
      * Get id
@@ -62,7 +58,7 @@ class Color
      *
      * @param string $name
      *
-     * @return Color
+     * @return Size
      */
     public function setName($name)
     {
@@ -86,7 +82,7 @@ class Color
      *
      * @param string $value
      *
-     * @return Color
+     * @return Size
      */
     public function setValue($value)
     {
@@ -106,26 +102,50 @@ class Color
     }
 
     /**
-     * Set slug
+     * Set unit
      *
-     * @param string $slug
+     * @param string $unit
      *
-     * @return Color
+     * @return Size
      */
-    public function setSlug($slug)
+    public function setUnit($unit)
     {
-        $this->slug = $slug;
+        $this->unit = $unit;
 
         return $this;
     }
 
     /**
-     * Get slug
+     * Get unit
      *
      * @return string
      */
-    public function getSlug()
+    public function getUnit()
     {
-        return $this->slug;
+        return $this->unit;
+    }
+
+    /**
+     * Set unitShortcut
+     *
+     * @param string $unitShortcut
+     *
+     * @return Size
+     */
+    public function setUnitShortcut($unitShortcut)
+    {
+        $this->unitShortcut = $unitShortcut;
+
+        return $this;
+    }
+
+    /**
+     * Get unitShortcut
+     *
+     * @return string
+     */
+    public function getUnitShortcut()
+    {
+        return $this->unitShortcut;
     }
 }

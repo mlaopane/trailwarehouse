@@ -3,17 +3,14 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Category
+ * Brand
  *
- * @ORM\Table(name="category")
- * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\CategoryRepository")
- * @UniqueEntity("name")
+ * @ORM\Table(name="brand")
+ * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\BrandRepository")
  */
-class Category
+class Brand
 {
     /**
      * @var int
@@ -27,18 +24,16 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=100, unique=true)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(name="slug", type="string", length=191, unique=true)
-     *
+     * @ORM\Column(name="logo", type="string", length=255)
      */
-    private $slug;
+    private $logo;
 
 
     /**
@@ -56,7 +51,7 @@ class Category
      *
      * @param string $name
      *
-     * @return Category
+     * @return Brand
      */
     public function setName($name)
     {
@@ -76,26 +71,26 @@ class Category
     }
 
     /**
-     * Set slug
+     * Set logo
      *
-     * @param string $slug
+     * @param string $logo
      *
-     * @return Category
+     * @return Brand
      */
-    public function setSlug($slug)
+    public function setLogo($logo)
     {
-        $this->slug = $slug;
+        $this->logo = $logo;
 
         return $this;
     }
 
     /**
-     * Get slug
+     * Get logo
      *
      * @return string
      */
-    public function getSlug()
+    public function getLogo()
     {
-        return $this->slug;
+        return $this->logo;
     }
 }

@@ -40,6 +40,23 @@ class CommonRepository extends EntityRepository
     return $this->createQueryBuilder('entity')
       ->addSelect('RAND() as HIDDEN rand')
       ->addOrderBy('rand')
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getOneOrNullResult();
+  }
+
+  /**
+   * Get one random entity by
+   *
+   * @return Entity
+   */
+  public function getOneRandBy($field, $value) {
+    return $this->createQueryBuilder('entity')
+      ->addSelect('RAND() as HIDDEN rand')
+      ->where('entity.'.$field.' = :value')
+      ->setParameter('value', $value)
+      ->addOrderBy('rand')
+      ->setMaxResults(1)
       ->getQuery()
       ->getOneOrNullResult();
   }

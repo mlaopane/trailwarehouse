@@ -84,7 +84,7 @@ class ShopController extends Controller
     }
 
     // At this point, the family does exist
-    $db_product = $repository['product']->getOneRand();
+    $db_product = $repository['product']->getOneRandBy('family', $db_family);
     $data = [
       'family' => $db_family,
       'product' => $db_product,

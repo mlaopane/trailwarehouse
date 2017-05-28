@@ -24,13 +24,11 @@ class CategoryRepository extends CommonRepository
   }
 
   public function getAll() {
-    $builder = $this->_em->createQueryBuilder();
-    $builder
+    return $this->_em->createQueryBuilder()
       ->select('category')
       ->from($this->_entityName, 'category')
       ->getQuery()
       ->getArrayResult()
     ;
-    dump($builder->getQuery());
   }
 }
