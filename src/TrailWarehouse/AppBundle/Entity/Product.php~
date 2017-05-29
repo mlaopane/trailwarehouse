@@ -71,6 +71,23 @@ class Product
     private $visuel;
 
 
+    /* ----- Events ----- */
+
+    /**
+     *
+     */
+    public function generateRef() {
+      $slug['family'] = $this->getFamily()->getSlug();
+      $slug['size'] = $this->getSize()->getSlug();
+      $slug['color'] = $this->getColor()->getSlug();
+      $ref = $slug['family'];
+      $ref .= empty($slug['size']) ? '' : '-'.$slug['size'];
+      $ref .= empty($slug['color']) ? '' : '-'.$slug['color'];
+      $this->setRef($ref);
+    }
+
+    /* ----- Getters & Setters ----- */
+
     /**
      * Get id
      *

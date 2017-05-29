@@ -3,12 +3,15 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Size
  *
  * @ORM\Table(name="size")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\SizeRepository")
+ * @UniqueEntity("value")
  */
 class Size
 {
@@ -24,7 +27,7 @@ class Size
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=100)
+     * @ORM\Column(name="value", type="string", length=100, unique=true)
      */
     private $value;
 
@@ -41,6 +44,15 @@ class Size
      * @ORM\Column(name="unit_shortcut", type="string", length=5, nullable=true)
      */
     private $unitShortcut;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"value"})
+     * @ORM\Column(name="slug", type="string", length=191, unique=true)
+     *
+     */
+    private $slug;
 
 
     /**

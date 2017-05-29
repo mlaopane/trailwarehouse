@@ -74,9 +74,12 @@ class Product
     /* ----- Events ----- */
 
     /**
+     * Generate ref
      *
+     * @return Product
      */
-    public function generateRef() {
+    public function generateRef()
+    {
       $slug['family'] = $this->getFamily()->getSlug();
       $slug['size'] = $this->getSize()->getSlug();
       $slug['color'] = $this->getColor()->getSlug();
@@ -84,6 +87,8 @@ class Product
       $ref .= empty($slug['size']) ? '' : '-'.$slug['size'];
       $ref .= empty($slug['color']) ? '' : '-'.$slug['color'];
       $this->setRef($ref);
+
+      return $this;
     }
 
     /* ----- Getters & Setters ----- */

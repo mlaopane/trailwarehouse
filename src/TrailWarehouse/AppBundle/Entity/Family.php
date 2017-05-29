@@ -188,4 +188,19 @@ class Family
     {
         return $this->slug;
     }
+
+    /**
+     * Generate & Set the slug
+     *
+     * @return Family
+     */
+    public function generateSlug()
+    {
+      $slugs['family'] = $this->getName();
+      $slugs['brand'] = $this->getBrand()->getName();
+      $slug = $slugs['family'].'-'.$slugs['brand'];
+      $this->setSlug($slug);
+
+      return $this;
+    }
 }
