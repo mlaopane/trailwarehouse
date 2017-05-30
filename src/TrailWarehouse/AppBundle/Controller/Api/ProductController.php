@@ -61,13 +61,12 @@ class ProductController extends CommonController
         ->setStock($request->request->get('stock'))
         ->generateRef()
       ;
-      $db_entity = $this->getRepository()->findByRef($entity->getRef());
-      if (empty($db_entity)) {
-        $manager = $this->getManager();
-        $manager->persist($entity);
-        $manager->flush();
+      $entity_not_found = empty($db_entity = $this->getRepository()->findByRef($entity->getRef()));
+      if ($entity_not_found) {
+        $this->persistOne($entity);
+        return new JsonResponse(true);
       }
-      return new JsonResponse(true);
+      return new JsonResponse(false);
     }
 
     /**
@@ -79,24 +78,28 @@ class ProductController extends CommonController
      */
     public function modifyAction(Request $request, int $id)
     {
-      $entity = $this->getRepository()->find($id);
-      if (empty($entity)) {
+      $entity_not_found = empty($entity = $this->getRepository()->find($id));
+      // If entity not found => Do nothing
+      if ($entity_not_found) {
         return new JsonResponse(false);
       }
+      // Else...
       else {
+        // Loop over the POST data
         foreach ($request->request as $field => $value) {
           $field = ucfirst($field);
-          $method = 'set'.$field;
-          if ($field == 'Family' OR $field == 'Color' OR $field == 'Size') {
-            $repository = $this->getManager()->getRepository('TrailWarehouseAppBundle:'.$field);
-            $value = $repository->find($value);
+          $set = 'set'.$field;
+          // If the provided field match with a setter
+          if (method_exists($this, $set)) {
+            // If the field is an entity
+            if ($field == 'Family' OR $field == 'Color' OR $field == 'Size') {
+              $value = $this->getManager()->getRepository('TrailWarehouseAppBundle:'.$field)->find($value);
+            }
+            $entity->$set($value); // Using the setter
           }
-          $entity->$method($value);
         }
-        $entity->generateRef();
-        $manager = $this->getManager();
-        $manager->persist($entity);
-        $manager->flush();
+        $entity->generateRef(); // Update the ref
+        $this->persistOne($entity);
         return new JsonResponse(true);
       }
     }
@@ -104,19 +107,18 @@ class ProductController extends CommonController
     /**
      * DELETE Category
      *
-     * @param Product $entity
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function removeAction(Product $entity)
+    public function removeAction(int $id)
     {
-      if (empty($entity)) {
+      $entity_not_found = empty($entity = $this->getRepository()->find($id));
+      if ($entity_not_found) {
         return new JsonResponse(false);
       }
       else {
-        $manager = $this->getManager();
-        $manager->remove($entity);
-        $manager->flush();
+        $this->removeOne($entity);
         return new JsonResponse(true);
       }
     }

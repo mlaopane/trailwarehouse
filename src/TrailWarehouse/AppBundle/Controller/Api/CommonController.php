@@ -90,5 +90,33 @@ abstract class CommonController extends Controller
     protected function getEntity() {
       return $this->entity;
     }
-    
+
+    /**
+     * @access protected
+     *
+     * @param $entity
+     *
+     * @return this
+     */
+    protected function persistOne($entity) {
+      $manager = $this->getManager();
+      $manager->persist($entity);
+      $manager->flush();
+      return $this;
+    }
+
+    /**
+     * @access protected
+     *
+     * @param $entity
+     *
+     * @return this
+     */
+    protected function removeOne($entity) {
+      $manager = $this->getManager();
+      $manager->remove($entity);
+      $manager->flush();
+      return $this;
+    }
+
 }
