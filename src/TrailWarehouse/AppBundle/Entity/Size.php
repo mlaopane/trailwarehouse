@@ -66,30 +66,6 @@ class Size
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Size
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Set value
      *
      * @param string $value

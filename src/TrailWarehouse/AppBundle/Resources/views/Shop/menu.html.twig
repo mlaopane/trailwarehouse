@@ -4,7 +4,7 @@
       {% if active_category is not null and active_category.name == 'toutes' %}
       class="active"
       {% else %}
-      href="{{ path('app_shop_category', {"slug": 'toutes'}) }}"
+      href="{{ path('app_shop_categories') }}"
       {% endif %}
     >
       Toutes

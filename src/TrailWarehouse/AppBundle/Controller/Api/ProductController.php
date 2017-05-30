@@ -13,32 +13,32 @@ use TrailWarehouse\AppBundle\Controller\Api\CommonController;
 class ProductController extends CommonController
 {
 
-    /**
-     * GET All Categories
-     *
-     * @return JsonResponse
-     */
-    public function getAllAction()
-    {
-      $repository = $this->getRepository();
-      $entities = $repository->findAll();
-      return new JsonResponse($this->serialize($entities));
-    }
+  /**
+   * getBy
+   * @param int family
+   * @param int color
+   * @param int size
+   */
+   public function getByAction(int $family, int $color, int $size)
+   {
+     $args_name = ['family', 'color', 'size'];
+     $ids = func_get_args();
+
+    foreach ($ids as $i => $id) {
+      $field = $args_name[$i];
+      $args[$field] = $this->getManager()
+        ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
+        ->find($id)
+      ;
+     }
+     $response = $this->getRepository()->getBy($args);
+     return new JsonResponse($response);
+   }
 
     /**
-     * GET Category
+     * Add Category
      *
-     * @param Product $entity
-     *
-     * @return JsonResponse
-     */
-    public function getAction(Product $entity)
-    {
-      return new JsonResponse($this->serialize($entity));
-    }
-
-    /**
-     * PUT Category
+     * [POST]
      *
      * @return JsonResponse
      */
@@ -77,12 +77,23 @@ class ProductController extends CommonController
      *
      * @return JsonResponse
      */
-    public function modifyAction(Product $entity)
+    public function modifyAction(Request $request, int $id)
     {
+      $entity = $this->getRepository()->find($id);
       if (empty($entity)) {
         return new JsonResponse(false);
       }
       else {
+        foreach ($request->request as $field => $value) {
+          $field = ucfirst($field);
+          $method = 'set'.$field;
+          if ($field == 'Family' OR $field == 'Color' OR $field == 'Size') {
+            $repository = $this->getManager()->getRepository('TrailWarehouseAppBundle:'.$field);
+            $value = $repository->find($value);
+          }
+          $entity->$method($value);
+        }
+        $entity->generateRef();
         $manager = $this->getManager();
         $manager->persist($entity);
         $manager->flush();

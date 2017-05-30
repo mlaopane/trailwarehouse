@@ -2,5 +2,3 @@ services:
 #    app.example:
 #        class: TrailWarehouse\AppBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
-    tw_app.string:
-        class: TrailWarehouse\AppBundle\Services\TWString

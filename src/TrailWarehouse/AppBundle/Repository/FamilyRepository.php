@@ -17,10 +17,9 @@ class FamilyRepository extends CommonRepository
 {
 
   /**
-   * @param $entity
    * @return Family ...
    */
-  public function getBy($entity_name, $entity) {
+  public function getAll() {
     $builder = $this->_em->createQueryBuilder();
     $builder
       ->select('family')
@@ -29,10 +28,30 @@ class FamilyRepository extends CommonRepository
       ->from($this->_entityName, 'family')
       ->innerJoin('family.category', 'category')
       ->innerJoin('family.brand', 'brand')
-      ->where('family.'. $entity_name .' = :entity')
-      ->setParameter('entity', $entity)
     ;
     return $builder
+      ->getQuery()
+      ->getArrayResult()
+    ;
+  }
+
+  /**
+   * @param string $field
+   * @param mixed $value
+   *
+   * @return Family ...
+   */
+  public function getBy($field, $value) {
+    $builder = $this->_em->createQueryBuilder();
+    return $builder
+      ->select('family')
+      ->addSelect('category')
+      ->addSelect('brand')
+      ->from($this->_entityName, 'family')
+      ->innerJoin('family.category', 'category')
+      ->innerJoin('family.brand', 'brand')
+      ->where('family.'. $field .' = :'. $field)
+      ->setParameter($field, $value)
       ->getQuery()
       ->getArrayResult()
     ;

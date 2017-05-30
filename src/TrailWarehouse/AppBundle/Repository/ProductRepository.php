@@ -2,6 +2,7 @@
 
 namespace TrailWarehouse\AppBundle\Repository;
 use TrailWarehouse\AppBundle\Entity\Product;
+use Doctrine\ORM\Query;
 
 /**
  * ProductRepository
@@ -11,4 +12,71 @@ use TrailWarehouse\AppBundle\Entity\Product;
  */
 class ProductRepository extends CommonRepository
 {
+  /**
+   * Get all Entities
+   *
+   * @return Array of arrays
+   */
+  public function getAll() {
+    return $this->getBuilder()
+      ->getQuery()
+      ->getArrayResult()
+    ;
+  }
+
+  /**
+   * Get one Entity
+   *
+   * @return Array
+   */
+  public function getOneBy($field, $value) {
+    return $this->getBuilder()
+      ->where('entity.'.$field.' = :value')
+      ->setParameter('value', $value)
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getOneOrNullResult(Query::HYDRATE_ARRAY)
+    ;
+  }
+
+  /**
+   * Get Entities by parameters
+   *
+   * @param Array $parameters
+   *
+   * @return Array of arrays
+   */
+  public function getBy(Array $parameters)
+  {
+    $builder = $this->getBuilder();
+    foreach ($parameters as $field => $value) {
+      $builder
+        ->andWhere('entity.'. $field .' = :'. $field)
+        ->setParameter($field, $value)
+      ;
+    }
+    return $builder
+      ->getQuery()
+      ->getArrayResult()
+    ;
+  }
+
+  /**
+   * Get Builder
+   *
+   * @return QueryBuilder (with preloaded query elements)
+   */
+  private function getBuilder()
+  {
+    $fields = ['family', 'color', 'size'];
+    $builder = $this->createQueryBuilder('entity');
+    foreach ($fields as $field) {
+      $builder
+        ->addSelect($field)
+        ->innerJoin('entity.'.$field, $field)
+      ;
+    }
+    return $builder;
+  }
+
 }

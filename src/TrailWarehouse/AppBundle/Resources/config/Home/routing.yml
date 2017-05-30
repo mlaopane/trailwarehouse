@@ -6,19 +6,14 @@ app_home:
 app_home_contact:
     path:     /nous-contacter
     defaults:
-        _controller: TrailWarehouseAppBundle:Home:index
+        _controller: TrailWarehouseAppBundle:Home:contact
 
 app_home_about:
     path:     /a-propos-de-trailwarehouse
     defaults:
-        _controller: TrailWarehouseAppBundle:Home:index
+        _controller: TrailWarehouseAppBundle:Home:about
 
 app_home_mentions:
     path:     /mentions-legales
     defaults:
         _controller: TrailWarehouseAppBundle:Home:mentions
-
-app_home_error:
-    path:     /{slug}
-    defaults:
-        _controller: TrailWarehouseAppBundle:Error:index

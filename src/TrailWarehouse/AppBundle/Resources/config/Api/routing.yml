@@ -1,51 +1,51 @@
 app_api_category_root :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_category.yml"
-    prefix            : /category
+    prefix            : /categories
 
 app_api_brand_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_brand.yml"
-    prefix            : /brand
+    prefix            : /brands
 
 app_api_family_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_family.yml"
-    prefix            : /family
+    prefix            : /families
 
 app_api_size_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_size.yml"
-    prefix            : /size
+    prefix            : /sizes
 
 app_api_color_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_color.yml"
-    prefix            : /color
+    prefix            : /colors
 
 app_api_product_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_product.yml"
-    prefix            : /product
+    prefix            : /products
 
 app_api_rate_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_rate.yml"
-    prefix            : /rate
+    prefix            : /rates
 
 app_api_rating_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_rating.yml"
-    prefix            : /rating
+    prefix            : /ratings
 
 app_api_order_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_order.yml"
-    prefix            : /order
+    prefix            : /orders
 
 app_api_promo_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_promo.yml"
-    prefix            : /promo
+    prefix            : /promos
 
 app_api_member_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_member.yml"
-    prefix            : /member
+    prefix            : /members
 
 app_api_coordinate_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_coordinate.yml"
-    prefix            : /coordinate
+    prefix            : /coordinates
 
 app_api_stat_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_stat.yml"
-    prefix            : /stat
+    prefix            : /stats

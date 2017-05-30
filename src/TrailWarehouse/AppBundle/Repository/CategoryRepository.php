@@ -1,6 +1,7 @@
 <?php
 
 namespace TrailWarehouse\AppBundle\Repository;
+use Doctrine\ORM\Query;
 
 /**
  * CategoryRepository
@@ -10,25 +11,5 @@ namespace TrailWarehouse\AppBundle\Repository;
  */
 class CategoryRepository extends CommonRepository
 {
-  public function getOneBy($field, $value) {
-    return $this->createQueryBuilder('category')
-      ->where('category.'.$field.' = :value')
-      ->setParameter('value', $value)
-      ->getQuery()
-      ->getOneOrNullResult()
-    ;
-  }
 
-  public function get($id) {
-    return $this->getOneBy('id', $id);
-  }
-
-  public function getAll() {
-    return $this->_em->createQueryBuilder()
-      ->select('category')
-      ->from($this->_entityName, 'category')
-      ->getQuery()
-      ->getArrayResult()
-    ;
-  }
 }

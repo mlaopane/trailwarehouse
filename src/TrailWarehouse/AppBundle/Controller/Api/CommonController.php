@@ -10,16 +10,10 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 abstract class CommonController extends Controller
 {
-    private $serializer;
     private $entity_name;
     private $entity;
 
     public function __construct() {
-      // Serializer
-      $normalizers = [new ObjectNormalizer()];
-      $encoders = [new JsonEncoder()];
-      $this->serializer = new Serializer($normalizers, $encoders);
-
       // Entity Name
       $search = [__NAMESPACE__, '\\', 'Controller'];
       $this->entity_name = str_replace($search, '', static::class);
@@ -29,6 +23,30 @@ abstract class CommonController extends Controller
       $this->entity = new $full_entity_name();
     }
 
+
+    /**
+     * GET All Categories
+     *
+     * @return JsonResponse
+     */
+    public function getAllAction()
+    {
+      $response = $this->getRepository()->getAll();
+      return new JsonResponse($response);
+    }
+
+    /**
+     * GET Entity
+     *
+     * @param int $id
+     *
+     * @return JsonResponse
+     */
+    public function getAction(int $id)
+    {
+      $response = $this->getRepository()->get($id);
+      return new JsonResponse($response);
+    }
 
     /**
      * @access protected
@@ -72,13 +90,5 @@ abstract class CommonController extends Controller
     protected function getEntity() {
       return $this->entity;
     }
-
-    /**
-     * @access protected
-     *
-     * @return String encoded object
-     */
-    protected function serialize($object) {
-      return $this->serializer->serialize($object, 'json');
-    }
+    
 }

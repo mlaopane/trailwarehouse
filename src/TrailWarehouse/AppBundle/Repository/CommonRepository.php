@@ -1,6 +1,7 @@
 <?php
 
 namespace TrailWarehouse\AppBundle\Repository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -16,6 +17,37 @@ class CommonRepository extends EntityRepository
 {
 
   /**
+   * Get all Entities
+   *
+   * @return Entity...
+   */
+  public function getAll() {
+    return $this->createQueryBuilder('entity')
+      ->getQuery()
+      ->getArrayResult()
+    ;
+  }
+
+  /**
+   * Get one Entity
+   *
+   * @return Array
+   */
+  public function getOneBy($field, $value) {
+    return $this->createQueryBuilder('entity')
+      ->where('entity.'.$field.' = :value')
+      ->setParameter('value', $value)
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getOneOrNullResult(Query::HYDRATE_ARRAY)
+    ;
+  }
+
+  public function get($id) {
+    return $this->getOneBy('id', $id);
+  }
+
+  /**
    * Get random entities
    *
    * @param int $count : Entities count
@@ -28,7 +60,7 @@ class CommonRepository extends EntityRepository
       ->addOrderBy('rand')
       ->setMaxResults($count)
       ->getQuery()
-      ->getResult();
+      ->getArrayResult();
   }
 
   /**
@@ -42,7 +74,7 @@ class CommonRepository extends EntityRepository
       ->addOrderBy('rand')
       ->setMaxResults(1)
       ->getQuery()
-      ->getOneOrNullResult();
+      ->getOneOrNullResult(Query::HYDRATE_ARRAY);
   }
 
   /**

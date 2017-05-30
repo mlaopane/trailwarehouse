@@ -3,6 +3,8 @@
 namespace TrailWarehouse\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use TrailWarehouse\AppBundle\Entity\Category;
 
 class ShopController extends Controller
 {
@@ -33,37 +35,46 @@ class ShopController extends Controller
       'categories' => $categories,
       'active_category' => $active_category,
     ];
-    return $this->render('TrailWarehouseAppBundle:Shop:categories.html.twig', $data);
+    return $this->render('TrailWarehouseAppBundle:Shop:menu.html.twig', $data);
+  }
+
+  /**
+   * 'app_shop_categories'
+   */
+  public function categoriesAction()
+  {
+    $category['name'] = 'toutes';
+    $doctrine = $this->getDoctrine();
+    $repo['family'] = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
+
+    $db_families = $repo['family']->getAll();
+
+    $data = [
+      'active_category' => $category,
+      'families' => $db_families,
+    ];
+
+    return $this->render('TrailWarehouseAppBundle:Shop:category.html.twig', $data);
   }
 
   /**
    * 'app_shop_category'
    * @param {string} $slug
+   *
+   * @ParamConverter("category", options={"mapping": {"slug": "slug"}})
    */
-  public function categoryAction($slug)
+  public function categoryAction(Category $category, $slug)
   {
     $doctrine = $this->getDoctrine();
-    $repo['category'] = $doctrine->getRepository('TrailWarehouseAppBundle:Category');
     $repo['family'] = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
 
-    // Toutes les catégories
-    if ($slug == 'toutes') {
-      $db_category['name'] = 'toutes';
-      $db_families = $repo['family']->findAll();
-    }
-    // Une catégorie spécifique
-    else {
-      $db_category = $repo['category']->findOneBySlug($slug);
-      if (empty($db_category)) {
-        return $this->redirectToRoute('app_shop');
-      }
-      $db_families = $repo['family']->getByCategory($db_category);
-    }
+    $db_families = $repo['family']->getByCategory($category);
 
     $data = [
-      'active_category' => $db_category,
+      'active_category' => $category,
       'families' => $db_families,
     ];
+
     return $this->render('TrailWarehouseAppBundle:Shop:category.html.twig', $data);
   }
 

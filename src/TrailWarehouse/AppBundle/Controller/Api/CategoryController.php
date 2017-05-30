@@ -15,38 +15,20 @@ class CategoryController extends CommonController
 {
 
     /**
-     * GET All Categories
-     *
-     * @return JsonResponse
-     */
-    public function getAllAction()
-    {
-      $repository = $this->getRepository();
-      $entities = $repository->findAll();
-      return new JsonResponse($this->serialize($entities));
-    }
-
-    /**
-     * GET Category
-     *
-     * @param Category $entity
-     *
-     * @return JsonResponse
-     */
-    public function getAction(Category $entity)
-    {
-      return new JsonResponse($this->serialize($entity));
-    }
-
-    /**
      * PUT Category
      *
      * @return JsonResponse
      */
     public function addAction(Request $request)
     {
+      $category_name = $request->request->get('name');
+      $entity = $this->getRepository()->getOneBy('name', $category_name);
+      if (!empty($entity)) {
+        return new JsonResponse(false);
+      }
       $entity = $this->getEntity();
-      $entity->setName($request->request->get('name'));
+      $entity->setName($category_name);
+
       $manager = $this->getManager();
       $manager->persist($entity);
       $manager->flush();
@@ -56,19 +38,21 @@ class CategoryController extends CommonController
     /**
      * POST Category
      *
-     * @param Category $entity
+     * @param Request $request
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function modifyAction(Request $request, Category $entity)
+    public function modifyAction(Request $request, int $id)
     {
+      $category_name = $request->request->get('name');
+      $entity = $this->getRepository()->findOneBy('name', $category_name);
       if (empty($entity)) {
         return new JsonResponse(false);
       }
       else {
         $entity->setName($request->request->get('name'));
         $manager = $this->getManager();
-        $manager->persist($entity);
         $manager->flush();
         return new JsonResponse(true);
       }
@@ -77,12 +61,13 @@ class CategoryController extends CommonController
     /**
      * DELETE Category
      *
-     * @param Category $entity
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function removeAction(Request $request, Category $entity)
+    public function removeAction(int $id)
     {
+      $entity = $this->getRepository()->find($id);
       if (empty($entity)) {
         return new JsonResponse(false);
       }

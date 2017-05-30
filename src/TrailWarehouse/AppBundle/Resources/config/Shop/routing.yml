@@ -2,6 +2,13 @@ app_shop:
     path:     /
     defaults:
         _controller: TrailWarehouseAppBundle:Shop:index
+    requirements:
+        url: .*/$
+
+app_shop_categories:
+    path:     /toutes-categories
+    defaults:
+        _controller: TrailWarehouseAppBundle:Shop:categories
 
 app_shop_category:
     path:     /categorie-{slug}
@@ -12,8 +19,3 @@ app_shop_family:
     path:     /fiche-produit/{slug}
     defaults:
         _controller: TrailWarehouseAppBundle:Shop:family
-
-app_shop_error:
-    path:     /{slug}
-    defaults:
-        _controller: TrailWarehouseAppBundle:Error:index
