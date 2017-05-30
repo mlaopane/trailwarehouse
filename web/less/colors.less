@@ -1,16 +1,14 @@
 // main: style.less
 
-@primary: @darken(@green, 5%);
+@primary   : darken(@green, 5%);
+@secondary : darken(@blue, 5%);
 
-.bg-whitegrey {
-  background: @whitegrey;
-}
-.bg-blackgrey {
-  background: @blackgrey;
-}
-.txt-whitegrey {
-  color: @whitegrey;
-}
-.txt-blackgrey {
-  color: @blackgrey;
-}
+.bg-primary { background : @primary; }
+.bg-secondary { background : @secondary; }
+.bg-whitegrey { background : @whitegrey; }
+.bg-blackgrey { background : @blackgrey; }
+
+.txt-primary { color : @primary; }
+.txt-secondary { color : @secondary; }
+.txt-whitegrey { color : @whitegrey; }
+.txt-blackgrey { color : @blackgrey; }

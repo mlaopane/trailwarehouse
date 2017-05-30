@@ -10,23 +10,29 @@
 /* Page Breadcrumb */
 
 #page-breadcrumb {
-  background: @bg-breadcrumb;
+  box-shadow: 0px 1px 4px 0px @grey;
   padding: 0;
-  .breadcrumb-item {
-    a {
-      color: @txt-breadcrumb;
-      font-family: 'Fira Sans Italic';
-    }
-    &:hover {
+  z-index: 1;
+  .breadcrumb {
+    background: @bg-breadcrumb;
+    border-radius: 0;
+    margin-bottom:0;
+    .breadcrumb-item {
       a {
-        color: @txt-breadcrumb-hover;
+        color: @txt-breadcrumb;
+        font-family: 'Fira Sans Italic';
       }
-    }
-    &.active {
-      color: @txt-breadcrumb-active;
-      a {
-        font-family: 'Fira Sans Bold';
+      &:hover {
+        a {
+          color: @txt-breadcrumb-hover;
+        }
+      }
+      &.active {
         color: @txt-breadcrumb-active;
+        a {
+          font-family: 'Fira Sans Bold';
+          color: @txt-breadcrumb-active;
+        }
       }
     }
   }

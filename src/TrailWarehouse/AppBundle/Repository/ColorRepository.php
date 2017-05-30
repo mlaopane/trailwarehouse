@@ -10,4 +10,5 @@ namespace TrailWarehouse\AppBundle\Repository;
  */
 class ColorRepository extends \Doctrine\ORM\EntityRepository
 {
+  
 }

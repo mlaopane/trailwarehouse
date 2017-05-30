@@ -52,6 +52,9 @@ class ProductController extends CommonController
           ->getRepository('TrailWarehouseAppBundle:'. ucfirst($field))
           ->find($request->request->get($field))
         ;
+        if (empty($entities[$field])) {
+          return new JsonResponse($field ." ". $request->request->get($field) ." doesn't exists !");
+        }
       }
       $entity
         ->setFamily($entities['family'])
@@ -61,12 +64,12 @@ class ProductController extends CommonController
         ->setStock($request->request->get('stock'))
         ->generateRef()
       ;
-      $entity_not_found = empty($db_entity = $this->getRepository()->findByRef($entity->getRef()));
+      $entity_not_found = empty($db_entity = $this->getRepository()->getOneBy('ref', $entity->getRef()));
       if ($entity_not_found) {
         $this->persistOne($entity);
-        return new JsonResponse(true);
+        return new JsonResponse(["message" => "Product added"]);
       }
-      return new JsonResponse(false);
+      return new JsonResponse(["message" => "Product already exists"]);
     }
 
     /**

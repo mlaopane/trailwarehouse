@@ -7,29 +7,10 @@
   {{ parent() }} : {{ family.name | capitalize }}
 {% endblock %}
 
-
-{% block breadcrumb %}
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a href="{{ path('app_home') }}"><span class="glyphicon glyphicon-home"></span></a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="{{ path('app_shop') }}">Boutique</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="{{ path('app_shop_category', { slug : family.category.slug }) }}">{{ family.category.name | capitalize }}</a>
-    </li>
-    <li class="breadcrumb-item active">
-      <a>{{ family.name | capitalize }}</a>
-    </li>
-  </ol>
-{% endblock %}
-
-
 {% block page_main %}
   <main id="page-category" class="page">
 
-    <!-- # Category Families -->
+    <!-- # Family -->
     <div id="families" class="container bg-whitegrey px-2 py-3 mb-4">
       <div class="row px-0 px-lg-3 px-xl-5">
       {% if product is not null %}
@@ -53,7 +34,18 @@
       {% endif %}
       </div>
     </div>
-    <!-- Category Families # -->
+    <!-- Family # -->
+
+    <!-- # Colors -->
+    <div class="container bg-whitegrey px-2py-3 mb-4">
+      {% if products is not empty %}
+      <ul>
+        {% for product in products %}
+          <li id="p-color-{{ loop.index }}" style="background:{{ product.color.value }}">{{ product.color.name }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
 
   </main>
 {% endblock %}

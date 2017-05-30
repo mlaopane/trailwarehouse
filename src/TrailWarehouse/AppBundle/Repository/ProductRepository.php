@@ -62,9 +62,26 @@ class ProductRepository extends CommonRepository
   }
 
   /**
+   * @param string $field
+   * @param mixed $value
+   *
+   */
+  public function getColorsBy($field, $value)
+  {
+    return $this->getBuilder()
+      ->where('entity.'. $field .' = :'. $field)
+      ->setParameter($field, $value)
+      ->groupBy('entity.color')
+      ->getQuery()
+      ->getArrayResult()
+    ;
+  }
+
+
+  /**
    * Get Builder
    *
-   * @return QueryBuilder (with preloaded query elements)
+   * @return QueryBuilder (with joined entities)
    */
   private function getBuilder()
   {

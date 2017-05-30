@@ -52,9 +52,9 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal", precision=8, scale=3)
+     * @ORM\Column(name="price", type="decimal", precision=7, scale=2)
      */
-    private $price = 0.000;
+    private $price = 0.00;
 
     /**
      * @var int

@@ -4,6 +4,7 @@ namespace TrailWarehouse\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Category;
 
 class ShopController extends Controller
@@ -80,25 +81,22 @@ class ShopController extends Controller
 
   /**
    * 'app_shop_family'
-   * @param {string} $slug
+   * @param Family $family (from slug)
+   *
    */
-  public function familyAction($slug)
+  public function familyAction(Family $family)
   {
     $doctrine = $this->getDoctrine();
-    $repository['family'] = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
-    $repository['product'] = $doctrine->getRepository('TrailWarehouseAppBundle:Product');
-
-    // Control if the family exists
-    $db_family = $repository['family']->findOneBySlug($slug);
-    if (empty($db_family)) {
-      return $this->redirectToRoute('app_shop');
+    $entity_names = ['product', 'family'];
+    foreach ($entity_names as $entity_name) {
+      $repository[$entity_name] = $doctrine->getRepository('TrailWarehouseAppBundle:'.ucfirst($entity_name));
     }
-
-    // At this point, the family does exist
-    $db_product = $repository['product']->getOneRandBy('family', $db_family);
+    $product = $repository['product']->getOneRandBy('family', $family);
+    $family_products = $repository['product']->getColorsBy('family', $family);
     $data = [
-      'family' => $db_family,
-      'product' => $db_product,
+      'family' => $family,
+      'product' => $product,
+      'products' => $family_products,
     ];
     return $this->render('TrailWarehouseAppBundle:Shop:family.html.twig', $data);
   }
