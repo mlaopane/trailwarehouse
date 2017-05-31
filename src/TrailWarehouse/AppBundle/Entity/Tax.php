@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * VAT
  *
- * @ORM\Table(name="rate")
- * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\RateRepository")
+ * @ORM\Table(name="tax")
+ * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\TaxRepository")
  */
-class Rate
+class Tax
 {
     /**
      * @var int

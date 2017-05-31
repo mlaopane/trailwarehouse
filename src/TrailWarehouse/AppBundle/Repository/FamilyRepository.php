@@ -20,19 +20,7 @@ class FamilyRepository extends CommonRepository
    * @return Family ...
    */
   public function getAll() {
-    $builder = $this->_em->createQueryBuilder();
-    $builder
-      ->select('family')
-      ->addSelect('category')
-      ->addSelect('brand')
-      ->from($this->_entityName, 'family')
-      ->innerJoin('family.category', 'category')
-      ->innerJoin('family.brand', 'brand')
-    ;
-    return $builder
-      ->getQuery()
-      ->getArrayResult()
-    ;
+    return $this->builderWithJoin()->getQuery()->getArrayResult();
   }
 
   /**
@@ -42,18 +30,10 @@ class FamilyRepository extends CommonRepository
    * @return Family ...
    */
   public function getBy($field, $value) {
-    $builder = $this->_em->createQueryBuilder();
-    return $builder
-      ->select('family')
-      ->addSelect('category')
-      ->addSelect('brand')
-      ->from($this->_entityName, 'family')
-      ->innerJoin('family.category', 'category')
-      ->innerJoin('family.brand', 'brand')
+    return $this->builderWithJoin()
       ->where('family.'. $field .' = :'. $field)
       ->setParameter($field, $value)
-      ->getQuery()
-      ->getArrayResult()
+      ->getQuery()->getArrayResult()
     ;
   }
 
@@ -63,25 +43,14 @@ class FamilyRepository extends CommonRepository
   * @return Family ...
   */
   public function getByArray($entity_name, Array $entities) {
-    $builder = $this->_em->createQueryBuilder();
-    $builder
-    ->select('family')
-    ->addSelect('category')
-    ->addSelect('brand')
-    ->from($this->_entityName, 'family')
-    ->innerJoin('family.category', 'category')
-    ->innerJoin('family.brand', 'brand')
-    ;
+    $builder = $this->builderWithJoin();
     foreach ($entities as $entity) {
       $builder
         ->orWhere('family.'. $entity_name .' = :entity')
         ->setParameter('entity', $entity)
       ;
     }
-    return $builder
-    ->getQuery()
-    ->getArrayResult()
-    ;
+    return $builder->getQuery()->getArrayResult();
   }
 
   /**
@@ -114,6 +83,40 @@ class FamilyRepository extends CommonRepository
    */
   public function getByBrands(Brand ...$brands) {
     return $this->getByArray('brand', $brands);
+  }
+
+  /**
+   *
+   *
+   */
+  public function getWith(string ...$fields) {
+    $builder = $this->_em->createQueryBuilder()
+      ->select('family')
+      ->addSelect('category')
+      ->addSelect('brand')
+      ->addSelect('color')
+      ->addSelect('size')
+      ->from($this->_entityName, 'family')
+      ->innerJoin('family.category', 'category')
+      ->innerJoin('family.brand', 'brand')
+      ->innerJoin('family', 'brand')
+    ;
+    foreach ($fields as $field) {
+      $builder->innerJoin('family.products.'.$field);
+    }
+    return $builder->getQuery()->getArrayResult();
+  }
+
+  /* ----- Private Methods ----- */
+  private function builderWithJoin() {
+    return $this->_em->createQueryBuilder()
+      ->select('family')
+      ->addSelect('category')
+      ->addSelect('brand')
+      ->from($this->_entityName, 'family')
+      ->innerJoin('family.category', 'category')
+      ->innerJoin('family.brand', 'brand')
+    ;
   }
 
 }

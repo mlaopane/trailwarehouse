@@ -8,10 +8,10 @@ use TrailWarehouse\AppBundle\Entity\Family;
 /**
  * Rating
  *
- * @ORM\Table(name="rating")
- * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\RatingRepository")
+ * @ORM\Table(name="review")
+ * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\ReviewRepository")
  */
-class Rating
+class Review
 {
     /**
      * @var int
@@ -47,15 +47,15 @@ class Rating
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="creation", type="datetime")
+     * @ORM\Column(name="creation_date", type="datetime")
      */
-    private $creation;
+    private $creationDate;
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -67,7 +67,7 @@ class Rating
      *
      * @param string $commentary
      *
-     * @return Rating
+     * @return Review
      */
     public function setCommentary($commentary)
     {
@@ -91,7 +91,7 @@ class Rating
      *
      * @param integer $value
      *
-     * @return Rating
+     * @return Review
      */
     public function setValue($value)
     {
@@ -103,7 +103,7 @@ class Rating
     /**
      * Get value
      *
-     * @return int
+     * @return integer
      */
     public function getValue()
     {
@@ -111,11 +111,35 @@ class Rating
     }
 
     /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     *
+     * @return Review
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
      * Set family
      *
-     * @param Family $family
+     * @param \TrailWarehouse\AppBundle\Entity\Family $family
      *
-     * @return Rating
+     * @return Review
      */
     public function setFamily(Family $family)
     {
@@ -127,34 +151,10 @@ class Rating
     /**
      * Get family
      *
-     * @return Family
+     * @return \TrailWarehouse\AppBundle\Entity\Family
      */
     public function getFamily()
     {
         return $this->family;
-    }
-
-    /**
-     * Set creation
-     *
-     * @param \DateTime $creation
-     *
-     * @return Rating
-     */
-    public function setCreation($creation)
-    {
-        $this->creation = $creation;
-
-        return $this;
-    }
-
-    /**
-     * Get creation
-     *
-     * @return \DateTime
-     */
-    public function getCreation()
-    {
-        return $this->creation;
     }
 }

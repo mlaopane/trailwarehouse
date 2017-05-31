@@ -32,7 +32,7 @@ class Product
     private $ref;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", cascade={"persist"}, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $family;
@@ -52,9 +52,9 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal", precision=8, scale=3)
+     * @ORM\Column(name="price", type="decimal", precision=7, scale=2)
      */
-    private $price = 0.000;
+    private $price = 0.00;
 
     /**
      * @var int
@@ -74,9 +74,12 @@ class Product
     /* ----- Events ----- */
 
     /**
+     * Generate ref
      *
+     * @return Product
      */
-    public function generateRef() {
+    public function generateRef()
+    {
       $slug['family'] = $this->getFamily()->getSlug();
       $slug['size'] = $this->getSize()->getSlug();
       $slug['color'] = $this->getColor()->getSlug();
@@ -84,6 +87,8 @@ class Product
       $ref .= empty($slug['size']) ? '' : '-'.$slug['size'];
       $ref .= empty($slug['color']) ? '' : '-'.$slug['color'];
       $this->setRef($ref);
+
+      return $this;
     }
 
     /* ----- Getters & Setters ----- */
@@ -120,30 +125,6 @@ class Product
     public function getRef()
     {
         return $this->ref;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Product
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**

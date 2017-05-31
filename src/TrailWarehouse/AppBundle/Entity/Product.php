@@ -32,7 +32,7 @@ class Product
     private $ref;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", cascade={"persist"}, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $family;

@@ -3,7 +3,11 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use TrailWarehouse\AppBundle\Entity\Brand;
+use TrailWarehouse\AppBundle\Entity\Category;
+use TrailWarehouse\AppBundle\Entity\Product;
 
 /**
  * Family
@@ -56,6 +60,14 @@ class Family
      *
      */
     private $slug;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="family")
+     *
+     */
+    private $products;
 
 
     /**
@@ -119,11 +131,11 @@ class Family
     /**
      * Set brand
      *
-     * @param \TrailWarehouse\AppBundle\Entity\Brand $brand
+     * @param Brand $brand
      *
      * @return Family
      */
-    public function setBrand(\TrailWarehouse\AppBundle\Entity\Brand $brand)
+    public function setBrand(Brand $brand)
     {
         $this->brand = $brand;
 
@@ -133,7 +145,7 @@ class Family
     /**
      * Get brand
      *
-     * @return \TrailWarehouse\AppBundle\Entity\Brand
+     * @return Brand
      */
     public function getBrand()
     {
@@ -143,11 +155,11 @@ class Family
     /**
      * Set category
      *
-     * @param \TrailWarehouse\AppBundle\Entity\Category $category
+     * @param Category $category
      *
      * @return Family
      */
-    public function setCategory(\TrailWarehouse\AppBundle\Entity\Category $category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
 
@@ -202,5 +214,46 @@ class Family
       $this->setSlug($slug);
 
       return $this;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
+    /**
+     * Add product
+     *
+     * @param Product $product
+     *
+     * @return Family
+     */
+    public function addProduct(Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param Product $product
+     */
+    public function removeProduct(Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }
