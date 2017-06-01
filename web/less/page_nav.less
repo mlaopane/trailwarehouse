@@ -4,19 +4,20 @@
 
 /* Custom colors */
 @bg-menu-category: @whitegrey;
-@bg-menu-category-hover: lighten(@bg-active-category, 3%);
-@bg-menu-category-active: darken(@bg-active-category, 3%);
+@bg-menu-category-hover: @darkblue;
+@bg-menu-category-active: lighten(@bg-active-category, 4%);
 @bg-active-category: lighten(@blue, 5%);
 @txt-menu-category: lighten(@blackgrey, 2%);
 @txt-menu-category-hover: @white;
 @border-menu-category: @steelgrey;
 @shadow-category-hover: darken(@bg-menu-category-hover, 20%);
+@border-category-hover: @bg-menu-category-hover;
 
 /* Page Navigation */
 
 #page-nav {
   background: @bg-menu-category;
-  margin: 15px 0px 20px 0px;
+  margin: 0px 0px 20px 0px;
   padding: 0 0 0 0;
   width: 100%;
 }
@@ -32,18 +33,12 @@
     margin: 0; padding: 0;
     li {
       padding: 0;
-      border-right-style: solid;
-      border-right-color: @border-menu-category;
-      border-right-width: 1px;
-      &:first-child {
-        border-left-style: solid;
-        border-left-color: @border-menu-category;
-        border-left-width: 1px;
-      }
+      display: flex;
+      align-items: center;
       a {
         color: @txt-menu-category;
         display: block;
-        padding: 14px 16px;
+        padding: 16px 20px;
         &.active {
           background: @bg-active-category;
           color: white;
@@ -51,22 +46,41 @@
         }
       }
       &:hover {
-        //border-color: @bg-menu-category-hover;
         z-index: 1;
         a:not(.active) {
           background: @bg-menu-category-hover;
-          box-shadow: 0px 0px 6px 1px @shadow-category-hover;
           color: @txt-menu-category-hover;
+          transform: scale(1.0);
         }
       }
       &:active {
         z-index: 1;
         a:not(.active) {
           background: @bg-menu-category-active;
-          box-shadow: 0px 0px 6px 1px @shadow-category-hover;
           color: @txt-menu-category-hover;
         }
       }
+    }
+  }
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+#site-search {
+  form {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: stretch;
+    line-height: 20px;
+    width: 100%;
+    @media (min-width: @width-sm) {
+    }
+    .form-control {
+      width: initial;
     }
   }
 }

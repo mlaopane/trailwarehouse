@@ -37,11 +37,11 @@
     <!-- Family # -->
 
     <!-- # Colors -->
-    <div class="container bg-whitegrey px-2py-3 mb-4">
-      {% if products is not empty %}
+    <div class="container bg-whitegrey px-2 py-3 mb-4">
+      {% if colors is not empty %}
       <ul>
-        {% for product in products %}
-          <li id="p-color-{{ loop.index }}" style="background:{{ product.color.value }}">{{ product.color.name }}</li>
+        {% for color in colors %}
+          <li id="p-color-{{ loop.index }}" style="background:{{ color.value }}">{{ color.name }}</li>
         {% endfor %}
       </ul>
       {% endif %}

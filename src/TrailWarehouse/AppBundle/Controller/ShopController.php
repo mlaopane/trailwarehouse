@@ -91,12 +91,14 @@ class ShopController extends Controller
     foreach ($entity_names as $entity_name) {
       $repository[$entity_name] = $doctrine->getRepository('TrailWarehouseAppBundle:'.ucfirst($entity_name));
     }
-    $product = $repository['product']->getOneRandBy('family', $family);
-    $family_products = $repository['product']->getColorsBy('family', $family);
+    $product = $repository['product']->getOneRandByFamily($family);
+    $colors = $repository['product']->getColorsByFamily($family);
+    $sizes = $repository['product']->getSizesByFamily($family);
     $data = [
       'family' => $family,
       'product' => $product,
-      'products' => $family_products,
+      'colors' => $colors,
+      'sizes' => $sizes,
     ];
     return $this->render('TrailWarehouseAppBundle:Shop:family.html.twig', $data);
   }

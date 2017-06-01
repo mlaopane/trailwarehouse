@@ -63,9 +63,7 @@ class Family
 
     /**
      * @var ArrayCollection
-     *
      * @ORM\OneToMany(targetEntity="Product", mappedBy="family")
-     *
      */
     private $products;
 

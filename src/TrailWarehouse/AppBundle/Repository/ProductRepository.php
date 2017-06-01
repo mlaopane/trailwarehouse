@@ -1,8 +1,10 @@
 <?php
 
 namespace TrailWarehouse\AppBundle\Repository;
+use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Product;
 use Doctrine\ORM\Query;
+use Doctrine\DBAL\Connection;
 
 /**
  * ProductRepository
@@ -24,6 +26,16 @@ class ProductRepository extends CommonRepository
     ;
   }
 
+  public function getOneRand() {
+    return $this->getBuilder()
+      ->addSelect('RAND() as HIDDEN rand')
+      ->addOrderBy('rand')
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getOneOrNullResult(Query::HYDRATE_ARRAY)
+    ;
+  }
+
   /**
    * Get one Entity
    *
@@ -31,12 +43,28 @@ class ProductRepository extends CommonRepository
    */
   public function getOneBy($field, $value) {
     return $this->getBuilder()
-      ->where('entity.'.$field.' = :value')
+      ->where('product.'.$field.' = :value')
       ->setParameter('value', $value)
       ->setMaxResults(1)
       ->getQuery()
       ->getOneOrNullResult(Query::HYDRATE_ARRAY)
     ;
+  }
+
+  public function getOneRandBy($field, $value) {
+    return $this->getBuilder()
+      ->addSelect('RAND() as HIDDEN rand')
+      ->where('product.'.$field.' = :value')
+      ->setParameter('value', $value)
+      ->addOrderBy('rand')
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getOneOrNullResult(Query::HYDRATE_ARRAY)
+    ;
+  }
+
+  public function getOneRandByFamily(Family $family) {
+    return $this->getOneRandBy('family', $family);
   }
 
   /**
@@ -51,7 +79,7 @@ class ProductRepository extends CommonRepository
     $builder = $this->getBuilder();
     foreach ($parameters as $field => $value) {
       $builder
-        ->andWhere('entity.'. $field .' = :'. $field)
+        ->andWhere('product.'. $field .' = :'. $field)
         ->setParameter($field, $value)
       ;
     }
@@ -63,37 +91,75 @@ class ProductRepository extends CommonRepository
 
   /**
    * @param string $field
-   * @param mixed $value
-   *
+   * @param Family|int|string $value
+   * @return Array Array
    */
   public function getColorsBy($field, $value)
   {
-    return $this->getBuilder()
-      ->where('entity.'. $field .' = :'. $field)
-      ->setParameter($field, $value)
-      ->groupBy('entity.color')
+    return $this->_em->createQueryBuilder()
+      ->select('color.name, color.value')
+      ->from($this->_entityName, 'product')
+      ->innerJoin('product.color', 'color')
+      ->where('product.'. $field .' = :value')
+      ->setParameter('value', $value)
+      ->groupBy('product.color')
       ->getQuery()
       ->getArrayResult()
     ;
   }
 
+  /**
+   * @param Family $family
+   * @return Array Array
+   */
+  public function getColorsByFamily(Family $family)
+  {
+    return $this->getColorsBy('family', $family);
+  }
+
+  /**
+   * @param string $field
+   * @param mixed $value
+   *
+   * @return Array Array
+   */
+  public function getSizesBy($field, $value)
+  {
+    return $this->_em->createQueryBuilder()
+      ->select('size.value')->from($this->_entityName, 'product')
+      ->innerJoin('product.size', 'size')
+      ->where('product.'. $field .' = :'. $field)
+      ->setParameter($field, $value)
+      ->groupBy('product.size')
+      ->getQuery()
+      ->getArrayResult()
+    ;
+  }
+
+  /**
+   * @param Family $family
+   *
+   * @return Array Array
+   */
+  public function getSizesByFamily(Family $family)
+  {
+    return $this->getSizesBy('family', $family);
+  }
 
   /**
    * Get Builder
    *
    * @return QueryBuilder (with joined entities)
    */
-  private function getBuilder()
-  {
-    $fields = ['family', 'color', 'size'];
-    $builder = $this->createQueryBuilder('entity');
-    foreach ($fields as $field) {
-      $builder
-        ->addSelect($field)
-        ->innerJoin('entity.'.$field, $field)
-      ;
-    }
-    return $builder;
+  private function getBuilder() {
+    return $this->createQueryBuilder('product')
+      ->addSelect('family, color, size, brand, category')
+      ->innerJoin('product.family', 'family')
+      ->innerJoin('product.color', 'color')
+      ->innerJoin('product.size', 'size')
+      ->innerJoin('family.brand', 'brand')
+      ->innerJoin('family.category', 'category')
+    ;
   }
 
 }
