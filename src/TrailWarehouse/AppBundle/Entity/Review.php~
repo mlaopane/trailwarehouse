@@ -10,6 +10,7 @@ use TrailWarehouse\AppBundle\Entity\Family;
  *
  * @ORM\Table(name="review")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\ReviewRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Review
 {
@@ -23,9 +24,17 @@ class Review
     private $id;
 
     /**
+     * @var Member
+     *
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Member", cascade={"persist"}, inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $member;
+
+    /**
      * @var Family
      *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family")
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", cascade={"persist"}, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
      */
     private $family;
@@ -40,9 +49,9 @@ class Review
     /**
      * @var int
      *
-     * @ORM\Column(name="value", type="integer")
+     * @ORM\Column(name="rating", type="integer")
      */
-    private $value;
+    private $rating;
 
     /**
      * @var \DateTime
@@ -53,6 +62,17 @@ class Review
 
 
     /**
+     * @ORM\PostPersist
+     */
+    public function updateFamily()
+    {
+        $this->getFamily()->updateAverageRating();
+    }
+
+
+    /* ----- GETTERS & SETTERS ----- */
+
+    /**
      * Get id
      *
      * @return integer
@@ -61,6 +81,8 @@ class Review
     {
         return $this->id;
     }
+
+
 
     /**
      * Set commentary
@@ -87,27 +109,27 @@ class Review
     }
 
     /**
-     * Set value
+     * Set rating
      *
-     * @param integer $value
+     * @param integer $rating
      *
      * @return Review
      */
-    public function setValue($value)
+    public function setRating($rating)
     {
-        $this->value = $value;
+        $this->rating = $rating;
 
         return $this;
     }
 
     /**
-     * Get value
+     * Get rating
      *
      * @return integer
      */
-    public function getValue()
+    public function getRating()
     {
-        return $this->value;
+        return $this->rating;
     }
 
     /**
@@ -141,7 +163,7 @@ class Review
      *
      * @return Review
      */
-    public function setFamily(Family $family)
+    public function setFamily(\TrailWarehouse\AppBundle\Entity\Family $family)
     {
         $this->family = $family;
 
@@ -156,5 +178,29 @@ class Review
     public function getFamily()
     {
         return $this->family;
+    }
+
+    /**
+     * Set member
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Member $member
+     *
+     * @return Review
+     */
+    public function setMember(\TrailWarehouse\AppBundle\Entity\Member $member)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    /**
+     * Get member
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Member
+     */
+    public function getMember()
+    {
+        return $this->member;
     }
 }

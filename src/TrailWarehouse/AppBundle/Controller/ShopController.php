@@ -70,10 +70,12 @@ class ShopController extends Controller
     $repo['family'] = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
 
     $db_families = $repo['family']->getByCategory($category);
+    $best = $repo['family']->getBestReviews();
 
     $data = [
       'active_category' => $category,
       'families' => $db_families,
+      'best' => $best,
     ];
 
     return $this->render('TrailWarehouseAppBundle:Shop:category.html.twig', $data);
@@ -92,8 +94,8 @@ class ShopController extends Controller
       $repository[$entity_name] = $doctrine->getRepository('TrailWarehouseAppBundle:'.ucfirst($entity_name));
     }
     $product = $repository['product']->getOneRandByFamily($family);
-    $colors = $repository['product']->getColorsByFamily($family);
-    $sizes = $repository['product']->getSizesByFamily($family);
+    $colors  = $repository['product']->getColorsByFamily($family);
+    $sizes   = $repository['product']->getSizesByFamily($family);
     $data = [
       'family' => $family,
       'product' => $product,

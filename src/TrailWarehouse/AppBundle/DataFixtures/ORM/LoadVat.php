@@ -3,22 +3,22 @@
 namespace AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use TrailWarehouse\AppBundle\Entity\Rate;
+use TrailWarehouse\AppBundle\Entity\Vat;
 
 /**
  *
  */
-class LoadRate implements FixtureInterface
+class LoadVat implements FixtureInterface
 {
   public function load(ObjectManager $manager)
   {
     $data = [
-      ['country' => 'fr', 'vat' => 0.20],
+      ['country' => 'fr', 'value' => 0.20],
     ];
     foreach ($data as $element) {
-      $item = (new Rate())
+      $item = (new Vat())
         ->setCountry($element['country'])
-        ->setVat($element['vat'])
+        ->setVat($element['value'])
       ;
       $manager->persist($item);
     }

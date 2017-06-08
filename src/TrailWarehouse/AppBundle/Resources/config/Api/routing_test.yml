@@ -1,0 +1,5 @@
+app_api_test_get :
+    path                 : /
+    methods              : [GET]
+    defaults             :
+        _controller      : TrailWarehouseAppBundle:Api/Test:get

@@ -49,3 +49,7 @@ app_api_coordinate_root   :
 app_api_stat_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_stat.yml"
     prefix            : /stats
+
+app_api_test_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_test.yml"
+    prefix            : /tests

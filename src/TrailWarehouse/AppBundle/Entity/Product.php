@@ -12,6 +12,7 @@ use TrailWarehouse\AppBundle\Entity\Size;
  *
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\ProductRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Product
 {
@@ -39,7 +40,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Color", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $color;
 
@@ -64,25 +65,27 @@ class Product
     private $stock = 0;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="visuel", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $visuel;
+    private $image;
 
 
     /* ----- Events ----- */
 
     /**
      * Generate ref
-     *
+     * @ORM\PrePersist
      * @return Product
      */
     public function generateRef()
     {
-      $slug['family'] = $this->getFamily()->getSlug();
-      $slug['size'] = $this->getSize()->getSlug();
-      $slug['color'] = $this->getColor()->getSlug();
+      $slug = [
+        'family' => $this->getFamily()->getSlug(),
+        'size'   => $this->getSize()->getSlug(),
+        'color'  => $this->getColor()->getSlug(),
+      ];
+
       $ref = $slug['family'];
       $ref .= empty($slug['size']) ? '' : '-'.$slug['size'];
       $ref .= empty($slug['color']) ? '' : '-'.$slug['color'];
@@ -269,5 +272,29 @@ class Product
     public function getSize()
     {
         return $this->size;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Image $image
+     *
+     * @return Product
+     */
+    public function setImage(\TrailWarehouse\AppBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

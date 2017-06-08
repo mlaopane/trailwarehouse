@@ -75,16 +75,17 @@ class ProductController extends CommonController
     /**
      * POST Category
      *
-     * @param Product $entity
+     * @param Request $request
+     * @param int $id
      *
      * @return JsonResponse
      */
     public function modifyAction(Request $request, int $id)
     {
-      $entity_not_found = empty($entity = $this->getRepository()->find($id));
-      // If entity not found => Do nothing
-      if ($entity_not_found) {
-        return new JsonResponse(false);
+      $product_not_found = empty($product = $this->getRepository()->find($id));
+      // If product not found => Do nothing
+      if ($product_not_found) {
+        return new JsonResponse("Product not found");
       }
       // Else...
       else {
@@ -93,17 +94,21 @@ class ProductController extends CommonController
           $field = ucfirst($field);
           $set = 'set'.$field;
           // If the provided field match with a setter
-          if (method_exists($this, $set)) {
+          if (method_exists($product, $set)) {
             // If the field is an entity
             if ($field == 'Family' OR $field == 'Color' OR $field == 'Size') {
               $value = $this->getManager()->getRepository('TrailWarehouseAppBundle:'.$field)->find($value);
             }
-            $entity->$set($value); // Using the setter
+            $product->$set($value); // Using the setter
           }
         }
-        $entity->generateRef(); // Update the ref
-        $this->persistOne($entity);
-        return new JsonResponse(true);
+        $product->generateRef(); // Update the ref
+        $product_already_exists = !empty($this->getRepository()->findByRef($product->getRef()));
+        if($product_already_exists) {
+          return new JsonResponse("Product already exists | Réf = '". $product->getRef() ."'");
+        }
+        $this->persistOne($product);
+        return new JsonResponse("Product successfully modified");
       }
     }
 

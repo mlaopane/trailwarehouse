@@ -3,9 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use TrailWarehouse\AppBundle\Entity\Brand;
 use TrailWarehouse\AppBundle\Entity\Family;
-use TrailWarehouse\AppBundle\Entity\Category;
 
 /**
  *

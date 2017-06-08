@@ -34,40 +34,31 @@ class Order
     private $member;
 
     /**
-     * @var int $total
+     * @var \DateTime
      *
-     * @ORM\Column(name="total", type="integer")
+     * @ORM\Column(name="creation_date", type="datetime")
      */
-    private $total;
+    private $creationDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="creation", type="datetime")
+     * @ORM\Column(name="sending_date", type="datetime")
      */
-    private $creation;
+    private $sendingDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="sending", type="datetime")
+     * @ORM\Column(name="delivery_date", type="datetime")
      */
-    private $sending;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="delivery", type="datetime")
-     */
-    private $delivery;
+    private $deliveryDate;
 
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="TrailWarehouse\AppBundle\Entity\OrderProduct", mappedBy="order")
+     * @var Cart
      */
-    private $orderProducts;
+    private $cart;
 
 
     /* ---------- Getters & Setters ---------- */
@@ -131,141 +122,98 @@ class Order
     }
 
     /**
-    * Add orderProduct
-    *
-    * @param OrderProduct
-    */
-    public function addOrderProduct(OrderProduct $orderProduct)
-    {
-        $this->orderProducts[] = $orderProduct;
-
-        return $this;
-    }
-
-    /**
-    * Remove orderProduct
-    *
-    * @param OrderProduct $orderProduct
-    */
-    public function removeOrderProduct(OrderProduct $orderProduct)
-    {
-        $this->orderProducts->removeElement($orderProduct);
-
-        return $this;
-    }
-
-    /**
-    * Get orderProducts
-    *
-    * @return ArrayCollection
-    */
-    public function getOrderProducts()
-    {
-        return $this->orderProducts;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->orderProducts = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-
-    /**
-     * Set creation
+     * Set creationDate
      *
-     * @param \DateTime $creation
+     * @param \DateTime $creationDate
      *
      * @return Order
      */
-    public function setCreation($creation)
+    public function setCreationDate($creationDate)
     {
-        $this->creation = $creation;
+        $this->creationDate = $creationDate;
 
         return $this;
     }
 
     /**
-     * Get creation
+     * Get creationDate
      *
      * @return \DateTime
      */
-    public function getCreation()
+    public function getCreationDate()
     {
-        return $this->creation;
+        return $this->creationDate;
     }
 
     /**
-     * Set sending
+     * Set sendingDate
      *
-     * @param \DateTime $sending
+     * @param \DateTime $sendingDate
      *
      * @return Order
      */
-    public function setSending($sending)
+    public function setSendingDate($sendingDate)
     {
-        $this->sending = $sending;
+        $this->sendingDate = $sendingDate;
 
         return $this;
     }
 
     /**
-     * Get sending
+     * Get sendingDate
      *
      * @return \DateTime
      */
-    public function getSending()
+    public function getSendingDate()
     {
-        return $this->sending;
+        return $this->sendingDate;
     }
 
     /**
-     * Set delivery
+     * Set deliveryDate
      *
-     * @param \DateTime $delivery
+     * @param \DateTime $deliveryDate
      *
      * @return Order
      */
-    public function setDelivery($delivery)
+    public function setDeliveryDate($deliveryDate)
     {
-        $this->delivery = $delivery;
+        $this->deliveryDate = $deliveryDate;
 
         return $this;
     }
 
     /**
-     * Get delivery
+     * Get deliveryDate
      *
      * @return \DateTime
      */
-    public function getDelivery()
+    public function getDeliveryDate()
     {
-        return $this->delivery;
+        return $this->deliveryDate;
     }
 
     /**
-     * Set total
+     * Set cart
      *
-     * @param integer $total
+     * @param Cart $cart
      *
      * @return Order
      */
-    public function setTotal($total)
+    public function setCart(Cart $cart)
     {
-        $this->total = $total;
+        $this->cart = $cart;
 
         return $this;
     }
 
     /**
-     * Get total
+     * Get cart
      *
-     * @return integer
+     * @return Cart
      */
-    public function getTotal()
+    public function getCart()
     {
-        return $this->total;
+        return $this->cart;
     }
 }

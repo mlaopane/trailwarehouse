@@ -19,21 +19,6 @@
 {% endblock %}
 
 
-{% block breadcrumb %}
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a href="{{ path('app_home') }}"><span class="glyphicon glyphicon-home"></span></a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="{{ path('app_shop') }}">Boutique</a>
-    </li>
-    <li class="breadcrumb-item active">
-      <a href="{{ path('app_shop_category', {slug : active_category.name}) }}">{{ active_category.name | capitalize }}</a>
-    </li>
-  </ol>
-{% endblock %}
-
-
 {% block page_main %}
   <!-- # Main -->
   <main id="page-category" class="page">

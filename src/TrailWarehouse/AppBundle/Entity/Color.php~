@@ -47,6 +47,9 @@ class Color
      */
     private $slug;
 
+
+    /* ----- GETTERS & SETTERS ----- */
+
     /**
      * Get id
      *

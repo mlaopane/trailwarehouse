@@ -11,41 +11,86 @@
   <main id="page-category" class="page">
 
     <!-- # Family -->
-    <div id="families" class="container bg-whitegrey px-2 py-3 mb-4">
+    <div class="family container bg-whitegrey px-2 py-3 mb-4">
       <div class="row px-0 px-lg-3 px-xl-5">
-      {% if product is not null %}
-        <div class="family col-12 col-md-6 col-lg-4 col-xl-3 py-2 px-xl-1">
-          <h4 class="row justify-content-center">{{ product.family.name | capitalize }} - {{ product.family.brand.name | upper }}</h4>
-          <div class="row justify-content-center">{{ product.color.name | capitalize }} - {{ product.size.value }}</div>
-          {% if product.stock <= 0 %}
-            <div class="text-danger">Produit indisponible</div>
+
+        <!-- # Product Image -->
+        <div class="image-container flex justify-content-center col-12 col-lg-6 col-xl-5 px-xl-2">
+          {% if product is null or product.image is null %}
+          <img id="image" src="{{ asset('images/no_picture.png') }}" alt="Visuel produit" class="round img-fluid">
           {% else %}
-            <div class="text-success">En Stock : {{ product.stock }}</div>
+          <img id="image" src="{{ asset(product.image.path) }}" alt="Visuel {{ product.family.name ~ ' - ' ~ product.family.brand.name }}" class="round img-fluid">
           {% endif %}
-          <span class="text-success">Prix : {{ product.price }}</span>
-          <div class="image-container row justify-content-center">
-            <img src="{{ asset('images/no_picture.png') }}" alt="{{ product.family.name ~ ' - ' ~ product.family.brand.name }}" class="round img-fluid">
+        </div>
+        <!-- Product # -->
+
+        <!-- # Product Data -->
+        <div class="col-12 col-lg-6 col-xl-7 py-2 px-xl-2">
+        {% if product is null %}
+          <div class="ness-block warning my-3 mx-auto">
+            <span>Aucun produit disponible</span>
           </div>
+        {% else %}
+          <h4 class="row justify-content-center">{{ product.family.name | capitalize }} - {{ product.family.brand.name | upper }}</h4>
+
+          <!-- # Description -->
+          <div id="description">
+            {{ family.description }}
+          </div>
+          <!-- Description # -->
+
+          <!-- # Stock -->
+          <div id="stock">
+            {% if product.stock <= 0 %}
+              <div class="text-danger">Produit indisponible</div>
+            {% else %}
+              <div class="text-success">En Stock : {{ product.stock }}</div>
+            {% endif %}
+            </div>
+          <!-- Stock # -->
+
+          <!-- # Price -->
+          <div id="price"  class="text-success">
+            Prix : {{ product.price }}
+          </div>
+          <!-- Price # -->
+
+          <div class="row">
+
+            <!-- # Colors -->
+            <div id="colors">
+            {% if colors is not empty %}
+            <ul>
+              {% for color in colors %}
+                <li id="p-color-{{ loop.index }}" style="background:{{ color.value }}">{{ color.name }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+            </div>
+            <!-- Colors # -->
+
+            <!-- # Sizes -->
+            <div class="container bg-whitegrey px-2 py-3 mb-4">
+              {% if sizes is not empty %}
+              <ul>
+                {% for size in sizes %}
+                <li id="p-size-{{ loop.index }}">{{ size.value | upper }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+            <!-- Sizes # -->
+
+          </div>
+        {% endif %}
+
         </div>
-      {% else %}
-        <div class="ness-block warning my-3 mx-auto">
-          <span>Aucun produit disponible</span>
-        </div>
-      {% endif %}
+        <!-- Product Data # -->
       </div>
     </div>
     <!-- Family # -->
 
-    <!-- # Colors -->
-    <div class="container bg-whitegrey px-2 py-3 mb-4">
-      {% if colors is not empty %}
-      <ul>
-        {% for color in colors %}
-          <li id="p-color-{{ loop.index }}" style="background:{{ color.value }}">{{ color.name }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </div>
+
 
   </main>
 {% endblock %}

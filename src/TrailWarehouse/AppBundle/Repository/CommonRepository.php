@@ -21,11 +21,9 @@ class CommonRepository extends EntityRepository
    *
    * @return Entity...
    */
-  public function getAll() {
-    return $this->createQueryBuilder('entity')
-      ->getQuery()
-      ->getArrayResult()
-    ;
+  public function getAll($as_array = true) {
+    $query = $this->createQueryBuilder('entity')->getQuery();
+    return $as_array ? $query->getArrayResult() : $query->getResult();
   }
 
   /**
@@ -33,18 +31,18 @@ class CommonRepository extends EntityRepository
    *
    * @return Array
    */
-  public function getOneBy($field, $value) {
-    return $this->createQueryBuilder('entity')
+  public function getOneBy($field, $value, $as_array = true) {
+    $query = $this->createQueryBuilder('entity')
       ->where('entity.'.$field.' = :value')
       ->setParameter('value', $value)
       ->setMaxResults(1)
       ->getQuery()
-      ->getOneOrNullResult(Query::HYDRATE_ARRAY)
     ;
+    return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
   }
 
-  public function get($id) {
-    return $this->getOneBy('id', $id);
+  public function get($id, $as_array = true) {
+    return $this->getOneBy('id', $id, $as_array);
   }
 
   /**
@@ -54,13 +52,14 @@ class CommonRepository extends EntityRepository
    *
    * @return array
    */
-  public function getRand($count = 5) {
-    return $this->createQueryBuilder('entity')
+  public function getRand($count = 5, $as_array = true) {
+    $query = $this->createQueryBuilder('entity')
       ->addSelect('RAND() as HIDDEN rand')
       ->addOrderBy('rand')
       ->setMaxResults($count)
       ->getQuery()
-      ->getArrayResult();
+    ;
+    return $as_array ? $query->getArrayResult() : $query->getResult();
   }
 
   /**
@@ -68,13 +67,14 @@ class CommonRepository extends EntityRepository
    *
    * @return Entity
    */
-  public function getOneRand() {
-    return $this->createQueryBuilder('entity')
+  public function getOneRand($as_array = true) {
+    $query = $this->createQueryBuilder('entity')
       ->addSelect('RAND() as HIDDEN rand')
       ->addOrderBy('rand')
       ->setMaxResults(1)
       ->getQuery()
-      ->getOneOrNullResult(Query::HYDRATE_ARRAY);
+    ;
+    return $as_array ? $query->getSingleResult(Query::HYDRATE_ARRAY) : $query->getSingleResult();
   }
 
   /**
@@ -90,6 +90,6 @@ class CommonRepository extends EntityRepository
       ->addOrderBy('rand')
       ->setMaxResults(1)
       ->getQuery()
-      ->getOneOrNullResult();
+      ->getOneOrNullResult(Query::HYDRATE_ARRAY);
   }
 }

@@ -6,6 +6,7 @@ use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Category;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Query;
 
 /**
  * FamilyRepository
@@ -19,8 +20,9 @@ class FamilyRepository extends CommonRepository
   /**
    * @return Family ...
    */
-  public function getAll() {
-    return $this->builderWithJoin()->getQuery()->getArrayResult();
+  public function getAll($as_array = true) {
+    $query = $this->getBuilder()->getQuery();
+    return $as_array ? $query->getArrayResult() : $query->getResult();
   }
 
   /**
@@ -29,12 +31,29 @@ class FamilyRepository extends CommonRepository
    *
    * @return Family ...
    */
-  public function getBy($field, $value) {
-    return $this->builderWithJoin()
+  public function getBy($field, $value, $as_array = true) {
+    $query = $this->getBuilder()
       ->where('family.'. $field .' = :'. $field)
       ->setParameter($field, $value)
-      ->getQuery()->getArrayResult()
+      ->getQuery()
     ;
+    return $as_array ? $query->getArrayResult() : $query->getResult();
+  }
+
+  /**
+   * @param string $field
+   * @param mixed $value
+   *
+   * @return Family ...
+   */
+  public function getOneBy($field, $value, $as_array = true) {
+    $query = $this->getBuilder()
+      ->where('family.'. $field .' = :'. $field)
+      ->setParameter($field, $value)
+      ->setMaxResults(1)
+      ->getQuery()
+    ;
+    return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
   }
 
   /**
@@ -42,73 +61,80 @@ class FamilyRepository extends CommonRepository
   * @param Array $entities
   * @return Family ...
   */
-  public function getByArray($entity_name, Array $entities) {
-    $builder = $this->builderWithJoin();
+  public function getByArray($entity_name, Array $entities, $as_array = true) {
+    $builder = $this->getBuilder();
     foreach ($entities as $entity) {
       $builder
         ->orWhere('family.'. $entity_name .' = :entity')
         ->setParameter('entity', $entity)
       ;
     }
-    return $builder->getQuery()->getArrayResult();
+    $query = $builder->getQuery();
+    return $as_array ? $query->getArrayResult() : $query->getResult();
   }
 
   /**
    * @param Category $category
    * @return Family ...
    */
-  public function getByCategory(Category $category) {
-    return $this->getBy('category', $category);
+  public function getByCategory(Category $category, $as_array = true) {
+    return $this->getBy('category', $category, $as_array);
   }
 
   /**
    * @param Brand $brand
    * @return Family ...
    */
-  public function getByBrand(Brand $brand) {
-    return $this->getBy('brand', $brand);
+  public function getByBrand(Brand $brand, $as_array = true) {
+    return $this->getBy('brand', $brand, $as_array);
   }
 
   /**
    * @param Category ... $categories
    * @return Family ...
    */
-  public function getByCategories(Category ...$categories) {
-    return $this->getByArray('category', $categories);
+  public function getByCategories(Array $categories, $as_array = true) {
+    return $this->getByArray('category', $categories, $as_array);
   }
 
   /**
    * @param Brand ... $brands
    * @return Array (Family)
    */
-  public function getByBrands(Brand ...$brands) {
-    return $this->getByArray('brand', $brands);
+  public function getByBrands(Array $brands, $as_array = true) {
+    return $this->getByArray('brand', $brands, $as_array);
   }
 
   /**
    *
-   *
    */
-  public function getWith(string ...$fields) {
-    $builder = $this->_em->createQueryBuilder()
-      ->select('family')
-      ->addSelect('category')
-      ->addSelect('brand')
-      ->addSelect('color')
-      ->addSelect('size')
-      ->from($this->_entityName, 'family')
-      ->innerJoin('family.category', 'category')
-      ->innerJoin('family.brand', 'brand')
-      ->innerJoin('family', 'brand')
+  public function getBestReviews($count = 5, $as_array = true)
+  {
+    $query = $this->_em->createQueryBuilder()
+      ->addSelect('family.id', 'family.name')
+      ->addSelect('AVG(review.rating) AS average')
+      ->from('TrailWarehouseAppBundle:Family', 'family')
+      ->leftJoin('family.reviews', 'review')
+      ->groupBy('review.family, family.id')
+      ->orderBy('average', 'desc')
+      ->setFirstResult(0)
+      ->setMaxResults(5)
+      ->getQuery()
     ;
-    foreach ($fields as $field) {
-      $builder->innerJoin('family.products.'.$field);
-    }
-    return $builder->getQuery()->getArrayResult();
+    return $as_array ? $query->getArrayResult() : $query->getResult();
   }
+  // public function getBestReviews($count = 5, $as_array = true)
+  // {
+  //   $query = $this->getBuilder('family')
+  //     ->orderBy('family.averageRating', 'desc')
+  //     ->setMaxResults($count)
+  //     ->getQuery()
+  //   ;
+  // return $as_array ? $query->getArrayResult() : $query->getResult();
+  // }
 
   /* ----- Private Methods ----- */
-  private function builderWithJoin() {
+  private function getBuilder() {
     return $this->_em->createQueryBuilder()
       ->select('family')
       ->addSelect('category')

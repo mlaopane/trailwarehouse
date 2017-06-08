@@ -24,8 +24,8 @@
         "symfony/polyfill-apcu": "^1.0",
         "symfony/serializer": "^3.2",
         "symfony/swiftmailer-bundle": "^2.3.10",
-        "symfony/symfony": "3.2.*",
-        "twig/twig": "^1.0||^2.0"
+        "symfony/symfony": "3.3.*",
+        "twig/twig": "2.*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^2.3",
@@ -50,7 +50,6 @@
     },
     "config": {
         "platform": {
-            "php": "5.5.9"
         },
         "sort-packages": true
     },

@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * VAT
  *
- * @ORM\Table(name="tax")
- * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\TaxRepository")
+ * @ORM\Table(name="Vat")
+ * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\VatRepository")
  */
-class Tax
+class Vat
 {
     /**
      * @var int
@@ -31,9 +31,9 @@ class Tax
     /**
      * @var string
      *
-     * @ORM\Column(name="vat", type="decimal", precision=5, scale=4)
+     * @ORM\Column(name="value", type="decimal", precision=5, scale=4)
      */
-    private $vat;
+    private $value;
 
 
     /**
@@ -70,27 +70,28 @@ class Tax
         return $this->country;
     }
 
+
     /**
-     * Set vat
+     * Set value
      *
-     * @param string $vat
+     * @param string $value
      *
-     * @return VAT
+     * @return Vat
      */
-    public function setVat($vat)
+    public function setValue($value)
     {
-        $this->vat = $vat;
+        $this->value = $value;
 
         return $this;
     }
 
     /**
-     * Get vat
+     * Get value
      *
      * @return string
      */
-    public function getVat()
+    public function getValue()
     {
-        return $this->vat;
+        return $this->value;
     }
 }

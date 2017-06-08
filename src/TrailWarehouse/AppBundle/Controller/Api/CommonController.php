@@ -48,6 +48,8 @@ abstract class CommonController extends Controller
       return new JsonResponse($response);
     }
 
+    /* ----- Protected Methods ----- */
+
     /**
      * @access protected
      *

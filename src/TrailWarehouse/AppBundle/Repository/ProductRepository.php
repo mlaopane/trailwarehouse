@@ -19,14 +19,14 @@ class ProductRepository extends CommonRepository
    *
    * @return Array of arrays
    */
-  public function getAll() {
+  public function getAll($as_array = true) {
     return $this->getBuilder()
       ->getQuery()
       ->getArrayResult()
     ;
   }
 
-  public function getOneRand() {
+  public function getOneRand($as_array = true) {
     return $this->getBuilder()
       ->addSelect('RAND() as HIDDEN rand')
       ->addOrderBy('rand')
@@ -41,7 +41,7 @@ class ProductRepository extends CommonRepository
    *
    * @return Array
    */
-  public function getOneBy($field, $value) {
+  public function getOneBy($field, $value, $as_array = true) {
     return $this->getBuilder()
       ->where('product.'.$field.' = :value')
       ->setParameter('value', $value)
@@ -51,7 +51,7 @@ class ProductRepository extends CommonRepository
     ;
   }
 
-  public function getOneRandBy($field, $value) {
+  public function getOneRandBy($field, $value, $as_array = true) {
     return $this->getBuilder()
       ->addSelect('RAND() as HIDDEN rand')
       ->where('product.'.$field.' = :value')
@@ -63,8 +63,8 @@ class ProductRepository extends CommonRepository
     ;
   }
 
-  public function getOneRandByFamily(Family $family) {
-    return $this->getOneRandBy('family', $family);
+  public function getOneRandByFamily(Family $family, $as_array = true) {
+    return $this->getOneRandBy('family', $family, $as_array);
   }
 
   /**
@@ -74,7 +74,7 @@ class ProductRepository extends CommonRepository
    *
    * @return Array of arrays
    */
-  public function getBy(Array $parameters)
+  public function getBy(Array $parameters, $as_array = true)
   {
     $builder = $this->getBuilder();
     foreach ($parameters as $field => $value) {
@@ -94,7 +94,7 @@ class ProductRepository extends CommonRepository
    * @param Family|int|string $value
    * @return Array Array
    */
-  public function getColorsBy($field, $value)
+  public function getColorsBy($field, $value, $as_array = true)
   {
     return $this->_em->createQueryBuilder()
       ->select('color.name, color.value')
@@ -112,7 +112,7 @@ class ProductRepository extends CommonRepository
    * @param Family $family
    * @return Array Array
    */
-  public function getColorsByFamily(Family $family)
+  public function getColorsByFamily(Family $family, $as_array = true)
   {
     return $this->getColorsBy('family', $family);
   }
@@ -123,7 +123,7 @@ class ProductRepository extends CommonRepository
    *
    * @return Array Array
    */
-  public function getSizesBy($field, $value)
+  public function getSizesBy($field, $value, $as_array = true)
   {
     return $this->_em->createQueryBuilder()
       ->select('size.value')->from($this->_entityName, 'product')
@@ -141,7 +141,7 @@ class ProductRepository extends CommonRepository
    *
    * @return Array Array
    */
-  public function getSizesByFamily(Family $family)
+  public function getSizesByFamily(Family $family, $as_array = true)
   {
     return $this->getSizesBy('family', $family);
   }
@@ -153,12 +153,13 @@ class ProductRepository extends CommonRepository
    */
   private function getBuilder() {
     return $this->createQueryBuilder('product')
-      ->addSelect('family, color, size, brand, category')
+      ->addSelect('family, color, size, image, category, brand')
       ->innerJoin('product.family', 'family')
-      ->innerJoin('product.color', 'color')
-      ->innerJoin('product.size', 'size')
-      ->innerJoin('family.brand', 'brand')
+      ->leftJoin('product.color', 'color')
+      ->leftJoin('product.size', 'size')
+      ->leftJoin('product.image', 'image')
       ->innerJoin('family.category', 'category')
+      ->innerJoin('family.brand', 'brand')
     ;
   }
 

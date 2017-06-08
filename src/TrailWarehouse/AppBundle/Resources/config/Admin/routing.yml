@@ -1,0 +1,5 @@
+app_admin_test :
+    path                 : /add
+    methods              : [GET]
+    defaults             :
+        _controller      : TrailWarehouseAppBundle:Admin/Test:add

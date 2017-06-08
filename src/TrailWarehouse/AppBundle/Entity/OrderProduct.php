@@ -7,7 +7,7 @@ use TrailWarehouse\AppBundle\Entity\Order;
 use TrailWarehouse\AppBundle\Entity\Product;
 
 /**
- * Purchase
+ * OrderProduct
  *
  * @ORM\Table(name="`order_product`")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\OrderProductRepository")
@@ -137,7 +137,6 @@ class OrderProduct
     {
         return $this->product;
     }
-
 
     /**
      * Set total

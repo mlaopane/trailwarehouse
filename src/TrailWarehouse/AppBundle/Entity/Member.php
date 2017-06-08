@@ -81,6 +81,12 @@ class Member implements UserInterface
     */
     private $coordinates;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="member")
+     */
+    private $reviews;
 
     /**
     * Constructor
@@ -88,6 +94,7 @@ class Member implements UserInterface
     public function __construct()
     {
         $this->coordinates = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
 
@@ -321,4 +328,38 @@ class Member implements UserInterface
         return $this->creation;
     }
 
+
+    /**
+     * Add review
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Review $review
+     *
+     * @return Member
+     */
+    public function addReview(\TrailWarehouse\AppBundle\Entity\Review $review)
+    {
+        $this->reviews[] = $review;
+
+        return $this;
+    }
+
+    /**
+     * Remove review
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Review $review
+     */
+    public function removeReview(\TrailWarehouse\AppBundle\Entity\Review $review)
+    {
+        $this->reviews->removeElement($review);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
 }

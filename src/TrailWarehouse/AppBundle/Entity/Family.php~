@@ -3,7 +3,11 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use TrailWarehouse\AppBundle\Entity\Brand;
+use TrailWarehouse\AppBundle\Entity\Category;
+use TrailWarehouse\AppBundle\Entity\Product;
 
 /**
  * Family
@@ -59,11 +63,61 @@ class Family
 
     /**
      * @var ArrayCollection
-     *
      * @ORM\OneToMany(targetEntity="Product", mappedBy="family")
-     *
      */
     private $products;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="family")
+     */
+    private $reviews;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="average_rating", type="decimal", precision=2, scale=1)
+     */
+    private $averageRating = 0;
+
+
+    /**
+    * Constructor
+    */
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
+    }
+
+    /**
+     * Generate & Set the slug
+     *
+     * @return Family
+     */
+    public function generateSlug()
+    {
+      $slugs['family'] = $this->name;
+      $slugs['brand'] = $this->brand->getName();
+      $slug = $this->name.'-'.$this->brand->getName();
+      $this->setSlug($slug);
+
+      return $this;
+    }
+
+    /**
+     * Used in 'Review:updateFamily' Callback (PostPersist)
+     */
+    public function updateAverageRating()
+    {
+      if (!empty($this->reviews)) {
+        $sum = 0;
+        foreach ($this->reviews as $review) {
+          $sum += $review->getRating();
+        }
+        $this->averageRating = $sum / count($this->reviews);
+      }
+    }
 
 
     /**
@@ -127,11 +181,11 @@ class Family
     /**
      * Set brand
      *
-     * @param \TrailWarehouse\AppBundle\Entity\Brand $brand
+     * @param Brand $brand
      *
      * @return Family
      */
-    public function setBrand(\TrailWarehouse\AppBundle\Entity\Brand $brand)
+    public function setBrand(Brand $brand)
     {
         $this->brand = $brand;
 
@@ -141,7 +195,7 @@ class Family
     /**
      * Get brand
      *
-     * @return \TrailWarehouse\AppBundle\Entity\Brand
+     * @return Brand
      */
     public function getBrand()
     {
@@ -151,11 +205,11 @@ class Family
     /**
      * Set category
      *
-     * @param \TrailWarehouse\AppBundle\Entity\Category $category
+     * @param Category $category
      *
      * @return Family
      */
-    public function setCategory(\TrailWarehouse\AppBundle\Entity\Category $category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
 
@@ -198,17 +252,94 @@ class Family
     }
 
     /**
-     * Generate & Set the slug
+     * Add product
+     *
+     * @param Product $product
      *
      * @return Family
      */
-    public function generateSlug()
+    public function addProduct(Product $product)
     {
-      $slugs['family'] = $this->getName();
-      $slugs['brand'] = $this->getBrand()->getName();
-      $slug = $slugs['family'].'-'.$slugs['brand'];
-      $this->setSlug($slug);
+        $this->products[] = $product;
 
-      return $this;
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param Product $product
+     */
+    public function removeProduct(Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * Add review
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Review $review
+     *
+     * @return Family
+     */
+    public function addReview(\TrailWarehouse\AppBundle\Entity\Review $review)
+    {
+        $this->reviews[] = $review;
+
+        return $this;
+    }
+
+    /**
+     * Remove review
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Review $review
+     */
+    public function removeReview(\TrailWarehouse\AppBundle\Entity\Review $review)
+    {
+        $this->reviews->removeElement($review);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * Set averageRating
+     *
+     * @param string $averageRating
+     *
+     * @return Family
+     */
+    public function setAverageRating($averageRating)
+    {
+        $this->averageRating = $averageRating;
+
+        return $this;
+    }
+
+    /**
+     * Get averageRating
+     *
+     * @return string
+     */
+    public function getAverageRating()
+    {
+        return $this->averageRating;
     }
 }
