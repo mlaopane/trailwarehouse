@@ -65,7 +65,7 @@ class Product
     private $stock = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Image", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Image", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $image;

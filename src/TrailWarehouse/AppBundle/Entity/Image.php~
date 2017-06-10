@@ -24,9 +24,16 @@ class Image
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=191, unique=true)
+     * @ORM\Column(name="src", type="string", length=191, unique=true)
      */
-    private $path;
+    private $src;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alt", type="string", length=255)
+     */
+    private $alt;
 
 
     /**
@@ -39,27 +46,4 @@ class Image
         return $this->id;
     }
 
-    /**
-     * Set path
-     *
-     * @param string $path
-     *
-     * @return Image
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
 }

@@ -14,10 +14,9 @@ class LoadCategory implements FixtureInterface
   {
     $data = [
       'chaussures',
-      'vêtements',
+      'textile',
       'électronique',
       'accessoires',
-      'fake category',
     ];
     foreach ($data as $item_name) {
       $item = new Category();

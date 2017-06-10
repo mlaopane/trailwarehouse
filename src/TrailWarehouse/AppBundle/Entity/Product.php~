@@ -80,9 +80,12 @@ class Product
      */
     public function generateRef()
     {
-      $slug['family'] = $this->getFamily()->getSlug();
-      $slug['size'] = $this->getSize()->getSlug();
-      $slug['color'] = $this->getColor()->getSlug();
+      $slug = [
+        'family' => $this->getFamily()->getSlug(),
+        'size'   => $this->getSize()->getSlug(),
+        'color'  => $this->getColor()->getSlug(),
+      ];
+
       $ref = $slug['family'];
       $ref .= empty($slug['size']) ? '' : '-'.$slug['size'];
       $ref .= empty($slug['color']) ? '' : '-'.$slug['color'];

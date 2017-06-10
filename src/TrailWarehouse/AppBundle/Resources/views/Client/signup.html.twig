@@ -21,6 +21,14 @@
         <!-- # Row -->
         <div class="row">
 
+          <div class="col-12 mb-2">
+            <h1>Création de votre compte</h1>
+          </div>
+
+          <div class="col-12 mb-2">
+            <h3>Identité</h3>
+          </div>
+
           <!-- # Col -->
           <div class="col-12 col-md-6">
 
@@ -77,11 +85,34 @@
         </div>
         <!-- Row # -->
 
+        {% if form.coordinates is defined %}
+          <!-- # Row -->
+          <div class="row">
+
+            <!-- # Col -->
+            <div class="col">
+
+              <!-- # Coordinates -->
+              <div class="form-group mb-4">
+                <h3>Adresses</h3>
+                {{ form_widget(form.coordinates) }}
+              </div>
+              <!-- Coordinates # -->
+
+            </div>
+            <!-- Col # -->
+
+          </div>
+          <!-- Row # -->
+        {% endif %}
+
         <!-- # Submit -->
-        {{ form_widget(form.envoyer, {'attr': {'class':'btn btn-confirm'}}, 'S\'inscrire') }}
+        {{ form_widget(form.send, {'attr': {'class':'btn btn-confirm'}}, 'S\'inscrire') }}
         <!-- Submit # -->
 
+        <!-- # Rest -->
         {{ form_rest(form) }}
+        <!-- Rest # -->
 
       {{ form_end(form) }}
       <!-- Signup Form # -->

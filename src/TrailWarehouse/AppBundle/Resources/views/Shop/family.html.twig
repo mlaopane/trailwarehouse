@@ -1,4 +1,4 @@
-{# TrailWarehouse > AppBundle > Resources > views > Shop > category.html.twig #}
+{# TrailWarehouse > AppBundle > Resources > views > Shop > family.html.twig #}
 
 {% extends "TrailWarehouseAppBundle::layout.html.twig" %}
 
@@ -7,90 +7,183 @@
   {{ parent() }} : {{ family.name | capitalize }}
 {% endblock %}
 
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bower_components/angular/angular.min.js') }}"></script>
+{% endblock %}
+
 {% block page_main %}
-  <main id="page-category" class="page">
+  <main id="page-family" class="page" data-ng-app="app">
 
     <!-- # Family -->
-    <div class="family container bg-whitegrey px-2 py-3 mb-4">
+    <div class="family container bg-whitegrey px-2 py-3 mb-4" data-ng-controller="familyCtrl as page">
+
+      <div id="ng-data">
+        <input type="hidden" data-ng-init="page.API_URL = '{{ url('app_api_product_get_all') }}'">
+        <input type="hidden" data-ng-init="page.ASSET_URL = '{{ asset('') }}'">
+        <input type="hidden" data-ng-init="page.family_id = '{{ family.id }}'">
+      </div>
+
       <div class="row px-0 px-lg-3 px-xl-5">
 
         <!-- # Product Image -->
-        <div class="image-container flex justify-content-center col-12 col-lg-6 col-xl-5 px-xl-2">
-          {% if product is null or product.image is null %}
-          <img id="image" src="{{ asset('images/no_picture.png') }}" alt="Visuel produit" class="round img-fluid">
-          {% else %}
-          <img id="image" src="{{ asset(product.image.path) }}" alt="Visuel {{ product.family.name ~ ' - ' ~ product.family.brand.name }}" class="round img-fluid">
-          {% endif %}
+        <div class="image-container flex justify-content-center col-12 col-lg-6 col-xl-5 py-2 px-xl-2">
+          <div class="p-4">
+            <img id="image"
+              data-ng-src="{% verbatim %}{{ (page.product.image.src != '' && page.product.image.src != null) ? page.product.image.src : (page.ASSET_URL + 'images/no_picture.png') }}{% endverbatim %}"
+              data-ng-alt="page.product.image.alt">
+          </div>
         </div>
         <!-- Product # -->
 
         <!-- # Product Data -->
         <div class="col-12 col-lg-6 col-xl-7 py-2 px-xl-2">
-        {% if product is null %}
-          <div class="ness-block warning my-3 mx-auto">
-            <span>Aucun produit disponible</span>
-          </div>
-        {% else %}
-          <h4 class="row justify-content-center">{{ product.family.name | capitalize }} - {{ product.family.brand.name | upper }}</h4>
 
-          <!-- # Description -->
-          <div id="description">
-            {{ family.description }}
-          </div>
-          <!-- Description # -->
-
-          <!-- # Stock -->
-          <div id="stock">
-            {% if product.stock <= 0 %}
-              <div class="text-danger">Produit indisponible</div>
+          <!-- # Card -->
+          <div class="card">
+            {% if product is null %}
+              <div class="ness-block warning my-3 mx-auto">
+                <span>Aucun produit disponible</span>
+              </div>
             {% else %}
-              <div class="text-success">En Stock : {{ product.stock }}</div>
+              <!-- # Card header -->
+              <div class="card-header">
+
+                <!-- # Nav Tabs -->
+                <ul class="nav nav-tabs card-header-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#features">Caractéristiques</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#reviews">Commentaires(2)</a>
+                  </li>
+                </ul>
+                <!-- Nav Tabs # -->
+
+              </div>
+              <!-- Card header # -->
+
+              <!-- # Card Block -->
+              <div class="card-block">
+
+                <!-- # Tab panes -->
+                <div class="tab-content">
+
+                  <!-- # Pane Features -->
+                  <div class="tab-pane active" id="features" role="tabpanel">
+
+                    <!-- # Card Title -->
+                    <div class="card-title">
+                      <h3 class="justify-content-center">{{ product.family.name | capitalize }} - {{ product.family.brand.name | upper }}</h3>
+                    </div>
+                    <!-- Card Title # -->
+
+                    <!-- # Card Text -->
+                    <div class="card-text">
+                      <div class="row">
+                        <!-- # Stock -->
+                        <div id="stock" class="col-6">
+                          <div class="text-success"
+                            data-ng-cloak
+                            data-ng-if="page.product.stock >= 10">
+                            <span>Disponible</span>
+                            <span class="glyphicon glyphicon-ok"></span>
+                          </div>
+                          <div class="text-warning"
+                            data-ng-cloak
+                            data-ng-bind="'Quantité disponible : ' + page.product.stock"
+                            data-ng-if="page.product.stock > 0 && page.product.stock < 10">
+                          </div>
+                          <div class="text-danger"
+                            data-ng-cloak
+                            data-ng-if="page.product.stock == 0">
+                            Produit indisponible
+                          </div>
+                        </div>
+                        <!-- Stock # -->
+                        <!-- # Price -->
+                        <div id="price"  class="text-success col-6">
+                          Prix : {{ product.price }}
+                        </div>
+                        <!-- Price # -->
+                      </div>
+                      <div class="row">
+                        <!-- # Colors -->
+                        <div id="colors" class="col-6">
+                          {% if colors is not empty %}
+                          <ul>
+                            {% for color in colors %}
+                            <li id="p-color-{{ loop.index }}" style="background:{{ color.value }}">{{ color.name }}</li>
+                            {% endfor %}
+                          </ul>
+                          {% endif %}
+                        </div>
+                        <!-- Colors # -->
+                        <!-- # Sizes -->
+                        <div id="sizes" class="col-6">
+                          {% if sizes is not empty %}
+                          <ul>
+                            {% for size in sizes %}
+                            <li id="p-size-{{ loop.index }}">{{ size.value | upper }}</li>
+                            {% endfor %}
+                          </ul>
+                          {% endif %}
+                        </div>
+                        <!-- Sizes # -->
+                      </div>
+                      <div class="row">
+                        <!-- # Description -->
+                        <div id="description" class="col-12">
+                          {{ family.description }}
+                        </div>
+                        <!-- Description # -->
+                      </div>
+                    </div>
+                    <!-- Card Text # -->
+
+                  </div>
+                  <!-- Pane Features # -->
+
+                  <!-- # Pane Reviews -->
+                  <div class="tab-pane" id="reviews" role="tabpanel">
+
+                    <!-- # Card Title -->
+                    <div class="card-title">
+                      <h4 class="col-12 justify-content-center">Titre du commentaire</h4>
+                      <p class="blockquote">Note</p>
+                    </div>
+                    <!-- Card Title # -->
+
+                    <!-- # Card Text -->
+                    <div class="card-text">
+                      <p>Pas de commentaire pour le moment</p>
+                    </div>
+                    <!-- Card Text # -->
+
+                  </div>
+                  <!-- Pane Reviews # -->
+
+                </div>
+                <!-- Tab panes # -->
+
+
+              </div>
+              <!-- Card Block # -->
+
             {% endif %}
-            </div>
-          <!-- Stock # -->
-
-          <!-- # Price -->
-          <div id="price"  class="text-success">
-            Prix : {{ product.price }}
           </div>
-          <!-- Price # -->
-
-          <div class="row">
-
-            <!-- # Colors -->
-            <div id="colors">
-            {% if colors is not empty %}
-            <ul>
-              {% for color in colors %}
-                <li id="p-color-{{ loop.index }}" style="background:{{ color.value }}">{{ color.name }}</li>
-              {% endfor %}
-            </ul>
-            {% endif %}
-            </div>
-            <!-- Colors # -->
-
-            <!-- # Sizes -->
-            <div class="container bg-whitegrey px-2 py-3 mb-4">
-              {% if sizes is not empty %}
-              <ul>
-                {% for size in sizes %}
-                <li id="p-size-{{ loop.index }}">{{ size.value | upper }}</li>
-                {% endfor %}
-              </ul>
-              {% endif %}
-            </div>
-            <!-- Sizes # -->
-
-          </div>
-        {% endif %}
-
         </div>
         <!-- Product Data # -->
+
       </div>
+
     </div>
     <!-- Family # -->
 
-
-
   </main>
+{% endblock %}
+
+{% block additional_javascripts %}
+  <script src="{{ asset('js/app-common.js') }}"></script>
+  <script src="{{ asset('js/family.js') }}"></script>
 {% endblock %}

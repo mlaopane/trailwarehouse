@@ -26,6 +26,11 @@ class ProductRepository extends CommonRepository
     ;
   }
 
+  /**
+   * Get one random product
+   *
+   * @return Array|Object|NULL
+   */
   public function getOneRand($as_array = true) {
     return $this->getBuilder()
       ->addSelect('RAND() as HIDDEN rand')
@@ -34,6 +39,27 @@ class ProductRepository extends CommonRepository
       ->getQuery()
       ->getOneOrNullResult(Query::HYDRATE_ARRAY)
     ;
+  }
+
+  /**
+   * Get the best Product of a Family
+   *
+   * @param Family $family
+   * @param bool $as_array
+   *
+   * @return Array|Object|NULL
+   */
+  public function getBest(Family $family, $as_array = true) {
+    $query = $this->getBuilder()
+      ->andWhere('product.family = :family')
+      ->andWhere('product.stock > 0')
+      ->addOrderBy('family.averageRating', 'desc')
+      ->addOrderBy('product.stock', 'asc')
+      ->setParameter('family', $family)
+      ->setMaxResults(1)
+      ->getQuery()
+    ;
+    return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
   }
 
   /**

@@ -18,7 +18,7 @@ class LoadVat implements FixtureInterface
     foreach ($data as $element) {
       $item = (new Vat())
         ->setCountry($element['country'])
-        ->setVat($element['value'])
+        ->setValue($element['value'])
       ;
       $manager->persist($item);
     }

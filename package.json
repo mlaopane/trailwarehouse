@@ -13,6 +13,7 @@
     "database": "php bin/console doctrine:database:create",
     "entity": "php bin/console doctrine:generate:entity",
     "entities": "php bin/console doctrine:generate:entities TrailWarehouse",
+    "form": "php bin/console doctrine:generate:form",
     "schema-dump": "php bin/console doctrine:schema:update --dump-sql",
     "schema-force": "php bin/console doctrine:schema:update --force",
     "bundle": "php bin/console generate:bundle",
@@ -31,5 +32,12 @@
   "bugs": {
     "url": "https://github.com/mlaopane/trailwarehouse/issues"
   },
-  "homepage": "https://github.com/mlaopane/trailwarehouse#readme"
+  "homepage": "https://github.com/mlaopane/trailwarehouse#readme",
+  "dependencies": {
+    "jquery-ts": "^2.1.1"
+  },
+  "devDependencies": {
+    "tsc": "^1.20150623.0",
+    "typescript": "^2.3.4"
+  }
 }

@@ -2,20 +2,20 @@
 1 verbose cli [ 'E:\\__Programs\\nodejs\\node.exe',
 1 verbose cli   'E:\\__Programs\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
 1 verbose cli   'run',
-1 verbose cli   'fixtures' ]
+1 verbose cli   'entity' ]
 2 info using npm@3.10.10
 3 info using node@v6.10.3
-4 verbose run-script [ 'prefixtures', 'fixtures', 'postfixtures' ]
-5 info lifecycle trailwarehouse@1.0.0~prefixtures: trailwarehouse@1.0.0
-6 silly lifecycle trailwarehouse@1.0.0~prefixtures: no script for prefixtures, continuing
-7 info lifecycle trailwarehouse@1.0.0~fixtures: trailwarehouse@1.0.0
-8 verbose lifecycle trailwarehouse@1.0.0~fixtures: unsafe-perm in lifecycle true
-9 verbose lifecycle trailwarehouse@1.0.0~fixtures: PATH: E:\__Programs\nodejs\node_modules\npm\bin\node-gyp-bin;E:\__Programs\Xampp\htdocs\__Symfony\trail-warehouse\node_modules\.bin;C:\Users\Myke Admin\bin;E:\__Programs\Git\mingw64\bin;E:\__Programs\Git\usr\local\bin;E:\__Programs\Git\usr\bin;E:\__Programs\Git\usr\bin;E:\__Programs\Git\mingw64\bin;E:\__Programs\Git\usr\bin;C:\Users\Myke Admin\bin;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\PROGRAM FILES\BROADCOM\BROADCOM 802.11 NETWORK ADAPTER;C:\Windows\SYSTEM32;C:\Windows;C:\Windows\SYSTEM32\WBEM;C:\Windows\SYSTEM32\WINDOWSPOWERSHELL\V1.0;C:\PROGRAM FILES\WIDCOMM\BLUETOOTH SOFTWARE;C:\PROGRAM FILES\WIDCOMM\BLUETOOTH SOFTWARE\SYSWOW64;C:\Program Files\Broadcom\WHL;C:\Program Files\Broadcom\WHL\syswow64;C:\Program Files\Broadcom\WHL\SysWow64;C:\Program Files\Broadcom\WHL\SysWow64\syswow64;E:\__Programs\Xampp\php;C:\ProgramData\ComposerSetup\bin;E:\__Programs\nodejs;C:\Users\Myke Admin\AppData\Roaming\Composer\vendor\bin;C:\Users\Myke Admin\AppData\Roaming\npm;C:\Users\Myke Admin\AppData\Local\atom\bin;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Users\Myke Admin\AppData\Roaming\Composer\vendor\bin;C:\Users\Myke Admin\AppData\Roaming\npm;C:\Users\Myke Admin\AppData\Local\atom\bin;E:\__Programs\Xampp\php;E:\__Programs\Visual Studio Code\bin;E:\__Programs\Git\;E:\__Programs\Git\usr\bin\vendor_perl;E:\__Programs\Git\usr\bin\core_perl
-10 verbose lifecycle trailwarehouse@1.0.0~fixtures: CWD: E:\__Programs\Xampp\htdocs\__Symfony\trail-warehouse
-11 silly lifecycle trailwarehouse@1.0.0~fixtures: Args: [ '/d /s /c', 'php bin/console doctrine:fixtures:load' ]
-12 silly lifecycle trailwarehouse@1.0.0~fixtures: Returned: code: 1  signal: null
-13 info lifecycle trailwarehouse@1.0.0~fixtures: Failed to exec fixtures script
-14 verbose stack Error: trailwarehouse@1.0.0 fixtures: `php bin/console doctrine:fixtures:load`
+4 verbose run-script [ 'preentity', 'entity', 'postentity' ]
+5 info lifecycle trailwarehouse@1.0.0~preentity: trailwarehouse@1.0.0
+6 silly lifecycle trailwarehouse@1.0.0~preentity: no script for preentity, continuing
+7 info lifecycle trailwarehouse@1.0.0~entity: trailwarehouse@1.0.0
+8 verbose lifecycle trailwarehouse@1.0.0~entity: unsafe-perm in lifecycle true
+9 verbose lifecycle trailwarehouse@1.0.0~entity: PATH: E:\__Programs\nodejs\node_modules\npm\bin\node-gyp-bin;E:\__Programs\Xampp\htdocs\__Symfony\trail-warehouse\node_modules\.bin;C:\Users\Myke Admin\bin;E:\__Programs\Git\mingw64\bin;E:\__Programs\Git\usr\local\bin;E:\__Programs\Git\usr\bin;E:\__Programs\Git\usr\bin;E:\__Programs\Git\mingw64\bin;E:\__Programs\Git\usr\bin;C:\Users\Myke Admin\bin;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\PROGRAM FILES\BROADCOM\BROADCOM 802.11 NETWORK ADAPTER;C:\Windows\SYSTEM32;C:\Windows;C:\Windows\SYSTEM32\WBEM;C:\Windows\SYSTEM32\WINDOWSPOWERSHELL\V1.0;C:\PROGRAM FILES\WIDCOMM\BLUETOOTH SOFTWARE;C:\PROGRAM FILES\WIDCOMM\BLUETOOTH SOFTWARE\SYSWOW64;C:\Program Files\Broadcom\WHL;C:\Program Files\Broadcom\WHL\syswow64;C:\Program Files\Broadcom\WHL\SysWow64;C:\Program Files\Broadcom\WHL\SysWow64\syswow64;E:\__Programs\Xampp\php;C:\ProgramData\ComposerSetup\bin;E:\__Programs\nodejs;C:\Users\Myke Admin\AppData\Roaming\Composer\vendor\bin;C:\Users\Myke Admin\AppData\Roaming\npm;C:\Users\Myke Admin\AppData\Local\atom\bin;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Users\Myke Admin\AppData\Roaming\Composer\vendor\bin;C:\Users\Myke Admin\AppData\Roaming\npm;C:\Users\Myke Admin\AppData\Local\atom\bin;E:\__Programs\Xampp\php;E:\__Programs\Visual Studio Code\bin;E:\__Programs\Git\;E:\__Programs\Git\usr\bin\vendor_perl;E:\__Programs\Git\usr\bin\core_perl
+10 verbose lifecycle trailwarehouse@1.0.0~entity: CWD: E:\__Programs\Xampp\htdocs\__Symfony\trail-warehouse
+11 silly lifecycle trailwarehouse@1.0.0~entity: Args: [ '/d /s /c', 'php bin/console doctrine:generate:entity' ]
+12 silly lifecycle trailwarehouse@1.0.0~entity: Returned: code: 1  signal: null
+13 info lifecycle trailwarehouse@1.0.0~entity: Failed to exec entity script
+14 verbose stack Error: trailwarehouse@1.0.0 entity: `php bin/console doctrine:generate:entity`
 14 verbose stack Exit status 1
 14 verbose stack     at EventEmitter.<anonymous> (E:\__Programs\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
 14 verbose stack     at emitTwo (events.js:106:13)
@@ -28,18 +28,18 @@
 15 verbose pkgid trailwarehouse@1.0.0
 16 verbose cwd E:\__Programs\Xampp\htdocs\__Symfony\trail-warehouse
 17 error Windows_NT 6.1.7601
-18 error argv "E:\\__Programs\\nodejs\\node.exe" "E:\\__Programs\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "fixtures"
+18 error argv "E:\\__Programs\\nodejs\\node.exe" "E:\\__Programs\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "entity"
 19 error node v6.10.3
 20 error npm  v3.10.10
 21 error code ELIFECYCLE
-22 error trailwarehouse@1.0.0 fixtures: `php bin/console doctrine:fixtures:load`
+22 error trailwarehouse@1.0.0 entity: `php bin/console doctrine:generate:entity`
 22 error Exit status 1
-23 error Failed at the trailwarehouse@1.0.0 fixtures script 'php bin/console doctrine:fixtures:load'.
+23 error Failed at the trailwarehouse@1.0.0 entity script 'php bin/console doctrine:generate:entity'.
 23 error Make sure you have the latest version of node.js and npm installed.
 23 error If you do, this is most likely a problem with the trailwarehouse package,
 23 error not with npm itself.
 23 error Tell the author that this fails on your system:
-23 error     php bin/console doctrine:fixtures:load
+23 error     php bin/console doctrine:generate:entity
 23 error You can get information on how to open an issue for this project with:
 23 error     npm bugs trailwarehouse
 23 error Or if that isn't available, you can get their info via:

@@ -30,7 +30,7 @@ class LoadFamily implements FixtureInterface
             $item->setName('Montre Cardio-GPS');
             $manager->persist($item);
             break;
-          case 'vêtements':
+          case 'textile':
             $item->setName('T-Shirt technique');
             $manager->persist($item);
             break;

@@ -48,6 +48,17 @@ abstract class CommonController extends Controller
       return new JsonResponse($response);
     }
 
+    /**
+     * GET Random Entity
+     *
+     * @return JsonResponse
+     */
+    public function getRandAction()
+    {
+      $response = $this->getRepository()->getRand();
+      return new JsonResponse($response);
+    }
+
     /* ----- Protected Methods ----- */
 
     /**

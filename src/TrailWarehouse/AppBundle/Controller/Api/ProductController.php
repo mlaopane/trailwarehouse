@@ -35,99 +35,123 @@ class ProductController extends CommonController
      return new JsonResponse($response);
    }
 
-    /**
-     * Add Category
-     *
-     * [POST]
-     *
-     * @return JsonResponse
-     */
-    public function addAction(Request $request)
-    {
-      $entity = $this->getEntity();
-      $entities = [];
-      $fields = ['family', 'color', 'size'];
-      foreach ($fields as $field) {
-        $entities[$field] = $this->getManager()
-          ->getRepository('TrailWarehouseAppBundle:'. ucfirst($field))
-          ->find($request->request->get($field))
-        ;
-        if (empty($entities[$field])) {
-          return new JsonResponse($field ." ". $request->request->get($field) ." doesn't exists !");
-        }
-      }
-      $entity
-        ->setFamily($entities['family'])
-        ->setColor($entities['color'])
-        ->setSize($entities['size'])
-        ->setPrice($request->request->get('price'))
-        ->setStock($request->request->get('stock'))
-        ->generateRef()
+  /**
+   * getBy
+   */
+  public function getOneRandAction()
+  {
+    $response = $this->getRepository()->getOneRand();
+    return new JsonResponse($response);
+  }
+
+  /**
+   * Get the best product of a family
+   *
+   * [GET]
+   *
+   * @param int $family_id
+   */
+  public function getBestAction(int $family_id)
+  {
+    $family = $this->getManager()->getRepository('TrailWarehouseAppBundle:Family')->find($family_id);
+    $response = $this->getRepository()->getBest($family);
+    return new JsonResponse($response);
+  }
+
+
+  /**
+   * Add Category
+   *
+   * [POST]
+   *
+   * @return JsonResponse
+   */
+  public function addAction(Request $request)
+  {
+    $entity = $this->getEntity();
+    $entities = [];
+    $fields = ['family', 'color', 'size'];
+    foreach ($fields as $field) {
+      $entities[$field] = $this->getManager()
+        ->getRepository('TrailWarehouseAppBundle:'. ucfirst($field))
+        ->find($request->request->get($field))
       ;
-      $entity_not_found = empty($db_entity = $this->getRepository()->getOneBy('ref', $entity->getRef()));
-      if ($entity_not_found) {
-        $this->persistOne($entity);
-        return new JsonResponse(["message" => "Product added"]);
+      if (empty($entities[$field])) {
+        return new JsonResponse($field ." ". $request->request->get($field) ." doesn't exists !");
       }
-      return new JsonResponse(["message" => "Product already exists"]);
     }
+    $entity
+      ->setFamily($entities['family'])
+      ->setColor($entities['color'])
+      ->setSize($entities['size'])
+      ->setPrice($request->request->get('price'))
+      ->setStock($request->request->get('stock'))
+      ->generateRef()
+    ;
+    $entity_not_found = empty($db_entity = $this->getRepository()->getOneBy('ref', $entity->getRef()));
+    if ($entity_not_found) {
+      $this->persistOne($entity);
+      return new JsonResponse(["message" => "Product added"]);
+    }
+    return new JsonResponse(["message" => "Product already exists"]);
+  }
 
-    /**
-     * POST Category
-     *
-     * @param Request $request
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
-    public function modifyAction(Request $request, int $id)
-    {
-      $product_not_found = empty($product = $this->getRepository()->find($id));
-      // If product not found => Do nothing
-      if ($product_not_found) {
-        return new JsonResponse("Product not found");
-      }
-      // Else...
-      else {
-        // Loop over the POST data
-        foreach ($request->request as $field => $value) {
-          $field = ucfirst($field);
-          $set = 'set'.$field;
-          // If the provided field match with a setter
-          if (method_exists($product, $set)) {
-            // If the field is an entity
-            if ($field == 'Family' OR $field == 'Color' OR $field == 'Size') {
-              $value = $this->getManager()->getRepository('TrailWarehouseAppBundle:'.$field)->find($value);
-            }
-            $product->$set($value); // Using the setter
+  /**
+   * POST Category
+   *
+   * @param Request $request
+   * @param int $id
+   *
+   * @return JsonResponse
+   */
+  public function modifyAction(Request $request, int $id)
+  {
+    $product_not_found = empty($product = $this->getRepository()->find($id));
+    // If product not found => Do nothing
+    if ($product_not_found) {
+      return new JsonResponse("Product not found");
+    }
+    // Else...
+    else {
+      // Loop over the POST data
+      foreach ($request->request as $field => $value) {
+        $field = ucfirst($field);
+        $set = 'set'.$field;
+        // If the provided field match with a setter
+        if (method_exists($product, $set)) {
+          // If the field is an entity
+          if ($field == 'Family' OR $field == 'Color' OR $field == 'Size') {
+            $value = $this->getManager()->getRepository('TrailWarehouseAppBundle:'.$field)->find($value);
           }
+          $product->$set($value); // Using the setter
         }
-        $product->generateRef(); // Update the ref
-        $product_already_exists = !empty($this->getRepository()->findByRef($product->getRef()));
-        if($product_already_exists) {
-          return new JsonResponse("Product already exists | Réf = '". $product->getRef() ."'");
-        }
-        $this->persistOne($product);
-        return new JsonResponse("Product successfully modified");
       }
+      $product->generateRef(); // Update the ref
+      $product_already_exists = !empty($this->getRepository()->findByRef($product->getRef()));
+      if($product_already_exists) {
+        return new JsonResponse("Product already exists | Réf = '". $product->getRef() ."'");
+      }
+      $this->persistOne($product);
+      return new JsonResponse("Product successfully modified");
     }
+  }
 
-    /**
-     * DELETE Category
-     *
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
-    public function removeAction(int $id)
-    {
-      $entity_not_found = empty($entity = $this->getRepository()->find($id));
-      if ($entity_not_found) {
-        return new JsonResponse(false);
-      }
-      else {
-        $this->removeOne($entity);
-        return new JsonResponse(true);
-      }
+  /**
+   * DELETE Category
+   *
+   * @param int $id
+   *
+   * @return JsonResponse
+   */
+  public function removeAction(int $id)
+  {
+    $entity_not_found = empty($entity = $this->getRepository()->find($id));
+    if ($entity_not_found) {
+      return new JsonResponse(false);
     }
+    else {
+      $this->removeOne($entity);
+      return new JsonResponse(true);
+    }
+  }
 }

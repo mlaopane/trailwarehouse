@@ -21,6 +21,7 @@
     "tests"
   ],
   "dependencies": {
-    "ness": "1"
+    "ness": "1",
+    "angular": "^1.6.4"
   }
 }
