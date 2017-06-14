@@ -41,6 +41,13 @@ class Color
     /**
      * @var string
      *
+     * @ORM\Column(name="type", type="string", length=100)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=191, unique=true)
      *
@@ -130,5 +137,29 @@ class Color
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Color
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

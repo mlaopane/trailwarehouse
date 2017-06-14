@@ -14,6 +14,7 @@
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
+/node_modules/*
 /web/bundles/
 /web/bower_components/
 /web/node_modules/

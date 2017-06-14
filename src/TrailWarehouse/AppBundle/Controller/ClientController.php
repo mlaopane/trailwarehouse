@@ -59,20 +59,24 @@ class ClientController extends Controller
   public function signinAction(Request $request)
   {
     $form = $this->get('form.factory')->create(SigninType::class, $this->member);
+    // Envoi du formulaire
     if ($form->isSubmitted())
     {
       $form->handleRequest($request);
-      if ($form->isValid())
-      {
+      // Formulaire non valide
+      if (!$form->isValid()) {
+        $request->getSession()->getFlashBag()->add('warning', 'Formulaire non valide !');
+      }
+      // Formulaire valide
+      else {
         $manager = $this->getDoctrine()->getManager();
         $repository = $manager->getRepository('TrailWarehouseAppBundle:Member');
         $db_member = $repository->findOneBy([
-          'email' => $this->member->getEmail(),
+          'email'    => $this->member->getEmail(),
           'password' => $this->member->getPassword(),
         ]);
-
-        if ($db_member == NULL)
-        {
+        // Identifiants erronés
+        if ($db_member == NULL) {
           return $this->redirectToRoute('app_client_signin');
         }
         $request->getSession()->getFlashBag()->add('notice', 'Bienvenue '. $this->member->getFirstname());

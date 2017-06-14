@@ -87,7 +87,7 @@ class Family
     public function __construct()
     {
         $this->products = new ArrayCollection();
-        $this->reviews = new ArrayCollection();
+        $this->reviews  = new ArrayCollection();
     }
 
     /**
@@ -342,4 +342,5 @@ class Family
     {
         return $this->averageRating;
     }
+
 }

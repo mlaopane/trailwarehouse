@@ -64,12 +64,6 @@ class Product
      */
     private $stock = 0;
 
-    /**
-     * @ORM\OneToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $image;
-
 
     /* ----- Events ----- */
 
@@ -274,27 +268,4 @@ class Product
         return $this->size;
     }
 
-    /**
-     * Set image
-     *
-     * @param \TrailWarehouse\AppBundle\Entity\Image $image
-     *
-     * @return Product
-     */
-    public function setImage(\TrailWarehouse\AppBundle\Entity\Image $image = null)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return \TrailWarehouse\AppBundle\Entity\Image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
 }

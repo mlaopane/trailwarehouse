@@ -123,7 +123,7 @@ class ProductRepository extends CommonRepository
   public function getColorsBy($field, $value, $as_array = true)
   {
     return $this->_em->createQueryBuilder()
-      ->select('color.name, color.value')
+      ->select('color.id, color.name, color.value')
       ->from($this->_entityName, 'product')
       ->innerJoin('product.color', 'color')
       ->where('product.'. $field .' = :value')
@@ -152,7 +152,8 @@ class ProductRepository extends CommonRepository
   public function getSizesBy($field, $value, $as_array = true)
   {
     return $this->_em->createQueryBuilder()
-      ->select('size.value')->from($this->_entityName, 'product')
+      ->select('size.id, size.value, size.unitShortcut')
+      ->from($this->_entityName, 'product')
       ->innerJoin('product.size', 'size')
       ->where('product.'. $field .' = :'. $field)
       ->setParameter($field, $value)
@@ -179,13 +180,12 @@ class ProductRepository extends CommonRepository
    */
   private function getBuilder() {
     return $this->createQueryBuilder('product')
-      ->addSelect('family, color, size, image, category, brand')
+      ->addSelect('family, color, size, category, brand')
       ->innerJoin('product.family', 'family')
-      ->leftJoin('product.color', 'color')
-      ->leftJoin('product.size', 'size')
-      ->leftJoin('product.image', 'image')
       ->innerJoin('family.category', 'category')
       ->innerJoin('family.brand', 'brand')
+      ->leftJoin('product.color', 'color')
+      ->leftJoin('product.size', 'size')
     ;
   }
 

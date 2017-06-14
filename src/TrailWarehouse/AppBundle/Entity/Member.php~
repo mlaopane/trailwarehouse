@@ -5,7 +5,7 @@ namespace TrailWarehouse\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use TrailWarehouse\AppBundle\Entity\Coordinate;
 
 /**
@@ -14,7 +14,7 @@ use TrailWarehouse\AppBundle\Entity\Coordinate;
 * @ORM\Table(name="member")
 * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\MemberRepository")
 */
-class Member implements UserInterface
+class Member implements AdvancedUserInterface, \Serializable
 {
     /**
     * @var int
@@ -45,6 +45,13 @@ class Member implements UserInterface
     * @ORM\Column(name="email", type="string", length=191, unique=true)
     */
     private $email;
+
+    /**
+    * @var string
+    *
+    * @ORM\Column(name="username", type="string", length=191, unique=true)
+    */
+    private $username;
 
     /**
     * @var string
@@ -91,18 +98,13 @@ class Member implements UserInterface
     /**
     * Constructor
     */
-    public function __construct()
-    {
+    public function __construct() {
         $this->coordinates = new ArrayCollection();
         $this->reviews = new ArrayCollection();
     }
 
 
-    /* ---------- UserInterface ---------- */
-
-    public function getUsername() {
-        return null;
-    }
+    /* ---------- AdvancedUserInterface ---------- */
 
     public function getRoles() {
         return null;
@@ -116,26 +118,63 @@ class Member implements UserInterface
         return null;
     }
 
+    public function isAccountNonExpired() {
+        return true;
+    }
+
+    public function isAccountNonLocked() {
+        return true;
+    }
+
+    public function isCredentialsNonExpired() {
+        return true;
+    }
+
+    public function isEnabled() {
+        return $this->isActive;
+    }
+
+    /* ---------- Serializable ---------- */
+
+    public function serialize() {
+        return serialize ([
+            $this->id,
+            $this->email,
+            $this->password,
+            $this->isActive,
+        ]);
+    }
+
+    public function unserialize($serialized) {
+        list (
+            $this->id,
+            $this->email,
+            $this->password,
+            $this->isActive,
+        ) = unserialize($serialized);
+    }
 
     /* ---------- Getters & Setters ---------- */
 
+
+
     /**
-    * Get id
-    *
-    * @return int
-    */
+     * Get id
+     *
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
     }
 
     /**
-    * Set firstname
-    *
-    * @param string $firstname
-    *
-    * @return Member
-    */
+     * Set firstname
+     *
+     * @param string $firstname
+     *
+     * @return Member
+     */
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
@@ -144,22 +183,22 @@ class Member implements UserInterface
     }
 
     /**
-    * Get firstname
-    *
-    * @return string
-    */
+     * Get firstname
+     *
+     * @return string
+     */
     public function getFirstname()
     {
         return $this->firstname;
     }
 
     /**
-    * Set lastname
-    *
-    * @param string $lastname
-    *
-    * @return Member
-    */
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return Member
+     */
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
@@ -168,22 +207,22 @@ class Member implements UserInterface
     }
 
     /**
-    * Get lastname
-    *
-    * @return string
-    */
+     * Get lastname
+     *
+     * @return string
+     */
     public function getLastname()
     {
         return $this->lastname;
     }
 
     /**
-    * Set email
-    *
-    * @param string $email
-    *
-    * @return Member
-    */
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Member
+     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -192,22 +231,46 @@ class Member implements UserInterface
     }
 
     /**
-    * Get email
-    *
-    * @return string
-    */
+     * Get email
+     *
+     * @return string
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
     /**
-    * Set password
-    *
-    * @param string $password
-    *
-    * @return Member
-    */
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return Member
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return Member
+     */
     public function setPassword($password)
     {
         $this->password = $password;
@@ -216,68 +279,13 @@ class Member implements UserInterface
     }
 
     /**
-    * Get password
-    *
-    * @return string
-    */
+     * Get password
+     *
+     * @return string
+     */
     public function getPassword()
     {
         return $this->password;
-    }
-
-    /**
-    * Set isActive
-    *
-    * @param boolean $isActive
-    *
-    * @return Member
-    */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    /**
-    * Get isActive
-    *
-    * @return bool
-    */
-    public function getIsActive()
-    {
-        return $this->isActive;
-    }
-
-    /**
-    * Add coordinate
-    *
-    * @param Coordinate $coordinate
-    */
-    public function addCoordinate(Coordinate $coordinate)
-    {
-        $this->coordinates[] = $coordinate;
-        $coordinate->setMember($this);
-    }
-
-    /**
-    * Remove coordinate
-    *
-    * @param Coordinate $coordinate
-    */
-    public function removeCoordinate(Coordinate $coordinate)
-    {
-        $this->coordinates->removeElement($coordinate);
-    }
-
-    /**
-    * Get coordinates
-    *
-    * @return ArrayCollection
-    */
-    public function getCoordinates()
-    {
-        return $this->coordinates;
     }
 
     /**
@@ -305,6 +313,30 @@ class Member implements UserInterface
     }
 
     /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Member
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
      * Set creation
      *
      * @param \DateTime $creation
@@ -328,6 +360,39 @@ class Member implements UserInterface
         return $this->creation;
     }
 
+    /**
+     * Add coordinate
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Coordinate $coordinate
+     *
+     * @return Member
+     */
+    public function addCoordinate(\TrailWarehouse\AppBundle\Entity\Coordinate $coordinate)
+    {
+        $this->coordinates[] = $coordinate;
+
+        return $this;
+    }
+
+    /**
+     * Remove coordinate
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Coordinate $coordinate
+     */
+    public function removeCoordinate(\TrailWarehouse\AppBundle\Entity\Coordinate $coordinate)
+    {
+        $this->coordinates->removeElement($coordinate);
+    }
+
+    /**
+     * Get coordinates
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCoordinates()
+    {
+        return $this->coordinates;
+    }
 
     /**
      * Add review

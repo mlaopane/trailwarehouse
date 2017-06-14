@@ -1,0 +1,29 @@
+// main : style.less
+
+/* ----- Page Family ----- */
+
+#page-family {
+  #colors {
+    margin-bottom: 24px;
+    .color {
+      &-list {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+      }
+      &-sample {
+        &-container {
+          border: 1px solid @grey;
+          padding: 2px;
+          margin-bottom: 5px;
+          &:not(:last-child) {
+            margin-right: 5px;
+          }
+        }
+        @color-sample-size : 28px;
+        height : @color-sample-size;
+        width : @color-sample-size;
+      }
+    }
+  }
+}

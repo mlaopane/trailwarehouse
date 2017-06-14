@@ -30,8 +30,8 @@
         <div class="image-container flex justify-content-center col-12 col-lg-6 col-xl-5 py-2 px-xl-2">
           <div class="p-4">
             <img id="image"
-              data-ng-src="{% verbatim %}{{ (page.product.image.src != '' && page.product.image.src != null) ? page.product.image.src : (page.ASSET_URL + 'images/no_picture.png') }}{% endverbatim %}"
-              data-ng-alt="page.product.image.alt">
+              data-ng-src="{% verbatim %}{{ (page.ASSET_URL + 'images/no_picture.png') }}{% endverbatim %}"
+              alt="">
           </div>
         </div>
         <!-- Product # -->
@@ -80,57 +80,81 @@
 
                     <!-- # Card Text -->
                     <div class="card-text">
+
+                      <!-- # Row -->
                       <div class="row">
-                        <!-- # Stock -->
-                        <div id="stock" class="col-6">
-                          <div class="text-success"
-                            data-ng-cloak
-                            data-ng-if="page.product.stock >= 10">
-                            <span>Disponible</span>
-                            <span class="glyphicon glyphicon-ok"></span>
+                        <!-- # Col 1 -->
+                        <div class="col-6">
+
+                          <!-- # Colors -->
+                          <div id="colors" class="mb-3">
+                            {% if colors is not empty %}
+                            <ul class="color-list">
+                              {% for color in colors %}
+                              <li class="color-sample-container">
+                                <div data-id-color="{{ color.id }}"
+                                  data-ng-click="page.updateProduct({{ color.id }}, page.active_size)"
+                                  class="color-sample"
+                                  style="background:{{ color.value }}">
+                                </div>
+                              </li>
+                              {% endfor %}
+                            </ul>
+                            {% endif %}
                           </div>
-                          <div class="text-warning"
-                            data-ng-cloak
-                            data-ng-bind="'Quantité disponible : ' + page.product.stock"
-                            data-ng-if="page.product.stock > 0 && page.product.stock < 10">
+                          <!-- Colors # -->
+
+                          <!-- # Sizes -->
+                          <div id="sizes" class="">
+                            {% if sizes is not empty %}
+                            <div class="ness-option-container w-50">
+                              <ul class="ness-option-group">
+                                {% for size in sizes %}
+                                <li id="size-{{ size.id }}" class="ness-option ness-option-md w-100">
+                                  <div class="size-option"
+                                    data-ng-click="page.updateProduct(page.active_color, {{ size.id }})">
+                                    {{ (size.value | upper) ~ ' ' ~ size.unitShortcut }}
+                                  </div>
+                                </li>
+                                {% endfor %}
+                              </ul>
+                            </div>
+                            {% endif %}
                           </div>
-                          <div class="text-danger"
-                            data-ng-cloak
-                            data-ng-if="page.product.stock == 0">
-                            Produit indisponible
-                          </div>
+                          <!-- Sizes # -->
+
                         </div>
-                        <!-- Stock # -->
-                        <!-- # Price -->
-                        <div id="price"  class="text-success col-6">
-                          Prix : {{ product.price }}
+
+                        <!-- # Col 2 -->
+                        <div class="col-6">
+
+                          <!-- # Stock -->
+                          <div id="stock" class="">
+                            <div class="text-success" data-ng-cloak
+                              data-ng-if="page.product.stock >= 10">
+                              <span>Disponible</span>&nbsp;<span class="glyphicon glyphicon-ok"></span>
+                            </div>
+                            <div class="text-warning" data-ng-cloak
+                              data-ng-bind="'Quantité disponible : ' + page.product.stock"
+                              data-ng-if="page.product.stock > 0 && page.product.stock < 10">
+                            </div>
+                            <div class="text-danger" data-ng-cloak
+                              data-ng-if="page.product.stock == 0">
+                              Produit indisponible
+                            </div>
+                          </div>
+                          <!-- Stock # -->
+
+                          <!-- # Price -->
+                          <div id="price">
+                            <strong>€&nbsp;<span class="text-success"></span> {{ product.price }}</strong>
+                          </div>
+                          <!-- Price # -->
+
                         </div>
-                        <!-- Price # -->
                       </div>
-                      <div class="row">
-                        <!-- # Colors -->
-                        <div id="colors" class="col-6">
-                          {% if colors is not empty %}
-                          <ul>
-                            {% for color in colors %}
-                            <li id="p-color-{{ loop.index }}" style="background:{{ color.value }}">{{ color.name }}</li>
-                            {% endfor %}
-                          </ul>
-                          {% endif %}
-                        </div>
-                        <!-- Colors # -->
-                        <!-- # Sizes -->
-                        <div id="sizes" class="col-6">
-                          {% if sizes is not empty %}
-                          <ul>
-                            {% for size in sizes %}
-                            <li id="p-size-{{ loop.index }}">{{ size.value | upper }}</li>
-                            {% endfor %}
-                          </ul>
-                          {% endif %}
-                        </div>
-                        <!-- Sizes # -->
-                      </div>
+                      <!-- Row # -->
+
                       <div class="row">
                         <!-- # Description -->
                         <div id="description" class="col-12">
@@ -179,7 +203,6 @@
 
     </div>
     <!-- Family # -->
-
   </main>
 {% endblock %}
 

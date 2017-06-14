@@ -41,6 +41,13 @@ class Color
     /**
      * @var string
      *
+     * @ORM\Column(name="type", type="string", length=100)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=191, unique=true)
      *
