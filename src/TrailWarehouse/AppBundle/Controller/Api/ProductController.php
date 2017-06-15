@@ -19,21 +19,67 @@ class ProductController extends CommonController
    * @param int color
    * @param int size
    */
-   public function getByAction(int $family, int $color, int $size)
-   {
-     $args_name = ['family', 'color', 'size'];
-     $ids = func_get_args();
+  public function getByAction(int $family, int $color = NULL, int $size = NULL)
+  {
+   $args_name[] = ['family', 'color', 'size'];
+   $ids = func_get_args();
 
-    foreach ($ids as $i => $id) {
-      $field = $args_name[$i];
-      $args[$field] = $this->getManager()
-        ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
-        ->find($id)
-      ;
-     }
-     $response = $this->getRepository()->getBy($args);
-     return new JsonResponse($response);
+  foreach ($ids as $i => $id) {
+    $field = $args_name[$i];
+    $args[$field] = $this->getManager()
+      ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
+      ->find($id)
+    ;
    }
+   $response = $this->getRepository()->getBy($args);
+   return new JsonResponse($response);
+  }
+
+  /**
+   * getBy
+   * @param int family
+   * @param int color
+   * @param int size
+   */
+  public function getByColorAction(int $family, int $color)
+  {
+   $args_name = ['family', 'color'];
+   $ids = func_get_args();
+
+  foreach ($ids as $i => $id) {
+    $field = $args_name[$i];
+    $args[$field] = $this->getManager()
+      ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
+      ->find($id)
+    ;
+   }
+   $response = $this->getRepository()->getBy($args);
+   return new JsonResponse($response);
+  }
+
+  /**
+   * getBy
+   * @param int family
+   * @param int color
+   * @param int size
+   */
+  public function getBySizeAction(int $family, int $size)
+  {
+   $args_name = ['family', 'size'];
+   $ids = func_get_args();
+
+  foreach ($ids as $i => $id) {
+    $field = $args_name[$i];
+    $args[$field] = $this->getManager()
+      ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
+      ->find($id)
+    ;
+   }
+   $response = $this->getRepository()->getBy($args);
+   return new JsonResponse($response);
+  }
+
+
 
   /**
    * getBy

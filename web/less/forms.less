@@ -49,3 +49,19 @@
     }
   }
 }
+
+.ness-option {
+  &.active {
+    background: @secondary;
+    color: white;
+  }
+  &.disabled {
+    background: @lightgrey;
+    color: @steelgrey;
+    cursor: default;
+  }
+  &:hover:not(.active):not(.disabled) {
+    background: @secondary;
+    color: white;
+  }
+}
