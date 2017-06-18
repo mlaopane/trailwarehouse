@@ -46,9 +46,7 @@ class Cart
         $this->items[] = $item;
 
         // Update Cart total
-        foreach ($this->items as $cart_item) {
-          $this->total += $cart_item->getTotal();
-        }
+        $this->total += $item->getTotal();
 
         return $this;
     }
@@ -61,6 +59,7 @@ class Cart
     public function removeItem(Item $item)
     {
         $this->items->removeElement($item);
+        $this->total -= $item->getTotal();
     }
 
     /**

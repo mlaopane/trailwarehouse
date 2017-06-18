@@ -14,11 +14,11 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
     $http.get(url).then(function(response) {
       products = response.data;
       page.colors = page.extractColors(products);
+      // Get the product using 1 color from page.colors
       for (let index in page.colors) {
         page.getProductsByColor(family_id, page.colors[index].id);
         break;
       }
-
     });
     return products;
   }

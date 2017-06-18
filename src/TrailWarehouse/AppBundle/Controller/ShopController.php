@@ -124,27 +124,37 @@ class ShopController extends Controller
    * [POST]
    */
   public function addToCartAction(Request $request) {
-    $item_data = json_decode(file_get_contents('php://input'));
-    $product  = $item_data->product;
-    $quantity = $item_data->quantity;
+    $post_item     = json_decode(file_get_contents('php://input'));
+    $post_product  = $post_item->product;
+    $post_quantity = $post_item->quantity;
 
     $repository['product'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Product');
-    $product_exists = !empty($db_product = $repository['product']->find($product->id));
+    $product_exists = !empty($db_product = $repository['product']->find($post_product->id));
 
     // IF the Product does exist and is available THEN Add Item to Cart
-    if ($product_exists AND $db_product->getStock() >= $quantity) {
-      $item = (new Item())
+    if ($product_exists AND $db_product->getStock() >= $post_quantity) {
+      $new_item = (new Item())
         ->setProduct($db_product)
-        ->setQuantity($quantity)
-        ->setTotal($product->price * $quantity)
+        ->setQuantity($post_quantity)
+        ->setTotal($post_product->price * $post_quantity)
       ;
+      // IF the cart doesn't exist
       if (empty($cart = $request->getSession()->get('cart'))) {
         $cart = new Cart();
       }
-      $cart->addItem($item);
+      // ELSE check if the product already exists in the cart
+      else {
+        foreach ($cart_items = $cart->getItems() as $cart_item) {
+          if ($cart_item->getProduct()->getId() == $db_product->getId()) {
+            $cart->removeItem($cart_item);
+            break;
+          }
+        }
+      }
+      $cart->addItem($new_item);
       $request->getSession()->set('cart', $cart);
       return new JsonResponse($this->serializer->serialize($cart, 'json'));
     }
-    return new JsonResponse("Item not added");
+    return new JsonResponse(array());
   }
 }

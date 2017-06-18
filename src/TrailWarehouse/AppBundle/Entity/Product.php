@@ -66,7 +66,7 @@ class Product
     private $image;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="price", type="decimal", precision=7, scale=2)
      */

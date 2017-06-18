@@ -23,12 +23,13 @@
         <input type="hidden" data-ng-init="page.API_URL = '{{ url('app_api_product_get_all') }}'">
         <input type="hidden" data-ng-init="page.ASSET_URL = '{{ asset('') }}'">
         <input type="hidden" data-ng-init="page.family_id = '{{ family.id }}'">
+        <input type="hidden" data-ng-init="page.quantity = 1">
       </div>
 
       <div class="row px-0 px-lg-3 px-xl-5">
 
         <!-- # Product Image -->
-        <div class="image-container flex justify-content-center col-12 mb-3">
+        <div class="image-container flex justify-content-center col-12 col-xl-6 mb-3">
           <div class="">
             <img id="image"
               data-ng-src="{% verbatim %}{{ page.ASSET_URL + (page.product.image ? page.product.image.src : 'images/no_picture.png') }}{% endverbatim %}"
@@ -39,7 +40,7 @@
         <!-- Product # -->
 
         <!-- # Product Data -->
-        <div class="col-12 py-2 px-xl-2">
+        <div class="col-12 col-xl-6 py-2 px-xl-2">
 
           <!-- # Card -->
           <div class="card">
@@ -70,10 +71,16 @@
                 <div class="tab-pane fade show active" id="features" role="tabpanel">
 
                   <!-- # Card Title -->
-                  <div class="card-title">
-                    <h3 class="justify-content-center"
-                      data-ng-bind="(page.product.family.name | capitalize) + ' - ' + (page.product.family.brand.name | ucwords)">
+                  <div class="card-title row">
+                    <h3 class="col-12 col-sm">
+                      <span class="font-italic mr-2">{{ family.brand.name | ucwords }}</span><span>{{ family.name | capitalize }}</span>
                     </h3>
+                    <div class="col-12 col-sm flex justify-content-xl-end">
+                      <button class="ness-btn bg-primary txt-whitegrey" type="button" name="button"
+                      data-ng-click="page.addToCart(page.product, page.quantity)">
+                      Ajouter au panier
+                    </button>
+                    </div>
                   </div>
                   <!-- Card Title # -->
 
@@ -105,12 +112,17 @@
                       </div>
 
                       <!-- # Pickers -->
-                      <div class="col-12 col-md-6">
+                      <div class="col-12 col-md-6 col-xl-12">
 
                         <div class="row">
                           <!-- # Colors -->
-                          <div id="colors" class="col-xl-6 mb-3">
-                            <h4>Couleurs</h4>
+                          <div id="colors" class="col-12 mb-3">
+                            <h4>
+                              <span class="font-weight-bold">Couleur</span> :
+                              <span
+                                data-ng-class="(page.product.color == null ? 'invisible' : '')"
+                                data-ng-bind="page.product.color.name | capitalize"></span>
+                            </h4>
                             {% if colors is not empty %}
                               <ul class="color-list ness-block three-d">
                                 {% for color in colors %}
@@ -132,10 +144,17 @@
                           <!-- Colors # -->
 
                           <!-- # Sizes -->
-                          <div id="sizes" class="col-xl-6 mb-3 mb-md-0">
-                            <h4>Tailles</h4>
+                          <div id="sizes" class="col-6 mb-3">
+                            <h4>
+                              <span class="font-weight-bold">Taille</span> :
+                              <span
+                                data-ng-class="(page.product.size == null ? 'invisible' : '')"
+                                data-ng-bind="
+                                (page.product.size.value | capitalize)
+                                + (page.product.size.unitShortcut == null ? '' : ' ' + page.product.size.unitShortcut)"></span>
+                            </h4>
                             {% if sizes is not empty %}
-                              <div class="ness-option-container">
+                              <div id="sizes-container" class="ness-option-container ness-option-container-sm">
                                 <!-- # Loader -->
                                 <div data-ng-class="'loader-container' + (!page.loading && page.product ? ' hide' : '')">
                                   <div class="loader">
@@ -151,7 +170,7 @@
                                   {% for size in sizes %}
                                     <li id="size-{{ size.id }}"
                                       data-ng-class="
-                                      'ness-option ness-option-md w-100'
+                                      'ness-option ness-option-sm w-100'
                                       + (page.sizes && !page.sizes[{{ size.id }}] ? ' disabled' : '')
                                       + (page.product.size.id == {{ size.id }} ? ' active' : '')"
                                       data-ng-click="page.getProductBy({{ family.id }}, page.product.color.id, {{ size.id }})">
@@ -168,55 +187,39 @@
                             {% endif %}
                           </div>
                           <!-- Sizes # -->
+
+                          <!-- # Quantity -->
+                          <div id="quantity" class="col-6 mb-3">
+                            <h4>
+                              <span class="font-weight-bold">Quantité</span> :
+                              <span
+                                data-ng-class="(page.quantity == null ? 'invisible' : '')"
+                                data-ng-bind="page.quantity"></span>
+                            </h4>
+                            <div class="ness-option-container ness-option-container-sm">
+                              <ul data-ng-class="'ness-option-group'">
+                                {% for i in range(1, 10) %}
+                                <li data-ng-class="
+                                  'ness-option ness-option-sm'
+                                  + (page.quantity == {{ i }} ? ' active' : '')"
+                                  data-ng-click="page.quantity = {{ i }}">
+                                  <div class="quantity-option">
+                                    {{ i }}
+                                  </div>
+                                </li>
+                                {% endfor %}
+                              </ul>
+                            </div>
+                          </div>
+                          <!-- # Quantity -->
+
                         </div>
 
                       </div>
                       <!-- Pickers # -->
 
                       <!-- # Details -->
-                      <div id="details" class="col-12 col-md-6">
-
-                        <div class="row">
-
-                          <div class="col-6">
-
-                            <!-- # Table details -->
-                            <table id="table-details">
-                              <tbody>
-                                <!-- # Price -->
-                                <tr data-ng-class="page.product.price != null ? '' : 'invisible'">
-                                  <td>€</td>
-                                  <td id="price" data-ng-bind="page.product.price"></td>
-                                </tr>
-                                <!-- Price # -->
-
-                                <!-- # Color picked -->
-                                <tr data-ng-class="page.product.color != null ? '' : 'invisible'">
-                                  <td>Couleur</td>
-                                  <td id="color-picked" data-ng-bind="page.product.color.name | capitalize"></td>
-                                </tr>
-                                <!-- Color picked # -->
-
-                                <!-- # Size picked -->
-                                <tr data-ng-class="page.product.size != null ? '' : 'invisible'">
-                                  <td>Taille</td>
-                                  <td id="size-picked" data-ng-bind="page.product.size.value | capitalize"></td>
-                                </tr>
-                                <!-- Size picked # -->
-                              </tbody>
-                            </table>
-
-                          </div>
-
-                          <!-- # Cart Button -->
-                          <div class="col-6">
-                            <button class="ness-btn bg-primary txt-whitegrey" type="button" name="button"
-                              data-ng-click="page.addToCart(page.product, 5)">
-                              Ajouter au panier
-                            </button>
-                          </div>
-
-                        </div>
+                      <div id="details" class="col-12 col-md-6 col-xl-12">
 
                         <div class="row">
                           <!-- # Description -->
