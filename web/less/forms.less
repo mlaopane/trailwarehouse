@@ -50,18 +50,18 @@
   }
 }
 
-.ness-option {
-  &.active {
-    background: @secondary;
-    color: white;
+.ness-btn {
+  background: linear-gradient(to bottom, lighten(@primary, 5%), darken(@primary, 5%)) !important;
+  transition: .50s;
+  &:hover {
+    background: linear-gradient(to bottom, lighten(@primary, 5%), darken(@primary, 5%)) !important;
+    border-color: @primary !important;
+    .glow;
   }
-  &.disabled {
-    background: @lightgrey;
-    color: @steelgrey;
-    cursor: default;
-  }
-  &:hover:not(.active):not(.disabled) {
-    background: @secondary;
-    color: white;
-  }
+}
+
+.glow {
+  text-shadow:
+    0 0 8px @neon-color,
+  ;
 }

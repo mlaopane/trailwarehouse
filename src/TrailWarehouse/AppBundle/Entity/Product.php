@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use TrailWarehouse\AppBundle\Entity\Color;
 use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Size;
+use TrailWarehouse\AppBundle\Entity\Image;
 
 /**
  * Product
@@ -33,22 +34,36 @@ class Product
     private $ref;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", cascade={"persist"}, inversedBy="products")
+     * @var Family
+     *
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $family;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Color", cascade={"persist"})
+     * @var Color
+     *
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Color")
      * @ORM\JoinColumn(nullable=true)
      */
     private $color;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Size", cascade={"persist"})
+     * @var Size
+     *
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Size")
      * @ORM\JoinColumn(nullable=true)
      */
     private $size;
+
+    /**
+     * @var Image
+     *
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $image;
 
     /**
      * @var string
@@ -173,30 +188,6 @@ class Product
     }
 
     /**
-     * Set visuel
-     *
-     * @param string $visuel
-     *
-     * @return Product
-     */
-    public function setVisuel($visuel)
-    {
-        $this->visuel = $visuel;
-
-        return $this;
-    }
-
-    /**
-     * Get visuel
-     *
-     * @return string
-     */
-    public function getVisuel()
-    {
-        return $this->visuel;
-    }
-
-    /**
      * Set family
      *
      * @param \TrailWarehouse\AppBundle\Entity\Family $family
@@ -227,7 +218,7 @@ class Product
      *
      * @return Product
      */
-    public function setColor(Color $color)
+    public function setColor(Color $color = null)
     {
         $this->color = $color;
 
@@ -251,7 +242,7 @@ class Product
      *
      * @return Product
      */
-    public function setSize(Size $size)
+    public function setSize(Size $size = null)
     {
         $this->size = $size;
 
@@ -268,4 +259,28 @@ class Product
         return $this->size;
     }
 
+
+    /**
+     * Set image
+     *
+     * @param Image $image
+     *
+     * @return Product
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 }

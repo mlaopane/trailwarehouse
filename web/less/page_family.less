@@ -3,32 +3,88 @@
 /* ----- Page Family ----- */
 
 #page-family {
+  .nav-link:not(.active):hover {
+    background: @sand;
+  }
   #colors {
     margin-bottom: 24px;
+    @media (min-width: @width-xl) {
+      min-height: 220px;
+    }
     .color {
       &-list {
         display: flex;
         flex-flow: row wrap;
         justify-content: flex-start;
       }
-      &-sample {
-        &-container {
-          border: 1px solid @darkgrey;
-          cursor: pointer;
-          margin-bottom: 5px;
-          &:not(:last-child) {
-            margin-right: 5px;
+      &-container {
+        border: 1px solid transparent;
+        cursor: pointer;
+        margin-bottom: 5px;
+        &:not(:last-child) {
+          margin-right: 5px;
+        }
+        &:hover:not(.active) {
+          box-shadow: 0px 0px 1px 1px @whitegrey;
+        }
+        &:active:not(.active) {
+          transform: scale3d(1.10, 1.10, 1.10);
+        }
+        &.active {
+          border: 1px solid @blackgrey;
+          transform: scale(1.10);
+          .color-sample {
+            border: 1px solid transparent;
           }
         }
-        &:hover {
-          box-shadow: 0px 0px 2px 1px @blackgrey;
-          transform: scale(1.15);
-        }
+      }
+      &-sample {
         @color-sample-size : 32px;
+        border: 1px solid @blackgrey;
         height : @color-sample-size;
         width : @color-sample-size;
         transition: 0.15s;
       }
+    }
+  }
+  #sizes {
+    @size-hover: @secondary;
+    @size-active : lighten(@secondary, 5%);
+    .ness-option-group {
+      &.hide {
+        display: none;
+      }
+    }
+    .ness-option {
+      &.active {
+        background: @size-active;
+        color: white;
+      }
+      &.disabled {
+        background: @lightgrey;
+        color: @grey;
+        cursor: default;
+      }
+      &:hover:not(.active):not(.disabled) {
+        background: @size-hover;
+        color: white;
+      }
+    }
+  }
+  #table-details {
+    border: 1px solid @steelgrey;
+    margin-bottom: 12px;
+    tr {
+      &:not(:last-of-type) {
+        border-bottom: 1px solid @steelgrey;
+      }
+    }
+    td {
+      &:not(:last-of-type) {
+        border-right: 1px solid @steelgrey;
+      }
+      font-weight: bold;
+      padding: 6px 12px;
     }
   }
 }

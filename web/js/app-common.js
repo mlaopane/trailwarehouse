@@ -47,3 +47,15 @@ app.filter('us2nbsp', function($sce) {
       return input;
   }
 });
+
+/*
+* The ucwords filter captalizes every word;
+*/
+app.filter('ucwords', function($sce) {
+  return function (input) {
+    if (typeof input === 'string')
+      return $sce.trustAsHtml(input.replace(/^(.)|\s+(.)/g, function ($1) { return $1.toUpperCase() }));
+    else
+      return input;
+  }
+});

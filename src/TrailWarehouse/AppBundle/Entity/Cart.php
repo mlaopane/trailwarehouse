@@ -19,7 +19,7 @@ class Cart
      * @var integer $total
      *
      */
-    private $total;
+    private $total = 0;
 
     /**
      * Constructor
@@ -41,7 +41,14 @@ class Cart
      */
     public function addItem(Item $item)
     {
-        $this->products[] = $product;
+        // Update Cart Items
+        $item->setTotal($item->getProduct()->getPrice() * $item->getQuantity());
+        $this->items[] = $item;
+
+        // Update Cart total
+        foreach ($this->items as $cart_item) {
+          $this->total += $cart_item->getTotal();
+        }
 
         return $this;
     }
@@ -53,7 +60,7 @@ class Cart
      */
     public function removeItem(Item $item)
     {
-        $this->products->removeElement($item);
+        $this->items->removeElement($item);
     }
 
     /**
@@ -63,7 +70,7 @@ class Cart
      */
     public function getItems()
     {
-        return $this->products;
+        return $this->items;
     }
 
     /**

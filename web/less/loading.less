@@ -1,0 +1,49 @@
+// main: style.less
+
+@loader: @secondary;
+
+@keyframes pulse {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+body {
+  margin: 0;
+}
+
+.loader-container {
+  display: flex;
+  background-color: lighten(@mustard, 40%);
+  min-height: 220px;
+  &.hide {
+    display: none;
+    .loader {
+      opacity: 0;
+    }
+  }
+}
+
+.loader {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  height: 2.5em; width: 2.5em;
+  margin: auto;
+  opacity: 1;
+  transition: .3s;
+  .content {
+    position: relative;
+    top: -10px;
+  }
+  .block {
+    height: 35%;
+    width: 35%;
+    animation: pulse 0.75s ease-in infinite alternate;
+    background-color: darken(@mustard, 10%);
+    margin-bottom: 6px;
+    &.delay {
+      animation-delay: 0.75s;
+    }
+  }
+}

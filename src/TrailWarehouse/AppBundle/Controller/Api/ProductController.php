@@ -19,64 +19,48 @@ class ProductController extends CommonController
    * @param int color
    * @param int size
    */
-  public function getByAction(int $family, int $color = NULL, int $size = NULL)
-  {
-   $args_name[] = ['family', 'color', 'size'];
-   $ids = func_get_args();
+  public function getByAction(int $family, int $color = NULL, int $size = NULL) {
+    $args_name = ['family', 'color', 'size'];
+    $ids = func_get_args();
 
-  foreach ($ids as $i => $id) {
-    $field = $args_name[$i];
-    $args[$field] = $this->getManager()
-      ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
-      ->find($id)
-    ;
-   }
-   $response = $this->getRepository()->getBy($args);
-   return new JsonResponse($response);
+    foreach ($ids as $i => $id) {
+      $field = $args_name[$i];
+      $args[$field] = $this->getManager()
+        ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
+        ->find($id)
+      ;
+    }
+    $response = $this->getRepository()->getBy($args);
+    return new JsonResponse($response);
   }
 
   /**
-   * getBy
+   * Get by Family
+   * @param int family
+   */
+  public function getByFamilyAction(int $family) {
+    $parameters = array_combine(['family'], func_get_args());
+    return new JsonResponse($this->getBy($parameters));
+  }
+
+  /**
+   * Get by Family & Color
    * @param int family
    * @param int color
-   * @param int size
    */
-  public function getByColorAction(int $family, int $color)
-  {
-   $args_name = ['family', 'color'];
-   $ids = func_get_args();
-
-  foreach ($ids as $i => $id) {
-    $field = $args_name[$i];
-    $args[$field] = $this->getManager()
-      ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
-      ->find($id)
-    ;
-   }
-   $response = $this->getRepository()->getBy($args);
-   return new JsonResponse($response);
+  public function getByColorAction(int $family, int $color) {
+   $parameters = array_combine(['family', 'color'], func_get_args());
+   return new JsonResponse($this->getBy($parameters));
   }
 
   /**
-   * getBy
+   * Get by Family & Size
    * @param int family
-   * @param int color
    * @param int size
    */
-  public function getBySizeAction(int $family, int $size)
-  {
-   $args_name = ['family', 'size'];
-   $ids = func_get_args();
-
-  foreach ($ids as $i => $id) {
-    $field = $args_name[$i];
-    $args[$field] = $this->getManager()
-      ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
-      ->find($id)
-    ;
-   }
-   $response = $this->getRepository()->getBy($args);
-   return new JsonResponse($response);
+  public function getBySizeAction(int $family, int $size) {
+    $parameters = array_combine(['family', 'size'], func_get_args());
+    return new JsonResponse($this->getBy($parameters));
   }
 
 
@@ -84,8 +68,7 @@ class ProductController extends CommonController
   /**
    * getBy
    */
-  public function getOneRandAction()
-  {
+  public function getOneRandAction() {
     $response = $this->getRepository()->getOneRand();
     return new JsonResponse($response);
   }
@@ -97,13 +80,11 @@ class ProductController extends CommonController
    *
    * @param int $family_id
    */
-  public function getBestAction(int $family_id)
-  {
+  public function getBestAction(int $family_id) {
     $family = $this->getManager()->getRepository('TrailWarehouseAppBundle:Family')->find($family_id);
     $response = $this->getRepository()->getBest($family);
     return new JsonResponse($response);
   }
-
 
   /**
    * Add Category
@@ -112,8 +93,7 @@ class ProductController extends CommonController
    *
    * @return JsonResponse
    */
-  public function addAction(Request $request)
-  {
+  public function addAction(Request $request) {
     $entity = $this->getEntity();
     $entities = [];
     $fields = ['family', 'color', 'size'];
@@ -150,8 +130,7 @@ class ProductController extends CommonController
    *
    * @return JsonResponse
    */
-  public function modifyAction(Request $request, int $id)
-  {
+  public function modifyAction(Request $request, int $id) {
     $product_not_found = empty($product = $this->getRepository()->find($id));
     // If product not found => Do nothing
     if ($product_not_found) {
@@ -189,8 +168,7 @@ class ProductController extends CommonController
    *
    * @return JsonResponse
    */
-  public function removeAction(int $id)
-  {
+  public function removeAction(int $id) {
     $entity_not_found = empty($entity = $this->getRepository()->find($id));
     if ($entity_not_found) {
       return new JsonResponse(false);
@@ -199,5 +177,17 @@ class ProductController extends CommonController
       $this->removeOne($entity);
       return new JsonResponse(true);
     }
+  }
+
+  /* ----- Protected Methods ----- */
+
+  protected function getBy(Array $parameters) {
+    foreach ($parameters as $entity_name => $entity_id) {
+      $entities[$entity_name] = $this->getManager()
+        ->getRepository('TrailWarehouseAppBundle:'.ucfirst($entity_name))
+        ->find($entity_id)
+      ;
+    }
+    return $this->getRepository()->getBy($entities);
   }
 }

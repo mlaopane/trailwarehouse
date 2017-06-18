@@ -19,6 +19,7 @@
     <div class="family container bg-whitegrey px-2 py-3 mb-4" data-ng-controller="familyCtrl as page">
 
       <div id="ng-data">
+        <input type="hidden" data-ng-init="page.SHOP_URL = '{{ url('app_shop') }}'">
         <input type="hidden" data-ng-init="page.API_URL = '{{ url('app_api_product_get_all') }}'">
         <input type="hidden" data-ng-init="page.ASSET_URL = '{{ asset('') }}'">
         <input type="hidden" data-ng-init="page.family_id = '{{ family.id }}'">
@@ -27,183 +28,250 @@
       <div class="row px-0 px-lg-3 px-xl-5">
 
         <!-- # Product Image -->
-        <div class="image-container flex justify-content-center col-12 col-lg-6 col-xl-5 py-2 px-xl-2">
-          <div class="p-4">
+        <div class="image-container flex justify-content-center col-12 mb-3">
+          <div class="">
             <img id="image"
-              data-ng-src="{% verbatim %}{{ (page.ASSET_URL + 'images/no_picture.png') }}{% endverbatim %}"
-              alt="">
+              data-ng-src="{% verbatim %}{{ page.ASSET_URL + (page.product.image ? page.product.image.src : 'images/no_picture.png') }}{% endverbatim %}"
+              alt="{% verbatim %}{{ page.product.image ? page.product.image.alt : 'illustration produit' }}{% endverbatim %}"
+              title="{{ family.name }}">
           </div>
         </div>
         <!-- Product # -->
 
         <!-- # Product Data -->
-        <div class="col-12 col-lg-6 col-xl-7 py-2 px-xl-2">
+        <div class="col-12 py-2 px-xl-2">
 
           <!-- # Card -->
           <div class="card">
-            {% if product is null %}
-              <div class="ness-block warning my-3 mx-auto">
-                <span>Aucun produit disponible</span>
-              </div>
-            {% else %}
-              <!-- # Card header -->
-              <div class="card-header">
+            <!-- # Card header -->
+            <div class="card-header">
 
-                <!-- # Nav Tabs -->
-                <ul class="nav nav-tabs card-header-tabs">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#features">Caractéristiques</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#reviews">Commentaires(2)</a>
-                  </li>
-                </ul>
-                <!-- Nav Tabs # -->
+              <!-- # Nav Tabs -->
+              <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#features" role="tab" data-toggle="tab">Caractéristiques</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#reviews" role="tab" data-toggle="tab">Commentaires(2)</a>
+                </li>
+              </ul>
+              <!-- Nav Tabs # -->
 
-              </div>
-              <!-- Card header # -->
+            </div>
+            <!-- Card header # -->
 
-              <!-- # Card Block -->
-              <div class="card-block">
+            <!-- # Card Block -->
+            <div class="card-block">
 
-                <!-- # Tab panes -->
-                <div class="tab-content">
+              <!-- # Tab panes -->
+              <div class="tab-content">
 
-                  <!-- # Pane Features -->
-                  <div class="tab-pane active" id="features" role="tabpanel">
+                <!-- # Pane Features -->
+                <div class="tab-pane fade show active" id="features" role="tabpanel">
 
-                    <!-- # Card Title -->
-                    <div class="card-title">
-                      <h3 class="justify-content-center">{{ product.family.name | capitalize }} - {{ product.family.brand.name | upper }}</h3>
-                    </div>
-                    <!-- Card Title # -->
+                  <!-- # Card Title -->
+                  <div class="card-title">
+                    <h3 class="justify-content-center"
+                      data-ng-bind="(page.product.family.name | capitalize) + ' - ' + (page.product.family.brand.name | ucwords)">
+                    </h3>
+                  </div>
+                  <!-- Card Title # -->
 
-                    <!-- # Card Text -->
-                    <div class="card-text">
+                  <!-- # Card Text -->
+                  <div class="card-text">
 
-                      <!-- # Row -->
-                      <div class="row">
-                        <!-- # Col 1 -->
-                        <div class="col-6">
+                    <!-- # Row -->
+                    <div class="row">
 
-                          <!-- # Stock -->
-                          <div id="stock" class="">
-                            <div class="text-success" data-ng-cloak
-                              data-ng-if="page.product.stock >= 10">
-                              <span>Disponible</span>&nbsp;<span class="glyphicon glyphicon-ok"></span>
-                            </div>
-                            <div class="text-warning" data-ng-cloak
-                              data-ng-bind="'Quantité disponible : ' + page.product.stock"
-                              data-ng-if="page.product.stock > 0 && page.product.stock < 10">
-                            </div>
-                            <div class="text-danger" data-ng-cloak
-                              data-ng-if="page.product.stock == 0">
-                              Produit indisponible
-                            </div>
+                      <div class="col-12">
+                        <!-- # Stock -->
+                        <div id="stock" class="mb-3">
+                          <div class="text-success" data-ng-cloak
+                            data-ng-if="page.product.stock >= 10">
+                            <span class="mr-2">En stock</span><span class="glyphicon glyphicon-ok"></span>
                           </div>
-                          <!-- Stock # -->
-
-                          <!-- # Price -->
-                          <div id="price">
-                            <strong>€&nbsp;<span class="text-success"></span> {{ product.price }}</strong>
+                          <div class="text-warning" data-ng-cloak
+                            data-ng-if="page.product.stock > 0 && page.product.stock < 10">
+                            <span>Plus que </span>
+                            <span data-ng-bind="page.product.stock"></span>
+                            <span> pièce(s) disponible(s)</span>
                           </div>
-                          <!-- Price # -->
-
+                          <div class="text-danger" data-ng-cloak
+                            data-ng-if="page.product.stock == 0">
+                            Produit indisponible
+                          </div>
                         </div>
+                        <!-- Stock # -->
+                      </div>
 
+                      <!-- # Pickers -->
+                      <div class="col-12 col-md-6">
 
-                        <!-- # Col 2 -->
-                        <div class="col-6">
-
+                        <div class="row">
                           <!-- # Colors -->
-                          <div id="colors" class="mb-3">
+                          <div id="colors" class="col-xl-6 mb-3">
+                            <h4>Couleurs</h4>
                             {% if colors is not empty %}
-                            <ul class="color-list">
-                              {% for color in colors %}
-                              <li class="color-sample-container">
-                                <div data-id-color="{{ color.id }}"
-                                  data-ng-click="page.getProductsByColor({{ family.id }}, {{ color.id }}, page.product.size.id)"
-                                  class="color-sample"
-                                  style="background:{{ color.value }}">
-                                </div>
-                              </li>
-                              {% endfor %}
-                            </ul>
+                              <ul class="color-list ness-block three-d">
+                                {% for color in colors %}
+                                  <li title="{{ color.name | capitalize }}"
+                                    data-ng-class="'color-container' + (page.product.color.id == {{ color.id }} ? ' active' : '')">
+                                    <div data-id-color="{{ color.id }}"
+                                      data-ng-class="
+                                      'color-sample'
+                                      + (page.colors && !page.colors[{{ color.id }}] ? ' disabled' : '')
+                                      + (page.product.color.id == {{ color.id }} ? ' active' : '')"
+                                      data-ng-click="page.getProductsByColor({{ family.id }}, {{ color.id }})"
+                                      style="background:{{ color.value }}">
+                                    </div>
+                                  </li>
+                                {% endfor %}
+                              </ul>
                             {% endif %}
                           </div>
                           <!-- Colors # -->
 
                           <!-- # Sizes -->
-                          <div id="sizes" class="">
+                          <div id="sizes" class="col-xl-6 mb-3 mb-md-0">
+                            <h4>Tailles</h4>
                             {% if sizes is not empty %}
-                            <div class="ness-option-container w-50">
-                              <ul class="ness-option-group">
-                                {% for size in sizes %}
-                                <li id="size-{{ size.id }}"
-                                  data-ng-class="!page.sizes || page.sizes[{{ size.id }}] ? 'ness-option ness-option-md w-100' : 'ness-option ness-option-md w-100 disabled'">
-                                  <div class="size-option"
-                                    data-ng-if="!page.sizes || page.sizes[{{ size.id }}]"
-                                    data-ng-click="page.getProductBy({{ family.id }}, page.product.color.id, {{ size.id }})">
-                                      {{ (size.value | upper) ~ ' ' ~ size.unitShortcut }}
+                              <div class="ness-option-container">
+                                <!-- # Loader -->
+                                <div data-ng-class="'loader-container' + (!page.loading && page.product ? ' hide' : '')">
+                                  <div class="loader">
+                                    <div class="block"></div>
+                                    <div class="block delay"></div>
+                                    <div class="block delay"></div>
+                                    <div class="block"></div>
                                   </div>
-                                  <div class="size-option"
-                                    data-ng-if="page.sizes && !page.sizes[{{ size.id }}]">
-                                      {{ (size.value | upper) ~ ' ' ~ size.unitShortcut }}
-                                  </div>
-                                </li>
-                                {% endfor %}
-                              </ul>
-                            </div>
+                                </div>
+                                <!-- Loader # -->
+                                <!-- # Option -->
+                                <ul data-ng-class="'ness-option-group' + (page.loading || !page.product ? ' hide' : '')">
+                                  {% for size in sizes %}
+                                    <li id="size-{{ size.id }}"
+                                      data-ng-class="
+                                      'ness-option ness-option-md w-100'
+                                      + (page.sizes && !page.sizes[{{ size.id }}] ? ' disabled' : '')
+                                      + (page.product.size.id == {{ size.id }} ? ' active' : '')"
+                                      data-ng-click="page.getProductBy({{ family.id }}, page.product.color.id, {{ size.id }})">
+                                      <!-- # Size Option -->
+                                      <div class="size-option">
+                                        {{ (size.value | upper) ~ ' ' ~ size.unitShortcut ~ ' ' }}
+                                      </div>
+                                      <!-- Size Option # -->
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                                <!-- Option # -->
+                              </div>
                             {% endif %}
                           </div>
                           <!-- Sizes # -->
-
                         </div>
 
                       </div>
-                      <!-- Row # -->
+                      <!-- Pickers # -->
 
-                      <div class="row">
-                        <!-- # Description -->
-                        <div id="description" class="col-12">
-                          {{ family.description }}
+                      <!-- # Details -->
+                      <div id="details" class="col-12 col-md-6">
+
+                        <div class="row">
+
+                          <div class="col-6">
+
+                            <!-- # Table details -->
+                            <table id="table-details">
+                              <tbody>
+                                <!-- # Price -->
+                                <tr data-ng-class="page.product.price != null ? '' : 'invisible'">
+                                  <td>€</td>
+                                  <td id="price" data-ng-bind="page.product.price"></td>
+                                </tr>
+                                <!-- Price # -->
+
+                                <!-- # Color picked -->
+                                <tr data-ng-class="page.product.color != null ? '' : 'invisible'">
+                                  <td>Couleur</td>
+                                  <td id="color-picked" data-ng-bind="page.product.color.name | capitalize"></td>
+                                </tr>
+                                <!-- Color picked # -->
+
+                                <!-- # Size picked -->
+                                <tr data-ng-class="page.product.size != null ? '' : 'invisible'">
+                                  <td>Taille</td>
+                                  <td id="size-picked" data-ng-bind="page.product.size.value | capitalize"></td>
+                                </tr>
+                                <!-- Size picked # -->
+                              </tbody>
+                            </table>
+
+                          </div>
+
+                          <!-- # Cart Button -->
+                          <div class="col-6">
+                            <button class="ness-btn bg-primary txt-whitegrey" type="button" name="button"
+                              data-ng-click="page.addToCart(page.product, 5)">
+                              Ajouter au panier
+                            </button>
+                          </div>
+
                         </div>
-                        <!-- Description # -->
+
+                        <div class="row">
+                          <!-- # Description -->
+                          <div id="description" data-ng-class="'col-12' + (page.product ? '' : ' invisible')">
+                            {% if family.description is null %}
+                              <p class="blockquote">Détails à venir...</p>
+                            {% else %}
+                              <p class="blockquote">{{ family.description }}</p>
+                            {% endif %}
+                          </div>
+                          <!-- Description # -->
+                        </div>
+
                       </div>
+                      <!-- Details # -->
+
+
+
                     </div>
-                    <!-- Card Text # -->
+                    <!-- Row # -->
 
                   </div>
-                  <!-- Pane Features # -->
-
-                  <!-- # Pane Reviews -->
-                  <div class="tab-pane" id="reviews" role="tabpanel">
-
-                    <!-- # Card Title -->
-                    <div class="card-title">
-                      <h4 class="col-12 justify-content-center">Titre du commentaire</h4>
-                      <p class="blockquote">Note</p>
-                    </div>
-                    <!-- Card Title # -->
-
-                    <!-- # Card Text -->
-                    <div class="card-text">
-                      <p>Pas de commentaire pour le moment</p>
-                    </div>
-                    <!-- Card Text # -->
-
-                  </div>
-                  <!-- Pane Reviews # -->
+                  <!-- Card Text # -->
 
                 </div>
-                <!-- Tab panes # -->
+                <!-- Pane Features # -->
 
+                <!-- # Pane Reviews -->
+                <div class="tab-pane fade" id="reviews" role="tabpanel">
+
+                  <!-- # Card Title -->
+                  <div class="card-title">
+                    <h4 class="col-12 justify-content-center">Titre du commentaire</h4>
+                    <p class="blockquote-header">Note</p>
+                  </div>
+                  <!-- Card Title # -->
+
+                  <!-- # Card Text -->
+                  <div class="card-text">
+                    <p>Pas de commentaire pour le moment</p>
+                  </div>
+                  <!-- Card Text # -->
+
+                </div>
+                <!-- Pane Reviews # -->
 
               </div>
-              <!-- Card Block # -->
+              <!-- Tab panes # -->
 
-            {% endif %}
+
+            </div>
+            <!-- Card Block # -->
           </div>
+          <!-- Card # -->
+
         </div>
         <!-- Product Data # -->
 
