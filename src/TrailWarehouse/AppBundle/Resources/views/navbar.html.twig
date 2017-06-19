@@ -13,9 +13,9 @@
     <!-- # User Navigation -->
     <nav id="menu-user" class="col-12 col-lg">
       {% block user_nav %}
-      <ul class="">
+      <ul id="menu-user-list">
         <li class="nav-item">
-          <a href="{{ path('app_client_signup') }}" data-toggle="modal" data-target="#signup-modal">
+          <a href="{{ path('app_client_signup') }}" data-toggle="" data-target="#signup-modal">
             <span class="glyphicon glyphicon-pencil"></span><span>Inscription</span>
           </a>
           {% include 'TrailWarehouseAppBundle:Client:signup_modal.html.twig' %}
@@ -27,10 +27,11 @@
           {% include 'TrailWarehouseAppBundle:Client:signin_modal.html.twig' %}
         </li>
         <li class="nav-item">
-          <a href="{{ path('app_client_signin') }}" data-toggle="modal" data-target="#signin-modal">
-            <span class="glyphicon glyphicon-user"></span><span>Connexion</span>
+          <a id="display-cart" href="" title="Voir mon panier"
+            data-toggle="modal" data-placement="bottom" data-target="#cart-modal">
+            <img id="img-cart" src="{{ asset('images/cart.png') }}">
           </a>
-          {% include 'TrailWarehouseAppBundle:Client:signin_modal.html.twig' %}
+          {% include 'TrailWarehouseAppBundle:Shop:cart_modal.html.twig' %}
         </li>
       </ul>
       {% endblock %}

@@ -19,7 +19,7 @@
     justify-content: space-around;
     align-items: center;
     align-content: center;
-    min-height: 80px;
+    min-height: 100px;
     position: relative;
     @media (min-width: @width-sm) {
       padding: 0px 0px;
@@ -76,16 +76,18 @@
 }
 
 #menu-user {
-  ul {
+  #menu-user-list {
     margin: 0;
     display: flex;
     li {
+      display: flex;
+      align-items: center;
       a {
         border-radius: 4px;
         color: @lightgrey;
         &:hover {
-          background: @lightgrey;
-          color: darken(@darkgrey, 10%);
+          background: darken(@primary, 5%);
+          box-shadow: 0px 0px 8px 2px @whitegrey;
         }
       }
     }
@@ -110,4 +112,8 @@
       margin: 0;
     }
   }
+}
+
+#img-cart {
+  height: 50px;
 }

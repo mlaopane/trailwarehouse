@@ -66,7 +66,7 @@ class Product
     private $image;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="price", type="decimal", precision=7, scale=2)
      */
@@ -188,30 +188,6 @@ class Product
     }
 
     /**
-     * Set visuel
-     *
-     * @param string $visuel
-     *
-     * @return Product
-     */
-    public function setVisuel($visuel)
-    {
-        $this->visuel = $visuel;
-
-        return $this;
-    }
-
-    /**
-     * Get visuel
-     *
-     * @return string
-     */
-    public function getVisuel()
-    {
-        return $this->visuel;
-    }
-
-    /**
      * Set family
      *
      * @param \TrailWarehouse\AppBundle\Entity\Family $family
@@ -242,7 +218,7 @@ class Product
      *
      * @return Product
      */
-    public function setColor(Color $color)
+    public function setColor(Color $color = null)
     {
         $this->color = $color;
 
@@ -266,7 +242,7 @@ class Product
      *
      * @return Product
      */
-    public function setSize(Size $size)
+    public function setSize(Size $size = null)
     {
         $this->size = $size;
 
@@ -283,4 +259,28 @@ class Product
         return $this->size;
     }
 
+
+    /**
+     * Set image
+     *
+     * @param Image $image
+     *
+     * @return Product
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 }
