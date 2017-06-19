@@ -50,7 +50,7 @@ class ShopController extends Controller
     $repo_category = $doctrine->getRepository('TrailWarehouseAppBundle:Category');
     $categories = $repo_category->findAll();
     $data = [
-      'categories' => $categories,
+      'categories'      => $categories,
       'active_category' => $active_category,
     ];
     return $this->render('TrailWarehouseAppBundle:Shop:menu.html.twig', $data);
