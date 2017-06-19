@@ -1,6 +1,8 @@
 app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
   page = this;
 
+  page.add_in_progress = false;
+
   /**
    * Get products by Family
    * @param {int} family_id
@@ -115,12 +117,14 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
    *
    */
   page.addToCart = function(product, quantity) {
+    page.add_in_progress = true;
     let url = page.SHOP_URL + 'cart/add';
     let data = {
       product : product,
       quantity : quantity,
     }
     $http.post(url, data).then(function(response) {
+      page.add_in_progress = false
       console.log(JSON.parse(response.data));
     });
   }
