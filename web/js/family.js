@@ -1,10 +1,12 @@
 app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
   page = this;
 
+  page.quantities = [];
   page.add_in_progress = false;
 
   /**
    * Get products by Family
+   *
    * @param {int} family_id
    * @param {array}
    */
@@ -34,7 +36,6 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
   page.getProductsByColor = function(family_id, color_id) {
     // IF product doesn't exist OR it is not the active color
     if (!page.product || page.product.color.id != color_id) {
-      page.loading = true;
       // Request URL
       let url = page.API_URL +
         'family/' + family_id +
@@ -43,10 +44,10 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
       let products = [];
       // AJAX Request
       $http.get(url).then(function(response) {
-        page.loading = false;
         products = response.data;
         page.sizes = page.extractSizes(products);
         page.product = products[0];
+        page.updateQuantities(page.product.stock);
       });
       return products;
     }
@@ -54,6 +55,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
 
   /**
    * Get a product by
+   *
    * @param {int} family_id
    * @param {int} color_id
    * @param {int} size_id
@@ -75,6 +77,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
         // AJAX Request
         $http.get(url).then(function(response) {
           page.product = response.data[0];
+          page.updateQuantities(page.product.stock);
         });
         return page.product;
       }
@@ -84,6 +87,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
 
   /**
    * Extract Colors
+   *
    * @param {array} products
    * @return {array}
    */
@@ -99,6 +103,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
 
   /**
    * Extract Sizes
+   *
    * @param {array} products
    * @return {array}
    */
@@ -113,8 +118,24 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
   }
 
   /**
+   * Update Quantities
    *
+   * @param {int} stock
+   */
+  page.updateQuantities = function(stock) {
+    page.quantities = [];
+    let max_quantity = (stock >= 10) ? (10) : (stock);
+    for (let i = 1 ; i <= max_quantity ; i++) {
+      page.quantities.push(i);
+    }
+    page.quantity = 1;
+  }
+
+  /**
+   * Add an Item to the Cart
    *
+   * @param {object} product
+   * @param {int} quantity
    */
   page.addToCart = function(product, quantity) {
     page.add_in_progress = true;

@@ -14,63 +14,67 @@
       </div>
       <!-- Modal Header # -->
 
+      <!-- # Modal Body -->
+      <div class="modal-body">
+
+        <!-- # Cart -->
+        <div id="cart">
+          {% if app.session.get('cart') is empty or app.session.get('cart').items is empty %}
+            <div class="ness-block warning">Votre panier est vide</div>
+          {% else %}
+            {% set cart = app.session.get('cart') %}
+            <!-- # Cart Items -->
+            <table id="table-cart-items" class="mb-3">
+              <thead>
+                <tr>
+                  <th class="">Produit</th>
+                  <th class="hidden-xs-down">Photo</th>
+                  <th class="hidden-sm-down">Prix unitaire</th>
+                  <th class="hidden-xs-down">Quantité</th>
+                  <th class="flex">Sous-total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart.items %}
+                <tr>
+                  <td class="text-left">
+                    <div class="d-flex flex-column justify-content-between justify-content-md-start">
+                      <div class="">
+                        <span class="font-italic">{{ item.product.family.brand.name | ucwords }}</span>
+                        <span>{{ item.product.family.name | capitalize }}</span>
+                      </div>
+                      <span>({{ item.product.size.value | upper }} {{ item.product.size.unitShortcut }} | {{ item.product.color.name | capitalize }})</span>
+                      <span class="hidden-sm-up">x{{ item.quantity }}</span>
+                    </div>
+                  </td>
+                  <td class="text-center hidden-xs-down"><img src="{{ item.product.image is null ? asset('images/no_picture.png') : item.product.image.src }}" alt=""></td>
+                  <td class="text-right hidden-sm-down">{{ item.product.price }}&nbsp;€</td>
+                  <td class="text-right hidden-xs-down">{{ item.quantity }}</td>
+                  <td class="text-right">{{ item.total }}&nbsp;€</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- Cart Items # -->
+            <!-- # Cart Total -->
+            <p class="flex justify-content-end">
+              <span class="font-weight-bold">Total</span>&nbsp;:&nbsp;<span class="font-weight-bold text-info">{{ cart.total }} €</span>
+            </p>
+            <!-- Cart Total # -->
+          {% endif %}
+        </div>
+        <!-- Cart # -->
+
+      </div>
+      <!-- Modal Body # -->
+
       <!-- # Form Container -->
       <div class="form-container">
 
-        <!-- # Modal Body -->
-        <div class="modal-body">
-
-          <!-- # Cart -->
-          <div id="cart">
-            {% if app.session.get('cart') is empty or app.session.get('cart').items is empty %}
-              <div class="ness-block warning">Votre panier est vide</div>
-            {% else %}
-              {% set cart = app.session.get('cart') %}
-              <!-- # Cart Items -->
-              <table id="table-cart-items" class="mb-3">
-                <thead>
-                  <tr>
-                    <th>Produit</th>
-                    <th>Couleur</th>
-                    <th>Taille</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                    <th>Sous-total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for item in cart.items %}
-                  <tr>
-                    <td class="text-left">
-                      <span class="font-italic">{{ item.product.family.brand.name | ucwords }}</span>
-                      <span>{{ item.product.family.name | capitalize }}</span>
-                    </td>
-                    <td class="text-left">{{ item.product.color.name | capitalize }}</td>
-                    <td class="text-left">{{ item.product.size.value | upper }} {{ item.product.size.unitShortcut }}</td>
-                    <td class="text-right">{{ item.product.price }} €</td>
-                    <td class="text-right">{{ item.quantity }}</td>
-                    <td class="text-right">{{ item.total }} €</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-              <!-- Cart Items # -->
-              <!-- # Cart Total -->
-              <p class="flex justify-content-end">
-                <span class="font-weight-bold">Total</span>&nbsp;:&nbsp;<span class="font-weight-bold text-info">{{ cart.total }} €</span>
-              </p>
-              <!-- Cart Total # -->
-            {% endif %}
-          </div>
-          <!-- Cart # -->
-
-        </div>
-        <!-- Modal Body # -->
-
         <!-- # Modal Footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-cancel" data-dismiss="modal">Continuer mon shopping</button>
-          <button type="submit" class="btn btn-confirm">Passer la commande</button>
+            <button type="button" class="btn btn-cancel mb-2 mb-sm-0" data-dismiss="modal">Continuer mon shopping</button>
+            <button type="submit" class="btn btn-confirm">Passer la commande</button>
         </div>
         <!-- Modal Footer # -->
 
