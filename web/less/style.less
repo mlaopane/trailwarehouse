@@ -106,8 +106,9 @@ em {
 }
 
 .parallelogram {
-	-webkit-transform: skew(-15deg);
-	   -moz-transform: skew(-15deg);
-	     -o-transform: skew(-15deg);
-	        transform: skew(-15deg);
+  @parallelogram-angle: -15deg;
+	-webkit-transform: skew(@parallelogram-angle);
+	   -moz-transform: skew(@parallelogram-angle);
+	     -o-transform: skew(@parallelogram-angle);
+	        transform: skew(@parallelogram-angle);
 }
