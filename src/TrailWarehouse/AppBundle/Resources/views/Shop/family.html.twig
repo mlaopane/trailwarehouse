@@ -19,11 +19,11 @@
     <div class="family container bg-whitegrey px-2 py-3 mb-4" data-ng-controller="familyCtrl as page">
 
       <div id="ng-data">
-        <input type="hidden" data-ng-init="page.SHOP_URL = '{{ url('app_shop') }}'">
-        <input type="hidden" data-ng-init="page.API_URL = '{{ url('app_api_product_get_all') }}'">
-        <input type="hidden" data-ng-init="page.ASSET_URL = '{{ asset('') }}'">
-        <input type="hidden" data-ng-init="page.family_id = '{{ family.id }}'">
-        <input type="hidden" data-ng-init="page.quantity = 1">
+        <input type ="hidden" data-ng-init="page.SHOP_URL  = '{{ url('app_shop') }}'">
+        <input type ="hidden" data-ng-init="page.API_URL   = '{{ url('app_api_product_get_all') }}'">
+        <input type ="hidden" data-ng-init="page.ASSET_URL = '{{ asset('') }}'">
+        <input type ="hidden" data-ng-init="page.family_id = '{{ family.id }}'">
+        <input type ="hidden" data-ng-init="page.quantity  = 1">
       </div>
 
       <div class="row px-0 px-lg-3 px-xl-5">
@@ -75,12 +75,16 @@
                     <h3 class="col-12 col-sm-8">
                       <span class="font-italic mr-2">{{ family.brand.name | ucwords }}</span><span>{{ family.name | capitalize }}</span>
                     </h3>
+
+                    <!-- # Add to cart -->
                     <div class="col-12 col-sm-4 flex justify-content-xl-end">
-                      <button class="ness-btn bg-primary txt-whitegrey" type="button" name="button"
+                      <button class="ness-btn bg-primary txt-whitegrey btn-validation" type="button" name="button"
                       data-ng-click="page.addToCart(page.product, page.quantity)">
-                      Ajouter au panier
-                    </button>
+                        <span data-ng-if="page.add_in_progress == false">Ajouter au panier</span>
+                        <span data-ng-if="page.add_in_progress == true">Ajout en cours...</span>
+                      </button>
                     </div>
+                    <!-- Add to cart # -->
                   </div>
                   <!-- Card Title # -->
 
