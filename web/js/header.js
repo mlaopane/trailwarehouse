@@ -1,3 +1,2 @@
 $(function() {
-  $('#display-cart').tooltip();
 });

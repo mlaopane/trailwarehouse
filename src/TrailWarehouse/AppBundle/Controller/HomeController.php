@@ -8,6 +8,7 @@ class HomeController extends Controller
 {
     public function indexAction()
     {
+        return $this->redirectToRoute('app_shop');
         $data = [];
         return $this->render('TrailWarehouseAppBundle:Home:index.html.twig', $data);
     }

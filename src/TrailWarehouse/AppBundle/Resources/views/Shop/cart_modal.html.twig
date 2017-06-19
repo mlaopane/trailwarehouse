@@ -22,7 +22,7 @@
 
           <!-- # Cart -->
           <div id="cart">
-            {% if app.session.get('cart').items is empty %}
+            {% if app.session.get('cart') is empty or app.session.get('cart').items is empty %}
               <div class="ness-block warning">Votre panier est vide</div>
             {% else %}
               {% set cart = app.session.get('cart') %}

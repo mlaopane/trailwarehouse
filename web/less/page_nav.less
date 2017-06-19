@@ -3,15 +3,15 @@
 /* ------------------------- */
 
 /* Custom colors */
-@bg-menu-category: @whitegrey;
-@bg-menu-category-hover: @darkblue;
-@bg-menu-category-active: lighten(@bg-active-category, 4%);
-@bg-active-category: lighten(@blue, 5%);
-@txt-menu-category: lighten(@blackgrey, 2%);
-@txt-menu-category-hover: @white;
-@border-menu-category: @steelgrey;
-@shadow-category-hover: darken(@bg-menu-category-hover, 20%);
-@border-category-hover: @bg-menu-category-hover;
+@bg-menu-category        : @whitegrey;
+@bg-menu-category-hover  : darken(@bg-active-category, 5%);
+@bg-menu-category-active : lighten(@bg-active-category, 5%);
+@bg-active-category      : lighten(@blue, 2%);
+@txt-menu-category       : lighten(@blackgrey, 2%);
+@txt-menu-category-hover : @white;
+@border-menu-category    : @steelgrey;
+@shadow-category-hover   : darken(@bg-menu-category-hover, 20%);
+@border-category-hover   : @bg-menu-category-hover;
 
 /* Page Navigation */
 
@@ -26,6 +26,11 @@
   background: @bg-menu-category;
   padding: 0;
   transition: .15s;
+  .ness-mask {
+    background: @bg-menu-category;
+    padding: 0;
+    transition: .15s;
+  }
   ul {
     display: flex;
     flex-flow: column;
@@ -46,23 +51,31 @@
         padding: 16px 20px;
         width: 100%;
         &.active {
-          background: @bg-active-category;
+          .ness-mask {
+            background: @bg-active-category;
+          }
+          // background: @bg-active-category;
           color: white;
           cursor: default;
         }
       }
       &:hover {
         z-index: 1;
-        a:not(.active) {
+        .ness-mask {
           background: @bg-menu-category-hover;
+        }
+        a:not(.active) {
+          // background: @bg-menu-category-hover;
           color: @txt-menu-category-hover;
-          transform: scale(1.0);
         }
       }
       &:active {
         z-index: 1;
-        a:not(.active) {
+        .ness-mask {
           background: @bg-menu-category-active;
+        }
+        a:not(.active) {
+          // background: @bg-menu-category-active;
           color: @txt-menu-category-hover;
         }
       }

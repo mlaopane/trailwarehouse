@@ -21,7 +21,6 @@
 <div class="hidden-sm-down col-12 col-lg-8 col-xl-9">
   <ul>
     <li>
-      <div class="ness-mask parallelogram" data-opacity="0.5"></div>
       <a
         {% if active_category is not null and active_category.name == 'toutes' %}
         class="active"
@@ -29,12 +28,12 @@
         href="{{ path('app_shop_categories') }}"
         {% endif %}
       >
-        TOUTES
+        <div class="ness-mask parallelogram" data-opacity="1.0"></div>
+        <span>TOUTES</span>
       </a>
     </li>
   {% for category in categories %}
     <li>
-      <div class="ness-mask parallelogram" data-opacity="0.5"></div>
       <a
         {% if active_category is null or active_category.name != category.name %}
         href="{{ path('app_shop_category', {"slug": category.slug}) }}"
@@ -43,7 +42,8 @@
         class="active"
         {% endif %}
       >
-        {{ category.name | capitalize }}
+      <div class="ness-mask parallelogram" data-opacity="1.0"></div>
+      <span>{{ category.name | capitalize }}</span>
       </a>
     </li>
   {% endfor %}

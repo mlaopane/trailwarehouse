@@ -23,6 +23,7 @@
 
 .modal {
   .modal-dialog {
+    min-width: 320px;
     @media (min-width: 576px) {
       margin: 40px auto;
     }
@@ -66,6 +67,14 @@
             background: darken(@bg-btn-cancel, 7%)
           }
         }
+      }
+    }
+    .modal-footer {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      @media (min-width: @width-sm) {
+        justify-content: flex-end;
       }
     }
     .form-container {
