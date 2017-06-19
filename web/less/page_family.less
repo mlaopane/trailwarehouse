@@ -27,6 +27,9 @@
       background: @lightgrey;
       color: @grey;
       cursor: default;
+      & + :not(.disabled) {
+        border-top: 1px solid @steelgrey;
+      }
     }
     &:hover:not(.active):not(.disabled) {
       background: @option-hover;
@@ -35,6 +38,9 @@
     &:active:not(.active):not(.disabled) {
       background: @option-click;
       color: black;
+    }
+    &:not(.disabled) + .disabled {
+      border-top: 1px solid @steelgrey;
     }
   }
   #colors {
