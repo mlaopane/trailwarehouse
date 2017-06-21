@@ -1,0 +1,68 @@
+{# TrailWarehouse > AppBundle > Resources > views > Shop > cart_modal.html.twig #}
+
+<!-- # Item Modal -->
+<div class="modal fade" id="item-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <!-- # Modal Dialog -->
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <!-- # Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Produit ajouté au panier !</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Modal Header # -->
+
+      <!-- # Modal Body -->
+      <div class="modal-body">
+
+        <!-- # Item -->
+        <div id="item">
+          <table id="table-item" class="mb-3">
+            <tbody>
+              <tr>
+                <td class="text-center">
+                  <div class="">
+                    <span class="font-italic" data-ng-bind="(page.item.product.family.brand.name | ucwords)"></span> -
+                    <span data-ng-bind="(page.item.product.family.name | capitalize)"></span>
+                  </div>
+                  <div class="">
+                    (<span data-ng-bind="page.item.product.color.name | capitalize"></span>&nbsp;|&nbsp;<span data-ng-bind="(page.item.product.size.value | uppercase)"></span><span data-ng-bind="(page.item.product.size.unitShortcut != null) ? (page.item.product.size.unitShortcut) : ''"></span>)
+                  </div>
+                </td>
+                <td class="text-center"><img class="miniature" data-ng-src="{% verbatim %}{{ (page.item.product.image != null) ? (page.item.product.image.src) : (page.ASSET_URL + 'images/no_picture.png') }}{% endverbatim %}"></td>
+                <td class="text-center">
+                  Quantité : <span data-ng-bind="page.item.quantity"></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Item Total # -->
+        </div>
+        <!-- Cart # -->
+
+      </div>
+      <!-- Modal Body # -->
+
+      <!-- # Form Container -->
+      <div class="form-container">
+
+        <!-- # Modal Footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-cancel mb-2 mb-sm-0" data-dismiss="modal">Continuer mon shopping</button>
+            <button type="submit" class="btn btn-confirm">Voir mon panier</button>
+        </div>
+        <!-- Modal Footer # -->
+
+      </div>
+      <!-- Form Container # -->
+
+    </div>
+  </div>
+  <!-- Modal Dialog # -->
+
+</div>
+<!-- Cart Modal # -->

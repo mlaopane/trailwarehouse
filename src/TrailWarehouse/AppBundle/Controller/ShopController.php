@@ -61,11 +61,10 @@ class ShopController extends Controller
    */
   public function categoriesAction()
   {
+    $doctrine         = $this->getDoctrine();
     $category['name'] = 'toutes';
-    $doctrine = $this->getDoctrine();
-    $repo['family'] = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
-
-    $db_families = $repo['family']->getAll();
+    $repo['family']   = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
+    $db_families      = $repo['family']->getAll();
 
     $data = [
       'active_category' => $category,
@@ -116,6 +115,15 @@ class ShopController extends Controller
       'sizes' => $sizes,
     ];
     return $this->render('TrailWarehouseAppBundle:Shop:family.html.twig', $data);
+  }
+
+  /**
+   * 'app_shop_cart'
+   *
+   */
+  public function cartAction(Request $request) {
+    $data = [];
+    return $this->render('TrailWarehouseAppBundle:Shop:cart.html.twig', $data);
   }
 
   /*
