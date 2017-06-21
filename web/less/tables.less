@@ -1,0 +1,36 @@
+// main: style.less
+
+.ness-table {
+  box-shadow: 0px 1px 3px 1px @grey;
+  font-size: .85rem !important;
+  width: 100%;
+  thead {
+    tr {
+      border-bottom: 2px solid @grey;
+      th {
+        text-align: center;
+        &:not(:last-of-type) {
+          border-right: 1px solid @steelgrey;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      &:not(:last-of-type) {
+        border-bottom: 1px solid @steelgrey;
+      }
+      td {
+        &:not(:last-of-type) {
+          border-right: 1px solid @steelgrey;
+        }
+      }
+    }
+  }
+  th, td {
+    padding: 6px 10px;
+  }
+  img {
+    max-width: 80px;
+  }
+}
