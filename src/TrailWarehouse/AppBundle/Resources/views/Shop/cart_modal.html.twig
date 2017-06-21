@@ -1,7 +1,9 @@
-{# TrailWarehouse > AppBundle > Resources > views > signin_modal.html.twig #}
+{# TrailWarehouse > AppBundle > Resources > views > Shop > cart_modal.html.twig #}
 
-<!-- Signin Modal -->
+<!-- # Cart Modal -->
 <div class="modal fade" id="cart-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <!-- # Modal Dialog -->
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
 
@@ -31,7 +33,7 @@
                   <th class="hidden-xs-down">Photo</th>
                   <th class="hidden-sm-down">Prix unitaire</th>
                   <th class="hidden-xs-down">Quantité</th>
-                  <th class="flex">Sous-total</th>
+                  <th class="">Sous-total</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,7 +49,7 @@
                       <span class="hidden-sm-up">x{{ item.quantity }}</span>
                     </div>
                   </td>
-                  <td class="text-center hidden-xs-down"><img src="{{ item.product.image is null ? asset('images/no_picture.png') : item.product.image.src }}" alt=""></td>
+                  <td class="text-center hidden-xs-down"><img class="miniature" src="{{ item.product.image is null ? asset('images/no_picture.png') : item.product.image.src }}" alt=""></td>
                   <td class="text-right hidden-sm-down">{{ item.product.price }}&nbsp;€</td>
                   <td class="text-right hidden-xs-down">{{ item.quantity }}</td>
                   <td class="text-right">{{ item.total }}&nbsp;€</td>
@@ -58,7 +60,7 @@
             <!-- Cart Items # -->
             <!-- # Cart Total -->
             <p class="flex justify-content-end">
-              <span class="font-weight-bold">Total</span>&nbsp;:&nbsp;<span class="font-weight-bold text-info">{{ cart.total }} €</span>
+              <span class="font-weight-bold">Valeur du panier</span>&nbsp;:&nbsp;<span class="font-weight-bold">{{ cart.total }} €</span>
             </p>
             <!-- Cart Total # -->
           {% endif %}
@@ -83,4 +85,7 @@
 
     </div>
   </div>
+  <!-- Modal Dialog # -->
+
 </div>
+<!-- Cart Modal # -->
