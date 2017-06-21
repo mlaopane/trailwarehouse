@@ -85,6 +85,9 @@
                       </button>
                     </div>
                     <!-- Add to cart # -->
+
+                    {{ include('TrailWarehouseAppBundle:Shop:item_modal.html.twig') }}
+
                   </div>
                   <!-- Card Title # -->
 
@@ -216,7 +219,7 @@
                               </ul>
                               <!-- Quantity # -->
                               <!-- # Loader -->
-                              <div data-ng-class="'loader-container' + (page.quantities.length > 0 ? ' hide' : '')">
+                              <div data-ng-class="'loader-container' + (page.quantities ? ' hide' : '')">
                                 <div class="loader">
                                   <div class="block"></div>
                                   <div class="block delay"></div>

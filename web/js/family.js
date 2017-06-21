@@ -138,16 +138,21 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
    * @param {int} quantity
    */
   page.addToCart = function(product, quantity) {
-    page.add_in_progress = true;
-    let url = page.SHOP_URL + 'cart/add';
-    let data = {
-      product : product,
-      quantity : quantity,
+    if (product != null && quantity > 0) {
+      page.add_in_progress = true;
+      let url = page.SHOP_URL + 'cart/add';
+      let item = {
+        product  : product,
+        quantity : quantity,
+      }
+      $http.post(url, item).then(function(response) {
+        page.add_in_progress = false;
+        page.cart = JSON.parse(response.data);
+        item.total = item.product.price * item.quantity;
+        page.item = item;
+        $('#item-modal').modal('show');
+      });
     }
-    $http.post(url, data).then(function(response) {
-      page.add_in_progress = false
-      console.log(JSON.parse(response.data));
-    });
   }
 
   $(function() {
