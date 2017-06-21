@@ -4,7 +4,7 @@ namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use TrailWarehouse\AppBundle\Entity\Member;
+use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Product;
 use TrailWarehouse\AppBundle\Entity\OrderProduct;
 
@@ -26,12 +26,12 @@ class Order
     private $id;
 
     /**
-     * @var Member $member
+     * @var User $user
      *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Member")
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $member;
+    private $user;
 
     /**
      * @var \DateTime
@@ -98,27 +98,27 @@ class Order
     }
 
     /**
-     * Set member
+     * Set user
      *
-     * @param Member $member
+     * @param User $user
      *
      * @return Order
      */
-    public function setMember(Member $member)
+    public function setUser(User $user)
     {
-        $this->member = $member;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get member
+     * Get user
      *
-     * @return Member
+     * @return User
      */
-    public function getMember()
+    public function getUser()
     {
-        return $this->member;
+        return $this->user;
     }
 
     /**

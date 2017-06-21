@@ -38,9 +38,9 @@ app_api_promo_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_promo.yml"
     prefix            : /promos
 
-app_api_member_root   :
-    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_member.yml"
-    prefix            : /members
+app_api_user_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_user.yml"
+    prefix            : /users
 
 app_api_coordinate_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_coordinate.yml"
@@ -49,7 +49,3 @@ app_api_coordinate_root   :
 app_api_stat_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_stat.yml"
     prefix            : /stats
-
-app_api_test_root   :
-    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_test.yml"
-    prefix            : /tests

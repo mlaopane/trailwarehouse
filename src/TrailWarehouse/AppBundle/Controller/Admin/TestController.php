@@ -36,7 +36,7 @@ class TestController extends Controller
           $manager->persist($item);
         }
         $manager->flush();
-        return $this->render('TrailWarehouseAppBundle:Home:index.html.twig', $data);
+        return $this->redirectToRoute('app_shop_categories', $data);
     }
 
 }

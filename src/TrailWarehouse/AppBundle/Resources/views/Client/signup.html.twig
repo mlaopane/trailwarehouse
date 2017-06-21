@@ -22,41 +22,11 @@
         <div class="row">
 
           <div class="col-12 mb-2">
-            <h1>Création de votre compte</h1>
-          </div>
-
-          <div class="col-12 mb-2">
-            <h3>Identité</h3>
+            <h1>Créez votre compte client</h1>
           </div>
 
           <!-- # Col -->
-          <div class="col-12 col-md-6">
-
-            <!-- # Firstname -->
-            <div class="form-group mb-4">
-              {{ form_label(form.firstname, 'Prénom*') }}
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                {{ form_widget(form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
-              </div>
-            </div>
-            <!-- Firstname # -->
-
-            <!-- # Lastname -->
-            <div class="form-group mb-4">
-              {{ form_label(form.lastname, 'Nom de famille*') }}
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                {{ form_widget(form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Nom de famille'}}) }}
-              </div>
-            </div>
-            <!-- Lastname # -->
-
-          </div>
-          <!-- Col # -->
-
-          <!-- # Col -->
-          <div class="col-12 col-md-6">
+          <div class="col-12">
 
             <!-- # E-mail -->
             <div class="form-group mb-4">
@@ -65,19 +35,36 @@
                 <div class="input-group-addon">@</div>
                 {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Adresse électronique'}}) }}
               </div>
+              <p class="form-text text-muted justify-self-end">Une adresse électronique valide</p>
             </div>
             <!-- E-mail # -->
 
             <!-- # Password -->
             <div class="form-group mb-4">
-              {{ form_label(form.password, 'Mot de passe*') }}
+              {{ form_label(form.plainPassword.first, 'Mot de passe*') }}
+              <div class="">
+                {{ form_errors(form.plainPassword) }}
+              </div>
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                {{ form_widget(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
               </div>
               <p class="form-text text-muted justify-self-end">Minimum 6 caractères</p>
             </div>
             <!-- Password # -->
+
+            <!-- # Password Confirmation -->
+            <div class="form-group mb-4">
+              {{ form_label(form.plainPassword.second, 'Confirmation Mot de passe*') }}
+              <div class="">
+              </div>
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+              </div>
+              <p class="form-text text-muted justify-self-end">Identique au mot de passe</p>
+            </div>
+            <!-- Password Confirmation # -->
 
           </div>
           <!-- Col # -->
@@ -85,29 +72,10 @@
         </div>
         <!-- Row # -->
 
-        {% if form.coordinates is defined %}
-          <!-- # Row -->
-          <div class="row">
-
-            <!-- # Col -->
-            <div class="col">
-
-              <!-- # Coordinates -->
-              <div class="form-group mb-4">
-                <h3>Adresses</h3>
-                {{ form_widget(form.coordinates) }}
-              </div>
-              <!-- Coordinates # -->
-
-            </div>
-            <!-- Col # -->
-
-          </div>
-          <!-- Row # -->
-        {% endif %}
-
         <!-- # Submit -->
-        {{ form_widget(form.send, {'attr': {'class':'btn btn-confirm'}}, 'S\'inscrire') }}
+        <div class="flex justify-content-center justify-content-sm-end">
+          {{ form_widget(form.send, {'attr': {'class':'btn btn-confirm'}}, 'S\'inscrire') }}
+        </div>
         <!-- Submit # -->
 
         <!-- # Rest -->

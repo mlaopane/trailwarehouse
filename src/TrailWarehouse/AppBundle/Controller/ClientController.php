@@ -10,7 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use TrailWarehouse\AppBundle\Entity\Member;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Form\SignupType;
 use TrailWarehouse\AppBundle\Form\SigninType;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
@@ -21,10 +22,10 @@ class ClientController extends Controller
   /* *** Initilization *** */
   /* --------------------- */
 
-  protected $member;
+  protected $user;
 
   public function __construct() {
-    $this->member = new Member();
+    $this->user = new User();
   }
 
   /* -------------- */
@@ -36,17 +37,21 @@ class ClientController extends Controller
    */
   public function signupAction(Request $request)
   {
-    $form = $this->get('form.factory')->create(SignupType::class, $this->member);
-    if ($form->isSubmitted())
-    {
+    $form = $this->get('form.factory')->create(SignupType::class, $this->user);
+    // Form submitted
+    if ($form->isSubmitted()) {
       $form->handleRequest($request);
-      if ($form->isValid())
-      {
-        $this->registerMember($this->member);
+      if ($form->isValid()) {
+        // Register the User then redirect to the Shop
+        $this->registerUser($this->user);
         $request->getSession()->getFlashBag()->add('notice', 'Votre inscription a été prise en compte');
         return $this->redirectToRoute('app_shop');
       }
+      else {
+        $request->getSession()->getFlashBag()->add('danger', 'L\'inscription a échoué');
+      }
     }
+    // Display the form to register
     $data = [
       'form' => $form->createView(),
     ];
@@ -58,7 +63,7 @@ class ClientController extends Controller
    */
   public function signinAction(Request $request)
   {
-    $form = $this->get('form.factory')->create(SigninType::class, $this->member);
+    $form = $this->get('form.factory')->create(SigninType::class, $this->user);
     // Envoi du formulaire
     if ($form->isSubmitted())
     {
@@ -70,16 +75,16 @@ class ClientController extends Controller
       // Formulaire valide
       else {
         $manager = $this->getDoctrine()->getManager();
-        $repository = $manager->getRepository('TrailWarehouseAppBundle:Member');
-        $db_member = $repository->findOneBy([
-          'email'    => $this->member->getEmail(),
-          'password' => $this->member->getPassword(),
+        $repository = $manager->getRepository('TrailWarehouseAppBundle:User');
+        $db_user = $repository->findOneBy([
+          'email'    => $this->user->getEmail(),
+          'password' => $this->user->getPassword(),
         ]);
         // Identifiants erronés
-        if ($db_member == NULL) {
+        if ($db_user == NULL) {
           return $this->redirectToRoute('app_client_signin');
         }
-        $request->getSession()->getFlashBag()->add('notice', 'Bienvenue '. $this->member->getFirstname());
+        $request->getSession()->getFlashBag()->add('notice', 'Bienvenue '. $this->user->getFirstname());
         return $this->redirectToRoute('app_shop');
       }
     }
@@ -103,17 +108,18 @@ class ClientController extends Controller
   /* -------------------------- */
 
   /**
-   * @param {Member} $member
-   * Register a member into the database
+   * @param User $user
+   * @param string $hash
+   * Register a user into the database
    */
-  protected function registerMember($member) {
-    $member
+  protected function registerUser($user, $hash) {
+    $user
       ->setRole('user')
       ->setIsActive(false)
       ->setDateCreation(new \DateTime())
     ;
     $manager = $this->getDoctrine()->getManager();
-    $manager->persist($member);
+    $manager->persist($user);
     $manager->flush();
   }
 

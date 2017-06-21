@@ -19,7 +19,7 @@ class SigninType extends AbstractType
         $builder
           ->add('email', EmailType::class)
           ->add('password', PasswordType::class)
-          ->add('envoyer', SubmitType::class)
+          ->add('send', SubmitType::class, ['label' => 'Connexion'])
         ;
     }
 
@@ -29,7 +29,7 @@ class SigninType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'TrailWarehouse\AppBundle\Entity\Member'
+            'data_class' => 'TrailWarehouse\AppBundle\Entity\User'
         ));
     }
 
@@ -38,7 +38,7 @@ class SigninType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'trailwarehouse_appbundle_member';
+        return 'trailwarehouse_appbundle_user';
     }
 
 

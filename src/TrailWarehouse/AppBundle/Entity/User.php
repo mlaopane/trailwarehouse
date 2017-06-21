@@ -3,18 +3,20 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use TrailWarehouse\AppBundle\Entity\Coordinate;
 
 /**
-* Member
+* User
 *
-* @ORM\Table(name="member")
-* @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\MemberRepository")
+* @ORM\Table(name="`user`")
+* @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\UserRepository")
+* @UniqueEntity(fields="email", message="Adresse électronique déjà utilisée")
 */
-class Member implements AdvancedUserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
     * @var int
@@ -28,20 +30,8 @@ class Member implements AdvancedUserInterface, \Serializable
     /**
     * @var string
     *
-    * @ORM\Column(name="firstname", type="string", length=255)
-    */
-    private $firstname;
-
-    /**
-    * @var string
-    *
-    * @ORM\Column(name="lastname", type="string", length=255)
-    */
-    private $lastname;
-
-    /**
-    * @var string
-    *
+    * @Assert\NotBlank()
+    * @Assert\Email()
     * @ORM\Column(name="email", type="string", length=191, unique=true)
     */
     private $email;
@@ -49,16 +39,16 @@ class Member implements AdvancedUserInterface, \Serializable
     /**
     * @var string
     *
-    * @ORM\Column(name="username", type="string", length=191, unique=true)
+    * @ORM\Column(name="password", type="string", length=128)
     */
-    private $username;
+    private $password;
 
     /**
     * @var string
-    *
-    * @ORM\Column(name="password", type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Length(max=4096)
     */
-    private $password;
+    private $plainPassword;
 
     /**
     * @var string
@@ -84,15 +74,15 @@ class Member implements AdvancedUserInterface, \Serializable
     /**
     * @var ArrayCollection
     *
-    * @ORM\OneToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Coordinate", mappedBy="member")
+    * @ORM\OneToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Coordinate", mappedBy="user")
     */
     private $coordinates;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Review", mappedBy="member")
-     */
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="Review", mappedBy="user")
+    */
     private $reviews;
 
     /**
@@ -169,51 +159,13 @@ class Member implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set firstname
-     *
-     * @param string $firstname
-     *
-     * @return Member
-     */
-    public function setFirstname($firstname)
+    * get the email (which stands for the username)
+    *
+    * @return string
+    */
+    public function getUsername()
     {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    /**
-     * Get firstname
-     *
-     * @return string
-     */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    /**
-     * Set lastname
-     *
-     * @param string $lastname
-     *
-     * @return Member
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * Get lastname
-     *
-     * @return string
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
+        return $this->email;
     }
 
     /**
@@ -221,7 +173,7 @@ class Member implements AdvancedUserInterface, \Serializable
      *
      * @param string $email
      *
-     * @return Member
+     * @return User
      */
     public function setEmail($email)
     {
@@ -241,27 +193,27 @@ class Member implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set username
+     * Set plainPassword
      *
-     * @param string $username
+     * @param string $plainPassword
      *
-     * @return Member
+     * @return User
      */
-    public function setUsername($username)
+    public function setPlainPassword($plainPassword)
     {
-        $this->username = $username;
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
 
     /**
-     * Get username
+     * Get plainPassword
      *
      * @return string
      */
-    public function getUsername()
+    public function getPlainPassword()
     {
-        return $this->username;
+        return $this->plainPassword;
     }
 
     /**
@@ -269,7 +221,7 @@ class Member implements AdvancedUserInterface, \Serializable
      *
      * @param string $password
      *
-     * @return Member
+     * @return User
      */
     public function setPassword($password)
     {
@@ -293,7 +245,7 @@ class Member implements AdvancedUserInterface, \Serializable
      *
      * @param string $role
      *
-     * @return Member
+     * @return User
      */
     public function setRole($role)
     {
@@ -317,7 +269,7 @@ class Member implements AdvancedUserInterface, \Serializable
      *
      * @param boolean $isActive
      *
-     * @return Member
+     * @return User
      */
     public function setIsActive($isActive)
     {
@@ -341,7 +293,7 @@ class Member implements AdvancedUserInterface, \Serializable
      *
      * @param \DateTime $creation
      *
-     * @return Member
+     * @return User
      */
     public function setCreation($creation)
     {
@@ -365,7 +317,7 @@ class Member implements AdvancedUserInterface, \Serializable
      *
      * @param \TrailWarehouse\AppBundle\Entity\Coordinate $coordinate
      *
-     * @return Member
+     * @return User
      */
     public function addCoordinate(\TrailWarehouse\AppBundle\Entity\Coordinate $coordinate)
     {
@@ -399,7 +351,7 @@ class Member implements AdvancedUserInterface, \Serializable
      *
      * @param \TrailWarehouse\AppBundle\Entity\Review $review
      *
-     * @return Member
+     * @return User
      */
     public function addReview(\TrailWarehouse\AppBundle\Entity\Review $review)
     {

@@ -1,35 +1,35 @@
-app_api_member_get_all :
+app_api_user_get_all :
     path                 : /
     methods              : [GET]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Member:getAll
+        _controller      : TrailWarehouseAppBundle:Api/User:getAll
 
-app_api_member_get     :
+app_api_user_get     :
     path                 : /{id}
     methods              : [GET]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Member:get
+        _controller      : TrailWarehouseAppBundle:Api/User:get
     requirements         :
         id               : '\d+'
 
-app_api_member_add     :
+app_api_user_add     :
     path                 : /
     methods              : [POST]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Member:add
+        _controller      : TrailWarehouseAppBundle:Api/User:add
 
-app_api_member_modify  :
+app_api_user_modify  :
     path                 : /{id}
     methods              : [POST]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Member:modify
+        _controller      : TrailWarehouseAppBundle:Api/User:modify
     requirements         :
         id               : '\d+'
 
-app_api_member_remove  :
+app_api_user_remove  :
     path                 : /{id}
     methods              : [DELETE]
     defaults             :
-        _controller      : TrailWarehouseAppBundle:Api/Member:remove
+        _controller      : TrailWarehouseAppBundle:Api/User:remove
     requirements         :
         id               : '\d+'

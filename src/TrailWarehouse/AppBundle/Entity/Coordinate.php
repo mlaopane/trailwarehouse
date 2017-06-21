@@ -3,7 +3,7 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use TrailWarehouse\AppBundle\Entity\Member;
+use TrailWarehouse\AppBundle\Entity\User;
 
 /**
  * Coordinate
@@ -23,10 +23,24 @@ class Coordinate
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Member", inversedBy="coordinates")
+    * @var string
+    *
+    * @ORM\Column(name="firstname", type="string", length=255)
+    */
+    private $firstname;
+
+    /**
+    * @var string
+    *
+    * @ORM\Column(name="lastname", type="string", length=255)
+    */
+    private $lastname;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="coordinates")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $member;
+    private $user;
 
     /**
      * @var string
@@ -164,26 +178,74 @@ class Coordinate
     }
 
     /**
-     * Set member
+     * Set user
      *
-     * @param \TrailWarehouse\AppBundle\Entity\Member $member
+     * @param User $user
      *
      * @return Coordinate
      */
-    public function setMember(Member $member)
+    public function setUser(User $user)
     {
-        $this->member = $member;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get member
+     * Get user
      *
-     * @return \TrailWarehouse\AppBundle\Entity\Member
+     * @return User
      */
-    public function getMember()
+    public function getUser()
     {
-        return $this->member;
+        return $this->user;
+    }
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     *
+     * @return Coordinate
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return Coordinate
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
     }
 }

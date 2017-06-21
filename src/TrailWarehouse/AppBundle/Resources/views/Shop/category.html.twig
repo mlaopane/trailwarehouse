@@ -44,18 +44,18 @@
       <div id="families" class="row no-gutters px-0 px-lg-2 px-xl-3 py-3">
       {% for family in families %}
 
-        <!-- # Family -->
-        <div class="family col-12 col-md-6 col-lg-4 col-xl-3 p-2">
-          <div class="card px-2">
-            <a href="{{ path('app_shop_family', {slug: family.slug}) }}">
-              <div class="image-container row no-gutters justify-content-center px-2">
-                <img src="{{ asset('images/no_picture.png') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}" class="round img-fluid">
-              </div>
-              <h4 class="card-title row no-gutters justify-content-center px-2">{{ family.name | capitalize }} - {{ family.brand.name | upper }}</h4>
-            </a>
+          <!-- # Family -->
+          <div class="family col-12 col-md-6 col-lg-4 col-xl-3 p-2">
+            <div class="card px-2">
+              <a href="{{ path('app_shop_family', {slug: family.slug}) }}">
+                <div class="image-container row no-gutters justify-content-center px-2">
+                  <img src="{{ asset('images/no_picture.png') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}" class="round img-fluid">
+                </div>
+                <h4 class="card-title row no-gutters justify-content-center px-2">{{ family.name | capitalize }} - {{ family.brand.name | upper }}</h4>
+              </a>
+            </div>
           </div>
-        </div>
-        <!-- # Family -->
+          <!-- # Family -->
 
       {% endfor %}
       </div>

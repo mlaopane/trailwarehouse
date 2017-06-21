@@ -24,12 +24,12 @@ class Review
     private $id;
 
     /**
-     * @var Member
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Member", cascade={"persist"}, inversedBy="reviews")
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", cascade={"persist"}, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $member;
+    private $user;
 
     /**
      * @var Family
@@ -181,26 +181,26 @@ class Review
     }
 
     /**
-     * Set member
+     * Set user
      *
-     * @param \TrailWarehouse\AppBundle\Entity\Member $member
+     * @param \TrailWarehouse\AppBundle\Entity\User $user
      *
      * @return Review
      */
-    public function setMember(\TrailWarehouse\AppBundle\Entity\Member $member)
+    public function setUser(\TrailWarehouse\AppBundle\Entity\User $user)
     {
-        $this->member = $member;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get member
+     * Get user
      *
-     * @return \TrailWarehouse\AppBundle\Entity\Member
+     * @return \TrailWarehouse\AppBundle\Entity\User
      */
-    public function getMember()
+    public function getUser()
     {
-        return $this->member;
+        return $this->user;
     }
 }

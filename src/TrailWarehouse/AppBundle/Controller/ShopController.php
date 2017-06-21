@@ -84,12 +84,17 @@ class ShopController extends Controller
     $doctrine = $this->getDoctrine();
     $repo['family'] = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
 
-    $db_families = $repo['family']->getByCategory($category);
+    $db_families = $repo['family']->findByCategory($category);
+    $families = [];
+    foreach ($db_families as $db_family) {
+      if ($db_family->getProducts()->count() > 0) {
+        $families[] = $db_family;
+      }
+    }
     $best = $repo['family']->getBestReviews();
-
     $data = [
       'active_category' => $category,
-      'families' => $db_families,
+      'families' => $families,
       'best' => $best,
     ];
 
@@ -109,6 +114,9 @@ class ShopController extends Controller
     }
     $colors  = $repository['product']->getColorsByFamily($family);
     $sizes   = $repository['product']->getSizesByFamily($family);
+    if (empty($colors) OR empty($sizes)) {
+      return $this->redirectToRoute('app_shop');
+    }
     $data = [
       'family' => $family,
       'colors' => $colors,
