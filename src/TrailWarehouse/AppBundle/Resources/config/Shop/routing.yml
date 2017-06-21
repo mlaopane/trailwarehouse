@@ -25,3 +25,8 @@ app_shop_add_to_cart :
     methods          : [POST]
     defaults         :
         _controller  : TrailWarehouseAppBundle:Shop:addToCart
+
+app_shop_cart :
+    path             : /cart
+    defaults         :
+        _controller  : TrailWarehouseAppBundle:Shop:cart
