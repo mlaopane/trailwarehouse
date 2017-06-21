@@ -5,8 +5,8 @@ security:
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
 
     encoders :
-        Symfony\Component\Security\Core\User\User:
-            algorithm : bcrypt
+        Symfony\Component\Security\Core\User\User: plaintext
+            # algorithm : bcrypt
 
     role_hierarchy :
         ROLE_ADMIN       : ROLE_USER
@@ -18,13 +18,13 @@ security:
                 users :
                     user  :
                         password : $2y$13$0Qlf/QiYFUStkojucAWrKORvQPR4jqZ.Dym2WCDxsi1co4VkRSzIO
-                        roles    : 'ROLE_USER'
-                    admin :
+                        roles    : [ 'ROLE_USER' ]
+                    admin        :
                         password : $2y$13$Mk3Qncp.P5RKtax0oXDrLOLO3CRqWZtfi5RZUrj5hTmBmOzqJk1vW
-                        roles    : 'ROLE_ADMIN'
-                    mickael :
+                        roles    : [ 'ROLE_ADMIN' ]
+                    superadmin   :
                         password : $2y$13$bLhahJ0foR90DYez16T1m.UQH5ioaMcrX9nPAe.XDaE.rVY9FuJve
-                        roles    : 'ROLE_SUPER_ADMIN'
+                        roles    : [ 'ROLE_SUPER_ADMIN' ]
         db_trailwarehouse :
             entity :
                 class    : TrailWarehouseAppBundle:Member
@@ -48,13 +48,15 @@ security:
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login :
-               provider   : db_trailwarehouse
-               login_path : app_client_signin
-               check_path : app_client_signin
+                provider   : in_memory
+              #  provider   : db_trailwarehouse
+                login_path : app_client_signin
+                check_path : app_client_signin_check
 
             logout :
-                path : app_client_signout
+                path   : app_client_signout
                 target : app_shop
 
     access_control :
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/superadmin, roles: ROLE_SUPER_ADMIN }
