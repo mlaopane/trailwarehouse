@@ -21,7 +21,7 @@
 
         <!-- # Item -->
         <div id="item">
-          <table id="table-item" class="mb-3">
+          <table id="table-item" class="ness-table mb-3">
             <tbody>
               <tr>
                 <td class="text-center">
@@ -34,9 +34,6 @@
                   </div>
                 </td>
                 <td class="text-center"><img class="miniature" data-ng-src="{% verbatim %}{{ (page.item.product.image != null) ? (page.item.product.image.src) : (page.ASSET_URL + 'images/no_picture.png') }}{% endverbatim %}"></td>
-                <td class="text-center">
-                  Quantité : <span data-ng-bind="page.item.quantity"></span>
-                </td>
               </tr>
             </tbody>
           </table>
