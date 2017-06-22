@@ -13,10 +13,10 @@
 {% endblock %}
 
 {% block page_main %}
-  <main id="page-cart" class="page" data-ng-app="app">
+  <main id="page-cart" class="page">
 
     <!-- # Container -->
-    <div class="container bg-whitegrey px-4 py-3 mb-4" data-ng-controller="cartCtrl as page">
+    <div class="container bg-whitegrey px-4 py-3 mb-4">
 
       <div id="ng-data">
         <input type ="hidden" data-ng-init="page.SHOP_URL  = '{{ url('app_shop') }}'">
@@ -82,5 +82,4 @@
 
 {% block additional_javascripts %}
   <script src="{{ asset('js/app-common.js') }}"></script>
-  <script src="{{ asset('js/family.js') }}"></script>
 {% endblock %}
