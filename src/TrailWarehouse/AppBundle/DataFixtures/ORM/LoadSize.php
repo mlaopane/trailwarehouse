@@ -15,23 +15,38 @@ class LoadSize implements FixtureInterface, OrderedFixtureInterface
   {
     $repository['category'] = $manager->getRepository('TrailWarehouseAppBundle:Category');
 
-    $category = $repository['category']->findOneByName('textile');
-    $data = [
-      ['value' => 'U', 'unit'  => NULL, 'unit_shortcut' => NULL, 'category' => $category],
-      ['value' => 'XS', 'unit' => NULL, 'unit_shortcut' => NULL, 'category' => $category],
-      ['value' => 'S', 'unit'  => NULL, 'unit_shortcut' => NULL, 'category' => $category],
-      ['value' => 'M', 'unit'  => NULL, 'unit_shortcut' => NULL, 'category' => $category],
-      ['value' => 'L', 'unit'  => NULL, 'unit_shortcut' => NULL, 'category' => $category],
-      ['value' => 'XL', 'unit' => NULL, 'unit_shortcut' => NULL, 'category' => $category],
+    $cat_accessoires = $repository['category']->findOneByName('accessoires');
+    $cat_textile = $repository['category']->findOneByName('textile');
+    $cat_chaussures = $repository['category']->findOneByName('chaussures');
+
+    $data = [];
+
+    // Accessoires
+    $data[] = [
+      'value'         => 'U',
+      'unit'          => NULL,
+      'unit_shortcut' => NULL,
+      'category'      => $cat_accessoires,
     ];
 
-    $category = $repository['category']->findOneByName('chaussures');
+    // Textile
+    $sizes = [ 'U', 'XS', 'S', 'M', 'L', 'XL' ];
+    foreach ($sizes as $size) {
+      $data[] = [
+        'value'         => $size,
+        'unit'          => NULL,
+        'unit_shortcut' => NULL,
+        'category'      => $cat_textile,
+      ];
+    }
+
+    // Chaussures
     for ($i = 20 ; $i < 35 ; $i += 0.5) {
       $data[] = [
         'value'         => round($i, 1),
         'unit'          => 'centimeter',
         'unit_shortcut' => 'cm',
-        'category'      => $category,
+        'category'      => $cat_chaussures,
       ];
     }
     foreach ($data as $element) {
