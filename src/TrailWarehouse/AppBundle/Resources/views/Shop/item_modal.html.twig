@@ -1,4 +1,4 @@
-{# TrailWarehouse > AppBundle > Resources > views > Shop > cart_modal.html.twig #}
+{# TrailWarehouse > AppBundle > Resources > views > Shop > item_modal.html.twig #}
 
 <!-- # Item Modal -->
 <div class="modal fade" id="item-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -49,8 +49,12 @@
 
         <!-- # Modal Footer -->
         <div class="modal-footer">
-            <button type="button" class="btn btn-cancel mb-2 mb-sm-0" data-dismiss="modal">Continuer mon shopping</button>
-            <button type="submit" class="btn btn-confirm">Voir mon panier</button>
+            <button type="button" class="btn btn-cancel mb-2 mb-sm-0" data-dismiss="modal">
+              <span>Continuer mon shopping</span>
+            </button>
+            <a href="{{ path('app_shop_cart') }}" class="btn btn-confirm">
+              Voir mon panier
+            </a>
         </div>
         <!-- Modal Footer # -->
 
