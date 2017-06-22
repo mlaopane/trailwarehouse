@@ -18,11 +18,12 @@ class LoadBrand implements FixtureInterface
       'salomon',
       'vibram',
     ];
-    foreach ($data as $item_name) {
-      $item = new Brand();
-      $item->setName($item_name);
-      $item->setLogo('images/no_picture.png');
-      $manager->persist($item);
+    foreach ($data as $name) {
+      $brand = new Brand();
+      $logo = str_replace([" ", "'"], "images/".$item_name.".png");
+      $brand->setName($name);
+      $brand->setLogo($logo);
+      $manager->persist($brand);
     }
     $manager->flush();
   }
