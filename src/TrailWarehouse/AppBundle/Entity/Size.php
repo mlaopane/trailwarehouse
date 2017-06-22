@@ -36,7 +36,7 @@ class Size
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=100, unique=true)
+     * @ORM\Column(name="value", type="string", length=100)
      */
     private $value;
 
