@@ -82,14 +82,15 @@ class CommonRepository extends EntityRepository
    *
    * @return Entity
    */
-  public function getOneRandBy($field, $value) {
-    return $this->createQueryBuilder('entity')
+  public function getOneRandBy($field, $value, $as_array = true) {
+    $query = $this->createQueryBuilder('entity')
       ->addSelect('RAND() as HIDDEN rand')
       ->where('entity.'.$field.' = :value')
       ->setParameter('value', $value)
       ->addOrderBy('rand')
       ->setMaxResults(1)
       ->getQuery()
-      ->getOneOrNullResult(Query::HYDRATE_ARRAY);
+    ;
+    return $as_array ? $query->getSingleResult(Query::HYDRATE_ARRAY) : $query->getSingleResult();
   }
 }
