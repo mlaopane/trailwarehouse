@@ -91,8 +91,8 @@ class Product
     {
       $slug = [
         'family' => $this->getFamily()->getSlug(),
-        'size'   => $this->getSize()->getSlug(),
-        'color'  => $this->getColor()->getSlug(),
+        'color'  => (!empty($color = $this->getColor())) ? ($color->getSlug()) : (''),
+        'size'   => (!empty($size = $this->getSize())) ? ($size->getSlug()) : (''),
       ];
 
       $ref = $slug['family'];
@@ -218,7 +218,7 @@ class Product
      *
      * @return Product
      */
-    public function setColor(Color $color = null)
+    public function setColor(Color $color = NULL)
     {
         $this->color = $color;
 
@@ -242,7 +242,7 @@ class Product
      *
      * @return Product
      */
-    public function setSize(Size $size = null)
+    public function setSize(Size $size = NULL)
     {
         $this->size = $size;
 
@@ -267,7 +267,7 @@ class Product
      *
      * @return Product
      */
-    public function setImage(Image $image = null)
+    public function setImage(Image $image)
     {
         $this->image = $image;
 

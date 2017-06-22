@@ -68,7 +68,7 @@ class ShopController extends Controller
 
     $data = [
       'active_category' => $category,
-      'families' => $db_families,
+      'families'        => $db_families,
     ];
 
     return $this->render('TrailWarehouseAppBundle:Shop:category.html.twig', $data);
