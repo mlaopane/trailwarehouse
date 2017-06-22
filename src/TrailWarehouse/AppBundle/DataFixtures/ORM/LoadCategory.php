@@ -18,10 +18,10 @@ class LoadCategory implements FixtureInterface
       'électronique',
       'accessoires',
     ];
-    foreach ($data as $item_name) {
-      $item = new Category();
-      $item->setName($item_name);
-      $manager->persist($item);
+    foreach ($data as $name) {
+      $category = new Category();
+      $category->setName($name);
+      $manager->persist($category);
     }
     $manager->flush();
   }
