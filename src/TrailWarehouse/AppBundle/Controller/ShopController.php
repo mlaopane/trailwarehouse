@@ -155,33 +155,44 @@ class ShopController extends Controller
     $post_product  = $post_item->product;
     $post_quantity = $post_item->quantity;
 
-    $repository['product'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Product');
-    $product_exists = !empty($db_product = $repository['product']->find($post_product->id));
+    // IF the quantity isn't a natural number
+    if ($post_quantity <= 0) {
+      return new JsonResponse(false);
+    }
 
-    // IF the Product does exist and is available THEN Add Item to Cart
-    if ($product_exists AND $db_product->getStock() >= $post_quantity) {
-      $new_item = (new Item())
-        ->setProduct($db_product)
-        ->setQuantity($post_quantity)
-        ->setTotal($post_product->price * $post_quantity)
-      ;
-      // IF the cart doesn't exist
-      if (empty($cart = $request->getSession()->get('cart'))) {
-        $cart = new Cart();
-      }
-      // ELSE check if the product already exists in the cart
-      else {
-        foreach ($cart_items = $cart->getItems() as $cart_item) {
-          if ($cart_item->getProduct()->getId() == $db_product->getId()) {
-            $cart->removeItem($cart_item);
-            break;
-          }
+    $repository['product'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Product');
+    $product_not_exists = empty($db_product = $repository['product']->find($post_product->id));
+
+    // IF the Product does NOT exist OR the quantity is NOT available
+    if ($product_not_exists OR ($post_quantity >= $db_product->getStock())) {
+      return new JsonResponse(false);
+    }
+
+    // Create the Item
+    $new_item = (new Item())
+      ->setProduct($db_product)
+      ->setQuantity($post_quantity)
+      ->setTotal($post_product->price * $post_quantity)
+    ;
+
+    // IF the Cart doesn't exist THEN create an new Cart
+    if (empty($cart = $request->getSession()->get('cart'))) {
+      $cart = new Cart();
+    }
+    // ELSE
+    else {
+      foreach ($cart_items = $cart->getItems() as $cart_item) {
+        // IF the product already appears in a Cart Item THEN remove the item (before adding the new one)
+        if ($cart_item->getProduct()->getId() == $db_product->getId()) {
+          $cart->removeItem($cart_item);
+          break;
         }
       }
-      $cart->addItem($new_item);
-      $request->getSession()->set('cart', $cart);
-      return new JsonResponse($this->serializer->serialize($cart, 'json'));
     }
-    return new JsonResponse(array());
+    
+    // Add the new Item and Update the Cart
+    $cart->addItem($new_item);
+    $request->getSession()->set('cart', $cart);
+    return new JsonResponse($this->serializer->serialize($new_item, 'json'));
   }
 }
