@@ -15,7 +15,6 @@ class LoadCategory implements FixtureInterface
     $data = [
       'chaussures',
       'textile',
-      'électronique',
       'accessoires',
     ];
     foreach ($data as $name) {
