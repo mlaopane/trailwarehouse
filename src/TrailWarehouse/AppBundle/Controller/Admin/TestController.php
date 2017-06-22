@@ -29,14 +29,14 @@ class TestController extends Controller
         $families = $repository['family']->findAll();
 
         foreach ($families as $family) {
-          if ($size = $repository['size']->getOneRandBy('category', $family->getCategory(), false) == NULL) {
-            $size = new Size();
+          if ( ($size = $repository['size']->getOneRandBy('category', $family->getCategory(), false)) == NULL) {
+            $size = NULL;
           }
-          if ($color = $repository['color']->getOneRand(false) == NULL) {
-            $color = new Color();
+          if ( ($color = $repository['color']->getOneRand(false)) == NULL) {
+            $color = NULL;
           }
           $price = ($family->getCategory()->getName() == 'accessoires') ? (mt_rand(1, 7) * 10) : (mt_rand(2, 15) * 10);
-          $stock = mt_rand(0, 10) * 5;
+          $stock = mt_rand(0, 6) * 5;
           $product = (new Product())
             ->setFamily($family)
             ->setColor($color)
