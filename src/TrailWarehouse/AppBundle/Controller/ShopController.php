@@ -64,11 +64,18 @@ class ShopController extends Controller
     $doctrine         = $this->getDoctrine();
     $category['name'] = 'toutes';
     $repo['family']   = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
-    $db_families      = $repo['family']->getAll();
+    $db_families      = $repo['family']->findAll();
+
+    $families = [];
+    foreach ($db_families as $db_family) {
+      if ($db_family->getProducts()->count() > 0) {
+        $families[] = $db_family;
+      }
+    }
 
     $data = [
       'active_category' => $category,
-      'families'        => $db_families,
+      'families'        => $families,
     ];
 
     return $this->render('TrailWarehouseAppBundle:Shop:category.html.twig', $data);
@@ -107,16 +114,20 @@ class ShopController extends Controller
    *
    */
   public function familyAction(Family $family) {
+    if ($family->getProducts()->count() == 0) {
+      return $this->redirectToRoute('app_shop');
+    }
+
     $doctrine = $this->getDoctrine();
     $entity_names = ['product', 'family'];
+
     foreach ($entity_names as $entity_name) {
       $repository[$entity_name] = $doctrine->getRepository('TrailWarehouseAppBundle:'.ucfirst($entity_name));
     }
-    $colors  = $repository['product']->getColorsByFamily($family);
-    $sizes   = $repository['product']->getSizesByFamily($family);
-    if (empty($colors) OR empty($sizes)) {
-      return $this->redirectToRoute('app_shop');
-    }
+
+    $colors = $repository['product']->getColorsByFamily($family);
+    $sizes  = $repository['product']->getSizesByFamily($family);
+
     $data = [
       'family' => $family,
       'colors' => $colors,
