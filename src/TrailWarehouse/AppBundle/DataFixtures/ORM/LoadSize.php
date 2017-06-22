@@ -13,28 +13,35 @@ class LoadSize implements FixtureInterface, OrderedFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
+    $repository['category'] = $manager->getRepository('TrailWarehouseAppBundle:Category');
+
+    $category = $repository['category']->findByName('textile');
     $data = [
-      ['value' => 'U', 'unit'  => NULL, 'unit_shortcut' => NULL],
-      ['value' => 'XS', 'unit' => NULL, 'unit_shortcut' => NULL],
-      ['value' => 'S', 'unit'  => NULL, 'unit_shortcut' => NULL],
-      ['value' => 'M', 'unit'  => NULL, 'unit_shortcut' => NULL],
-      ['value' => 'L', 'unit'  => NULL, 'unit_shortcut' => NULL],
-      ['value' => 'XL', 'unit' => NULL, 'unit_shortcut' => NULL],
+      ['value' => 'U', 'unit'  => NULL, 'unit_shortcut' => NULL, 'category' => $category],
+      ['value' => 'XS', 'unit' => NULL, 'unit_shortcut' => NULL, 'category' => $category],
+      ['value' => 'S', 'unit'  => NULL, 'unit_shortcut' => NULL, 'category' => $category],
+      ['value' => 'M', 'unit'  => NULL, 'unit_shortcut' => NULL, 'category' => $category],
+      ['value' => 'L', 'unit'  => NULL, 'unit_shortcut' => NULL, 'category' => $category],
+      ['value' => 'XL', 'unit' => NULL, 'unit_shortcut' => NULL, 'category' => $category],
     ];
+
+    $category = $repository['category']->findByName('chaussures');
     for ($i = 20 ; $i < 35 ; $i += 0.5) {
       $data[] = [
         'value'         => round($i, 1),
         'unit'          => 'centimeter',
         'unit_shortcut' => 'cm',
+        'category'      => $category,
       ];
     }
     foreach ($data as $element) {
-      $item = (new Size())
+      $size = (new Size())
         ->setValue($element['value'])
         ->setUnit($element['unit'])
         ->setUnitShortcut($element['unit_shortcut'])
+        ->setCategory($element['category'])
       ;
-      $manager->persist($item);
+      $manager->persist($size);
     }
     $manager->flush();
   }

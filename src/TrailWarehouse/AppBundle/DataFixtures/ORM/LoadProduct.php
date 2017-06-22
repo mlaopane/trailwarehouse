@@ -13,9 +13,7 @@ class LoadProduct implements FixtureInterface, OrderedFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
-    // $repo['family'] = $manager->getRepository('TrailWarehouseAppBundle:Family');
-    // $repo['size'] = $manager->getRepository('TrailWarehouseAppBundle:Family');
-    // $repo['color'] = $manager->getRepository('TrailWarehouseAppBundle:Family');
+
   }
 
   public function getOrder()
