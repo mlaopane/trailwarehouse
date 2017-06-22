@@ -4,6 +4,9 @@ namespace TrailWarehouse\AppBundle\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use TrailWarehouse\AppBundle\Entity\Product;
+use TrailWarehouse\AppBundle\Entity\Family;
+use TrailWarehouse\AppBundle\Entity\Color;
+use TrailWarehouse\AppBundle\Entity\Size;
 
 class TestController extends Controller
 {
@@ -26,12 +29,20 @@ class TestController extends Controller
         $families = $repository['family']->findAll();
 
         foreach ($families as $family) {
+          if ($size = $repository['size']->getOneRandBy('category', $family->getCategory(), false) == NULL) {
+            $size = new Size();
+          }
+          if ($color = $repository['color']->getOneRand(false) == NULL) {
+            $color = new Color();
+          }
+          $price = ($family->getCategory()->getName() == 'accessoires') ? (mt_rand(1, 7) * 10) : (mt_rand(2, 15) * 10);
+          $stock = mt_rand(0, 10) * 5;
           $product = (new Product())
             ->setFamily($family)
-            ->setColor($repository['color']->getOneRand(false))
-            ->setSize($repository['size']->getOneRandBy('category', $family->getCategory(), false))
-            ->setPrice($family->getCategory()->getName() == 'accessoires' ? mt_rand(1, 7) * 10 : mt_rand(2, 15) * 10)
-            ->setStock(mt_rand(0, 5) * 10)
+            ->setColor($color)
+            ->setSize($size)
+            ->setPrice($price)
+            ->setStock($stock)
           ;
           $manager->persist($product);
         }
