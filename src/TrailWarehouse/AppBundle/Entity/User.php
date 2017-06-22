@@ -32,6 +32,7 @@ class User implements AdvancedUserInterface, \Serializable
     *
     * @Assert\NotBlank()
     * @Assert\Email()
+    *
     * @ORM\Column(name="email", type="string", length=191, unique=true)
     */
     private $email;
@@ -39,12 +40,16 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * @var string
     *
+    * @Assert\NotBlank()
+    * @Assert\Length(max=4096)
+    *
     * @ORM\Column(name="password", type="string", length=128)
     */
     private $password;
 
     /**
     * @var string
+    *
     * @Assert\NotBlank()
     * @Assert\Length(max=4096)
     */
@@ -54,6 +59,7 @@ class User implements AdvancedUserInterface, \Serializable
     * @var string
     *
     * @ORM\Column(name="role", type="string", length=255)
+    * @Assert\NotBlank()
     */
     private $role;
 
@@ -62,12 +68,13 @@ class User implements AdvancedUserInterface, \Serializable
     *
     * @ORM\Column(name="is_active", type="boolean")
     */
-    private $isActive;
+    private $isActive = false;
 
     /**
     * @var \DateTime
     *
     * @ORM\Column(name="creation", type="datetime")
+    * @Assert\DateTime
     */
     private $creation;
 
@@ -81,7 +88,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * @var ArrayCollection
     *
-    * @ORM\OneToMany(targetEntity="Review", mappedBy="user")
+    * @ORM\OneToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Review", mappedBy="user")
     */
     private $reviews;
 
@@ -90,7 +97,7 @@ class User implements AdvancedUserInterface, \Serializable
     */
     public function __construct() {
         $this->coordinates = new ArrayCollection();
-        $this->reviews = new ArrayCollection();
+        $this->reviews     = new ArrayCollection();
     }
 
 
@@ -120,8 +127,19 @@ class User implements AdvancedUserInterface, \Serializable
         return true;
     }
 
+    /**
+     * @Assert\IsTrue(message = "Le compte n'est pas encore activé")
+     */
     public function isEnabled() {
         return $this->isActive;
+    }
+
+    /**
+     * @Assert\IsTrue(message = "L'adresse électronique et le mot de passe doivent être différents")
+     */
+    public function isPasswordLegal()
+    {
+        return $this->email !== $this->plainPassword;
     }
 
     /* ---------- Serializable ---------- */
