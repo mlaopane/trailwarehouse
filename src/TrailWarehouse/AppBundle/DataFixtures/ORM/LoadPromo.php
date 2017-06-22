@@ -26,8 +26,8 @@ class LoadPromo implements FixtureInterface
         'end' => new \DateTime('2017-07-04 00:00:00'),
       ],
       [
-        'code' => 'AUTUMN10',
-        'value' => 0.10,
+        'code' => 'AUTUMN12',
+        'value' => 0.12,
         'start' => new \DateTime('2017-09-18 00:00:00'),
         'end' => new \DateTime('2017-10-03 00:00:00'),
       ],
