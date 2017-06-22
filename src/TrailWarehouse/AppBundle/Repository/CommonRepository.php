@@ -74,7 +74,7 @@ class CommonRepository extends EntityRepository
       ->setMaxResults(1)
       ->getQuery()
     ;
-    return $as_array ? $query->getSingleResult(Query::HYDRATE_ARRAY) : $query->getSingleResult();
+    return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
   }
 
   /**
@@ -91,6 +91,6 @@ class CommonRepository extends EntityRepository
       ->setMaxResults(1)
       ->getQuery()
     ;
-    return $as_array ? $query->getSingleResult(Query::HYDRATE_ARRAY) : $query->getSingleResult();
+    return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
   }
 }
