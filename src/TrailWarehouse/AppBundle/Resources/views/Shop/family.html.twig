@@ -168,8 +168,8 @@
                                     <li id="size-{{ size.id }}"
                                       data-ng-class="
                                       'ness-option ness-option-sm w-100'
-                                      + (page.sizes && !page.sizes[{{ size.id }}] ? ' disabled' : '')
-                                      + (page.product.size.id == {{ size.id }} ? ' active' : '')"
+                                      + ((page.sizes && !page.sizes[{{ size.id }}]) || (page.product.stock == 0) ? ' disabled' : '')
+                                      + ((page.product.size.id == {{ size.id }}) && (page.product.stock > 0) ? ' active' : '')"
                                       data-ng-click="page.getProductBy({{ family.id }}, page.product.color.id, {{ size.id }})">
                                       <!-- # Size Option -->
                                       <div class="size-option">
@@ -199,21 +199,22 @@
                           <div id="quantity" class="col-6 mb-3">
                             <h4>
                               <span class="font-weight-bold">Quantité</span> :
-                              <span
-                                data-ng-class="(page.quantity == null ? 'invisible' : '')"
-                                data-ng-bind="page.quantity"></span>
+                              <span data-ng-bind="page.quantity ? page.quantity : '-'"></span>
                             </h4>
-                            <div class="ness-option-container ness-option-container-sm">
+                            <div data-ng-class="
+                              'ness-option-container ness-option-container-sm'
+                              ">
                               <!-- # Quantity -->
                               <ul data-ng-class="'ness-option-group'">
                                 <li
                                   data-ng-repeat="quantity in page.quantities"
                                   data-ng-class="
                                   'ness-option ness-option-sm'
+                                  + (page.product.stock ? '' : ' disabled')
                                   + (page.quantity == quantity ? ' active' : '')"
                                   data-ng-click="page.quantity = quantity">
                                   <div class="quantity-option">
-                                    <span data-ng-bind="quantity"></span>
+                                    <span data-ng-bind="page.product.stock ? quantity : '-'"></span>
                                   </div>
                                 </li>
                               </ul>

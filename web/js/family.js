@@ -46,6 +46,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
       $http.get(url).then(function(response) {
         products = response.data;
         page.sizes = page.extractSizes(products);
+
         page.product = products[0];
         page.updateQuantities(page.product.stock);
       });
@@ -67,6 +68,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
 
       // IF the size exists for the active AND it's not the active size
       if (page.sizes[size_id] != null && page.product.size.id != size_id) {
+
         // Set the active size to update the view ASAP
         page.product.size.id = size_id;
         // Request URL
@@ -110,9 +112,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
   page.extractSizes = function(products) {
     let sizes = [];
     for (product of products) {
-      if (product.stock > 0) {
-        sizes[product.size.id] = product.size;
-      }
+      sizes[product.size.id] = product.size;
     }
     return sizes;
   }
@@ -124,11 +124,19 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
    */
   page.updateQuantities = function(stock) {
     page.quantities = [];
-    let max_quantity = (stock >= 10) ? (10) : (stock);
-    for (let i = 1 ; i <= max_quantity ; i++) {
-      page.quantities.push(i);
+    if (stock == 0) {
+      page.quantities.push('-');
+      page.quantity = 0;
     }
-    page.quantity = 1;
+    else {
+      page.quantity = 1;
+      let max_quantity = (stock >= 10) ? (10) : (stock);
+      if (stock) {
+        for (let i = 1 ; i <= max_quantity ; i++) {
+          page.quantities.push(i);
+        }
+      }
+    }
   }
 
   /**
@@ -147,10 +155,12 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
       }
       $http.post(url, item).then(function(response) {
         page.add_in_progress = false;
-        page.cart = JSON.parse(response.data);
-        item.total = item.product.price * item.quantity;
-        page.item = item;
-        $('#item-modal').modal('show');
+        let added_item = JSON.parse(response.data);
+        if (added_item) {
+          item.total = item.product.price * item.quantity;
+          page.item = item;
+          $('#item-modal').modal('show');
+        }
       });
     }
   }
