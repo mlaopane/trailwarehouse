@@ -1,65 +1,67 @@
 <div class="row">
 
-<!-- # Menu Select -->
-<div class="col-12 hidden-md-up py-3">
-  <h4 class="flex justify-content-center mb-3">Sélectionnez une catégorie</h4>
-  <div class="ness-option-container no-limit">
-    <ul class="ness-option-group">
-      {% for category in categories %}
-      <li class="ness-option w-100">
-        <a href="{{ path('app_shop_category', {"slug": category.slug}) }}" class="w-100">
-          {{ category.name | capitalize }}
+  <!-- # Menu Select -->
+  <nav class="col-12 hidden-md-up py-3">
+    <h4 class="navbar-toggler flex justify-content-center mb-3" data-toggle="collapse" data-target="#menu-select">Sélectionnez une catégorie</h4>
+    <div id="menu-select" class="ness-option-container no-limit collapse">
+      <ul class="ness-option-group">
+        {% for category in categories %}
+        <li class="ness-option w-100">
+          <a
+            href="{{ path('app_shop_category', {"slug": category.slug}) }}"
+            class="w-100 {% if active_category is not null and active_category.name == category.name %} active{% endif %}">
+            {{ category.name | capitalize }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+  <!-- Menu Select # -->
+
+  <!-- # Menu List -->
+  <nav class="hidden-sm-down col-12 col-lg-8 col-xl-9">
+    <ul>
+      <li>
+        <a
+          {% if active_category is not null and active_category.name == 'toutes' %}
+          class="active"
+          {% else %}
+          href="{{ path('app_shop_categories') }}"
+          {% endif %}
+        >
+          <div class="ness-mask parallelogram" data-opacity="1.0"></div>
+          <span>TOUTES</span>
         </a>
       </li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-<!-- Menu Select # -->
-
-<!-- # Menu List -->
-<div class="hidden-sm-down col-12 col-lg-8 col-xl-9">
-  <ul>
-    <li>
-      <a
-        {% if active_category is not null and active_category.name == 'toutes' %}
-        class="active"
-        {% else %}
-        href="{{ path('app_shop_categories') }}"
-        {% endif %}
-      >
+    {% for category in categories %}
+      <li>
+        <a
+          {% if active_category is null or active_category.name != category.name %}
+          href="{{ path('app_shop_category', {"slug": category.slug}) }}"
+          {% endif %}
+          {% if active_category is not null and active_category.name == category.name %}
+          class="active"
+          {% endif %}
+        >
         <div class="ness-mask parallelogram" data-opacity="1.0"></div>
-        <span>TOUTES</span>
-      </a>
-    </li>
-  {% for category in categories %}
-    <li>
-      <a
-        {% if active_category is null or active_category.name != category.name %}
-        href="{{ path('app_shop_category', {"slug": category.slug}) }}"
-        {% endif %}
-        {% if active_category is not null and active_category.name == category.name %}
-        class="active"
-        {% endif %}
-      >
-      <div class="ness-mask parallelogram" data-opacity="1.0"></div>
-      <span>{{ category.name | capitalize }}</span>
-      </a>
-    </li>
-  {% endfor %}
-  </ul>
-</div>
-<!-- # Menu List -->
+        <span>{{ category.name | capitalize }}</span>
+        </a>
+      </li>
+    {% endfor %}
+    </ul>
+  </nav>
+  <!-- # Menu List -->
 
-<!-- # Site Search -->
-<div class="col-lg-4 col-xl-3 flex">
-  <div id="site-search">
-    <form class="ness-form-inline">
-      <input class="form-control mr-2" type="search" placeholder="Rechercher...">
-      <button class="ness-btn ness-btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-    </form>
-  </div>
-</div>
-<!-- Site Search # -->
+  <!-- # Site Search -->
+  <nav class="col-lg-4 col-xl-3 flex">
+    <div id="site-search">
+      <form class="ness-form-inline">
+        <input class="form-control mr-2" type="search" placeholder="Rechercher...">
+        <button class="ness-btn ness-btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+      </form>
+    </div>
+  </nav>
+  <!-- Site Search # -->
 
 </div>
