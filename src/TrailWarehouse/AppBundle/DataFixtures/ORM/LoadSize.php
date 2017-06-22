@@ -2,13 +2,14 @@
 
 namespace AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use TrailWarehouse\AppBundle\Entity\Size;
 
 /**
  *
  */
-class LoadSize implements FixtureInterface
+class LoadSize implements FixtureInterface, OrderedFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
@@ -36,5 +37,10 @@ class LoadSize implements FixtureInterface
       $manager->persist($item);
     }
     $manager->flush();
+  }
+
+  public function getOrder()
+  {
+    return 4;
   }
 }

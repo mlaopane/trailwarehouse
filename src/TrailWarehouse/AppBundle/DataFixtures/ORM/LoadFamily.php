@@ -2,13 +2,14 @@
 
 namespace AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use TrailWarehouse\AppBundle\Entity\Family;
 
 /**
  *
  */
-class LoadFamily implements FixtureInterface
+class LoadFamily implements FixtureInterface, OrderedFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
@@ -58,5 +59,10 @@ class LoadFamily implements FixtureInterface
       }
       $manager->flush();
     }
+  }
+
+  public function getOrder()
+  {
+    return 5;
   }
 }

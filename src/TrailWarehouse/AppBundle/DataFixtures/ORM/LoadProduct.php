@@ -20,6 +20,6 @@ class LoadProduct implements FixtureInterface, OrderedFixtureInterface
 
   public function getOrder()
   {
-    return 10;
+    return 6;
   }
 }
