@@ -16,11 +16,11 @@ class LoadVat implements FixtureInterface
       ['country' => 'fr', 'value' => 0.20],
     ];
     foreach ($data as $element) {
-      $item = (new Vat())
+      $vat = (new Vat())
         ->setCountry($element['country'])
         ->setValue($element['value'])
       ;
-      $manager->persist($item);
+      $manager->persist($vat);
     }
     $manager->flush();
   }
