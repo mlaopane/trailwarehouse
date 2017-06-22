@@ -28,6 +28,7 @@ class Color
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=100, unique=true)
      */
     private $name;
@@ -35,16 +36,10 @@ class Color
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="value", type="string", length=7)
      */
     private $value;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=100)
-     */
-    private $type;
 
     /**
      * @var string
