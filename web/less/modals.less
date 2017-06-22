@@ -3,21 +3,21 @@
 /* Custom */
 
 // Header
-@bg-modal-header: @bluegreen;
-@txt-modal-header: white;
-@txt-modal-title: @txt-modal-header;
+@bg-modal-header  : @bluegreen;
+@txt-modal-header : white;
+@txt-modal-title  : @txt-modal-header;
 
 // Body
-@bg-modal-body: @lightgrey;
-@txt-modal-body: @blackgrey;
+@bg-modal-body    : @lightgrey;
+@txt-modal-body   : @blackgrey;
 
 // Footer
-@bg-modal-footer: @bluegreen;
-@txt-modal-footer: white;
-@bg-btn-confirm: @darkblue;
-@txt-btn-confirm: white;
-@bg-btn-cancel: @lightgrey;
-@txt-btn-cancel: @blackgrey;
+@bg-modal-footer  : @lightgrey;
+@txt-modal-footer : white;
+@bg-btn-confirm   : @bluegreen;
+@txt-btn-confirm  : white;
+@bg-btn-cancel    : @darkgrey;
+@txt-btn-cancel   : @lightgrey;
 
 /* Modals */
 
@@ -55,14 +55,20 @@
       color: @txt-modal-body;
     }
     .modal-footer {
-      background: @bg-modal-footer;
-      border-radius: 0 0 0.3rem 0.3rem;
-      color: @txt-modal-footer;
+      background      : @bg-modal-footer;
+      border-radius   : 0 0 0.3rem 0.3rem;
+      color           : @txt-modal-footer;
+      display         : flex;
+      flex-flow       : row wrap;
+      justify-content : center;
+      @media (min-width: @width-sm) {
+        justify-content: flex-end;
+      }
       .btn {
         cursor: pointer;
         &-confirm {
-          border: 1px solid darken(@bg-btn-confirm, 10%);
           background: @bg-btn-confirm;
+          border: 1px solid darken(@bg-btn-confirm, 10%);
           color: @txt-btn-confirm;
           &:hover {
             background: darken(@bg-btn-confirm, 7%)
@@ -76,14 +82,6 @@
             background: darken(@bg-btn-cancel, 7%)
           }
         }
-      }
-    }
-    .modal-footer {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: center;
-      @media (min-width: @width-sm) {
-        justify-content: flex-end;
       }
     }
     .form-container {

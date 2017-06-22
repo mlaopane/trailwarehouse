@@ -41,8 +41,13 @@
   }
   &-confirm {
     background: @bg-btn-confirm;
-    color: @lightgrey;
     border: 1px solid darken(@bg-btn-confirm, 10%);
+    color: @lightgrey;
+    a {
+      color: @lightgrey;
+      display: block;
+      width: 100%;
+    }
     &:hover {
       background: @bg-btn-confirm-hover;
       border: 1px solid darken(@bg-btn-confirm-hover, 10%);
