@@ -21,7 +21,7 @@ class LoadBrand implements FixtureInterface, OrderedFixtureInterface
     ];
     foreach ($data as $name) {
       $brand = new Brand();
-      $logo = str_replace([" ", "'"], "images/".$item_name.".png");
+      $logo = str_replace([" ", "'"], "_", "images/".$name.".png");
       $brand->setName($name);
       $brand->setLogo($logo);
       $manager->persist($brand);
