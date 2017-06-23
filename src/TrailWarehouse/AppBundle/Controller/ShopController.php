@@ -11,11 +11,15 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use TrailWarehouse\AppBundle\Entity\Item;
 use TrailWarehouse\AppBundle\Entity\Cart;
+use TrailWarehouse\AppBundle\Entity\Promo;
 use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Category;
+use TrailWarehouse\AppBundle\Form\CartType;
+use TrailWarehouse\AppBundle\Form\PromoType;
 
 class ShopController extends Controller
 {
+
   public function __construct() {
     $normalizer = new ObjectNormalizer();
     $normalizer->setCircularReferenceHandler(function ($object) {
@@ -30,8 +34,7 @@ class ShopController extends Controller
   /**
    * 'app_shop'
    */
-  public function indexAction()
-  {
+  public function indexAction() {
     $doctrine = $this->getDoctrine();
     $repo_brand = $doctrine->getRepository('TrailWarehouseAppBundle:Brand');
     $brands = $repo_brand->findAll(['brand' => 'asc']);
@@ -44,8 +47,7 @@ class ShopController extends Controller
   /**
    * Gets the categories then render the menu
    */
-  public function menuAction($active_category = NULL)
-  {
+  public function menuAction($active_category = NULL) {
     $doctrine = $this->getDoctrine();
     $repo_category = $doctrine->getRepository('TrailWarehouseAppBundle:Category');
     $categories = $repo_category->findAll();
@@ -59,8 +61,7 @@ class ShopController extends Controller
   /**
    * 'app_shop_categories'
    */
-  public function categoriesAction()
-  {
+  public function categoriesAction() {
     $doctrine         = $this->getDoctrine();
     $category['name'] = 'toutes';
     $repo['family']   = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
@@ -141,7 +142,12 @@ class ShopController extends Controller
    *
    */
   public function cartAction(Request $request) {
-    $data = [];
+    $cart_form = $this->createForm(CartType::class, new Cart());
+    $promo_form = $this->createForm(PromoType::class, new Promo());
+    $data = [
+      'cart_form'  => $cart_form->createView(),
+      'promo_form' => $promo_form->createView(),
+    ];
     return $this->render('TrailWarehouseAppBundle:Shop:cart.html.twig', $data);
   }
 
@@ -164,7 +170,7 @@ class ShopController extends Controller
     $product_not_exists = empty($db_product = $repository['product']->find($post_product->id));
 
     // IF the Product does NOT exist OR the quantity is NOT available
-    if ($product_not_exists OR ($post_quantity >= $db_product->getStock())) {
+    if ($product_not_exists OR ($post_quantity > $db_product->getStock())) {
       return new JsonResponse(false);
     }
 
@@ -189,10 +195,22 @@ class ShopController extends Controller
         }
       }
     }
-    
+
     // Add the new Item and Update the Cart
     $cart->addItem($new_item);
     $request->getSession()->set('cart', $cart);
     return new JsonResponse($this->serializer->serialize($new_item, 'json'));
   }
+
+  public function addPromoAction(Request $request) {
+    $post_code = json_decode(file_get_contents('php://input'));
+    $repository['Promo'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Promo');
+    if (empty($repository['Promo']->getOneBy($post_code))) {
+      return new JsonResponse(false);
+    }
+    else {
+
+    }
+  }
+
 }
