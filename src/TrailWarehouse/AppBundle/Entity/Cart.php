@@ -2,8 +2,10 @@
 
 namespace TrailWarehouse\AppBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use TrailWarehouse\AppBundle\Entity\Item;
+use TrailWarehouse\AppBundle\Entity\Promo;
 
 /**
  * Cart
@@ -14,6 +16,12 @@ class Cart
      * @var ArrayCollection
      */
     private $items;
+
+    /**
+     * @var Promo
+     *
+     */
+    private $promo;
 
     /**
      * @var integer $total
@@ -94,6 +102,30 @@ class Cart
     public function getTotal()
     {
         return $this->total;
+    }
+
+    /**
+     * Set promo
+     *
+     * @param Promo $promo
+     *
+     * @return Cart
+     */
+    public function setPromo(Promo $promo)
+    {
+        $this->promo = $promo;
+
+        return $this;
+    }
+
+    /**
+     * Get promo
+     *
+     * @return Promo
+     */
+    public function getPromo()
+    {
+        return $this->promo;
     }
 
 }
