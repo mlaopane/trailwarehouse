@@ -39,7 +39,7 @@
                   <th class="">Produit</th>
                   <th class="hidden-xs-down">Photo</th>
                   <th class="hidden-sm-down">Prix unitaire</th>
-                  <th class="hidden-xs-down">Quantité</th>
+                  <th class="">Quantité</th>
                   <th class="">Sous-total</th>
                 </tr>
               </thead>
@@ -53,23 +53,36 @@
                         <span>{{ item.product.family.name | capitalize }}</span>
                       </div>
                       <span>({{ item.product.size.value | upper }} {{ item.product.size.unitShortcut }} | {{ item.product.color.name | capitalize }})</span>
-                      <span class="hidden-sm-up">x{{ item.quantity }}</span>
                     </div>
                   </td>
                   <td class="text-center hidden-xs-down"><img class="miniature" src="{{ item.product.image is null ? asset('images/no_picture.png') : item.product.image.src }}" alt=""></td>
                   <td class="text-right hidden-sm-down">{{ item.product.price }}&nbsp;€</td>
-                  <td class="text-right hidden-xs-down">{{ item.quantity }}</td>
+                  <td class="text-right">{{ item.quantity }}</td>
                   <td class="text-right">{{ item.total }}&nbsp;€</td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
             <!-- Cart Items # -->
+
+            <!-- # Promo Code -->
+
+            <!-- Promo Code # -->
+
+
             <!-- # Cart Total -->
-            <p class="flex justify-content-end">
-              <span class="font-weight-bold">Valeur du panier</span>&nbsp;:&nbsp;<span class="font-weight-bold">{{ cart.total }} €</span>
-            </p>
+            <div id="cart-total" class="flex justify-content-end lead">
+              <span>Valeur du panier</span>&nbsp;:&nbsp;<span class="font-weight-bold">{{ cart.total }}&nbsp;&euro;</span>
+            </div>
             <!-- Cart Total # -->
+
+            <!-- # Cart Validation -->
+            <div id="cart-validation" class="flex justify-content-end lead">
+              <button class="btn btn-confirm" type="button">Valider mon panier</button>
+            </div>
+            <!-- Cart Validation # -->
+
+
           {% endif %}
         </div>
         <!-- Cart # -->
