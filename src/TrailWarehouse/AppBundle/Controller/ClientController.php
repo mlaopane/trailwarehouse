@@ -42,9 +42,10 @@ class ClientController extends Controller
     if ($form->isSubmitted()) {
       $form->handleRequest($request);
       if ($form->isValid()) {
-        // Register the User then redirect to the Shop
+        // Register the User
         $this->registerUser($this->user);
         $request->getSession()->getFlashBag()->add('notice', 'Votre inscription a été prise en compte');
+        // Redirect to the Shop
         return $this->redirectToRoute('app_shop');
       }
       else {
