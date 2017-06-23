@@ -35,7 +35,7 @@ class ClientController extends Controller
   /**
    * 'signup' route
    */
-  public function signupAction(Request $request, UserPasswordEncoderInterface $encoder)
+  public function signupAction(Request $request)
   {
     $form = $this->createForm(SignupType::class, $this->user);
     // Form submitted
