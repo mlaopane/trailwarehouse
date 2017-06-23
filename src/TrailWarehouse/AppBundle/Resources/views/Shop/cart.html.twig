@@ -66,9 +66,22 @@
             <!-- Cart Items # -->
 
             <!-- # Promo Code -->
-
+            <div class="form-container mx-auto mb-5">
+              {{ form_start(promo_form) }}
+              <div class="row justify-content-end">
+                <div class="col-12 col-sm-6 col-md-4">
+                  <div class="form-group mb-4">
+                    {{ form_label(promo_form.code, 'Code promo') }}
+                    {{ form_widget(promo_form.code, {'attr': {'class': 'form-control'}}) }}
+                  </div>
+                  <div class="form-group mb-4">
+                    {{ form_widget(promo_form.send, {'attr': {'class':'btn btn-warning'}}) }}
+                  </div>
+                </div>
+              </div>
+              {{ form_end(promo_form) }}
+            </div>
             <!-- Promo Code # -->
-
 
             <!-- # Cart Total -->
             <div id="cart-total" class="flex justify-content-end lead">
@@ -81,7 +94,6 @@
               <button class="btn btn-confirm" type="button">Valider mon panier</button>
             </div>
             <!-- Cart Validation # -->
-
 
           {% endif %}
         </div>
