@@ -1,0 +1,36 @@
+// main: style.less
+
+#page-cart {
+
+  #cart-total {
+    background: @lightgrey;
+    border: 1px solid @grey;
+    border-radius: 4px;
+    color: @darkgrey;
+    padding: 8px;
+    margin-bottom: 12px;
+  }
+
+  #cart-promo {
+    #promo-field {
+      &:focus, &:active {
+        background: darken(@mustard, 5%);
+        color: white;
+      }
+    }
+    #promo-button {
+      background: @sand;
+      border: 1px solid darken(@sand, 5%);
+      color: @blackgrey;
+      &:hover {
+        background: @mustard;
+        color: @white;
+      }
+    }
+  }
+
+  #cart-validation {
+
+  }
+
+}
