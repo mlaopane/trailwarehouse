@@ -2,9 +2,9 @@ app_shop_root:
     resource: "@TrailWarehouseAppBundle/Resources/config/Shop/routing.yml"
     prefix:   /boutique
 
-app_client_root:
-    resource: "@TrailWarehouseAppBundle/Resources/config/Client/routing.yml"
-    prefix:   /client
+app_user_root:
+    resource: "@TrailWarehouseAppBundle/Resources/config/User/routing.yml"
+    prefix:   /user
 
 app_api_root:
     resource: "@TrailWarehouseAppBundle/Resources/config/Api/routing.yml"

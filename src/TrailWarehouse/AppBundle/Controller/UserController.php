@@ -16,7 +16,7 @@ use TrailWarehouse\AppBundle\Form\SignupType;
 use TrailWarehouse\AppBundle\Form\SigninType;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 
-class ClientController extends Controller
+class UserController extends Controller
 {
   /* --------------------- */
   /* *** Initilization *** */
@@ -56,7 +56,7 @@ class ClientController extends Controller
     $data = [
       'form' => $form->createView(),
     ];
-    return $this->render('TrailWarehouseAppBundle:Client:signup.html.twig', $data);
+    return $this->render('TrailWarehouseAppBundle:User:signup.html.twig', $data);
   }
 
   /**
@@ -83,7 +83,7 @@ class ClientController extends Controller
         ]);
         // Identifiants erronés
         if ($db_user == NULL) {
-          return $this->redirectToRoute('app_client_signin');
+          return $this->redirectToRoute('app_user_signin');
         }
         $request->getSession()->getFlashBag()->add('notice', 'Bienvenue '. $this->user->getFirstname());
         return $this->redirectToRoute('app_shop');
@@ -92,7 +92,7 @@ class ClientController extends Controller
     $data = [
       'form' => $form->createView(),
     ];
-    return $this->render('TrailWarehouseAppBundle:Client:signin.html.twig', $data);
+    return $this->render('TrailWarehouseAppBundle:User:signin.html.twig', $data);
   }
 
   /**

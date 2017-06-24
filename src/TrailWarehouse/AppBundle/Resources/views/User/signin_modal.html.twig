@@ -1,13 +1,13 @@
-{# TrailWarehouse > AppBundle > Resources > views > signup_modal.html.twig #}
+{# TrailWarehouse > AppBundle > Resources > views > signin_modal.html.twig #}
 
-<!-- Signup Modal -->
-<div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Signin Modal -->
+<div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
       <!-- # Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Inscription chez Trail Warehouse</h4>
+        <h4 class="modal-title" id="exampleModalLabel">Connexion à l'espace client</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -17,35 +17,15 @@
       <!-- # Form Container -->
       <div class="form-container">
 
-        <!-- # Signup Form -->
-        <form id="signup-form" class="" action="{{ path('app_client_signup') }}" method="post">
+        <!-- # Signin Form -->
+        <form id="signin-form" class="" action="{{ path('app_user_signin') }}" method="post">
 
           <!-- # Modal Body -->
           <div class="modal-body">
 
-            <!-- # Firstname -->
-            <div class="form-group">
-              <label for="">Prénom*</label>
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                <input id="signin-firstname" class="form-control" type="text" name="firstname" value="" placeholder="Prénom">
-              </div>
-            </div>
-            <!-- Firstname # -->
-
-            <!-- # Laststname -->
-            <div class="form-group">
-              <label for="">Nom de famille*</label>
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                <input id="signin-lastname" class="form-control" type="text" name="lastname" value="" placeholder="Nom de famille">
-              </div>
-            </div>
-            <!-- Lastname # -->
-
             <!-- # E-mail -->
             <div class="form-group">
-              <label for="">Adresse électronique*</label>
+              <label for="">Adresse électronique</label>
               <div class="input-group">
                 <div class="input-group-addon">@</div>
                 <input id="signin-email" class="form-control" type="text" name="email" value="" placeholder="E-mail">
@@ -55,7 +35,7 @@
 
             <!-- # Password -->
             <div class="form-group">
-              <label for="">Mot de passe*</label>
+              <label for="">Mot de passe</label>
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
                 <input id="signin-password" class="form-control" type="password" name="password" value="" placeholder="Mot de passe">
@@ -69,12 +49,12 @@
           <!-- # Modal Footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-cancel" data-dismiss="modal">Annuler</button>
-            <button type="submit" class="btn btn-confirm">S'inscrire</button>
+            <button type="submit" class="btn btn-confirm">Se connecter</button>
           </div>
           <!-- Modal Footer # -->
 
         </form>
-        <!-- Signup Form # -->
+        <!-- Signin Form # -->
 
       </div>
       <!-- Form Container # -->
