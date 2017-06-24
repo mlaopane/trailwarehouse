@@ -2,9 +2,8 @@
 
 {% extends "TrailWarehouseAppBundle::layout.html.twig" %}
 
-
 {% block title %}
-  {{ parent() }} : {{ family.name | capitalize }}
+  {{ parent() }} : {{ family.name | capitalize }} {{ family.brand.name | ucwords }} ({{ family.category.name | capitalize }})
 {% endblock %}
 
 {% block javascripts %}
@@ -73,7 +72,7 @@
                   <!-- # Card Title -->
                   <div class="card-title row">
                     <h3 class="col-12 col-sm-8">
-                      <span class="font-italic mr-2">{{ family.brand.name | ucwords }}</span><span>{{ family.name | capitalize }}</span>
+                      <span class="">{{ family.name | capitalize }}</span>&nbsp;<span class="font-italic">{{ family.brand.name | ucwords }}</span>
                     </h3>
 
                     <!-- # Add to cart -->
@@ -201,7 +200,7 @@
                               <span class="font-weight-bold">Quantité</span> :
                               <span data-ng-bind="page.quantity ? page.quantity : '-'"></span>
                             </h4>
-                            <div data-ng-class="
+                            <div id="quantities-container" data-ng-class="
                               'ness-option-container ness-option-container-sm'
                               ">
                               <!-- # Quantity -->
