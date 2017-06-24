@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use TrailWarehouse\AppBundle\Form\CoordinateType;
 
 class SignupType extends AbstractType
 {
