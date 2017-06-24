@@ -66,34 +66,44 @@
             <!-- Cart Items # -->
 
             <!-- # Promo Code -->
-            <div class="form-container mx-auto mb-5">
-              {{ form_start(promo_form) }}
-              <div class="row justify-content-end">
-                <div class="col-12 col-sm-6 col-md-4">
-                  <div class="form-group mb-4">
-                    {{ form_label(promo_form.code, 'Code promo') }}
-                    {{ form_widget(promo_form.code, {'attr': {'class': 'form-control'}}) }}
+            <div class="row justify-content-between">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                {{ form_start(promo_form) }}
+                  <div id="cart-promo" class="form-container mx-auto mb-2  d-flex flex-column align-items-start">
+                    <div class="form-group mb-4">
+                      {{ form_label(promo_form.code, 'Code promo') }}
+                      {{ form_widget(promo_form.code, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group mb-4">
+                      {{ form_widget(promo_form.send, {'attr': {'class':'btn btn-action'}}) }}
+                    </div>
                   </div>
-                  <div class="form-group mb-4">
-                    {{ form_widget(promo_form.send, {'attr': {'class':'btn btn-warning'}}) }}
-                  </div>
-                </div>
+                {{ form_end(promo_form) }}
               </div>
-              {{ form_end(promo_form) }}
+
+              <div class="col-12 col-sm-6 col-md-4">
+
+                <!-- # Cart Total -->
+                <div id="cart-total" class="d-flex flex-column align-items-end mb-4">
+                  <div>Valeur du panier</div>
+                  <div class="font-weight-bold lead">{{ cart.total }}&nbsp;&euro;</div>
+                </div>
+                <!-- Cart Total # -->
+
+                <!-- # Cart Validation -->
+                <div id="cart-validation" class="flex justify-content-end mb-2">
+                  <button class="btn btn-confirm" type="button">
+                    <span>Valider mon panier</span>
+                    <span class="glyphicon glyphicon-ok ml-2"></span>
+                  </button>
+                </div>
+                <!-- Cart Validation # -->
+
+              </div>
             </div>
             <!-- Promo Code # -->
 
-            <!-- # Cart Total -->
-            <div id="cart-total" class="flex justify-content-end lead">
-              <span>Valeur du panier</span>&nbsp;:&nbsp;<span class="font-weight-bold">{{ cart.total }}&nbsp;&euro;</span>
-            </div>
-            <!-- Cart Total # -->
-
-            <!-- # Cart Validation -->
-            <div id="cart-validation" class="flex justify-content-end lead">
-              <button class="btn btn-confirm" type="button">Valider mon panier</button>
-            </div>
-            <!-- Cart Validation # -->
 
           {% endif %}
         </div>

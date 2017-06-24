@@ -3,28 +3,18 @@
 #page-cart {
 
   #cart-total {
-    background: @lightgrey;
-    border: 1px solid @grey;
+    background: @greenblue;
     border-radius: 4px;
-    color: @darkgrey;
-    padding: 8px;
-    margin-bottom: 12px;
+    color: @whitegrey;
+    padding: 8px 16px;
   }
 
   #cart-promo {
-    #promo-field {
+    #trailwarehouse_appbundle_promo_code {
+      transition: .2s;
       &:focus, &:active {
-        background: darken(@mustard, 5%);
+        background: @darkgrey;
         color: white;
-      }
-    }
-    #promo-button {
-      background: @sand;
-      border: 1px solid darken(@sand, 5%);
-      color: @blackgrey;
-      &:hover {
-        background: @mustard;
-        color: @white;
       }
     }
   }

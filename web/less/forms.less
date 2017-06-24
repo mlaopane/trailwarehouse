@@ -2,6 +2,8 @@
 
 @bg-btn-confirm: @blue;
 @bg-btn-confirm-hover: darken(@bg-btn-confirm, 10%);
+@bg-btn-action: @mustard;
+@bg-btn-action-hover: darken(@bg-btn-action, 10%);
 
 .form-container {
   background: @lightgrey;
@@ -30,6 +32,7 @@
 .btn {
   border-radius: 3px;
   cursor: pointer;
+  // Cancel
   &-cancel {
     background: @lightgrey;
     color: @darkgrey;
@@ -39,6 +42,7 @@
       border: 1px solid @blackgrey;
     }
   }
+  // Confirm
   &-confirm {
     background: @bg-btn-confirm;
     border: 1px solid darken(@bg-btn-confirm, 10%);
@@ -51,6 +55,21 @@
     &:hover {
       background: @bg-btn-confirm-hover;
       border: 1px solid darken(@bg-btn-confirm-hover, 10%);
+    }
+  }
+  // Action
+  &-action {
+    background: @bg-btn-action;
+    border: 1px solid darken(@bg-btn-action, 10%);
+    color: @whitegrey;
+    a {
+      color: @whitegrey;
+      display: block;
+      width: 100%;
+    }
+    &:hover {
+      background: @bg-btn-action-hover;
+      border: 1px solid darken(@bg-btn-action-hover, 10%);
     }
   }
   &-validation {
