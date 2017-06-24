@@ -24,6 +24,13 @@ class Image
     /**
      * @var string
      *
+     * @ORM\Column(name="title", type="string", length=191)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="src", type="string", length=191, unique=true)
      */
     private $src;
@@ -31,7 +38,7 @@ class Image
     /**
      * @var string
      *
-     * @ORM\Column(name="alt", type="string", length=255)
+     * @ORM\Column(name="alt", type="string", length=191)
      */
     private $alt;
 
@@ -46,6 +53,30 @@ class Image
         return $this->id;
     }
 
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Image
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
     /**
      * Set src
