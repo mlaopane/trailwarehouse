@@ -4,7 +4,7 @@ app_shop_root:
 
 app_user_root:
     resource: "@TrailWarehouseAppBundle/Resources/config/User/routing.yml"
-    prefix:   /user
+    prefix:   /utilisateur
 
 app_api_root:
     resource: "@TrailWarehouseAppBundle/Resources/config/Api/routing.yml"

@@ -30,8 +30,7 @@ security:
         db_trailwarehouse :
             entity :
                 class    : TrailWarehouseAppBundle:User
-
-    provider : in_memory
+                property : email
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -45,8 +44,8 @@ security:
             # activate different ways to authenticate
 
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            http_basic :
-                provider : in_memory
+            http_basic : ~
+            provider : db_trailwarehouse
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             # form_login :
@@ -59,5 +58,6 @@ security:
                 target : app_shop
 
     access_control :
-        - { path: ^/admin/users, roles: ROLE_SUPER_ADMIN }
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin/users, roles : ROLE_SUPER_ADMIN }
+        - { path: ^/admin, roles       : ROLE_ADMIN }
+        - { path: ^/utilisateur, roles : ROLE_USER }
