@@ -73,10 +73,10 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * @var \DateTime
     *
-    * @ORM\Column(name="creation", type="datetime")
+    * @ORM\Column(name="creation_date", type="datetime")
     * @Assert\DateTime
     */
-    private $creation;
+    private $creationDate;
 
     /**
     * @var ArrayCollection
@@ -98,6 +98,10 @@ class User implements AdvancedUserInterface, \Serializable
     public function __construct() {
         $this->coordinates = new ArrayCollection();
         $this->reviews     = new ArrayCollection();
+        $this->creationDate = new \DateTime();
+        if ($this->role === 'ROLE_ADMIN' OR $this->role === 'ROLE_SUPER_ADMIN') {
+          $this->isActive = true;
+        }
     }
 
 
