@@ -96,8 +96,8 @@ class User implements AdvancedUserInterface, \Serializable
     * Constructor
     */
     public function __construct() {
-        $this->coordinates = new ArrayCollection();
-        $this->reviews     = new ArrayCollection();
+        $this->coordinates  = new ArrayCollection();
+        $this->reviews      = new ArrayCollection();
         $this->creationDate = new \DateTime();
         if ($this->role === 'ROLE_ADMIN' OR $this->role === 'ROLE_SUPER_ADMIN') {
           $this->isActive = true;

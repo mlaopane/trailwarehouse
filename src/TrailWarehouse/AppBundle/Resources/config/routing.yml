@@ -1,3 +1,24 @@
+app_signup:
+    path:     /inscription
+    defaults:
+        _controller: TrailWarehouseAppBundle:User:signup
+
+app_signin:
+    path:     /connexion
+    defaults:
+        _controller: TrailWarehouseAppBundle:User:signin
+
+app_signin_check:
+    path:     /verification
+
+app_signout:
+    path:     /deconnexion
+
+app_account:
+    path:     /espace-perso
+    defaults:
+        _controller: TrailWarehouseAppBundle:User:account
+
 app_shop_root:
     resource: "@TrailWarehouseAppBundle/Resources/config/Shop/routing.yml"
     prefix:   /boutique

