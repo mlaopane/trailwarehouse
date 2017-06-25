@@ -58,35 +58,17 @@ class UserController extends Controller
   /**
    * 'signin' route
    */
-  public function signinAction(Request $request)
+  public function signinAction(Request $request, AuthenticationUtils $authUtils)
   {
-    $form = $this->get('form.factory')->create(SigninType::class, $this->user);
-    // Envoi du formulaire
-    if ($form->isSubmitted())
-    {
-      $form->handleRequest($request);
-      // Formulaire non valide
-      if (!$form->isValid()) {
-        $request->getSession()->getFlashBag()->add('warning', 'Formulaire non valide !');
-      }
-      // Formulaire valide
-      else {
-        $manager = $this->getDoctrine()->getManager();
-        $repository = $manager->getRepository('TrailWarehouseAppBundle:User');
-        $db_user = $repository->findOneBy([
-          'email'    => $this->user->getEmail(),
-          'password' => $this->user->getPassword(),
-        ]);
-        // Identifiants erronés
-        if ($db_user == NULL) {
-          return $this->redirectToRoute('app_user_signin');
-        }
-        $request->getSession()->getFlashBag()->add('notice', 'Bienvenue '. $this->user->getFirstname());
-        return $this->redirectToRoute('app_shop');
-      }
-    }
+    $form = $this->createForm(SigninType::class, $this->user);
+
+    $error     = $authUtils->getLastAuthenticationError();
+    $lastEmail = $authUtils->getLastUsername();
+
     $data = [
       'signin_form' => $form->createView(),
+      'last_email'  => $lastEmail,
+      'error'       => $error,
     ];
     return $this->render('TrailWarehouseAppBundle:User:signin.html.twig', $data);
   }

@@ -27,8 +27,18 @@
           <!-- Form title # -->
 
           <!-- # Form errors -->
-          {% form_theme signin_form with ['form/form_errors.html.twig'] %}
           {{ form_errors(signin_form) }}
+          {% if error is not empty %}
+            {% if error.message == 'Bad credentials.' %}
+              <div class="ness-block failure round mx-auto mb-2">
+                <span>Identifiants incorrects</span>
+              </div>
+            {% else %}
+              <div class="ness-block warning round mx-auto mb-2">
+                {{ error.message }}
+              </div>
+            {% endif %}
+          {% endif %}
           <!-- Form errors # -->
 
           <!-- # Col -->
@@ -39,17 +49,17 @@
               {{ form_label(signin_form.email, 'E-mail*') }}
               <div class="input-group">
                 <div class="input-group-addon">@</div>
-                {{ form_widget(signin_form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail'}}) }}
+                {{ form_widget(signin_form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail', 'value': last_email }}) }}
               </div>
             </div>
             <!-- E-mail # -->
 
             <!-- # Password -->
             <div class="form-group mb-4">
-              {{ form_label(signin_form.plainPassword, 'Mot de passe*') }}
+              {{ form_label(signin_form.password, 'Mot de passe*') }}
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                {{ form_widget(signin_form.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+                {{ form_widget(signin_form.password, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
               </div>
             </div>
             <!-- Password # -->

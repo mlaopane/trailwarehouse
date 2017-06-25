@@ -8,9 +8,6 @@ app_signin:
     defaults:
         _controller: TrailWarehouseAppBundle:User:signin
 
-app_signin_check:
-    path:     /verification
-
 app_signout:
     path:     /deconnexion
 

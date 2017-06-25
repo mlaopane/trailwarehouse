@@ -11,12 +11,11 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
  */
 class UserRepository extends CommonRepository implements UserLoaderInterface
 {
-  public function loadUserByUsername($username)
+  public function loadUserByUsername($email)
    {
       return $this->createQueryBuilder('u')
-        ->where('u.username = :username OR u.email = :email')
-        ->setParameter('username', $username)
-        ->setParameter('email', $username)
+        ->where('u.email = :email')
+        ->setParameter('email', $email)
         ->getQuery()
         ->getOneOrNullResult()
       ;

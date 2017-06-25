@@ -34,11 +34,16 @@ security:
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login :
                 provider   : db_trailwarehouse
-                login_path : app_client_signin
-                check_path : app_client_signin_check
+                login_path : app_signin
+                check_path : app_signin
+                username_parameter : email
+                password_parameter : password
+
+            remember_me :
+                secret : '%secret%'
 
             logout :
-                path   : app_client_signout
+                path   : app_signout
                 target : app_shop
 
     access_control :

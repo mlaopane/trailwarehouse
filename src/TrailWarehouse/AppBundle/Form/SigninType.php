@@ -20,12 +20,12 @@ class SigninType extends AbstractType
     {
         $builder
           ->add('email', EmailType::class)
-          ->add('plainPassword', PasswordType::class)
-          ->add('send', SubmitType::class, ['label' => 'Connexion'])
+          ->add('password', PasswordType::class)
           ->add('rememberMe', CheckboxType::class, [
-            'mapped'      => false,
-            'constraints' => new IsTrue(),
+            'mapped'   => false,
+            'required' => false,
           ])
+          ->add('send', SubmitType::class, ['label' => 'Connexion'])
         ;
     }
 
