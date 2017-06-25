@@ -5,6 +5,8 @@ security:
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
 
     encoders :
+        Symfony\Component\Security\Core\User\User :
+            algorithm : bcrypt
         TrailWarehouse\AppBundle\Entity\User :
             algorithm : bcrypt
 
@@ -13,6 +15,13 @@ security:
         ROLE_SUPER_ADMIN : [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers :
+        in_memory :
+            memory :
+                users :
+                    toto@toto.fr :
+                        password : '$2y$13$naOK2oxxFahRPNXb0hTzYegBztL9IHZ/xR1Ftx67YGH2tepBFadAy'
+                        roles    : 'ROLE_SUPER_ADMIN'
+
         db_trailwarehouse :
             entity        :
                 class     : TrailWarehouseAppBundle:User
@@ -29,24 +38,24 @@ security:
             # activate different ways to authenticate
 
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            # http_basic : ~
+            # http_basic :
+            #     provider :  db_trailwarehouse
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login :
                 provider   : db_trailwarehouse
                 login_path : app_signin
                 check_path : app_signin
-                username_parameter : email
-                password_parameter : password
 
-            remember_me :
-                secret : '%secret%'
+            # remember_me :
+            #     secret : '%secret%'
 
             logout :
                 path   : app_signout
                 target : app_shop
 
     access_control :
+        - { path: ^/admin/add, roles : ROLE_SUPER_ADMIN }
         - { path: ^/admin, roles : ROLE_ADMIN }
         - { path: ^/espace-perso, roles : ROLE_USER }
         - { path: ^/deconnexion, roles : ROLE_USER }
