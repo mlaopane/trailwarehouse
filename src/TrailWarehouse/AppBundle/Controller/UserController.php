@@ -31,9 +31,7 @@ class UserController extends Controller
   /**
    * 'signup' route
    * @param Request $request
-   * @param UserPasswordEncoderInterface $encoder
    */
-  // public function signupAction(Request $request, UserPasswordEncoderInterface $encoder)
   public function signupAction(Request $request)
   {
     $form = $this->createForm(SignupType::class, $this->user);
@@ -88,7 +86,7 @@ class UserController extends Controller
       }
     }
     $data = [
-      'form' => $form->createView(),
+      'signin_form' => $form->createView(),
     ];
     return $this->render('TrailWarehouseAppBundle:User:signin.html.twig', $data);
   }
