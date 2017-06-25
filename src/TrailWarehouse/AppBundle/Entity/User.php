@@ -33,7 +33,9 @@ class User implements AdvancedUserInterface, \Serializable
     * @var string
     *
     * @Assert\NotBlank()
-    * @Assert\Email()
+    * @Assert\Email(
+    *   message = "Adresse électronique non valide"
+    * )
     *
     * @ORM\Column(name="email", type="string", length=191, unique=true)
     */
@@ -41,11 +43,6 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
     * @var string
-    *
-    * @Assert\Length(
-    *   min = 6,
-    *   minMessage = "Le mot de passe doit contenir au moins 6 caractères",
-    * )
     *
     * @ORM\Column(name="password", type="string", length=128)
     */
@@ -55,7 +52,12 @@ class User implements AdvancedUserInterface, \Serializable
     * @var string
     *
     * @Assert\NotBlank()
-    * @Assert\Length(max=4096)
+    * @Assert\Length(
+    *   min = 6,
+    *   max = 128,
+    *   minMessage = "Le mot de passe doit contenir au moins 6 caractères",
+    *   maxMessage = "Le mot de passe ne peut dépasser 128 catactères",
+    * )
     */
     private $plainPassword;
 
@@ -102,9 +104,6 @@ class User implements AdvancedUserInterface, \Serializable
         $this->coordinates  = new ArrayCollection();
         $this->reviews      = new ArrayCollection();
         $this->creationDate = new \DateTime();
-        if ($this->role === 'ROLE_ADMIN' OR $this->role === 'ROLE_SUPER_ADMIN') {
-          $this->isActive = true;
-        }
     }
 
 
@@ -171,6 +170,17 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $hash = password_hash($this->plainPassword, PASSWORD_BCRYPT);
         $this->setPassword($hash);
+    }
+
+    /**
+     * @Assert\Callback
+     * @ORM\PrePersist
+     */
+    public function activateAdmin()
+    {
+        if ($this->role === 'ROLE_ADMIN' OR $this->role === 'ROLE_SUPER_ADMIN') {
+          $this->isActive = true;
+        }
     }
 
     /* ---------- Other Methods ---------- */
@@ -408,7 +418,14 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @Assert\IsTrue(message = "L'adresse électronique et le mot de passe doivent être différents")
+    * @Assert\Email(message = "E-mail non valide")
+    */
+    public function isEmailValid() {
+      return $this->email;
+    }
+
+    /**
+     * @Assert\IsTrue(message = "E-mail et mot de passe doivent être différents")
      */
     public function isPasswordLegal()
     {
