@@ -163,7 +163,6 @@ class User implements AdvancedUserInterface, \Serializable
     /* ---------- Callbacks ---------- */
 
     /**
-     * @Assert\Callback
      * @ORM\PrePersist
      */
     public function generateHash()
@@ -173,7 +172,6 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @Assert\Callback
      * @ORM\PrePersist
      */
     public function activateAdmin()
