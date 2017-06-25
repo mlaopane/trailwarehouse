@@ -23,10 +23,6 @@ app_shop_root:
     resource: "@TrailWarehouseAppBundle/Resources/config/Shop/routing.yml"
     prefix:   /boutique
 
-app_user_root:
-    resource: "@TrailWarehouseAppBundle/Resources/config/User/routing.yml"
-    prefix:   /utilisateur
-
 app_api_root:
     resource: "@TrailWarehouseAppBundle/Resources/config/Api/routing.yml"
     prefix:   /api
