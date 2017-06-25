@@ -109,7 +109,7 @@ class User implements AdvancedUserInterface, \Serializable
     /* ---------- AdvancedUserInterface ---------- */
 
     public function getRoles() {
-        return arary('ROLE_USER');
+        return [$this->role];
     }
 
     public function getSalt() {
