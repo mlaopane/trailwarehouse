@@ -15,31 +15,41 @@
     <div class="form-container mx-auto mb-5">
 
       <!-- # Signin Form -->
-      {{ form_start(form) }}
-        {{ form_errors(form) }}
+      {{ form_start(signin_form) }}
 
         <!-- # Row -->
         <div class="row">
+
+          <!-- # Form title -->
+          <div class="col-12 mb-2">
+            <h1>Accédez à votre espace personnel</h1>
+          </div>
+          <!-- Form title # -->
+
+          <!-- # Form errors -->
+          {% form_theme signin_form with ['form/form_errors.html.twig'] %}
+          {{ form_errors(signin_form) }}
+          <!-- Form errors # -->
 
           <!-- # Col -->
           <div class="col-12">
 
             <!-- # E-mail -->
             <div class="form-group mb-4">
-              {{ form_label(form.email, 'Adresse électronique*') }}
+              {{ form_label(signin_form.email, 'Adresse électronique*') }}
               <div class="input-group">
                 <div class="input-group-addon">@</div>
-                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Adresse électronique'}}) }}
+                {{ form_widget(signin_form.email, {'attr': {'class': 'form-control', 'placeholder': 'Adresse électronique'}}) }}
               </div>
             </div>
             <!-- E-mail # -->
 
             <!-- # Password -->
             <div class="form-group mb-4">
-              {{ form_label(form.password, 'Mot de passe*') }}
+              {{ form_label(signin_form.plainPassword, 'Mot de passe*') }}
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                {{ form_widget(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+                {{ form_widget(signin_form.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
               </div>
             </div>
             <!-- Password # -->
@@ -51,12 +61,12 @@
         <!-- Row # -->
 
         <!-- # Submit -->
-        {{ form_widget(form.send, {'attr': {'class':'btn btn-confirm'}}, 'S\'inscrire') }}
+        {{ form_widget(signin_form.send, {'attr': {'class':'btn btn-confirm'}}, 'S\'inscrire') }}
         <!-- Submit # -->
 
-        {{ form_rest(form) }}
+        {{ form_rest(signin_form) }}
 
-      {{ form_end(form) }}
+      {{ form_end(signin_form) }}
       <!-- Signin Form # -->
 
     </div>
