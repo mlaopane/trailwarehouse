@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use TrailWarehouse\AppBundle\Entity\Coordinate;
 
 /**
@@ -14,7 +15,8 @@ use TrailWarehouse\AppBundle\Entity\Coordinate;
 *
 * @ORM\Table(name="`user`")
 * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\UserRepository")
-* @UniqueEntity(fields="email", message="Adresse électronique déjà utilisée")
+* @UniqueEntity(fields={"email"}, message="Adresse électronique déjà utilisée")
+* @ORM\HasLifecycleCallbacks()
 */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -31,7 +33,9 @@ class User implements AdvancedUserInterface, \Serializable
     * @var string
     *
     * @Assert\NotBlank()
-    * @Assert\Email()
+    * @Assert\Email(
+    *   message = "Adresse électronique non valide"
+    * )
     *
     * @ORM\Column(name="email", type="string", length=191, unique=true)
     */
@@ -39,9 +43,6 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
     * @var string
-    *
-    * @Assert\NotBlank()
-    * @Assert\Length(max=4096)
     *
     * @ORM\Column(name="password", type="string", length=128)
     */
@@ -51,7 +52,12 @@ class User implements AdvancedUserInterface, \Serializable
     * @var string
     *
     * @Assert\NotBlank()
-    * @Assert\Length(max=4096)
+    * @Assert\Length(
+    *   min = 6,
+    *   max = 128,
+    *   minMessage = "Le mot de passe doit contenir au moins 6 caractères",
+    *   maxMessage = "Le mot de passe ne peut dépasser 128 catactères",
+    * )
     */
     private $plainPassword;
 
@@ -59,9 +65,8 @@ class User implements AdvancedUserInterface, \Serializable
     * @var string
     *
     * @ORM\Column(name="role", type="string", length=255)
-    * @Assert\NotBlank()
     */
-    private $role;
+    private $role = 'ROLE_USER';
 
     /**
     * @var bool
@@ -96,12 +101,9 @@ class User implements AdvancedUserInterface, \Serializable
     * Constructor
     */
     public function __construct() {
-        $this->coordinates = new ArrayCollection();
-        $this->reviews     = new ArrayCollection();
+        $this->coordinates  = new ArrayCollection();
+        $this->reviews      = new ArrayCollection();
         $this->creationDate = new \DateTime();
-        if ($this->role === 'ROLE_ADMIN' OR $this->role === 'ROLE_SUPER_ADMIN') {
-          $this->isActive = true;
-        }
     }
 
 
@@ -132,18 +134,10 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @Assert\IsTrue(message = "Le compte n'est pas encore activé")
+     * @return bool
      */
     public function isEnabled() {
         return $this->isActive;
-    }
-
-    /**
-     * @Assert\IsTrue(message = "L'adresse électronique et le mot de passe doivent être différents")
-     */
-    public function isPasswordLegal()
-    {
-        return $this->email !== $this->plainPassword;
     }
 
     /* ---------- Serializable ---------- */
@@ -166,9 +160,30 @@ class User implements AdvancedUserInterface, \Serializable
         ) = unserialize($serialized);
     }
 
-    /* ---------- Getters & Setters ---------- */
+    /* ---------- Callbacks ---------- */
 
+    /**
+     * @Assert\Callback
+     * @ORM\PrePersist
+     */
+    public function generateHash()
+    {
+        $hash = password_hash($this->plainPassword, PASSWORD_BCRYPT);
+        $this->setPassword($hash);
+    }
 
+    /**
+     * @Assert\Callback
+     * @ORM\PrePersist
+     */
+    public function activateAdmin()
+    {
+        if ($this->role === 'ROLE_ADMIN' OR $this->role === 'ROLE_SUPER_ADMIN') {
+          $this->isActive = true;
+        }
+    }
+
+    /* ---------- Other Methods ---------- */
 
     /**
      * Get id
@@ -311,27 +326,27 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set creation
+     * Set creationDate
      *
-     * @param \DateTime $creation
+     * @param \DateTime $creationDate
      *
      * @return User
      */
-    public function setCreation($creation)
+    public function setCreationDate($creationDate)
     {
-        $this->creation = $creation;
+        $this->creation = $creationDate;
 
         return $this;
     }
 
     /**
-     * Get creation
+     * Get creationDate
      *
      * @return \DateTime
      */
-    public function getCreation()
+    public function getCreationDate()
     {
-        return $this->creation;
+        return $this->creationDate;
     }
 
     /**
@@ -400,5 +415,20 @@ class User implements AdvancedUserInterface, \Serializable
     public function getReviews()
     {
         return $this->reviews;
+    }
+
+    /**
+    * @Assert\Email(message = "E-mail non valide")
+    */
+    public function isEmailValid() {
+      return $this->email;
+    }
+
+    /**
+     * @Assert\IsTrue(message = "E-mail et mot de passe doivent être différents")
+     */
+    public function isPasswordLegal()
+    {
+        return $this->email !== $this->plainPassword;
     }
 }

@@ -5,12 +5,8 @@ namespace TrailWarehouse\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Form\SignupType;
 use TrailWarehouse\AppBundle\Form\SigninType;
@@ -34,27 +30,29 @@ class UserController extends Controller
 
   /**
    * 'signup' route
+   * @param Request $request
+   * @param UserPasswordEncoderInterface $encoder
    */
+  // public function signupAction(Request $request, UserPasswordEncoderInterface $encoder)
   public function signupAction(Request $request)
   {
     $form = $this->createForm(SignupType::class, $this->user);
-    // Form submitted
-    if ($form->isSubmitted()) {
-      $form->handleRequest($request);
-      if ($form->isValid()) {
-        // Register the User
-        $this->registerUser($this->user);
-        $request->getSession()->getFlashBag()->add('notice', 'Votre inscription a été prise en compte');
-        // Redirect to the Shop
-        return $this->redirectToRoute('app_shop');
+    $form->handleRequest($request);
+    // Form submitted ?
+    if ($form->isSubmitted() AND $form->isValid()) {
+      // Super Admin ?
+      if ($this->user->getEmail() == 'mlaopane@gmail.com') {
+        $this->user->setRole('ROLE_SUPER_ADMIN');
       }
-      else {
-        $request->getSession()->getFlashBag()->add('danger', 'L\'inscription a échoué');
-      }
+      $manager = $this->getDoctrine()->getManager();
+      $manager->persist($this->user);
+      $manager->flush();
+      // Redirect to the Shop
+      return $this->redirectToRoute('app_shop');
     }
-    // Display the form to register
+    // Display the form to sign up
     $data = [
-      'form' => $form->createView(),
+      'signup_form' => $form->createView(),
     ];
     return $this->render('TrailWarehouseAppBundle:User:signup.html.twig', $data);
   }
@@ -107,21 +105,5 @@ class UserController extends Controller
   /* -------------------------- */
   /* *** Additional Methods *** */
   /* -------------------------- */
-
-  /**
-   * @param User $user
-   * @param string $hash
-   * Register a user into the database
-   */
-  protected function registerUser($user, $hash) {
-    $user
-      ->setRole('user')
-      ->setIsActive(false)
-      ->setDateCreation(new \DateTime())
-    ;
-    $manager = $this->getDoctrine()->getManager();
-    $manager->persist($user);
-    $manager->flush();
-  }
 
 }
