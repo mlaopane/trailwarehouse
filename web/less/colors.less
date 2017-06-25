@@ -2,14 +2,43 @@
 
 @primary    : @bluegreen;
 @secondary  : @greenblue;
-@neon-color : @whitegrey;
+@link-color : darken(@blue, 4%);
+@link-color-hover : darken(@link-color, 8%);
 
 .bg-primary { background : @primary !important }
 .bg-secondary { background : @secondary !important }
 .bg-whitegrey { background : @whitegrey !important }
 .bg-blackgrey { background : @blackgrey !important }
 
-.txt-primary { color : @primary !important }
-.txt-secondary { color : @secondary !important }
-.txt-whitegrey { color : @whitegrey !important }
-.txt-blackgrey { color : @blackgrey !important }
+.txt-primary {
+  color : @primary !important;
+  &.hover {
+    &:hover {
+      color: darken(@primary, 5%) !important;
+    }
+  }
+}
+.txt-secondary {
+  color : @secondary !important;
+  &.hover {
+    &:hover {
+      color: darken(@secondary, 5%) !important;
+    }
+  }
+}
+.txt-whitegrey {
+  color : @whitegrey !important;
+  &.hover {
+    &:hover {
+      color: darken(@whitegrey, 5%) !important;
+    }
+  }
+}
+.txt-blackgrey {
+  color : @blackgrey !important;
+  &.hover {
+    &:hover {
+      color: darken(@blackgrey, 5%) !important;
+    }
+  }
+}

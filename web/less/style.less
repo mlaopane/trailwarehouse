@@ -22,7 +22,8 @@
 @import "page_nav.less";
 @import "page_main.less";
 @import "page_footer.less";
-@import "page_sign.less";
+@import "page_signin.less";
+@import "page_signup.less";
 @import "page_shop.less";
 @import "page_cart.less";
 @import "page_category.less";
@@ -59,6 +60,7 @@ ul {
 }
 
 button {
+  font-family: 'Fira Sans';
   &:focus {
     outline: none;
   }
@@ -68,6 +70,13 @@ em {
   font-style: normal;
   font-weight: normal;
   font-family: @main-font-italic;
+}
+
+a {
+  color: @link-color;
+  &:hover {
+    color : @link-color-hover;
+  }
 }
 
 .container {
