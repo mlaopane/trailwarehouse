@@ -7,7 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class SigninType extends AbstractType
 {
@@ -18,8 +20,12 @@ class SigninType extends AbstractType
     {
         $builder
           ->add('email', EmailType::class)
-          ->add('password', PasswordType::class)
+          ->add('plainPassword', PasswordType::class)
           ->add('send', SubmitType::class, ['label' => 'Connexion'])
+          ->add('rememberMe', CheckboxType::class, [
+            'mapped'      => false,
+            'constraints' => new IsTrue(),
+          ])
         ;
     }
 

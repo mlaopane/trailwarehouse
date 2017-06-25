@@ -36,12 +36,12 @@
 
             <!-- # E-mail -->
             <div class="form-group mb-4">
-              {{ form_label(signup_form.email, 'Adresse électronique*') }}
+              {{ form_label(signup_form.email, 'E-mail*') }}
               <div class="input-group">
                 <div class="input-group-addon">@</div>
-                {{ form_widget(signup_form.email, {'attr': {'class': 'form-control', 'placeholder': 'Adresse électronique'}}) }}
+                {{ form_widget(signup_form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail'}}) }}
               </div>
-              <p class="form-text text-muted justify-self-end">Une adresse électronique valide</p>
+              <p class="form-text text-muted justify-self-end">E-mail valide</p>
             </div>
             <!-- E-mail # -->
 
@@ -73,11 +73,20 @@
         </div>
         <!-- Row # -->
 
-        <!-- # Submit -->
-        <div class="flex justify-content-center justify-content-sm-end">
-          {{ form_widget(signup_form.send, {'attr': {'class':'btn btn-confirm'}}) }}
+        <div class="row">
+
+          <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-center mb-3">
+            {{ form_widget(signup_form.termsAccepted) }}
+            <label for="" class="mb-0 ml-2 mr-2">J'accepte les conditions d'utilisation</label>
+          </div>
+
+          <!-- # Submit -->
+          <div class="col-12 d-flex justify-content-center justify-content-sm-end">
+            {{ form_widget(signup_form.send, {'attr': {'class':'btn btn-confirm'}}) }}
+          </div>
+          <!-- Submit # -->
+
         </div>
-        <!-- Submit # -->
 
         <!-- # Rest -->
         {{ form_rest(signup_form) }}

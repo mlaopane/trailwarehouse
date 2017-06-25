@@ -7,7 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use TrailWarehouse\AppBundle\Entity\Coordinate;
 
 /**
@@ -168,6 +167,7 @@ class User implements AdvancedUserInterface, \Serializable
     public function generateHash()
     {
         $hash = password_hash($this->plainPassword, PASSWORD_BCRYPT);
+        // $hash = $encoder->encodePassword($this, $this->plainPassword);
         $this->setPassword($hash);
     }
 

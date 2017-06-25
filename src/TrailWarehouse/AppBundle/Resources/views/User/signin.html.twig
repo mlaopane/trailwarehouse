@@ -36,10 +36,10 @@
 
             <!-- # E-mail -->
             <div class="form-group mb-4">
-              {{ form_label(signin_form.email, 'Adresse électronique*') }}
+              {{ form_label(signin_form.email, 'E-mail*') }}
               <div class="input-group">
                 <div class="input-group-addon">@</div>
-                {{ form_widget(signin_form.email, {'attr': {'class': 'form-control', 'placeholder': 'Adresse électronique'}}) }}
+                {{ form_widget(signin_form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail'}}) }}
               </div>
             </div>
             <!-- E-mail # -->
@@ -60,9 +60,22 @@
         </div>
         <!-- Row # -->
 
-        <!-- # Submit -->
-        {{ form_widget(signin_form.send, {'attr': {'class':'btn btn-confirm'}}, 'S\'inscrire') }}
-        <!-- Submit # -->
+        <div class="row">
+          <div class="col-12 d-flex flex-column align-items-center align-items-sm-end mb-3">
+            <a id="forgotten-password" href="{{ path('app_signin') }}" class="mb-2">Mot de passe oublié ?</a>
+            <div class="d-flex align-items-center">
+              {{ form_widget(signin_form.rememberMe) }}
+              <label for="" class="mb-0 ml-2">Se souvenir de moi</label>
+            </div>
+          </div>
+          <!-- # Submit -->
+          <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
+            <!-- # Password forgotten -->
+            <!-- Password forgotten # -->
+            {{ form_widget(signin_form.send, {'attr': {'class':'btn btn-confirm'}}) }}
+          </div>
+          <!-- Submit # -->
+        </div>
 
         {{ form_rest(signin_form) }}
 
