@@ -35,17 +35,13 @@ security:
         main :
             pattern   : ^/
             anonymous : ~
-            # activate different ways to authenticate
-
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            # http_basic :
-            #     provider :  db_trailwarehouse
-
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login :
                 provider   : db_trailwarehouse
                 login_path : app_signin
                 check_path : app_signin
+                username_parameter : trailwarehouse_appbundle_user[_username]
+                password_parameter : trailwarehouse_appbundle_user[_password]
 
             # remember_me :
             #     secret : '%secret%'
