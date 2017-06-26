@@ -32,8 +32,7 @@ class UserController extends Controller
    * 'signup' route
    * @param Request $request
    */
-  public function signupAction(Request $request)
-  {
+  public function signupAction(Request $request) {
     $form = $this->createForm(SignupType::class, $this->user);
     $form->handleRequest($request);
     // Form submitted ?
@@ -58,17 +57,16 @@ class UserController extends Controller
   /**
    * 'signin' route
    */
-  public function signinAction(Request $request, AuthenticationUtils $authUtils)
-  {
+  public function signinAction(Request $request, AuthenticationUtils $authUtils) {
     $form = $this->createForm(SigninType::class, $this->user);
 
-    $error     = $authUtils->getLastAuthenticationError();
-    $lastEmail = $authUtils->getLastUsername();
+    $error        = $authUtils->getLastAuthenticationError();
+    $lastUsername = $authUtils->getLastUsername();
 
     $data = [
-      'signin_form' => $form->createView(),
-      'last_email'  => $lastEmail,
-      'error'       => $error,
+      'signin_form'   => $form->createView(),
+      'last_username' => $lastUsername,
+      'error'         => $error,
     ];
     return $this->render('TrailWarehouseAppBundle:User:signin.html.twig', $data);
   }
