@@ -1,0 +1,102 @@
+{# TrailWarehouse > AppBundle > Resources > views > account.html.twig #}
+
+{% extends 'TrailWarehouseAppBundle::layout.html.twig' %}
+
+
+{% block title %}
+  {{ parent() }} : Mon espace perso
+{% endblock %}
+
+
+{% block page_main %}
+  <main id="page-account">
+
+    <!-- # Form Container -->
+    <div class="form-container rounded border p-4 mx-auto mb-5">
+
+      <!-- # Signin Form -->
+      {{ form_start(user_form) }}
+
+        <!-- # Row -->
+        <div class="row">
+
+          <!-- # Form title -->
+          <div class="col-12 mb-2">
+            <h1>Modifier vos informations personnelles</h1>
+          </div>
+          <!-- Form title # -->
+
+          <!-- # Form errors -->
+          {{ form_errors(user_form) }}
+          {% if error is not empty %}
+            {% if error.message == 'Bad credentials.' %}
+              <div class="ness-block failure round mx-auto mb-2">
+                <span>Identifiants incorrects</span>
+              </div>
+            {% elseif error.message == 'User account is disabled.' %}
+              <div class="ness-block warning round mx-auto mb-2">
+                <span>Compte non actif</span>
+              </div>
+            {% else %}
+              <div class="ness-block warning round mx-auto mb-2">
+                {{ error.message }}
+              </div>
+            {% endif %}
+          {% endif %}
+          <!-- Form errors # -->
+
+          <!-- # Col -->
+          <div class="col-12">
+
+            <!-- # E-mail -->
+            <div class="form-group mb-4">
+              {{ form_label(user_form.email, 'E-mail*') }}
+              <div class="input-group">
+                <div class="input-group-addon">@</div>
+                {{ form_widget(user_form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail', 'value': user.email }}) }}
+              </div>
+            </div>
+            <!-- E-mail # -->
+
+            <!-- # Password -->
+            <div class="form-group mb-4">
+              {{ form_label(user_form.password, 'Mot de passe*') }}
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                {{ form_widget(user_form.password, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+              </div>
+            </div>
+            <!-- Password # -->
+
+          </div>
+          <!-- Col # -->
+
+        </div>
+        <!-- Row # -->
+
+        <div class="row">
+          <div class="col-12 d-flex flex-column align-items-center align-items-sm-end mb-3">
+            <div class="d-flex align-items-center">
+              {{ form_widget(user_form.rememberMe) }}
+              <label for="" class="mb-0 ml-2">Se souvenir de moi</label>
+            </div>
+          </div>
+          <!-- # Submit -->
+          <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
+            <!-- # Password forgotten -->
+            <!-- Password forgotten # -->
+            {{ form_widget(user_form.send, {'attr': {'class':'btn btn-confirm'}}) }}
+          </div>
+          <!-- Submit # -->
+        </div>
+
+        {{ form_rest(user_form) }}
+
+      {{ form_end(user_form) }}
+      <!-- Signin Form # -->
+
+    </div>
+    <!-- Form Container # -->
+
+  </main>
+{% endblock %}

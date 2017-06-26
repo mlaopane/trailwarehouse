@@ -1,33 +1,33 @@
-app_signup:
+app_signup :
     path:     /inscription
     defaults:
         _controller: TrailWarehouseAppBundle:User:signup
 
-app_signin:
+app_signin :
     path:     /connexion
     defaults:
         _controller: TrailWarehouseAppBundle:User:signin
 
-app_signout:
+app_signout :
     path:     /deconnexion
 
-app_account:
+app_account :
     path:     /espace-perso
     defaults:
         _controller: TrailWarehouseAppBundle:User:account
 
-app_shop_root:
-    resource: "@TrailWarehouseAppBundle/Resources/config/Shop/routing.yml"
-    prefix:   /boutique
+app_shop_root :
+    resource : "@TrailWarehouseAppBundle/Resources/config/Shop/routing.yml"
+    prefix   : /boutique
 
-app_api_root:
-    resource: "@TrailWarehouseAppBundle/Resources/config/Api/routing.yml"
-    prefix:   /api
+app_api_root :
+    resource : "@TrailWarehouseAppBundle/Resources/config/Api/routing.yml"
+    prefix   : /api
 
-app_admin_root:
-    resource: "@TrailWarehouseAppBundle/Resources/config/Admin/routing.yml"
-    prefix:   /admin
+app_admin_root :
+    resource : "@TrailWarehouseAppBundle/Resources/config/Admin/routing.yml"
+    prefix   : /admin
 
-app_home_root:
-    resource: "@TrailWarehouseAppBundle/Resources/config/Home/routing.yml"
-    prefix:   /
+app_home_root :
+    resource : "@TrailWarehouseAppBundle/Resources/config/Home/routing.yml"
+    prefix   : /
