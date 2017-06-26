@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Form\SignupType;
@@ -57,9 +58,13 @@ class UserController extends Controller
   /**
    * 'signin' route
    */
-  public function signinAction(Request $request, AuthenticationUtils $authUtils) {
-    $form = $this->createForm(SigninType::class, $this->user);
+  public function signinAction(Request $request, AuthenticationUtils $authUtils, UserInterface $user = null) {
 
+    if ($user) {
+      return $this->redirectToRoute('app_account');
+    }
+
+    $form = $this->createForm(SigninType::class, $this->user);
     $error        = $authUtils->getLastAuthenticationError();
     $lastUsername = $authUtils->getLastUsername();
 
@@ -72,10 +77,22 @@ class UserController extends Controller
   }
 
   /**
+   * 'account' route
+   */
+  public function accountAction(Request $request, UserInterface $user) {
+    $form = $this->createForm(SigninType::class, $this->user);
+    $data = [
+      'user_form' => $form->createView(),
+      'user'      => $user,
+      'error'     => null,
+    ];
+    return $this->render('TrailWarehouseAppBundle:User:account.html.twig', $data);
+  }
+
+  /**
    * 'signout' route
    */
-  public function signoutAction(Request $request)
-  {
+  public function signoutAction(Request $request) {
     // Return
     return $this->render('TrailWarehouseAppBundle:Home:index.html.twig');
   }

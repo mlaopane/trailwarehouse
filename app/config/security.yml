@@ -15,12 +15,6 @@ security:
         ROLE_SUPER_ADMIN : [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers :
-        in_memory :
-            memory :
-                users :
-                    toto@toto.fr :
-                        password : '$2y$13$naOK2oxxFahRPNXb0hTzYegBztL9IHZ/xR1Ftx67YGH2tepBFadAy'
-                        roles    : 'ROLE_SUPER_ADMIN'
 
         db_trailwarehouse :
             entity        :
@@ -34,7 +28,7 @@ security:
         # Main Firewall
         main :
             pattern   : ^/
-            anonymous : ~
+            anonymous : true
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login :
                 provider   : db_trailwarehouse
@@ -53,5 +47,7 @@ security:
     access_control :
         - { path: ^/admin/add, roles : ROLE_SUPER_ADMIN }
         - { path: ^/admin, roles : ROLE_ADMIN }
+        - { path: ^/connexion, roles : IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/inscription, roles : IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/deconnexion, roles : IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/espace-perso, roles : ROLE_USER }
-        - { path: ^/deconnexion, roles : ROLE_USER }
