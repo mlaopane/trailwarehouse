@@ -79,3 +79,25 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+easy_admin :
+    site_name     : '<em style="font-size:1.8rem;">Trail&nbsp;Warehouse&nbsp;Admin</em>'
+    design :
+        brand_color : '#0EAA80'
+    entities      :
+        User      :
+            class : TrailWarehouse\AppBundle\Entity\User
+        Brand     :
+            class : TrailWarehouse\AppBundle\Entity\Brand
+        Category  :
+            class : TrailWarehouse\AppBundle\Entity\Category
+        Family    :
+            class : TrailWarehouse\AppBundle\Entity\Family
+        Product   :
+            class : TrailWarehouse\AppBundle\Entity\Product
+        Order     :
+            class : TrailWarehouse\AppBundle\Entity\Order
+        Review    :
+            class : TrailWarehouse\AppBundle\Entity\Review
+        Vat       :
+            class : TrailWarehouse\AppBundle\Entity\Vat
