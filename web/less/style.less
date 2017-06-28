@@ -119,6 +119,47 @@ a {
   }
 }
 
+/* ----- Heading ----- */
+.heading-container {
+  background: @blackgrey;
+  box-shadow: 0px 2px 2px 0px darken(@blackgrey, 10%);
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  margin-bottom: 2.0rem;
+  width: 100%;
+  &-primary {
+    background: @primary;
+    box-shadow: 0px 2px 2px 0px darken(@primary, 10%);
+  }
+  &-secondary {
+    background: @secondary;
+    box-shadow: 0px 2px 2px 0px darken(@secondary, 10%);
+  }
+  &-blue {
+    background: @blue;
+    box-shadow: 0px 2px 2px 0px darken(@blue, 10%);
+  }
+  &-red {
+    background: @red;
+    box-shadow: 0px 2px 2px 0px darken(@red, 10%);
+  }
+  &-green {
+    background: @green;
+    box-shadow: 0px 2px 2px 0px darken(@green, 10%);
+  }
+  &-yellow {
+    background: @yellow;
+    box-shadow: 0px 2px 2px 0px darken(@yellow, 10%);
+  }
+  .heading {
+    border-bottom : 1px solid @whitegrey;
+    color: white;
+    margin: 0px;
+  }
+}
+
 .parallelogram {
   @parallelogram-angle: -15deg;
 	-webkit-transform: skew(@parallelogram-angle);
