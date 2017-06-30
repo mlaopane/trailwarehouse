@@ -2,7 +2,6 @@
 
 namespace TrailWarehouse\AppBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use TrailWarehouse\AppBundle\Entity\Item;
 use TrailWarehouse\AppBundle\Entity\Promo;
@@ -49,13 +48,9 @@ class Cart
      */
     public function addItem(Item $item)
     {
-        // Update Cart Items
         $item->setTotal($item->getProduct()->getPrice() * $item->getQuantity());
         $this->items[] = $item;
-
-        // Update Cart total
-        $this->total += $item->getTotal();
-
+        $this->updateTotal();
         return $this;
     }
 
@@ -67,11 +62,12 @@ class Cart
     public function removeItem(Item $item)
     {
         $this->items->removeElement($item);
-        $this->total -= $item->getTotal();
+        $this->updateTotal();
+        return $this;
     }
 
     /**
-     * Get products
+     * Get Items
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -114,7 +110,7 @@ class Cart
     public function setPromo(Promo $promo)
     {
         $this->promo = $promo;
-
+        $this->recalcTotal();
         return $this;
     }
 
@@ -126,6 +122,30 @@ class Cart
     public function getPromo()
     {
         return $this->promo;
+    }
+
+    public function updateTotal()
+    {
+      // Reset the total
+      $this->total = 0;
+
+      // IF the Cart has items
+      if (!empty($this->items)) {
+        $iterator = $this->items->getIterator();
+
+        // Update the total with the items' totals
+        while ($iterator->valid()) {
+          $this->total += $iterator->current()->getTotal();
+          $iterator->next();
+        }
+
+        // IF the cart has a promo code
+        if (!empty($this->promo)) {
+          $this->total *= $this->promo->getValue();
+        }
+      }
+
+      return $this;
     }
 
 }

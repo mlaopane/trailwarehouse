@@ -26,6 +26,14 @@ class Item
     private $total;
 
 
+    public function __construct(Product $product = null, int $quantity = null) {
+      if ($product != null AND $quantity != null) {
+        $this->product  = $product;
+        $this->quantity = $quantity;
+        $this->total    = $product->getPrice() * $quantity;
+      }
+    }
+
     /* ---------- Getters & Setters ---------- */
 
     /**
