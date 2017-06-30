@@ -35,12 +35,12 @@ class ShopController extends Controller
    * 'app_shop'
    */
   public function indexAction() {
-    $doctrine = $this->getDoctrine();
+    $doctrine   = $this->getDoctrine();
     $repo_brand = $doctrine->getRepository('TrailWarehouseAppBundle:Brand');
-    $brands = $repo_brand->findAll(['brand' => 'asc']);
-    $data = [
-      'brands' => $brands,
-    ];
+    $brands     = $repo_brand->findAll(['brand' => 'asc']);
+
+    $data['brands'] = $brands;
+
     return $this->render('TrailWarehouseAppBundle:Shop:index.html.twig', $data);
   }
 
@@ -135,82 +135,6 @@ class ShopController extends Controller
       'sizes' => $sizes,
     ];
     return $this->render('TrailWarehouseAppBundle:Shop:family.html.twig', $data);
-  }
-
-  /**
-   * 'app_shop_cart'
-   *
-   */
-  public function cartAction(Request $request) {
-    $cart_form = $this->createForm(CartType::class, new Cart());
-    $promo_form = $this->createForm(PromoType::class, new Promo());
-    $data = [
-      'cart_form'  => $cart_form->createView(),
-      'promo_form' => $promo_form->createView(),
-    ];
-    return $this->render('TrailWarehouseAppBundle:Shop:cart.html.twig', $data);
-  }
-
-  /*
-   * Add Item to Cart
-   *
-   * [POST]
-   */
-  public function addToCartAction(Request $request) {
-    $post_item     = json_decode(file_get_contents('php://input'));
-    $post_product  = $post_item->product;
-    $post_quantity = $post_item->quantity;
-
-    // IF the quantity isn't a natural number
-    if ($post_quantity <= 0) {
-      return new JsonResponse(false);
-    }
-
-    $repository['product'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Product');
-    $product_not_exists = empty($db_product = $repository['product']->find($post_product->id));
-
-    // IF the Product does NOT exist OR the quantity is NOT available
-    if ($product_not_exists OR ($post_quantity > $db_product->getStock())) {
-      return new JsonResponse(false);
-    }
-
-    // Create the Item
-    $new_item = (new Item())
-      ->setProduct($db_product)
-      ->setQuantity($post_quantity)
-      ->setTotal($post_product->price * $post_quantity)
-    ;
-
-    // IF the Cart doesn't exist THEN create an new Cart
-    if (empty($cart = $request->getSession()->get('cart'))) {
-      $cart = new Cart();
-    }
-    // ELSE
-    else {
-      foreach ($cart_items = $cart->getItems() as $cart_item) {
-        // IF the product already appears in a Cart Item THEN remove the item (before adding the new one)
-        if ($cart_item->getProduct()->getId() == $db_product->getId()) {
-          $cart->removeItem($cart_item);
-          break;
-        }
-      }
-    }
-
-    // Add the new Item and Update the Cart
-    $cart->addItem($new_item);
-    $request->getSession()->set('cart', $cart);
-    return new JsonResponse($this->serializer->serialize($new_item, 'json'));
-  }
-
-  public function addPromoAction(Request $request) {
-    $post_code = json_decode(file_get_contents('php://input'));
-    $repository['Promo'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Promo');
-    if (empty($repository['Promo']->getOneBy($post_code))) {
-      return new JsonResponse(false);
-    }
-    else {
-
-    }
   }
 
 }
