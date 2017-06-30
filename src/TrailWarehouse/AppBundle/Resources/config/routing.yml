@@ -16,6 +16,10 @@ app_account :
     defaults:
         _controller: TrailWarehouseAppBundle:User:account
 
+app_cart_root :
+    resource : "@TrailWarehouseAppBundle/Resources/config/Cart/routing.yml"
+    prefix   : /cart
+
 app_shop_root :
     resource : "@TrailWarehouseAppBundle/Resources/config/Shop/routing.yml"
     prefix   : /boutique

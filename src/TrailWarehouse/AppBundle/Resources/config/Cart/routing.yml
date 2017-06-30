@@ -1,0 +1,10 @@
+app_cart_add :
+    path             : /add
+    methods          : [POST]
+    defaults         :
+        _controller  : TrailWarehouseAppBundle:Cart:add
+
+app_cart :
+    path             : /
+    defaults         :
+        _controller  : TrailWarehouseAppBundle:Cart:index

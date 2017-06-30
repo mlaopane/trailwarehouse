@@ -148,7 +148,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
   page.addToCart = function(product, quantity) {
     if (product != null && quantity > 0) {
       page.add_in_progress = true;
-      let url = page.SHOP_URL + 'cart/add';
+      let url = page.CART_URL + 'add';
       let item = {
         product  : product,
         quantity : quantity,

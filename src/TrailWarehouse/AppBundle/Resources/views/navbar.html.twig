@@ -15,32 +15,32 @@
       {% block user_nav %}
         {% if app.user is empty %}
 
-        <!-- # Guest Menu -->
-        <ul id="menu-user-list">
-          <li class="nav-item">
-            <a href="{{ path('app_signup') }}" title="Inscription" data-toggle="" data-target="#signup-modal">
-              <span class="glyphicon glyphicon-pencil"></span><span>Inscription</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ path('app_signin') }}" title="Connexion" data-toggle="modal" data-target="#signin-modal">
-              <span class="glyphicon glyphicon-user"></span>&nbsp;<span>Connexion</span>
-            </a>
-            {% include 'TrailWarehouseAppBundle:User:signin_modal.html.twig' %}
-          </li>
-          <li class="nav-item">
-            <a href="{{ path('app_shop_cart') }}" title="Voir mon panier">
-              <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;<span>Panier</span>
-            </a>
-          </li>
-        </ul>
-        <!-- Guest Menu # -->
+          <!-- # Guest Menu -->
+          <ul id="menu-user-list">
+            <li class="nav-item">
+              <a href="{{ path('app_signup') }}" title="Inscription">
+                <span class="glyphicon glyphicon-pencil"></span><span>Inscription</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ path('app_signin') }}" title="Connexion">
+                <span class="glyphicon glyphicon-user"></span>&nbsp;<span>Connexion</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ path('app_cart') }}" title="Voir mon panier">
+                <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;<span>Panier</span>
+              </a>
+            </li>
+          </ul>
+          <!-- Guest Menu # -->
 
         {% else %}
+
           <!-- # User Menu -->
           <ul id="menu-user-list">
             <li class="nav-item">
-              <a href="{{ path('app_account') }}" title="Inscription" data-toggle="" data-target="#signup-modal">
+              <a href="{{ path('app_account') }}" title="Inscription">
                 <span class="glyphicon glyphicon-pencil"></span><span>Mon compte</span>
               </a>
             </li>
@@ -48,7 +48,6 @@
               <a href="{{ path('app_signout') }}" title="Connexion">
                 <span class="glyphicon glyphicon-user"></span>&nbsp;<span>Déconnexion</span>
               </a>
-              {% include 'TrailWarehouseAppBundle:User:signin_modal.html.twig' %}
             </li>
             {% if app.user.role == 'ROLE_USER' %} {# Cart #}
               <li class="nav-item">
@@ -64,7 +63,8 @@
               </li>
             {% endif %}
           </ul>
-        <!-- # User Menu -->
+          <!-- # User Menu -->
+
         {% endif %}
       {% endblock %}
     </nav>
