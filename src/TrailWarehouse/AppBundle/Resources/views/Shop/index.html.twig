@@ -96,7 +96,7 @@
         {% for brand in brands %}
           <div class="brand col">
             <a href="#">
-              <img src="{{ asset(brand.logo) }}" alt="Logo {{ brand.name }}" class="round">
+              <img src="{{ asset(brand.logo) }}" alt="Logo {{ brand.name }}" class="round img-fluid mx-auto d-block">
               <p class="row justify-content-center">{{ brand.name | capitalize }}</p>
             </a>
           </div>
