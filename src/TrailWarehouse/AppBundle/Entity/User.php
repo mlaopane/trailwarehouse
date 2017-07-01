@@ -194,10 +194,10 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-    * get the email (which stands for the username)
-    *
-    * @return string
-    */
+     * get the email (which stands for the username)
+     *
+     * @return string
+     */
     public function getUsername()
     {
         return $this->email;
