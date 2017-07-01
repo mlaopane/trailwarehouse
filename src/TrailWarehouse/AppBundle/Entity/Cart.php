@@ -50,7 +50,6 @@ class Cart
     {
         $item->setTotal($item->getProduct()->getPrice() * $item->getQuantity());
         $this->items[] = $item;
-        $this->updateTotal();
         return $this;
     }
 
@@ -62,7 +61,6 @@ class Cart
     public function removeItem(Item $item)
     {
         $this->items->removeElement($item);
-        $this->updateTotal();
         return $this;
     }
 
@@ -86,7 +84,6 @@ class Cart
     public function setTotal($total)
     {
         $this->total = $total;
-
         return $this;
     }
 
@@ -110,7 +107,6 @@ class Cart
     public function setPromo(Promo $promo)
     {
         $this->promo = $promo;
-        $this->recalcTotal();
         return $this;
     }
 
@@ -130,17 +126,15 @@ class Cart
       $this->total = 0;
 
       // IF the Cart has items
-      if (!empty($this->items)) {
+      if ($this->items) {
         $iterator = $this->items->getIterator();
-
         // Update the total with the items' totals
         while ($iterator->valid()) {
           $this->total += $iterator->current()->getTotal();
           $iterator->next();
         }
-
-        // IF the cart has a promo code
-        if (!empty($this->promo)) {
+        // IF there is a promo code to apply
+        if ($this->promo) {
           $this->total *= $this->promo->getValue();
         }
       }

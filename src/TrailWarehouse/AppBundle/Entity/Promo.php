@@ -156,4 +156,10 @@ class Promo
     {
         return $this->end;
     }
+
+    public function isActive()
+    {
+        $now = new \DateTime();
+        return $this->start <= $now AND $now <= $this->end;
+    }
 }
