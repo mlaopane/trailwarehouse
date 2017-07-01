@@ -53,7 +53,6 @@
       }
       &-container {
         border: 1px solid transparent;
-        cursor: pointer;
         margin-bottom: 5px;
         &:not(:last-child) {
           margin-right: 5px;
@@ -62,7 +61,6 @@
           box-shadow: 0px 0px 1px 1px @whitegrey;
         }
         &:active:not(.active) {
-          transform: scale3d(1.10, 1.10, 1.10);
         }
         &.active {
           border: 1px solid @blackgrey;
@@ -75,9 +73,15 @@
       &-sample {
         @color-sample-size : 32px;
         border: 1px solid @blackgrey;
+        cursor: pointer;
         height : @color-sample-size;
         width : @color-sample-size;
         transition: 0.15s;
+        &.disabled {
+          border: 1px solid darken(@steelgrey, 5%);
+          background: @steelgrey !important;
+          cursor: default;
+        }
       }
     }
   }

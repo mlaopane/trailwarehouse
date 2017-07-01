@@ -35,11 +35,11 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
    */
   page.getProductsByColor = function(family_id, color_id) {
     // IF product doesn't exist OR it is not the active color
-    if (!page.product || page.product.color.id != color_id) {
+    if (!page.product || (page.product.color.id != color_id && page.colors[color_id] != null) ) {
       // Request URL
       let url = page.API_URL +
-        'family/' + family_id +
-        '/' + 'color/' + color_id
+      'family/' + family_id +
+      '/' + 'color/' + color_id
       ;
       let products = [];
       // AJAX Request
@@ -66,7 +66,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
     // IF product and sizes are initialized
     if (page.product != null && page.sizes != null) {
 
-      // IF the size exists for the active AND it's not the active size
+      // IF the size exists AND it's not the active size
       if (page.sizes[size_id] != null && page.product.size.id != size_id) {
 
         // Set the active size to update the view ASAP
@@ -112,7 +112,9 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
   page.extractSizes = function(products) {
     let sizes = [];
     for (product of products) {
-      sizes[product.size.id] = product.size;
+      if (product.stock > 0 && !sizes[product.color.id]) {
+        sizes[product.size.id] = product.size;
+      }
     }
     return sizes;
   }
