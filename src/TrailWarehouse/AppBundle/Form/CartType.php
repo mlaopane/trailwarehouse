@@ -35,7 +35,7 @@ class CartType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'trailwarehouse_appbundle_cart';
+        return 'trailwarehouse_cart';
     }
 
 

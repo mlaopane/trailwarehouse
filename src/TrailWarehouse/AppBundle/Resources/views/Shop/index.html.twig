@@ -94,10 +94,9 @@
       <div class="row px-3">
       {% if brands is not empty %}
         {% for brand in brands %}
-          <div class="brand col">
-            <a href="#">
+          <div class="brand col d-flex justify-content-center align-items-center">
+            <a href="#" class="">
               <img src="{{ asset(brand.logo) }}" alt="Logo {{ brand.name }}" class="round img-fluid mx-auto d-block">
-              <p class="row justify-content-center">{{ brand.name | capitalize }}</p>
             </a>
           </div>
         {% endfor %}

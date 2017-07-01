@@ -135,7 +135,7 @@ class Cart
         }
         // IF there is a promo code to apply
         if ($this->promo) {
-          $this->total *= $this->promo->getValue();
+          $this->total *= (1 - $this->promo->getValue());
         }
       }
 

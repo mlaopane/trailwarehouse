@@ -31,17 +31,30 @@ class CartController extends Controller
     $this->serializer = new Serializer($normalizers, $encoders);
   }
 
-
   /**
    * 'app_shop_cart'
    */
-  public function indexAction(Request $request) {
-    $cart_form = $this->createForm(CartType::class, new Cart());
-    $promo_form = $this->createForm(PromoType::class, new Promo());
+  public function indexAction(Request $request)
+  {
+    // Promo Form
+    $promo_form = $this->createForm(PromoType::class, new Promo(), [
+      'action' => $this->generateUrl('app_cart_add_promo'),
+    ]);
+
+    // Cart Form
+    $cart_form = $this->createForm(CartType::class, new Cart(), [
+      'action' => $this->generateUrl('app_cart_check'),
+    ]);
+
+    // IF no Form has been submitted
+    $flashbag = $request->getSession()->getFlashBag();
     $data = [
-      'cart_form'  => $cart_form->createView(),
-      'promo_form' => $promo_form->createView(),
+      'cart_form'    => $cart_form->createView(),
+      'promo_form'   => $promo_form->createView(),
+      'promo_errors' => $flashbag->get('promo_errors'),
+      'cart_errors'  => $flashbag->get('cart_errors'),
     ];
+
     return $this->render('TrailWarehouseAppBundle:Cart:index.html.twig', $data);
   }
 
@@ -50,11 +63,11 @@ class CartController extends Controller
    *
    * [POST]
    */
-  public function addAction(Request $request) {
+  public function addItemAction(Request $request) {
     $post_item = json_decode(file_get_contents('php://input'));
     $repository['product'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Product');
     $db_product = $repository['product']->find($post_item->product->id);
-    $new_item  = new Item($db_product, $post_item->quantity);
+    $new_item = new Item($db_product, $post_item->quantity);
 
     if (!$this->isCartable($new_item)) {
       return new JsonResponse(false);
@@ -62,9 +75,7 @@ class CartController extends Controller
     if (empty ($cart = $request->getSession()->get('cart'))) {
       $cart = new Cart();
     }
-    else {
-      $cart = $this->updateCart($cart, $new_item);
-    }
+    $cart = $this->updateCart($cart, $new_item);
     $request->getSession()->set('cart', $cart);
     return new JsonResponse($this->serializer->serialize($new_item, 'json'));
   }
@@ -72,15 +83,34 @@ class CartController extends Controller
   /**
    * Apply a promo code to the Cart
    */
-  public function addPromoAction(Request $request) {
-    $post_code = json_decode(file_get_contents('php://input'));
-    $repository['Promo'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Promo');
-    if (empty($repository['Promo']->getOneBy($post_code))) {
-      return new JsonResponse(false);
-    }
-    else {
+  public function addPromoAction(Request $request)
+  {
+    // Check if there is a cart to apply the promo code
+    if (!empty($cart = $request->getSession()->get('cart'))) {
+      $form = $this->createForm(PromoType::class, new Promo());
+      $form->handleRequest($request);
+      // Check Form
+      if ($form->isSubmitted() AND $form->isValid()) {
+        // Search for a matching Promo in DB
+        $repository['promo'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Promo');
+        $post_promo = $form->getData();
+        $promo = $repository['promo']->findOneByCode($post_promo->getCode());
 
+        // Check Promo and apply if OK
+        if (empty($promo)) {
+          $this->addFlash('failure', 'Code non valide');
+        }
+        elseif (!$promo->isActive()) {
+          $this->addFlash('failure', 'Le Code <span class="font-weight-bold">'.$promo->getCode().'</span> est expiré');
+        }
+        else {
+          $cart->setPromo($promo);
+          $cart->updateTotal();
+          $this->addFlash('success', 'Code <span class="font-weight-bold">'.$promo->getCode().'</span> appliqué');
+        }
+      }
     }
+    return $this->redirectToRoute('app_cart');
   }
 
   /* ---------- Private methods ---------- */
@@ -89,20 +119,15 @@ class CartController extends Controller
    * Return a new empty or an updated one if it already exists
    */
   private function updateCart(Cart $cart, Item $new_item) : Cart {
-    // Create a new Cart
-    if (empty($cart)) {
-      $cart = new Cart();
-    }
     // Remove the item from the Cart if it does exist
-    else {
-      foreach ($cart_items = $cart->getItems() as $cart_item) {
-        if ($cart_item->getProduct()->getId() == $new_item->getProduct()->getId()) {
-          $cart->removeItem($cart_item);
-          break;
-        }
+    foreach ($cart_items = $cart->getItems() as $cart_item) {
+      if ($cart_item->getProduct()->getId() == $new_item->getProduct()->getId()) {
+        $cart->removeItem($cart_item);
+        break;
       }
     }
-    return $cart->addItem($new_item);
+    $cart->addItem($new_item)->updateTotal();
+    return $cart;
   }
 
   /**

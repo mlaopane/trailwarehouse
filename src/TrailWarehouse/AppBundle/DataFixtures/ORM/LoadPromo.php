@@ -14,22 +14,34 @@ class LoadPromo implements FixtureInterface
   {
     $data = [
       [
-        'code' => 'WELCOME10',
+        'code'  => 'WELCOME10',
         'value' => 0.10,
-        'start' => new \DateTime('2017-06-05 00:00:00'),
-        'end' => new \DateTime('2018-06-05 00:00:00'),
+        'start' => new \DateTime('2017-07-01 00:00:00'),
+        'end'   => new \DateTime('2018-07-01 00:00:00'),
       ],
       [
-        'code' => 'SUMMER15',
+        'code'  => 'SPRING12',
+        'value' => 0.12,
+        'start' => new \DateTime('2017-03-20 00:00:00'),
+        'end'   => new \DateTime('2017-06-20 00:00:00'),
+      ],
+      [
+        'code'  => 'SUMMER15',
         'value' => 0.15,
         'start' => new \DateTime('2017-06-19 00:00:00'),
-        'end' => new \DateTime('2017-07-04 00:00:00'),
+        'end'   => new \DateTime('2017-07-04 00:00:00'),
       ],
       [
-        'code' => 'AUTUMN12',
+        'code'  => 'AUTUMN12',
         'value' => 0.12,
         'start' => new \DateTime('2017-09-18 00:00:00'),
-        'end' => new \DateTime('2017-10-03 00:00:00'),
+        'end'   => new \DateTime('2017-10-03 00:00:00'),
+      ],
+      [
+        'code'  => 'SPECIAL20',
+        'value' => 0.20,
+        'start' => new \DateTime('2017-07-25 00:00:00'),
+        'end'   => new \DateTime('2017-07-30 00:00:00'),
       ],
     ];
     foreach ($data as $element) {

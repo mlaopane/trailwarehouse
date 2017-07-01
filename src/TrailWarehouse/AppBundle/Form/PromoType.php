@@ -37,7 +37,7 @@ class PromoType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'trailwarehouse_appbundle_promo';
+        return 'trailwarehouse_promo';
     }
 
 

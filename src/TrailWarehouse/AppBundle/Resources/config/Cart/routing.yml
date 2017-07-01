@@ -1,10 +1,22 @@
-app_cart_add :
-    path             : /add
+app_cart :
+  path             : /
+  defaults         :
+    _controller  : TrailWarehouseAppBundle:Cart:index
+
+app_cart_add_item :
+    path             : /ajouter-item
     methods          : [POST]
     defaults         :
-        _controller  : TrailWarehouseAppBundle:Cart:add
+        _controller  : TrailWarehouseAppBundle:Cart:addItem
 
-app_cart :
-    path             : /
+app_cart_add_promo :
+    path             : /appliquer-code-promo
+    methods          : [POST]
     defaults         :
-        _controller  : TrailWarehouseAppBundle:Cart:index
+        _controller  : TrailWarehouseAppBundle:Cart:addPromo
+
+app_cart_check :
+    path             : /check
+    methods          : [POST]
+    defaults         :
+        _controller  : TrailWarehouseAppBundle:Cart:check
