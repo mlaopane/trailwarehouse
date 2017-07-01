@@ -1,0 +1,7 @@
+{% for type, messages in app.flashes %}
+  {% for message in messages %}
+    <div class="ness-block {{ type }} mb-1">
+      <div>{{ message | raw }}</div>
+    </div>
+  {% endfor %}
+{% endfor %}
