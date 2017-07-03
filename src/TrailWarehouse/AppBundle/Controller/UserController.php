@@ -42,13 +42,10 @@ class UserController extends Controller
     if (in_array('ROLE_ADMIN', $roles) OR in_array('ROLE_SUPER_ADMIN', $roles)) {
       return $this->redirectToRoute('easyadmin');
     }
-    if (empty($cart = $session->get('cart'))) {
-      $cart = new Cart();
-      return $this->redirectToRoute('app_shop');
+    if (!empty($cart = $session->get('cart'))) {
+      return $this->redirectToRoute('app_cart');
     }
-    $manager->persist($cart);
-    $manager->flush();
-    return $this->redirectToRoute('app_cart');
+    return $this->redirectToRoute('app_shop');
   }
 
   /**

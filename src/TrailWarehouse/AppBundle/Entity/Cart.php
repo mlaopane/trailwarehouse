@@ -17,15 +17,6 @@ use TrailWarehouse\AppBundle\Entity\Promo;
 class Cart
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var ArrayCollection
      */
     private $items;
@@ -41,12 +32,6 @@ class Cart
      *
      */
     private $total = 0;
-
-    /**
-     * @ORM\OneToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $user;
 
     /**
      * Constructor
