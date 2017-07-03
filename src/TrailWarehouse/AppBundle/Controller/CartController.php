@@ -19,7 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class CartController extends Controller
 {
 
-  public function __construct() {
+  public function __construct(SessionInterface $session) {
     $normalizer = new ObjectNormalizer();
     $normalizer->setCircularReferenceHandler(function ($object) {
       return $object->getId();
@@ -27,6 +27,10 @@ class CartController extends Controller
     $normalizers = [ $normalizer ];
     $encoders = [ new JsonEncoder() ];
     $this->serializer = new Serializer($normalizers, $encoders);
+    
+    if (empty($cart = $session->get('cart'))) {
+      $session->set('cart', new Cart());
+    }
   }
 
   /**

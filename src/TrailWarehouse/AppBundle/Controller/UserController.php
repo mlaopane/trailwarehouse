@@ -33,22 +33,6 @@ class UserController extends Controller
   /* -------------- */
 
   /**
-   * 'init' route
-   * @param Request $request
-   */
-  public function initAction(SessionInterface $session, UserInterface $user, EntityManagerInterface $manager)
-  {
-    $roles = $user->getRoles();
-    if (in_array('ROLE_ADMIN', $roles) OR in_array('ROLE_SUPER_ADMIN', $roles)) {
-      return $this->redirectToRoute('easyadmin');
-    }
-    if (!empty($cart = $session->get('cart'))) {
-      return $this->redirectToRoute('app_cart');
-    }
-    return $this->redirectToRoute('app_shop');
-  }
-
-  /**
    * 'signup' route
    * @param Request $request
    */

@@ -28,14 +28,20 @@ class LoadPromo implements FixtureInterface
       [
         'code'  => 'SUMMER15',
         'value' => 0.15,
-        'start' => new \DateTime('2017-06-19 00:00:00'),
-        'end'   => new \DateTime('2017-07-04 00:00:00'),
+        'start' => new \DateTime('2017-06-21 00:00:00'),
+        'end'   => new \DateTime('2017-09-21 00:00:00'),
       ],
       [
         'code'  => 'AUTUMN12',
         'value' => 0.12,
-        'start' => new \DateTime('2017-09-18 00:00:00'),
-        'end'   => new \DateTime('2017-10-03 00:00:00'),
+        'start' => new \DateTime('2017-09-22 00:00:00'),
+        'end'   => new \DateTime('2017-12-20 00:00:00'),
+      ],
+      [
+        'code'  => 'WINTER15',
+        'value' => 0.15,
+        'start' => new \DateTime('2017-12-21 00:00:00'),
+        'end'   => new \DateTime('2018-03-19 00:00:00'),
       ],
       [
         'code'  => 'SPECIAL20',

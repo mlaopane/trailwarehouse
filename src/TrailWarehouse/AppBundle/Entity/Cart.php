@@ -11,8 +11,6 @@ use TrailWarehouse\AppBundle\Entity\Promo;
 /**
  * Cart
  *
- * @ORM\Table(name="cart")
- * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\CartRepository")
  */
 class Cart
 {

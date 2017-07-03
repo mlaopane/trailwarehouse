@@ -5,6 +5,7 @@ namespace TrailWarehouse\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -16,19 +17,23 @@ use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Category;
 use TrailWarehouse\AppBundle\Form\CartType;
 use TrailWarehouse\AppBundle\Form\PromoType;
+use TrailWarehouse\AppBundle\Controller\CartController;
 
 class ShopController extends Controller
 {
 
-  public function __construct() {
+  public function __construct(SessionInterface $session) {
     $normalizer = new ObjectNormalizer();
     $normalizer->setCircularReferenceHandler(function ($object) {
       return $object->getId();
     });
     $normalizers = [ $normalizer ];
     $encoders = [ new JsonEncoder() ];
-
     $this->serializer = new Serializer($normalizers, $encoders);
+    
+    if (empty($cart = $session->get('cart'))) {
+      $session->set('cart', new Cart());
+    }
   }
 
   /**
