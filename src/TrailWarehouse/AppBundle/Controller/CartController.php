@@ -4,18 +4,17 @@ namespace TrailWarehouse\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use TrailWarehouse\AppBundle\Entity\Item;
 use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Promo;
-use TrailWarehouse\AppBundle\Entity\Family;
-use TrailWarehouse\AppBundle\Entity\Category;
 use TrailWarehouse\AppBundle\Form\CartType;
 use TrailWarehouse\AppBundle\Form\PromoType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CartController extends Controller
 {
@@ -27,14 +26,13 @@ class CartController extends Controller
     });
     $normalizers = [ $normalizer ];
     $encoders = [ new JsonEncoder() ];
-
     $this->serializer = new Serializer($normalizers, $encoders);
   }
 
   /**
    * 'app_shop_cart'
    */
-  public function indexAction(Request $request)
+  public function indexAction(SessionInterface $session)
   {
     // Promo Form
     $promo_form = $this->createForm(PromoType::class, new Promo(), [
@@ -47,7 +45,7 @@ class CartController extends Controller
     ]);
 
     // IF no Form has been submitted
-    $flashbag = $request->getSession()->getFlashBag();
+    $flashbag = $session->getFlashbag();
     $data = [
       'cart_form'    => $cart_form->createView(),
       'promo_form'   => $promo_form->createView(),
@@ -63,21 +61,22 @@ class CartController extends Controller
    *
    * [POST]
    */
-  public function addItemAction(Request $request) {
+  public function addItemAction(SessionInterface $session)
+  {
     $post_item = json_decode(file_get_contents('php://input'));
     $repository['product'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Product');
     $db_product = $repository['product']->find($post_item->product->id);
     $new_item = new Item($db_product, $post_item->quantity);
 
     if (!$this->isCartable($new_item)) {
-      return new JsonResponse(false);
+      return $this->json(false);
     }
-    if (empty ($cart = $request->getSession()->get('cart'))) {
+    if (empty ($cart = $session->get('cart'))) {
       $cart = new Cart();
     }
     $cart = $this->updateCart($cart, $new_item);
-    $request->getSession()->set('cart', $cart);
-    return new JsonResponse($this->serializer->serialize($new_item, 'json'));
+    $session->set('cart', $cart);
+    return $this->json($this->serializer->serialize($new_item, 'json'));
   }
 
   /**
@@ -113,12 +112,18 @@ class CartController extends Controller
     return $this->redirectToRoute('app_cart');
   }
 
+  public function checkAction(EntityManagerInterface $manager)
+  {
+    return $this->redirectToRoute('app_cart');
+  }
+
   /* ---------- Private methods ---------- */
 
   /**
    * Return a new empty or an updated one if it already exists
    */
-  private function updateCart(Cart $cart, Item $new_item) : Cart {
+  private function updateCart(Cart $cart, Item $new_item) : Cart
+  {
     // Remove the item from the Cart if it does exist
     foreach ($cart_items = $cart->getItems() as $cart_item) {
       if ($cart_item->getProduct()->getId() == $new_item->getProduct()->getId()) {

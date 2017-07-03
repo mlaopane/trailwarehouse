@@ -2,15 +2,29 @@
 
 namespace TrailWarehouse\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use TrailWarehouse\AppBundle\Entity\Item;
+use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Promo;
 
 /**
  * Cart
+ *
+ * @ORM\Table(name="cart")
+ * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\CartRepository")
  */
 class Cart
 {
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
     /**
      * @var ArrayCollection
      */
@@ -27,6 +41,12 @@ class Cart
      *
      */
     private $total = 0;
+
+    /**
+     * @ORM\OneToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
 
     /**
      * Constructor

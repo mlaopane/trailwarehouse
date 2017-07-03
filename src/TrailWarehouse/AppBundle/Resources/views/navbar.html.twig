@@ -51,7 +51,7 @@
             </li>
             {% if app.user.role == 'ROLE_USER' %} {# Cart #}
               <li class="nav-item">
-                <a href="{{ path('app_shop_cart') }}" class="p-1" title="Voir mon panier">
+                <a href="{{ path('app_cart') }}" class="p-1" title="Voir mon panier">
                   <img id="img-cart" src="{{ asset('images/cart.png') }}">
                 </a>
               </li>
