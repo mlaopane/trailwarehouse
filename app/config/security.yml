@@ -36,6 +36,8 @@ security:
                 check_path : app_signin
                 username_parameter : trailwarehouse_appbundle_user[email]
                 password_parameter : trailwarehouse_appbundle_user[password]
+                always_use_default_target_path : true
+                default_target_path : /user/init
 
             # remember_me :
             #     secret : '%secret%'
@@ -51,3 +53,4 @@ security:
         - { path: ^/inscription, roles : IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/deconnexion, roles : IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/espace-perso, roles : ROLE_USER }
+        - { path: ^/cart/init, roles : ROLE_USER }

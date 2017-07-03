@@ -3,6 +3,11 @@ app_cart :
   defaults         :
     _controller  : TrailWarehouseAppBundle:Cart:index
 
+app_cart_init :
+    path             : /init
+    defaults         :
+        _controller  : TrailWarehouseAppBundle:Cart:init
+
 app_cart_add_item :
     path             : /ajouter-item
     methods          : [POST]

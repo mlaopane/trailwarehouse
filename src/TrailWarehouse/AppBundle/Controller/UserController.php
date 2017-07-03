@@ -5,13 +5,16 @@ namespace TrailWarehouse\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use TrailWarehouse\AppBundle\Entity\User;
+use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Form\SignupType;
 use TrailWarehouse\AppBundle\Form\SigninType;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
+use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends Controller
 {
@@ -28,6 +31,25 @@ class UserController extends Controller
   /* -------------- */
   /* *** Routes *** */
   /* -------------- */
+
+  /**
+   * 'init' route
+   * @param Request $request
+   */
+  public function initAction(SessionInterface $session, UserInterface $user, EntityManagerInterface $manager)
+  {
+    $roles = $user->getRoles();
+    if (in_array('ROLE_ADMIN', $roles) OR in_array('ROLE_SUPER_ADMIN', $roles)) {
+      return $this->redirectToRoute('easyadmin');
+    }
+    if (empty($cart = $session->get('cart'))) {
+      $cart = new Cart();
+      return $this->redirectToRoute('app_shop');
+    }
+    $manager->persist($cart);
+    $manager->flush();
+    return $this->redirectToRoute('app_cart');
+  }
 
   /**
    * 'signup' route
