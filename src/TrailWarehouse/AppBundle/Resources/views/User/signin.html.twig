@@ -60,7 +60,10 @@
 
             <!-- # Password -->
             <div class="form-group mb-4">
-              {{ form_label(signin_form.password, 'Mot de passe*') }}
+              <div class="d-flex justify-content-start align-items-baseline">
+                {{ form_label(signin_form.password, 'Mot de passe*') }}
+                <a id="forgotten-password" href="{{ path('app_signin') }}" class="ml-auto">Mot de passe oublié ?</a>
+              </div>
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
                 {{ form_widget(signin_form.password, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
@@ -76,17 +79,14 @@
 
         <div class="row">
           <div class="col-12 d-flex flex-column align-items-center align-items-sm-end mb-3">
-            <a id="forgotten-password" href="{{ path('app_signin') }}" class="mb-2">Mot de passe oublié ?</a>
             <div class="d-flex align-items-center">
               {{ form_widget(signin_form.rememberMe) }}
-              <label for="" class="mb-0 ml-2">Se souvenir de moi</label>
+              {{ form_label(signin_form.rememberMe, 'Se souvenir de moi', {'label_attr':{'class':'mb-0 ml-2'}}) }}
             </div>
           </div>
           <!-- # Submit -->
           <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
-            <!-- # Password forgotten -->
-            <!-- Password forgotten # -->
-            {{ form_widget(signin_form.send, {'attr': {'class':'btn btn-confirm'}}) }}
+            {{ form_widget(signin_form.send, {'attr': {'class':'btn btn-confirm w-100'}}) }}
           </div>
           <!-- Submit # -->
         </div>
@@ -96,8 +96,20 @@
       {{ form_end(signin_form) }}
       <!-- Signin Form # -->
 
+      <hr>
+
+      <div class="d-flex flex-column align-items-center">
+        <div class="mb-2">
+          Je n'ai pas encore de compte
+        </div>
+        <button class="btn btn-action">
+          <a href="{{ path('app_signup') }}">Créer mon compte</a>
+        </button>
+      </div>
+
     </div>
     <!-- Form Container # -->
+
 
   </main>
 {% endblock %}

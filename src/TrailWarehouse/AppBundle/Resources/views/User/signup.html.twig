@@ -82,7 +82,7 @@
 
           <!-- # Submit -->
           <div class="col-12 d-flex justify-content-center justify-content-sm-end">
-            {{ form_widget(signup_form.send, {'attr': {'class':'btn btn-confirm'}}) }}
+            {{ form_widget(signup_form.send, {'attr': {'class':'btn btn-confirm w-100'}}) }}
           </div>
           <!-- Submit # -->
 
@@ -94,6 +94,17 @@
 
       {{ form_end(signup_form) }}
       <!-- Signup Form # -->
+
+      <hr>
+
+      <div class="d-flex flex-column align-items-center">
+        <div class="mb-2 font-size-8">
+          J'ai déjà un compte
+        </div>
+        <button class="btn btn-action">
+          <a href="{{ path('app_signin') }}">Accéder à mon compte</a>
+        </button>
+      </div>
 
     </div>
     <!-- Form Container # -->

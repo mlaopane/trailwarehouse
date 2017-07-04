@@ -102,6 +102,17 @@
               </div>
               <!-- Cart Total # -->
 
+              {% if app.user is empty %}
+              <!-- # Connexion -->
+              <div class="flex justify-content-end mb-2">
+                <div class="form-group mb-4">
+                  <button type="button" class="btn btn-confirm">
+                    <a href="{{ path('app_signin') }}">Valider mon panier</a>
+                  </button>
+                </div>
+              </div>
+              <!-- Connexion # -->
+              {% elseif app.user.role == 'ROLE_USER' %}
               <!-- # Cart Validation -->
               <div id="cart-validation" class="flex justify-content-end mb-2">
                 {{ form_start(cart_form) }}
@@ -111,6 +122,7 @@
                 {{ form_end(cart_form) }}
               </div>
               <!-- Cart Validation # -->
+              {% endif %}
 
             </div>
           </div>
