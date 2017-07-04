@@ -1,9 +1,19 @@
 // main: style.less
 
-@bg-btn-confirm: @blue;
+@bg-btn-confirm: @bluegreen;
 @bg-btn-confirm-hover: darken(@bg-btn-confirm, 7%);
-@bg-btn-action: @mustard;
+@bg-btn-cancel: @darkgrey;
+@bg-btn-cancel-hover: darken(@darkgrey, 7%);
+@bg-btn-action: @greenblue;
 @bg-btn-action-hover: darken(@bg-btn-action, 7%);
+
+
+button {
+  &:active, &:focus {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+}
 
 /* Form */
 .form-container {
@@ -52,6 +62,9 @@
     &:hover {
       background: @darkgrey;
       border: 1px solid @blackgrey;
+      a {
+        color: @darkgrey;
+      }
     }
   }
   // Confirm
@@ -67,6 +80,9 @@
     &:hover {
       background: @bg-btn-confirm-hover;
       border: 1px solid darken(@bg-btn-confirm-hover, 5%);
+      a {
+        color: white;
+      }
     }
   }
   // Action
@@ -83,6 +99,9 @@
       background: @bg-btn-action-hover;
       border: 1px solid darken(@bg-btn-action-hover, 5%);
       color: white;
+      a {
+        color: white;
+      }
     }
   }
   &-validation {

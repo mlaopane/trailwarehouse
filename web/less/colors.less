@@ -1,10 +1,5 @@
 // main: style.less
 
-@primary    : @bluegreen;
-@secondary  : @greenblue;
-@link-color : darken(@blue, 4%);
-@link-color-hover : darken(@link-color, 8%);
-
 .bg-primary {
   background : @primary !important;
   color: white;
@@ -58,3 +53,12 @@
     }
   }
 }
+
+.font-size(@i: 10) when (@i > 0) {
+  .font-size-@{i} {
+    font-size+: 1rem * @i / 10;
+  }
+  .font-size(@i - 1)
+}
+
+.font-size(120);
