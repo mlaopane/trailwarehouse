@@ -45,6 +45,10 @@ class CommonRepository extends EntityRepository
     return $this->getOneBy('id', $id, $as_array);
   }
 
+  public function getOne($id, $as_array = true) {
+    return $this->getOneBy('id', $id, $as_array);
+  }
+
   /**
    * Get random entities
    *

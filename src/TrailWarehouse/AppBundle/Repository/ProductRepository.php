@@ -68,13 +68,13 @@ class ProductRepository extends CommonRepository
    * @return Array
    */
   public function getOneBy($field, $value, $as_array = true) {
-    return $this->getBuilder()
+    $query = $this->getBuilder()
       ->where('product.'.$field.' = :value')
       ->setParameter('value', $value)
       ->setMaxResults(1)
       ->getQuery()
-      ->getOneOrNullResult(Query::HYDRATE_ARRAY)
     ;
+    return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
   }
 
   public function getOneRandBy($field, $value, $as_array = true) {

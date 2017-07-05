@@ -29,13 +29,6 @@ class Item
      */
     private $total;
 
-    /**
-     * @var Cart $cart
-     *
-     * @ORM\ManyToOne(targetEntity="Cart", inversedBy="items")
-     */
-    private $cart;
-
     public function __construct(Product $product = null, int $quantity = null) {
       if ($product != null AND $quantity != null) {
         $this->product  = $product;

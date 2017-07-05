@@ -108,7 +108,6 @@ class CartController extends Controller
         }
         else {
           $cart->setPromo($promo)->updateTotal();
-          $this->addFlash('success', 'Code <span class="font-weight-bold">'.$promo->getCode().'</span> appliqué');
         }
       }
     }
@@ -125,12 +124,13 @@ class CartController extends Controller
     $iterator = $cart->getItems()->getIterator();
     while ($iterator->valid()) {
       $item = $iterator->current();
-      $db_product = $repo['product']->find($item->getProduct()->getId());
+      $db_product = $repo['product']->getOne($item->getProduct()->getId(), false);
       $db_stock = $db_product->getStock();
       if ($db_stock < $item->getQuantity()) {
+        $name = $db_product->getName() ? $db_product->getName() : $db_product->getFamily()->getName();
         $this->addFlash(
-          'failure',
-          'Le quantité demandée pour <span class="font-weight-bold">'.$db_product->getName().'</span> n\'est pas disponible.<br>
+          'cart_warning',
+          'Le quantité demandée pour <span class="font-weight-bold">'.$name.'</span> n\'est pas disponible.<br>
           Votre panier a été mis à jour automatiquement'
         );
         $new_item = new Item($db_product, $db_stock);
