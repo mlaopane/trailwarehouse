@@ -27,7 +27,7 @@ class CartController extends Controller
     $normalizers = [ $normalizer ];
     $encoders = [ new JsonEncoder() ];
     $this->serializer = new Serializer($normalizers, $encoders);
-    
+
     if (empty($cart = $session->get('cart'))) {
       $session->set('cart', new Cart());
     }
@@ -78,7 +78,7 @@ class CartController extends Controller
     if (empty ($cart = $session->get('cart'))) {
       $cart = new Cart();
     }
-    $cart = $this->updateCart($cart, $new_item);
+    $cart = $this->getUpdatedCart($cart, $new_item);
     $session->set('cart', $cart);
     return $this->json($this->serializer->serialize($new_item, 'json'));
   }
@@ -107,8 +107,7 @@ class CartController extends Controller
           $this->addFlash('failure', 'Le Code <span class="font-weight-bold">'.$promo->getCode().'</span> est expiré');
         }
         else {
-          $cart->setPromo($promo);
-          $cart->updateTotal();
+          $cart->setPromo($promo)->updateTotal();
           $this->addFlash('success', 'Code <span class="font-weight-bold">'.$promo->getCode().'</span> appliqué');
         }
       }
@@ -116,8 +115,31 @@ class CartController extends Controller
     return $this->redirectToRoute('app_cart');
   }
 
-  public function checkAction(EntityManagerInterface $manager)
+  /**
+   *
+   */
+  public function checkAction(SessionInterface $session, EntityManagerInterface $manager)
   {
+    $repo['product'] = $manager->getRepository('TrailWarehouseAppBundle:Product');
+    $cart = $session->get('cart');
+    $iterator = $cart->getItems()->getIterator();
+    while ($iterator->valid()) {
+      $item = $iterator->current();
+      $db_product = $repo['product']->find($item->getProduct()->getId());
+      $db_stock = $db_product->getStock();
+      if ($db_stock < $item->getQuantity()) {
+        $this->addFlash(
+          'failure',
+          'Le quantité demandée pour <span class="font-weight-bold">'.$db_product->getName().'</span> n\'est pas disponible.<br>
+          Votre panier a été mis à jour automatiquement'
+        );
+        $new_item = new Item($db_product, $db_stock);
+        $cart = $this->getUpdatedCart($cart, $new_item);
+        $session->set('cart', $cart);
+        return $this->redirectToRoute('app_cart');
+      }
+      $iterator->next();
+    }
     return $this->redirectToRoute('app_cart');
   }
 
@@ -126,7 +148,7 @@ class CartController extends Controller
   /**
    * Return a new empty or an updated one if it already exists
    */
-  private function updateCart(Cart $cart, Item $new_item) : Cart
+  private function getUpdatedCart(Cart $cart, Item $new_item) : Cart
   {
     // Remove the item from the Cart if it does exist
     foreach ($cart_items = $cart->getItems() as $cart_item) {
@@ -142,7 +164,8 @@ class CartController extends Controller
   /**
    * Check if an item is valid for being put into the cart
    */
-  private function isCartable(Item $item) : bool {
+  private function isCartable(Item $item) : bool
+  {
     if ($item_quantity = $item->getQuantity() <= 0) {
       return false;
     }

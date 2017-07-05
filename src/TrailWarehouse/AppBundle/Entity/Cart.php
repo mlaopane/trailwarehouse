@@ -16,6 +16,8 @@ class Cart
 {
     /**
      * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="cart")
      */
     private $items;
 

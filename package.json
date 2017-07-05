@@ -8,8 +8,8 @@
   },
   "scripts": {
     "server"       : "php bin/console server:run",
-    "cache-dev"    : "php bin/console cache:clear",
-    "cache-prod"   : "php bin/console cache:clear --env=prod",
+    "cache-dev"    : "php bin/console cache:warmup",
+    "cache-prod"   : "php bin/console cache:warmup --env=prod",
     "database"     : "php bin/console doctrine:database:create",
     "entity"       : "php bin/console doctrine:generate:entity",
     "entities"     : "php bin/console doctrine:generate:entities TrailWarehouse",

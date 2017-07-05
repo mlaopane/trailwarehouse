@@ -16,7 +16,7 @@ app_cart_add_promo :
         _controller  : TrailWarehouseAppBundle:Cart:addPromo
 
 app_cart_check :
-    path             : /check
+    path             : /valider
     methods          : [POST]
     defaults         :
         _controller  : TrailWarehouseAppBundle:Cart:check

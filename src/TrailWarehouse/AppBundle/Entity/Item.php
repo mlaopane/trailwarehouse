@@ -2,16 +2,20 @@
 
 namespace TrailWarehouse\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Product;
 
 /**
  * Item
+ *
  */
 class Item
 {
     /**
      * @var Product $product
+     *
+     * @ORM\OneToOne(targetEntity="Product")
      */
     private $product;
 
@@ -25,6 +29,12 @@ class Item
      */
     private $total;
 
+    /**
+     * @var Cart $cart
+     *
+     * @ORM\ManyToOne(targetEntity="Cart", inversedBy="items")
+     */
+    private $cart;
 
     public function __construct(Product $product = null, int $quantity = null) {
       if ($product != null AND $quantity != null) {

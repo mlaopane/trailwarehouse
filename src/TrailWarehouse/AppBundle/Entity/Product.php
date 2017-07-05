@@ -34,6 +34,13 @@ class Product
     private $ref;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=191)
+     */
+    private $name;
+
+    /**
      * @var Family
      *
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", inversedBy="products")
@@ -84,6 +91,7 @@ class Product
 
     /**
      * Generate ref
+     *
      * @ORM\PrePersist
      * @return Product
      */
@@ -100,6 +108,31 @@ class Product
       $ref .= empty($slug['color']) ? '' : '-'.$slug['color'];
       $this->setRef($ref);
 
+      return $this;
+    }
+
+    /**
+     * Generate name
+     *
+     * @ORM\PrePersist
+     * @return Product
+     */
+    public function generateName()
+    {
+      $data = [
+        'brand'  => ucfirst($this->getFamily()->getBrand()->getName()),
+        'family' => ucfirst($this->getFamily()->getName()),
+        'color'  => ucfirst($this->color->getName()),
+        'size'   => ucfirst($this->size->getValue()),
+      ];
+      $name =
+        $data['brand']
+        . ' - ' . $data['family']
+        . ' (' . $data['size']
+        . ((empty($data['color'])) ? (')') : (' | ' . $data['color'] . ')'))
+
+      ;
+      $this->setName($name);
       return $this;
     }
 
@@ -125,7 +158,6 @@ class Product
     public function setRef($ref)
     {
         $this->ref = $ref;
-
         return $this;
     }
 
@@ -137,6 +169,29 @@ class Product
     public function getRef()
     {
         return $this->ref;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Product
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
