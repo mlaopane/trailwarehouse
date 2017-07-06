@@ -26,7 +26,7 @@ class OrderProduct
     /**
      * @var Order $order
      *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Order", inversedBy="orderProducts")
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="orderProducts", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $order;
@@ -34,7 +34,7 @@ class OrderProduct
     /**
      * @var Product $product
      *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="Product")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
