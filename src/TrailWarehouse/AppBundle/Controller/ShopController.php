@@ -30,7 +30,7 @@ class ShopController extends Controller
     $normalizers = [ $normalizer ];
     $encoders = [ new JsonEncoder() ];
     $this->serializer = new Serializer($normalizers, $encoders);
-    
+
     if (empty($cart = $session->get('cart'))) {
       $session->set('cart', new Cart());
     }
@@ -70,18 +70,11 @@ class ShopController extends Controller
     $doctrine         = $this->getDoctrine();
     $category['name'] = 'toutes';
     $repo['family']   = $doctrine->getRepository('TrailWarehouseAppBundle:Family');
-    $db_families      = $repo['family']->findAll();
-
-    $families = [];
-    foreach ($db_families as $db_family) {
-      if ($db_family->getProducts()->count() > 0) {
-        $families[] = $db_family;
-      }
-    }
+    $db_families      = $repo['family']->getAll();
 
     $data = [
       'active_category' => $category,
-      'families'        => $families,
+      'families'        => $db_families,
     ];
 
     return $this->render('TrailWarehouseAppBundle:Shop:category.html.twig', $data);
