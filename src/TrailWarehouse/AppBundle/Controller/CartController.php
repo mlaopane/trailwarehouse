@@ -79,25 +79,23 @@ class CartController extends Controller
       $cart = new Cart();
     }
     $cart = $this->getUpdatedCart($cart, $new_item);
-    $session->set('cart', $cart);
     return $this->json($this->serializer->serialize($new_item, 'json'));
   }
 
   /**
    * Apply a promo code to the Cart
    */
-  public function addPromoAction(Request $request)
+  public function addPromoAction(Request $request, SessionInterface $session)
   {
     // Check if there is a cart to apply the promo code
-    if (!empty($cart = $request->getSession()->get('cart'))) {
+    if (!empty($cart = $session->get('cart'))) {
       $form = $this->createForm(PromoType::class, new Promo());
       $form->handleRequest($request);
       // Check Form
       if ($form->isSubmitted() AND $form->isValid()) {
         // Search for a matching Promo in DB
         $repository['promo'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Promo');
-        $post_promo = $form->getData();
-        $promo = $repository['promo']->findOneByCode($post_promo->getCode());
+        $promo = $repository['promo']->findOneByCode($form->getData()->getCode());
 
         // Check Promo and apply if OK
         if (empty($promo)) {
@@ -130,12 +128,11 @@ class CartController extends Controller
         $name = $db_product->getName() ? $db_product->getName() : $db_product->getFamily()->getName();
         $this->addFlash(
           'cart_warning',
-          'Le quantité demandée pour <span class="font-weight-bold">'.$name.'</span> n\'est pas disponible.<br>
-          Votre panier a été mis à jour automatiquement'
+          "Au moins l'un des produits n'est plus disponible pour la quantité demandée.<br>
+          Votre panier a été mis à jour automatiquement"
         );
         $new_item = new Item($db_product, $db_stock);
         $cart = $this->getUpdatedCart($cart, $new_item);
-        $session->set('cart', $cart);
         return $this->redirectToRoute('app_cart');
       }
       $iterator->next();
