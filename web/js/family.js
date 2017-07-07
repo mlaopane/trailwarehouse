@@ -169,6 +169,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
 
   $(function() {
     page.getProductsByFamily(page.family_id);
+    page.cart_count = parseInt($('#cart-count').html());
   })
 
 }]);

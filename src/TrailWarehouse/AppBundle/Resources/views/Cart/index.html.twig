@@ -40,7 +40,7 @@
               <span>Votre panier est vide</span>
             </div>
             <div class="mx-auto d-flex justify-content-center align-items-baseline">
-              Accédez à la boutique&nbsp;<strong class="font-weight-normal"><a class="font-brand" href="{{ path('app_home') }}">Trail Warehouse</a></strong>
+              <span class="mr-1">Visitez notre boutique</span>&nbsp;<strong class="font-weight-normal"><a class="font-brand" href="{{ path('app_home') }}">Trail Warehouse</a></strong>
             </div>
           </div>
           {% else %}
@@ -53,8 +53,8 @@
           <table id="table-cart" class="ness-table mb-4">
             <thead>
               <tr>
+                <th class=""></th>
                 <th class="">Produit</th>
-                <th class="hidden-xs-down">Photo</th>
                 <th class="hidden-sm-down">Prix unitaire</th>
                 <th class="">Quantité</th>
                 <th class="">Sous-total</th>
@@ -63,6 +63,7 @@
             <tbody>
               {% for item in cart.items %}
               <tr>
+                <td class="text-center"><img class="miniature" src="{{ item.product.image is null ? asset('images/no_picture.png') : item.product.image.src }}" alt=""></td>
                 <td class="text-left">
                   <div class="d-flex flex-column justify-content-center">
                     <a href="{{ path('app_shop_family', { 'slug' : item.product.family.slug }) }}">
@@ -74,9 +75,16 @@
                     <span>({{ item.product.size.value | upper }} {{ item.product.size.unitShortcut }} | {{ item.product.color.name | capitalize }})</span>
                   </div>
                 </td>
-                <td class="text-center hidden-xs-down"><img class="miniature" src="{{ item.product.image is null ? asset('images/no_picture.png') : item.product.image.src }}" alt=""></td>
                 <td class="text-right hidden-sm-down">{{ item.product.price }}&nbsp;€</td>
-                <td class="text-right">{{ item.quantity }}</td>
+                <td class="text-right">
+                  <div class="d-flex">
+                    <div class="input-number input-group justify-content-end">
+                      <input type="text" class="input-quantity form-control" name="" value="{{ item.quantity }}">
+                      <div class="input-group-addon" data-action="decrease">-</div>
+                      <div class="input-group-addon" data-action="increase">+</div>
+                    </div>
+                  </div>
+                </td>
                 <td class="text-right">{{ item.total }}&nbsp;€</td>
               </tr>
               {% endfor %}
@@ -145,4 +153,5 @@
 
 {% block additional_javascripts %}
   <script src="{{ asset('js/app-common.js') }}"></script>
+  <script src="{{ asset('js/cart.js') }}"></script>
 {% endblock %}
