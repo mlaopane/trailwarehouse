@@ -9,6 +9,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use TrailWarehouse\AppBundle\Entity\Product;
 use TrailWarehouse\AppBundle\Controller\Api\CommonController;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ProductController extends CommonController
 {
@@ -19,13 +20,13 @@ class ProductController extends CommonController
    * @param int color
    * @param int size
    */
-  public function getByAction(int $family, int $color = NULL, int $size = NULL) {
+  public function getByAction(int $family, int $color = NULL, int $size = NULL, EntityManagerInterface $em) {
     $args_name = ['family', 'color', 'size'];
     $ids = func_get_args();
 
     foreach ($ids as $i => $id) {
       $field = $args_name[$i];
-      $args[$field] = $this->getManager()
+      $args[$field] = $em
         ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
         ->find($id)
       ;
@@ -80,8 +81,8 @@ class ProductController extends CommonController
    *
    * @param int $family_id
    */
-  public function getBestAction(int $family_id) {
-    $family = $this->getManager()->getRepository('TrailWarehouseAppBundle:Family')->find($family_id);
+  public function getBestAction(int $family_id, EntityManagerInterface $em) {
+    $family = $em->getRepository('TrailWarehouseAppBundle:Family')->find($family_id);
     $response = $this->getRepository()->getBest($family);
     return new JsonResponse($response);
   }
@@ -93,12 +94,12 @@ class ProductController extends CommonController
    *
    * @return JsonResponse
    */
-  public function addAction(Request $request) {
+  public function addAction(Request $request, EntityManagerInterface $em) {
     $entity = $this->getEntity();
     $entities = [];
     $fields = ['family', 'color', 'size'];
     foreach ($fields as $field) {
-      $entities[$field] = $this->getManager()
+      $entities[$field] = $em
         ->getRepository('TrailWarehouseAppBundle:'. ucfirst($field))
         ->find($request->request->get($field))
       ;
@@ -130,7 +131,7 @@ class ProductController extends CommonController
    *
    * @return JsonResponse
    */
-  public function modifyAction(Request $request, int $id) {
+  public function modifyAction(Request $request, int $id, EntityManagerInterface $em) {
     $product_not_found = empty($product = $this->getRepository()->find($id));
     // If product not found => Do nothing
     if ($product_not_found) {
@@ -146,7 +147,7 @@ class ProductController extends CommonController
         if (method_exists($product, $set)) {
           // If the field is an entity
           if ($field == 'Family' OR $field == 'Color' OR $field == 'Size') {
-            $value = $this->getManager()->getRepository('TrailWarehouseAppBundle:'.$field)->find($value);
+            $value = $em->getRepository('TrailWarehouseAppBundle:'.$field)->find($value);
           }
           $product->$set($value); // Using the setter
         }
@@ -168,7 +169,7 @@ class ProductController extends CommonController
    *
    * @return JsonResponse
    */
-  public function removeAction(int $id) {
+  public function removeAction(int $id, EntityManagerInterface $em) {
     $entity_not_found = empty($entity = $this->getRepository()->find($id));
     if ($entity_not_found) {
       return new JsonResponse(false);
@@ -181,9 +182,13 @@ class ProductController extends CommonController
 
   /* ----- Protected Methods ----- */
 
+  /**
+   * @param array $parameters
+   * @return array
+   */
   protected function getBy(Array $parameters) {
     foreach ($parameters as $entity_name => $entity_id) {
-      $entities[$entity_name] = $this->getManager()
+      $entities[$entity_name] = $this->getDoctrine()
         ->getRepository('TrailWarehouseAppBundle:'.ucfirst($entity_name))
         ->find($entity_id)
       ;

@@ -48,7 +48,6 @@ class CartController extends Controller
       'action' => $this->generateUrl('app_cart_check'),
     ]);
 
-    // IF no Form has been submitted
     $flashbag = $session->getFlashbag();
     $data = [
       'cart_form'    => $cart_form->createView(),
@@ -65,10 +64,10 @@ class CartController extends Controller
    *
    * [POST]
    */
-  public function addItemAction(SessionInterface $session)
+  public function addItemAction(SessionInterface $session, EntityManagerInterface $em)
   {
     $post_item = json_decode(file_get_contents('php://input'));
-    $repository['product'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Product');
+    $repository['product'] = $em->getRepository('TrailWarehouseAppBundle:Product');
     $db_product = $repository['product']->find($post_item->product->id);
     $new_item = new Item($db_product, $post_item->quantity);
 
@@ -77,24 +76,26 @@ class CartController extends Controller
     }
     if (empty ($cart = $session->get('cart'))) {
       $cart = new Cart();
+      $cart->addItem($new_item);
     }
-    $cart = $this->getUpdatedCart($cart, $new_item);
+    else {
+      $cart = $this->getUpdatedCart($cart, $new_item);
+    }
     return $this->json($this->serializer->serialize($new_item, 'json'));
   }
 
   /**
    * Apply a promo code to the Cart
    */
-  public function addPromoAction(Request $request, SessionInterface $session)
+  public function addPromoAction(Request $request, SessionInterface $session, EntityManagerInterface $em)
   {
     // Check if there is a cart to apply the promo code
     if (!empty($cart = $session->get('cart'))) {
-      $form = $this->createForm(PromoType::class, new Promo());
-      $form->handleRequest($request);
+      $form = $this->createForm(PromoType::class, new Promo())->handleRequest($request);
       // Check Form
       if ($form->isSubmitted() AND $form->isValid()) {
         // Search for a matching Promo in DB
-        $repository['promo'] = $this->getDoctrine()->getRepository('TrailWarehouseAppBundle:Promo');
+        $repository['promo'] = $em->getRepository('TrailWarehouseAppBundle:Promo');
         $promo = $repository['promo']->findOneByCode($form->getData()->getCode());
 
         // Check Promo and apply if OK
@@ -115,28 +116,32 @@ class CartController extends Controller
   /**
    *
    */
-  public function checkAction(SessionInterface $session, EntityManagerInterface $manager)
+  public function checkAction(SessionInterface $session, EntityManagerInterface $em)
   {
-    $repo['product'] = $manager->getRepository('TrailWarehouseAppBundle:Product');
+    $repo['product'] = $em->getRepository('TrailWarehouseAppBundle:Product');
     $cart = $session->get('cart');
     $iterator = $cart->getItems()->getIterator();
-    while ($iterator->valid()) {
+
+    while ($iterator->valid())
+    {
       $item = $iterator->current();
       $db_product = $repo['product']->getOne($item->getProduct()->getId(), false);
       $db_stock = $db_product->getStock();
-      if ($db_stock < $item->getQuantity()) {
-        $name = $db_product->getName() ? $db_product->getName() : $db_product->getFamily()->getName();
+
+      if ($db_stock < $item->getQuantity())
+      {
         $this->addFlash(
           'cart_warning',
           "Au moins l'un des produits n'est plus disponible pour la quantité demandée.<br>
           Votre panier a été mis à jour automatiquement"
         );
-        $new_item = new Item($db_product, $db_stock);
-        $cart = $this->getUpdatedCart($cart, $new_item);
+        $this->getUpdatedCart($cart, new Item($db_product, $db_stock));
         return $this->redirectToRoute('app_cart');
       }
+
       $iterator->next();
     }
+
     return $this->redirectToRoute('app_cart');
   }
 

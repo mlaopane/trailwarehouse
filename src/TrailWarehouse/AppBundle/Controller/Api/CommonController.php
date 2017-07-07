@@ -64,24 +64,11 @@ abstract class CommonController extends Controller
   /**
    * @access protected
    *
-   * @return EntityManager
-   */
-  protected function getManager() {
-    return $this
-      ->getDoctrine()
-      ->getManager()
-    ;
-  }
-
-  /**
-   * @access protected
-   *
    * @return Repository
    */
   protected function getRepository() {
     return $this
       ->getDoctrine()
-      ->getManager()
       ->getRepository('TrailWarehouseAppBundle:'. $this->entity_name)
     ;
   }

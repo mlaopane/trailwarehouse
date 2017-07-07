@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use TrailWarehouse\AppBundle\Entity\Category;
 use TrailWarehouse\AppBundle\Controller\Api\CommonController;
 use TrailWarehouse\AppBundle\Form\CategoryType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CategoryController extends CommonController
 {
@@ -19,7 +20,7 @@ class CategoryController extends CommonController
      *
      * @return JsonResponse
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request, EntityManagerInterface $em)
     {
       $category_name = $request->request->get('name');
       $entity = $this->getRepository()->getOneBy('name', $category_name);
@@ -29,9 +30,8 @@ class CategoryController extends CommonController
       $entity = $this->getEntity();
       $entity->setName($category_name);
 
-      $manager = $this->getManager();
-      $manager->persist($entity);
-      $manager->flush();
+      $em->persist($entity);
+      $em->flush();
       return new JsonResponse(true);
     }
 
@@ -43,7 +43,7 @@ class CategoryController extends CommonController
      *
      * @return JsonResponse
      */
-    public function modifyAction(Request $request, int $id)
+    public function modifyAction(Request $request, EntityManagerInterface $em, int $id)
     {
       $category_name = $request->request->get('name');
       $entity = $this->getRepository()->findOneBy('name', $category_name);
@@ -52,8 +52,7 @@ class CategoryController extends CommonController
       }
       else {
         $entity->setName($request->request->get('name'));
-        $manager = $this->getManager();
-        $manager->flush();
+        $em->flush();
         return new JsonResponse(true);
       }
     }
@@ -65,16 +64,15 @@ class CategoryController extends CommonController
      *
      * @return JsonResponse
      */
-    public function removeAction(int $id)
+    public function removeAction(int $id, EntityManagerInterface $em)
     {
       $entity = $this->getRepository()->find($id);
       if (empty($entity)) {
         return new JsonResponse(false);
       }
       else {
-        $manager = $this->getManager();
-        $manager->remove($entity);
-        $manager->flush();
+        $em->remove($entity);
+        $em->flush();
         return new JsonResponse(true);
       }
     }
