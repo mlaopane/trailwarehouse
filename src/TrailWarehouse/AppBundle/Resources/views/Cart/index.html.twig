@@ -65,7 +65,7 @@
               <tr>
                 <td class="text-left">
                   <div class="d-flex flex-column justify-content-center">
-                    <a href="#">
+                    <a href="{{ path('app_shop_family', { 'slug' : item.product.family.slug }) }}">
                       <div class="">
                         <span class="font-italic">{{ item.product.family.brand.name | ucwords }}</span>
                         <span>{{ item.product.family.name | capitalize }}</span>
