@@ -1,0 +1,6 @@
+# /commande
+
+app_order :
+  path             : /
+  defaults         :
+    _controller  : TrailWarehouseAppBundle:Order:index
