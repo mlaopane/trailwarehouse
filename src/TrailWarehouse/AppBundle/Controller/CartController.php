@@ -34,7 +34,7 @@ class CartController extends Controller
   }
 
   /**
-   * 'app_shop_cart'
+   * 'app_cart'
    */
   public function indexAction(SessionInterface $session)
   {
@@ -43,14 +43,8 @@ class CartController extends Controller
       'action' => $this->generateUrl('app_cart_add_promo'),
     ]);
 
-    // Cart Form
-    $cart_form = $this->createForm(CartType::class, new Cart(), [
-      'action' => $this->generateUrl('app_cart_check'),
-    ]);
-
     $flashbag = $session->getFlashbag();
     $data = [
-      'cart_form'    => $cart_form->createView(),
       'promo_form'   => $promo_form->createView(),
       'promo_errors' => $flashbag->get('promo_errors'),
       'cart_errors'  => $flashbag->get('cart_errors'),
@@ -61,8 +55,7 @@ class CartController extends Controller
 
   /*
    * Add Item to Cart
-   *
-   * [POST]
+   * Route 'app_cart_add_item'
    */
   public function addItemAction(SessionInterface $session, EntityManagerInterface $em)
   {
@@ -86,6 +79,7 @@ class CartController extends Controller
 
   /**
    * Apply a promo code to the Cart
+   * Route 'app_cart_add_promo'
    */
   public function addPromoAction(Request $request, SessionInterface $session, EntityManagerInterface $em)
   {
@@ -113,10 +107,16 @@ class CartController extends Controller
     return $this->redirectToRoute('app_cart');
   }
 
+  public function updateItem(Request $request, SessionInterface $session)
+  {
+    return $this->json();
+  }
+
   /**
-   *
+   * Control the cart before checkout
+   * Route 'app_cart_checkout'
    */
-  public function checkAction(SessionInterface $session, EntityManagerInterface $em)
+  public function checkoutAction(SessionInterface $session, EntityManagerInterface $em)
   {
     $repo['product'] = $em->getRepository('TrailWarehouseAppBundle:Product');
     $cart = $session->get('cart');

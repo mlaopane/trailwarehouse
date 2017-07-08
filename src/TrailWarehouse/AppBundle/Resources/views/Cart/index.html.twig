@@ -31,11 +31,11 @@
         </div>
         <!-- Heading # -->
 
-        <div id="cart-content" class="px-4">
+        <div id="cart-content" class="px-4 pb-2">
           {% set cart = app.session.get('cart') %}
           <!-- # Cart content -->
           {% if cart is empty or cart.items is empty %}
-          <div class="pb-4">
+            <div class="pb-4">
             <div class="ness-block warning mx-auto mb-3 d-flex justify-content-center w-50">
               <span>Votre panier est vide</span>
             </div>
@@ -49,98 +49,100 @@
                 <span>{{ message | raw }}</span>
               </div>
             {% endfor %}
-          <!-- # Cart Items -->
-          <table id="table-cart" class="ness-table mb-4">
-            <thead>
-              <tr>
-                <th class=""></th>
-                <th class="">Produit</th>
-                <th class="hidden-sm-down">Prix unitaire</th>
-                <th class="">Quantité</th>
-                <th class="">Sous-total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in cart.items %}
-              <tr>
-                <td class="text-center"><img class="miniature" src="{{ item.product.image is null ? asset('images/no_picture.png') : item.product.image.src }}" alt=""></td>
-                <td class="text-left">
-                  <div class="d-flex flex-column justify-content-center">
-                    <a href="{{ path('app_shop_family', { 'slug' : item.product.family.slug }) }}">
-                      <div class="">
-                        <span class="font-italic">{{ item.product.family.brand.name | ucwords }}</span>
-                        <span>{{ item.product.family.name | capitalize }}</span>
-                      </div>
-                    </a>
-                    <span>({{ item.product.size.value | upper }} {{ item.product.size.unitShortcut }} | {{ item.product.color.name | capitalize }})</span>
-                  </div>
-                </td>
-                <td class="text-right hidden-sm-down">{{ item.product.price }}&nbsp;€</td>
-                <td class="text-right">
-                  <div class="d-flex">
-                    <div class="input-number input-group justify-content-end">
-                      <input type="text" class="input-quantity form-control" name="" value="{{ item.quantity }}">
-                      <div class="input-group-addon" data-action="decrease">-</div>
-                      <div class="input-group-addon" data-action="increase">+</div>
+
+            <!-- # Cart Items -->
+            <table id="table-cart" class="ness-table mb-4">
+              <thead>
+                <tr>
+                  <th class=""></th>
+                  <th class="">Produit</th>
+                  <th class="">Prix unitaire</th>
+                  <th class="">Quantité</th>
+                  <th class="">Sous-total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart.items %}
+                <tr>
+                  <td class="text-center"><img class="miniature" src="{{ item.product.image is null ? asset('images/no_picture.png') : item.product.image.src }}" alt=""></td>
+                  <td class="text-left">
+                    <div class="d-flex flex-column justify-content-center">
+                      <a href="{{ path('app_shop_family', { 'slug' : item.product.family.slug }) }}">
+                        <div class="">
+                          <span class="font-italic">{{ item.product.family.brand.name | ucwords }}</span>
+                          <span>{{ item.product.family.name | capitalize }}</span>
+                        </div>
+                      </a>
+                      <span>({{ item.product.size.value | upper }} {{ item.product.size.unitShortcut }} | {{ item.product.color.name | capitalize }})</span>
                     </div>
-                  </div>
-                </td>
-                <td class="text-right">{{ item.total }}&nbsp;€</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          <!-- Cart Items # -->
+                  </td>
+                  <td class="text-right">{{ item.product.price }}&nbsp;€</td>
+                  <td class="text-right">
+                    <div class="d-flex justify-content-end">
+                      <div class="input-number input-group justify-content-start">
+                        <input type="text" class="input-quantity form-control" name="" value="{{ item.quantity }}">
+                        <div class="input-group-addon" data-action="decrease">-</div>
+                        <div class="input-group-addon" data-action="increase">+</div>
+                      </div>
+                      <div data-action="delete" class="btn btn-info mr-1 d-flex align-items-center invisible">
+                        <span class="font-size-8">Supprimer</span>
+                      </div>
+                      <div data-action="update" class="btn btn-info mr-1 d-flex align-items-center invisible">
+                        <span class="font-size-8">Mettre à jour</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-right">{{ item.total }}&nbsp;€</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- Cart Items # -->
 
-          <div class="row justify-content-between">
+            <div class="row justify-content-between">
+              <div class="col-12 col-sm-6 col-md-4">
 
-            <div class="col-12 col-sm-6 col-md-4">
-
-              <!-- # Promo Code -->
-              <div id="cart-promo" class="mx-auto mb-2  d-flex flex-column align-items-start">
-                {{ form_start(promo_form) }}
-                  <div class="form-group mb-3">
-                    {% include 'TrailWarehouseAppBundle:Error:alerts.html.twig' %}
-                    {{ form_widget(promo_form.code, {'attr': {'class': 'form-control', 'placeholder': 'Un code promo ?'}}) }}
-                  </div>
-                  <div class="form-group mb-4">
-                    {{ form_widget(promo_form.send, {'attr': {'class':'btn btn-default'}}) }}
-                  </div>
-                  {{ form_rest(promo_form) }}
-                {{ form_end(promo_form) }}
-              </div>
-              <!-- # Promo Code -->
-
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4">
-
-              {% if cart.promo is not empty %}
-              <div class="ness-block info d-flex justify-content-center mb-2">
-                <div>{{ cart.promo.code }} : <span class="font-weight-bold">-&nbsp;{{ cart.promo.value * 100 }}&nbsp;%</span></div>
-              </div>
-              {% endif %}
-
-              <!-- # Cart Total -->
-              <div id="cart-total" class="d-flex flex-column align-items-end mb-3">
-                <div>Valeur du panier</div>
-                <div class="font-weight-bold lead">{{ cart.total }}&nbsp;&euro;</div>
-              </div>
-              <!-- Cart Total # -->
-
-              <!-- # Cart Validation -->
-              <div id="cart-validation" class="flex justify-content-end mb-2">
-                {{ form_start(cart_form, {'attr': {'class':'w-100'}}) }}
-                <div class="form-group mb-3">
-                  {{ form_widget(cart_form.send, {'attr': {'class': 'ness-btn btn btn-confirm txt-whitegrey w-100'}}) }}
+                <!-- # Promo Form -->
+                <div id="cart-promo" class="mx-auto mb-2  d-flex flex-column align-items-start">
+                  {{ form_start(promo_form) }}
+                    <div class="form-group mb-3">
+                      {% include 'TrailWarehouseAppBundle:Error:alerts.html.twig' %}
+                      {{ form_widget(promo_form.code, {'attr': {'class': 'form-control', 'placeholder': 'Un code promo ?'}}) }}
+                    </div>
+                    <div class="form-group mb-4">
+                      {{ form_widget(promo_form.send, {'attr': {'class':'btn btn-default'}}) }}
+                    </div>
+                    {{ form_rest(promo_form) }}
+                  {{ form_end(promo_form) }}
                 </div>
-                {{ form_end(cart_form) }}
-              </div>
-              <!-- Cart Validation # -->
+                <!-- Promo Form # -->
 
+              </div>
+              <div class="col-12 col-sm-6 col-md-4">
+
+                {% if cart.promo is not empty %}
+                  <!-- # Active Promo Code -->
+                  <div class="ness-block info d-flex justify-content-center mb-2">
+                    <div>{{ cart.promo.code }} : <span class="font-weight-bold">-&nbsp;{{ cart.promo.value * 100 }}&nbsp;%</span></div>
+                  </div>
+                  <!-- Active Promo Code # -->
+                {% endif %}
+
+                <!-- # Cart Total -->
+                <div id="cart-total" class="d-flex justify-content-end align-items-baseline mb-3">
+                  <div class="lead mr-2">Total : </div>
+                  <div class="font-weight-bold lead">{{ cart.total }}&nbsp;&euro;</div>
+                </div>
+                <!-- Cart Total # -->
+
+                <!-- # Cart Validation -->
+                <div id="cart-validation" class="flex justify-content-end mb-2">
+                  <a href="{{ path('app_cart_checkout') }}" class="ness-btn btn btn-confirm txt-whitegrey w-100">Valider mon panier</a>
+                </div>
+                <!-- Cart Validation # -->
+
+              </div>
             </div>
-          </div>
-          <!-- Promo Code # -->
           {% endif %}
           <!-- Cart content # -->
         </div>
