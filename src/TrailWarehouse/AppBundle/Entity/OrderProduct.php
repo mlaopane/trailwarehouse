@@ -153,7 +153,7 @@ class OrderProduct
     /**
      * Get total
      *
-     * @return integer
+     * @return int
      */
     public function getTotal()
     {

@@ -54,6 +54,12 @@ class Order
      */
     private $deliveryDate;
 
+    /**
+     * @var Promo
+     * @ORM\OneToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Promo")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $promo;
 
     /**
      * @var int
@@ -221,5 +227,29 @@ class Order
     public function getTotal()
     {
         return $this->total;
+    }
+
+    /**
+     * Set promo
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Promo $promo
+     *
+     * @return Order
+     */
+    public function setPromo(\TrailWarehouse\AppBundle\Entity\Promo $promo = null)
+    {
+        $this->promo = $promo;
+
+        return $this;
+    }
+
+    /**
+     * Get promo
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Promo
+     */
+    public function getPromo()
+    {
+        return $this->promo;
     }
 }

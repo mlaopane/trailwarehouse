@@ -6,9 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Security\Core\User\UserInterface;
 use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Promo;
@@ -18,15 +15,15 @@ use TrailWarehouse\AppBundle\Entity\OrderProduct;
 
 class OrderController extends Controller
 {
-  public function __construct()
+
+  protected $repo;
+
+  public function __construct(EntityManagerInterface $em)
   {
-    $normalizer = new ObjectNormalizer();
-    $normalizer->setCircularReferenceHandler(function ($object) {
-      return $object->getId();
-    });
-    $normalizers = [ $normalizer ];
-    $encoders = [ new JsonEncoder() ];
-    $this->serializer = new Serializer($normalizers, $encoders);
+    $this->repo = [
+      'product' => $em->getRepository('TrailWarehouseAppBundle:Product'),
+      'promo'   => $em->getRepository('TrailWarehouseAppBundle:Promo'),
+    ];
   }
 
   /**
@@ -40,11 +37,7 @@ class OrderController extends Controller
   /**
    * Route 'app_order'
    */
-  public function createAction(
-    Request $request,
-    SessionInterface $session,
-    EntityManagerInterface $em,
-    UserInterface $user)
+  public function createAction(Request $request, SessionInterface $session, EntityManagerInterface $em, UserInterface $user)
   {
     $cart  = $session->get('cart');
     $items = $cart->getItems();
@@ -53,20 +46,29 @@ class OrderController extends Controller
     }
 
     $iterator = $cart->getItems()->getIterator();
+    $db_promo = $this->repo['promo']->find($cart->getPromo()->getId());
     $order = (new Order())
       ->setUser($user)
+      ->setPromo($db_promo)
       ->setTotal($cart->getTotal())
     ;
 
     while($iterator->valid())
     {
       $item = $iterator->current();
+      $db_product = $this->repo['product']->find($item->getProduct()->getId());
+      if ($db_product->getStock() < $item->getQuantity()) {
+        $this->addFlash('failure', "Le produit <span class=\"font-weight-bold\">". $db_product->getName() ."</strong> n'est plus disponible pour la quantité demandée");
+        return $this->redirectToRoute('app_cart');
+      }
       $order_product = (new OrderProduct())
         ->setOrder($order)
-        ->setProduct($item->getProduct())
+        ->setProduct($db_product)
         ->setQuantity($item->getQuantity())
+        ->setTotal($item->getTotal())
       ;
       $em->persist($order_product);
+      $iterator->next();
     }
 
     $em->persist($order);
