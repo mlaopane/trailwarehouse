@@ -26,7 +26,7 @@ class OrderProduct
     /**
      * @var Order $order
      *
-     * @ORM\ManyToOne(targetEntity="Order", inversedBy="orderProducts", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Order")
      */
     private $order;
 

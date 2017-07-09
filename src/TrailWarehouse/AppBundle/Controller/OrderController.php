@@ -51,6 +51,7 @@ class OrderController extends Controller
     if (empty($cart) OR $items->count() === 0) {
       return $this->redirectToRoute('app_shop');
     }
+
     $iterator = $cart->getItems()->getIterator();
     $order = (new Order())
       ->setUser($user)
