@@ -1,3 +1,5 @@
+# /
+
 app_signup :
     path:     /inscription
     defaults:
@@ -16,13 +18,17 @@ app_account :
     defaults:
         _controller: TrailWarehouseAppBundle:User:account
 
+app_shop_root :
+    resource : "@TrailWarehouseAppBundle/Resources/config/Shop/routing.yml"
+    prefix   : /boutique
+
 app_cart_root :
     resource : "@TrailWarehouseAppBundle/Resources/config/Cart/routing.yml"
     prefix   : /panier
 
-app_shop_root :
-    resource : "@TrailWarehouseAppBundle/Resources/config/Shop/routing.yml"
-    prefix   : /boutique
+app_order_root :
+    resource : "@TrailWarehouseAppBundle/Resources/config/Order/routing.yml"
+    prefix   : /commande
 
 app_api_root :
     resource : "@TrailWarehouseAppBundle/Resources/config/Api/routing.yml"

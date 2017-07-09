@@ -43,23 +43,30 @@ class Order
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="sending_date", type="datetime")
+     * @ORM\Column(name="sending_date", type="datetime", nullable=true)
      */
     private $sendingDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="delivery_date", type="datetime")
+     * @ORM\Column(name="delivery_date", type="datetime", nullable=true)
      */
     private $deliveryDate;
 
 
     /**
-     * @var Cart
+     * @var int
+     *
+     * @ORM\Column(name="total", type="integer")
      */
-    private $cart;
+    private $total;
 
+
+    public function __construct()
+    {
+        $this->creationDate = new \DateTime();
+    }
 
     /* ---------- Getters & Setters ---------- */
 
@@ -194,26 +201,25 @@ class Order
     }
 
     /**
-     * Set cart
+     * Set total
      *
-     * @param Cart $cart
+     * @param int $total
      *
      * @return Order
      */
-    public function setCart(Cart $cart)
+    public function setTotal(int $total)
     {
-        $this->cart = $cart;
-
+        $this->total = $total;
         return $this;
     }
 
     /**
-     * Get cart
+     * Get total
      *
-     * @return Cart
+     * @return int
      */
-    public function getCart()
+    public function getTotal()
     {
-        return $this->cart;
+        return $this->total;
     }
 }

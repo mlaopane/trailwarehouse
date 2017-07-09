@@ -27,7 +27,6 @@ class OrderProduct
      * @var Order $order
      *
      * @ORM\ManyToOne(targetEntity="Order", inversedBy="orderProducts", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
      */
     private $order;
 
@@ -35,12 +34,11 @@ class OrderProduct
      * @var Product $product
      *
      * @ORM\ManyToOne(targetEntity="Product")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $product;
 
     /**
-     * @var int $quantity
+     * @var Product $product
      *
      * @ORM\Column(name="quantity", type="integer")
      */

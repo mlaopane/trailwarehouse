@@ -13,7 +13,8 @@ abstract class CommonController extends Controller
   private $entity_name;
   private $entity;
 
-  public function __construct() {
+  public function __construct()
+  {
     // Entity Name
     $search = [__NAMESPACE__, '\\', 'Controller'];
     $this->entity_name = str_replace($search, '', static::class);

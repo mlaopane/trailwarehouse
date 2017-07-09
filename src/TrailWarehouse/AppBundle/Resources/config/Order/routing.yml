@@ -4,3 +4,8 @@ app_order :
   path             : /
   defaults         :
     _controller  : TrailWarehouseAppBundle:Order:index
+
+app_order_create :
+  path             : /creation
+  defaults         :
+    _controller  : TrailWarehouseAppBundle:Order:create

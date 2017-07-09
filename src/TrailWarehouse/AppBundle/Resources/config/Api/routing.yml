@@ -1,3 +1,5 @@
+# /api
+
 app_api_category_root :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_category.yml"
     prefix            : /categories

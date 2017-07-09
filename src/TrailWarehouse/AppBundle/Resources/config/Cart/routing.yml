@@ -1,3 +1,5 @@
+# /panier
+
 app_cart :
   path             : /
   defaults         :
@@ -15,8 +17,7 @@ app_cart_add_promo :
     defaults         :
         _controller  : TrailWarehouseAppBundle:Cart:addPromo
 
-app_cart_check :
-    path             : /valider
-    methods          : [POST]
+app_cart_checkout :
+    path             : /validation
     defaults         :
-        _controller  : TrailWarehouseAppBundle:Cart:check
+        _controller  : TrailWarehouseAppBundle:Cart:checkout
