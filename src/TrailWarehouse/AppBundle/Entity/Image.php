@@ -3,6 +3,9 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use TrailWarehouse\AppBundle\Entity\Color;
+use TrailWarehouse\AppBundle\Entity\Family;
 
 /**
  * Image
@@ -42,6 +45,22 @@ class Image
      */
     private $alt;
 
+    /**
+     * @var Family
+     *
+     * @ORM\ManyToOne(targetEntity="Family")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $family;
+
+    /**
+     * @var Color
+     *
+     * @ORM\ManyToOne(targetEntity="Color")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $color;
+
 
     /**
      * Get id
@@ -52,7 +71,6 @@ class Image
     {
         return $this->id;
     }
-
 
     /**
      * Set title
@@ -124,5 +142,101 @@ class Image
     public function getAlt()
     {
         return $this->alt;
+    }
+
+    /**
+     * Set families
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Family $families
+     *
+     * @return Image
+     */
+    public function setFamilies(\TrailWarehouse\AppBundle\Entity\Family $families)
+    {
+        $this->families = $families;
+
+        return $this;
+    }
+
+    /**
+     * Get families
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Family
+     */
+    public function getFamilies()
+    {
+        return $this->families;
+    }
+
+    /**
+     * Set colors
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Color $colors
+     *
+     * @return Image
+     */
+    public function setColors(\TrailWarehouse\AppBundle\Entity\Color $colors)
+    {
+        $this->colors = $colors;
+
+        return $this;
+    }
+
+    /**
+     * Get colors
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Color
+     */
+    public function getColors()
+    {
+        return $this->colors;
+    }
+
+    /**
+     * Set family
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Family $family
+     *
+     * @return Image
+     */
+    public function setFamily(\TrailWarehouse\AppBundle\Entity\Family $family)
+    {
+        $this->family = $family;
+
+        return $this;
+    }
+
+    /**
+     * Get family
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Family
+     */
+    public function getFamily()
+    {
+        return $this->family;
+    }
+
+    /**
+     * Set color
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Color $color
+     *
+     * @return Image
+     */
+    public function setColor(\TrailWarehouse\AppBundle\Entity\Color $color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Color
+     */
+    public function getColor()
+    {
+        return $this->color;
     }
 }

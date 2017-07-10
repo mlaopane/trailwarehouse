@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use TrailWarehouse\AppBundle\Entity\Brand;
 use TrailWarehouse\AppBundle\Entity\Category;
 use TrailWarehouse\AppBundle\Entity\Product;
+use TrailWarehouse\AppBundle\Entity\Color;
 
 /**
  * Family
@@ -53,6 +54,14 @@ class Family
     private $category;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Color")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $colors;
+
+    /**
      * @var string
      *
      * @Gedmo\Slug(fields={"name"})
@@ -88,6 +97,7 @@ class Family
     {
         $this->products = new ArrayCollection();
         $this->reviews  = new ArrayCollection();
+        $this->colors   = new ArrayCollection();
     }
 
     /**
@@ -343,4 +353,37 @@ class Family
         return $this->averageRating;
     }
 
+    /**
+     * Add color
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Color $color
+     *
+     * @return Family
+     */
+    public function addColor(Color $color)
+    {
+        $this->colors[] = $color;
+
+        return $this;
+    }
+
+    /**
+     * Remove color
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Color $color
+     */
+    public function removeColor(Color $color)
+    {
+        $this->colors->removeElement($color);
+    }
+
+    /**
+     * Get colors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getColors()
+    {
+        return $this->colors;
+    }
 }
