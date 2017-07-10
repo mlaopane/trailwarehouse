@@ -42,7 +42,7 @@ class OrderController extends Controller
     $cart  = $session->get('cart');
     $items = $cart->getItems();
     if (empty($cart) OR $items->count() === 0) {
-      return $this->redirectToRoute('app_shop');
+      return $this->redirectToRoute('app_home');
     }
 
     $iterator = $cart->getItems()->getIterator();

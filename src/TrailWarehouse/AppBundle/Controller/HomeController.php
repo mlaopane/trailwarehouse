@@ -3,14 +3,14 @@
 namespace TrailWarehouse\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\EntityManagerInterface;
 
 class HomeController extends Controller
 {
-    public function indexAction()
+    public function indexAction(EntityManagerInterface $em)
     {
-        return $this->redirectToRoute('app_shop');
-        $data = [];
-        return $this->render('TrailWarehouseAppBundle:Home:index.html.twig', $data);
+      $data['brands'] = $em->getRepository('TrailWarehouseAppBundle:Brand')->findAll(['brand' => 'asc']);
+      return $this->render('TrailWarehouseAppBundle:Shop:index.html.twig', $data);
     }
 
     public function contactAction()

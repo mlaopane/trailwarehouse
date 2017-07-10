@@ -49,13 +49,11 @@ class ShopController extends Controller
   }
 
   /**
-   * 'app_shop'
+   * 'app_home'
    */
   public function indexAction()
   {
-    $data['brands'] = $this->repo['brand']->findAll(['brand' => 'asc']);
-
-    return $this->render('TrailWarehouseAppBundle:Shop:index.html.twig', $data);
+    return $this->redirectToRoute('app_shop_categories');
   }
 
   /**
@@ -105,7 +103,7 @@ class ShopController extends Controller
   public function familyAction(Family $family, EntityManagerInterface $em)
   {
     if ($family->getProducts()->count() == 0) {
-      return $this->redirectToRoute('app_shop');
+      return $this->redirectToRoute('app_home');
     }
 
     $data = [

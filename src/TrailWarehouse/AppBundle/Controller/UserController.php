@@ -49,7 +49,7 @@ class UserController extends Controller
       $manager->persist($this->user);
       $manager->flush();
       // Redirect to the Shop
-      return $this->redirectToRoute('app_shop');
+      return $this->redirectToRoute('app_home');
     }
     // Display the form to sign up
     $data = [
