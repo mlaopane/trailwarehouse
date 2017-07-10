@@ -167,6 +167,20 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
     }
   }
 
+  /* Images Loaded */
+	page.imgLoadedEvents = {
+		always: function(instance) {
+			// Do stuff
+		},
+		done: function(instance) {
+			angular.element(instance.elements[0]).addClass('loaded');
+		},
+		fail: function(instance) {
+			// Do stuff
+		}
+
+	};
+
   $(function() {
     page.getProductsByFamily(page.family_id);
     page.cart_count = parseInt($('#cart-count').html());

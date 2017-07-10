@@ -9,6 +9,8 @@
 {% block javascripts %}
   {{ parent() }}
   <script src="{{ asset('bower_components/angular/angular.min.js') }}"></script>
+  <script src="{{ asset('bower_components/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+  <script src="{{ asset('bower_components/angular-images-loaded/angular-images-loaded.js') }}"></script>
 {% endblock %}
 
 {% block page_main %}
@@ -29,7 +31,7 @@
 
         <!-- # Product Image -->
         <div class="image-container flex justify-content-center col-12 col-xl-6 mb-3">
-          <div class="">
+          <div class="wrapper" images-loaded="page.imgLoadedEvents">
             <img id="image"
               data-ng-src="{% verbatim %}{{ page.ASSET_URL + (page.product.image ? page.product.image.src : 'images/no_picture.png') }}{% endverbatim %}"
               alt="{% verbatim %}{{ page.product.image ? page.product.image.alt : 'illustration produit' }}{% endverbatim %}"
@@ -161,7 +163,7 @@
                             </h4>
                             {% if sizes is not empty %}
                               <div id="sizes-container" class="ness-option-container ness-option-container-sm">
-                                <!-- # Option -->
+                                <!-- # Options -->
                                 <ul data-ng-class="'ness-option-group' + (page.loading || !page.product ? ' hide' : '')">
                                   {% for size in sizes %}
                                     <li id="size-{{ size.id }}"
@@ -178,7 +180,7 @@
                                     </li>
                                   {% endfor %}
                                 </ul>
-                                <!-- Option # -->
+                                <!-- Options # -->
                                 <!-- # Loader -->
                                 <div data-ng-class="'loader-container' + (page.sizes.length > 0 ? ' hide' : '')">
                                   <div class="loader">
@@ -219,7 +221,7 @@
                               </ul>
                               <!-- Quantity # -->
                               <!-- # Loader -->
-                              <div data-ng-class="'loader-container' + (page.quantities ? ' hide' : '')">
+                              <div data-ng-class="'loader-container' + (page.quantities.length > 0 ? ' hide' : '')">
                                 <div class="loader">
                                   <div class="block"></div>
                                   <div class="block delay"></div>

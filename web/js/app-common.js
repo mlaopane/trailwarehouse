@@ -1,4 +1,7 @@
-var app = angular.module('app', []);
+
+/* App Initialization */
+var app = angular.module('app', ['hj.imagesLoaded']);
+
 /*
 * The capitalize filter uppercases the 1st character of a string
 */
