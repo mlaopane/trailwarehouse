@@ -7,6 +7,11 @@
   {{ parent() }} : Accueil
 {% endblock %}
 
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bower_components/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+{% endblock %}
+
 {% block page_main %}
   <main id="page-shop">
 
@@ -68,14 +73,16 @@
     <div id="selections" class="col-12">
 
       <!-- # Sélection -->
-      <div id="chaussures" class="selection p-3">
+      <div class="selection p-3">
         <div class="row justify-content-center">
           <h2 class="border-bottom mb-4">Sélection du moment</h2>
         </div>
         <div class="ness-diaporama row">
           {% for i in 1..3 %}
           <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 d-flex justify-content-center">
-            <img src="{{ asset('images/no_picture.png') }}" alt="" class="rounded mx-auto img-fluid">
+            <div class="image-container wrapper">
+              <img src="{{ asset('images/no_picture.png') }}" alt="" class="rounded mx-auto img-fluid">
+            </div>
           </div>
           {% endfor %}
         </div>
@@ -94,7 +101,7 @@
       <div class="row px-3">
       {% if brands is not empty %}
         {% for brand in brands %}
-          <div class="brand col d-flex justify-content-center align-items-center">
+          <div class="brand image-container wrapper col d-flex justify-content-center align-items-center">
             <a href="#" class="">
               <img src="{{ asset(brand.logo) }}" alt="Logo {{ brand.name }}" class="round img-fluid mx-auto d-block">
             </a>
@@ -106,4 +113,8 @@
     <!-- Brands # -->
 
   </main>
+{% endblock %}
+
+{% block additional_javascripts %}
+  <script src="{{ asset('js/home.js') }}"></script>
 {% endblock %}

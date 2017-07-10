@@ -10,7 +10,7 @@ class HomeController extends Controller
     public function indexAction(EntityManagerInterface $em)
     {
       $data['brands'] = $em->getRepository('TrailWarehouseAppBundle:Brand')->findAll(['brand' => 'asc']);
-      return $this->render('TrailWarehouseAppBundle:Shop:index.html.twig', $data);
+      return $this->render('TrailWarehouseAppBundle:Home:index.html.twig', $data);
     }
 
     public function contactAction()
