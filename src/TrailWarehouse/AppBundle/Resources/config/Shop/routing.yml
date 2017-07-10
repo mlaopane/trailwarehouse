@@ -1,25 +1,20 @@
-app_shop_categories  :
-    path             : /toutes-categories
-    defaults         :
-        _controller  : TrailWarehouseAppBundle:Shop:categories
+app_shop_categories :
+    path            : /toutes-categories
+    defaults        :
+        _controller : TrailWarehouseAppBundle:Shop:categories
 
-app_shop_category    :
-    path             : /categorie-{slug}
-    defaults         :
-        _controller  : TrailWarehouseAppBundle:Shop:category
+app_shop_category   :
+    path            : /categorie-{slug}
+    defaults        :
+        _controller : TrailWarehouseAppBundle:Shop:category
 
-app_shop_family      :
-    path             : /fiche-produit/{slug}
-    defaults         :
-        _controller  : TrailWarehouseAppBundle:Shop:family
+app_shop_family     :
+    path            : /fiche-produit/{slug}
+    defaults        :
+        _controller : TrailWarehouseAppBundle:Shop:family
 
-app_shop_add_to_cart :
-    path             : /cart/add
-    methods          : [POST]
-    defaults         :
-        _controller  : TrailWarehouseAppBundle:Shop:addToCart
-
-app_shop_cart :
-    path             : /cart
-    defaults         :
-        _controller  : TrailWarehouseAppBundle:Shop:cart
+app_shop_search     :
+    path            : /recherche/{input}
+    defaults        :
+        _controller : TrailWarehouseAppBundle:Shop:search
+        input       : '*'

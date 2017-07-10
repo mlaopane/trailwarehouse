@@ -49,11 +49,14 @@ class ShopController extends Controller
   }
 
   /**
-   * 'app_home'
+   * 'app_shop_search'
    */
-  public function indexAction()
+  public function searchAction()
   {
-    return $this->redirectToRoute('app_shop_categories');
+    $data = [
+      'families' => [],
+    ];
+    return $this->render('TrailWarehouseAppBundle:Shop:search.html.twig', $data);
   }
 
   /**
