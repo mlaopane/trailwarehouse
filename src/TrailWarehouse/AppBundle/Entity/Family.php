@@ -9,6 +9,7 @@ use TrailWarehouse\AppBundle\Entity\Brand;
 use TrailWarehouse\AppBundle\Entity\Category;
 use TrailWarehouse\AppBundle\Entity\Product;
 use TrailWarehouse\AppBundle\Entity\Color;
+use TrailWarehouse\AppBundle\Entity\Image;
 
 /**
  * Family
@@ -56,10 +57,18 @@ class Family
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Color")
+     * @ORM\OneToMany(targetEntity="Color", mappedBy="Family")
      * @ORM\JoinColumn(nullable=false)
      */
     private $colors;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="Family")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $images;
 
     /**
      * @var string
@@ -385,5 +394,39 @@ class Family
     public function getColors()
     {
         return $this->colors;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Image $image
+     *
+     * @return Family
+     */
+    public function addImage(Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Image $image
+     */
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }
