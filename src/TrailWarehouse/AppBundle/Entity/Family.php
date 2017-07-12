@@ -57,18 +57,10 @@ class Family
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Color", mappedBy="Family")
+     * @ORM\OneToMany(targetEntity="FamilyColor", mappedBy="family")
      * @ORM\JoinColumn(nullable=false)
      */
     private $colors;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="Family")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $images;
 
     /**
      * @var string
@@ -396,37 +388,4 @@ class Family
         return $this->colors;
     }
 
-    /**
-     * Add image
-     *
-     * @param \TrailWarehouse\AppBundle\Entity\Image $image
-     *
-     * @return Family
-     */
-    public function addImage(Image $image)
-    {
-        $this->images[] = $image;
-
-        return $this;
-    }
-
-    /**
-     * Remove image
-     *
-     * @param \TrailWarehouse\AppBundle\Entity\Image $image
-     */
-    public function removeImage(Image $image)
-    {
-        $this->images->removeElement($image);
-    }
-
-    /**
-     * Get images
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
 }

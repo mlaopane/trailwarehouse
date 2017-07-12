@@ -27,7 +27,7 @@ class FamilyColor
     /**
      * @var Family
      *
-     * @ORM\ManyToOne(targetEntity="Family")
+     * @ORM\ManyToOne(targetEntity="Family", inversedBy="colors")
      * @ORM\JoinColumn(nullable=false)
      */
     private $family;
