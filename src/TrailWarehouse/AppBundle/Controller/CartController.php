@@ -142,7 +142,7 @@ class CartController extends Controller
       $iterator->next();
     }
 
-    return $this->redirectToRoute('app_cart');
+    return $this->redirectToRoute('app_order_coordinates');
   }
 
   /* ---------- Private methods ---------- */
