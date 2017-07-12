@@ -1,0 +1,44 @@
+// main: style.less
+
+#page-cart {
+
+  #cart {
+    width: 100%;
+  }
+
+  #cart-total {
+    background: @greenblue;
+    border: 1px solid darken(@greenblue, 7%);
+    color: @whitegrey;
+    padding: 8px 16px;
+  }
+
+  #cart-promo {
+    #trailwarehouse_appbundle_promo_code {
+      background: @lightgrey;
+      transition: .2s;
+      &:focus, &:active {
+        background: darken(@darkgrey, 5%);
+        color: white;
+        border-color: white;
+        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+          color: @grey;
+        }
+        &::-moz-placeholder { /* Firefox 19+ */
+          color: @grey;
+        }
+        &:-ms-input-placeholder { /* IE 10+ */
+          color: @grey;
+        }
+        &:-moz-placeholder { /* Firefox 18- */
+          color: @grey;
+        }
+      }
+    }
+  }
+
+  #cart-validation {
+
+  }
+
+}
