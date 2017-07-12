@@ -11,7 +11,9 @@ use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Promo;
 use TrailWarehouse\AppBundle\Entity\Order;
 use TrailWarehouse\AppBundle\Entity\Product;
+use TrailWarehouse\AppBundle\Entity\Coordinate;
 use TrailWarehouse\AppBundle\Entity\OrderProduct;
+use TrailWarehouse\AppBundle\Form\CoordinateType;
 
 class OrderController extends Controller
 {
@@ -27,15 +29,36 @@ class OrderController extends Controller
   }
 
   /**
-   * Route 'app_order'
+   * Route 'app_order_coordinates'
    */
-  public function indexAction(Request $request, SessionInterface $session)
+  public function coordinatesAction(Request $request, SessionInterface $session)
   {
-    return $this->render('TrailWarehouseAppBundle:Cart:index.html.twig', $data);
+    $form = $this->createForm(CoordinateType::class, new Coordinate());
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() AND $form->isValid()) {
+
+    }
+
+    $data = [
+      'coordinate_form' => $form->createView(),
+    ];
+    return $this->render('TrailWarehouseAppBundle:Order:coordintes.html.twig', $data);
   }
 
   /**
-   * Route 'app_order'
+   * Route 'app_order_payment'
+   */
+  public function paymentAction(Request $request, SessionInterface $session)
+  {
+    $data = [
+
+    ];
+    return $this->render('TrailWarehouseAppBundle:Order:payment.html.twig', $data);
+  }
+
+  /**
+   * Route 'app_order_create'
    */
   public function createAction(Request $request, SessionInterface $session, EntityManagerInterface $em, UserInterface $user)
   {

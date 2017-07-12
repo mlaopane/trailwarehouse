@@ -1,0 +1,106 @@
+{# TrailWarehouse > AppBundle > Resources > views > Shop > family.html.twig #}
+
+{% extends "TrailWarehouseAppBundle::layout.html.twig" %}
+
+
+{% block title %}
+  {{ parent() }} : Mon panier
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bower_components/angular/angular.min.js') }}"></script>
+{% endblock %}
+
+{% block page_nav %}{% endblock %}
+
+{% block page_main %}
+
+  <!-- # Coordinates -->
+  <main id="page-order-address" class="bg-white">
+
+      <!-- # Heading -->
+      <div class="heading-container heading-container-blue">
+        <h3 class="heading">Coordonnées</h3>
+      </div>
+      <!-- Heading # -->
+
+      <div class="page-content mx-auto px-3 row">
+        <div class="col-12 col-md-6 col-xl-5">
+
+          <!-- # Form Container -->
+          <div class="form-container mb-5 rounded">
+
+            <!-- # Form title -->
+            <div class="col-12 mb-3">
+              <h2>Ajouter une nouvelle adresse</h2>
+            </div>
+            <!-- Form title # -->
+
+            <!-- # Col -->
+            <div class="col-12">
+
+              <!-- # Address -->
+              <div class="form-group mb-4">
+                {{ form_label(coordinate_form.address, 'Adresse*') }}
+                <div class="input-group">
+                  <div class="input-group-addon">@</div>
+                  {{ form_widget(coordinate_form.address, {'attr': {'class': 'form-control', 'placeholder': 'Adresse' }}) }}
+                </div>
+              </div>
+              <!-- Address # -->
+
+              <!-- # Zipcode -->
+              <div class="form-group mb-4">
+                <div class="d-flex justify-content-start align-items-baseline">
+                  {{ form_label(coordinate_form.zipcode, 'Code postal*') }}
+                </div>
+                <div class="input-group">
+                  <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                  {{ form_widget(coordinate_form.zipcode, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
+                </div>
+              </div>
+              <!-- Zipcode # -->
+
+              <!-- # City -->
+              <div class="form-group mb-4">
+                <div class="d-flex justify-content-start align-items-baseline">
+                  {{ form_label(coordinate_form.city, 'Code postal*') }}
+                </div>
+                <div class="input-group">
+                  <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                  {{ form_widget(coordinate_form.city, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
+                </div>
+              </div>
+              <!-- City # -->
+
+              <!-- # Submit -->
+              <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
+                {{ form_widget(coordinate_form.save, {'attr': {'class':'btn btn-confirm w-100'}}) }}
+              </div>
+              <!-- Submit # -->
+
+            </div>
+            <!-- Col # -->
+
+          </div>
+          <!-- Form Container # -->
+
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-7">
+          <div id="user-coordindates">
+
+          </div>
+        </div>
+      </div>
+
+  </main>
+  <!-- Coordinates # -->
+
+{% endblock %}
+
+{% block additional_javascripts %}
+  <script src="{{ asset('js/app-common.js') }}"></script>
+  <script src="{{ asset('js/cart.js') }}"></script>
+{% endblock %}

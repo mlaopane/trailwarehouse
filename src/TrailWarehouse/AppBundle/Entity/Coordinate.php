@@ -25,6 +25,13 @@ class Coordinate
     /**
     * @var string
     *
+    * @ORM\Column(name="title", type="string", length=255)
+    */
+    private $title;
+
+    /**
+    * @var string
+    *
     * @ORM\Column(name="firstname", type="string", length=255)
     */
     private $firstname;
@@ -247,5 +254,29 @@ class Coordinate
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Coordinate
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }

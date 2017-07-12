@@ -5,6 +5,7 @@ namespace TrailWarehouse\AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CoordinateType extends AbstractType
@@ -16,10 +17,12 @@ class CoordinateType extends AbstractType
     {
       $class = ['class' => 'form-control col-6 mb-3'];
       $builder
+        ->add('title', TextType::class, ['label' => 'titre', 'attr' => $class])
         ->add('address', TextType::class, ['label' => 'Adresse', 'attr' => $class])
         ->add('zipcode', TextType::class, ['label' => 'Code postal', 'attr' => $class])
         ->add('city', TextType::class, ['label' => 'Ville', 'attr' => $class])
         ->add('type', TextType::class, ['label' => 'Type', 'attr' => $class])
+        ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
       ;
     }
 
