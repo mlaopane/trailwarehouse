@@ -56,13 +56,6 @@ class Coordinate
      */
     private $city;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="type", type="boolean")
-     */
-    private $type;
-
 
     /**
      * Get id
@@ -144,30 +137,6 @@ class Coordinate
     public function getCity()
     {
         return $this->city;
-    }
-
-    /**
-     * Set type
-     *
-     * @param boolean $type
-     *
-     * @return Coordinate
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return bool
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
