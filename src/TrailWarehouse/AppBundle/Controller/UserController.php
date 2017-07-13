@@ -13,6 +13,7 @@ use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Form\SignupType;
 use TrailWarehouse\AppBundle\Form\SigninType;
+use TrailWarehouse\AppBundle\Form\AccountType;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -83,7 +84,7 @@ class UserController extends Controller
    * 'account' route
    */
   public function accountAction(Request $request, UserInterface $user) {
-    $form = $this->createForm(SigninType::class, $this->user);
+    $form = $this->createForm(AccountType::class, $this->user);
     $data = [
       'user_form' => $form->createView(),
       'user'      => $user,
