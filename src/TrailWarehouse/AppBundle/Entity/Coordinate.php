@@ -25,23 +25,9 @@ class Coordinate
     /**
     * @var string
     *
-    * @ORM\Column(name="title", type="string", length=255)
+    * @ORM\Column(name="title", type="string", length=191)
     */
     private $title;
-
-    /**
-    * @var string
-    *
-    * @ORM\Column(name="firstname", type="string", length=255)
-    */
-    private $firstname;
-
-    /**
-    * @var string
-    *
-    * @ORM\Column(name="lastname", type="string", length=255)
-    */
-    private $lastname;
 
     /**
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="coordinates")
@@ -206,54 +192,6 @@ class Coordinate
     public function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * Set firstname
-     *
-     * @param string $firstname
-     *
-     * @return Coordinate
-     */
-    public function setFirstname($firstname)
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    /**
-     * Get firstname
-     *
-     * @return string
-     */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    /**
-     * Set lastname
-     *
-     * @param string $lastname
-     *
-     * @return Coordinate
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * Get lastname
-     *
-     * @return string
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
     }
 
     /**

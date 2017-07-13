@@ -40,45 +40,74 @@
             <!-- # Col -->
             <div class="col-12">
 
-              <!-- # Address -->
-              <div class="form-group mb-4">
-                {{ form_label(coordinate_form.address, 'Adresse*') }}
-                <div class="input-group">
-                  <div class="input-group-addon">@</div>
-                  {{ form_widget(coordinate_form.address, {'attr': {'class': 'form-control', 'placeholder': 'Adresse' }}) }}
-                </div>
-              </div>
-              <!-- Address # -->
+              <!-- # Coordinate Form -->
+              {{ form_start(coordinate_form) }}
 
-              <!-- # Zipcode -->
-              <div class="form-group mb-4">
-                <div class="d-flex justify-content-start align-items-baseline">
-                  {{ form_label(coordinate_form.zipcode, 'Code postal*') }}
+                <!-- # Title -->
+                <div class="form-group mb-4">
+                  {{ form_label(coordinate_form.title) }}
+                  <div class="input-group">
+                    <div class="input-group-addon">@</div>
+                    {{ form_widget(coordinate_form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre' }}) }}
+                  </div>
                 </div>
-                <div class="input-group">
-                  <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                  {{ form_widget(coordinate_form.zipcode, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
-                </div>
-              </div>
-              <!-- Zipcode # -->
+                <!-- Address # -->
 
-              <!-- # City -->
-              <div class="form-group mb-4">
-                <div class="d-flex justify-content-start align-items-baseline">
-                  {{ form_label(coordinate_form.city, 'Code postal*') }}
+                <!-- # Address -->
+                <div class="form-group mb-4">
+                  {{ form_label(coordinate_form.address) }}
+                  <div class="input-group">
+                    <div class="input-group-addon">@</div>
+                    {{ form_widget(coordinate_form.address, {'attr': {'class': 'form-control', 'placeholder': 'Adresse' }}) }}
+                  </div>
                 </div>
-                <div class="input-group">
-                  <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                  {{ form_widget(coordinate_form.city, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
-                </div>
-              </div>
-              <!-- City # -->
+                <!-- Address # -->
 
-              <!-- # Submit -->
-              <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
-                {{ form_widget(coordinate_form.save, {'attr': {'class':'btn btn-confirm w-100'}}) }}
-              </div>
-              <!-- Submit # -->
+                <!-- # Zipcode -->
+                <div class="form-group mb-4">
+                  <div class="d-flex justify-content-start align-items-baseline">
+                    {{ form_label(coordinate_form.zipcode) }}
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                    {{ form_widget(coordinate_form.zipcode, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
+                  </div>
+                </div>
+                <!-- Zipcode # -->
+
+                <!-- # City -->
+                <div class="form-group mb-4">
+                  <div class="d-flex justify-content-start align-items-baseline">
+                    {{ form_label(coordinate_form.city) }}
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                    {{ form_widget(coordinate_form.city, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
+                  </div>
+                </div>
+                <!-- City # -->
+
+                <!-- # Type -->
+                <div class="form-group mb-4">
+                  <div class="d-flex justify-content-start align-items-baseline">
+                    {{ form_label(coordinate_form.type) }}
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                    {{ form_widget(coordinate_form.type, {'attr': {'class': 'form-control', 'placeholder': 'Livraison/Facturation'}}) }}
+                  </div>
+                </div>
+                <!-- Type # -->
+
+                <!-- # Submit -->
+                <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
+                  {{ form_widget(coordinate_form.save, {'attr': {'class':'btn btn-confirm w-100'}}) }}
+                </div>
+                <!-- Submit # -->
+
+                {{ form_rest(coordinate_form) }}
+
+              {{ form_end(coordinate_form) }}
 
             </div>
             <!-- Col # -->

@@ -17,11 +17,11 @@ class CoordinateType extends AbstractType
     {
       $class = ['class' => 'form-control col-6 mb-3'];
       $builder
-        ->add('title', TextType::class, ['label' => 'titre', 'attr' => $class])
-        ->add('address', TextType::class, ['label' => 'Adresse', 'attr' => $class])
-        ->add('zipcode', TextType::class, ['label' => 'Code postal', 'attr' => $class])
-        ->add('city', TextType::class, ['label' => 'Ville', 'attr' => $class])
-        ->add('type', TextType::class, ['label' => 'Type', 'attr' => $class])
+        ->add('title', TextType::class, ['label' => 'Titre*', 'attr' => $class])
+        ->add('address', TextType::class, ['label' => 'Adresse*', 'attr' => $class])
+        ->add('zipcode', TextType::class, ['label' => 'Code postal*', 'attr' => $class])
+        ->add('city', TextType::class, ['label' => 'Ville*', 'attr' => $class])
+        ->add('type', TextType::class, ['label' => 'Type*', 'attr' => $class])
         ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
       ;
     }
