@@ -142,6 +142,7 @@ class CartController extends Controller
       $iterator->next();
     }
 
+    $session->set('checkout', true);
     return $this->redirectToRoute('app_order_coordinates');
   }
 

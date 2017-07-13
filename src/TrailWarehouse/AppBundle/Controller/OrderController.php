@@ -23,27 +23,37 @@ class OrderController extends Controller
   public function __construct(EntityManagerInterface $em)
   {
     $this->repo = [
-      'product' => $em->getRepository('TrailWarehouseAppBundle:Product'),
-      'promo'   => $em->getRepository('TrailWarehouseAppBundle:Promo'),
+      'product'    => $em->getRepository('TrailWarehouseAppBundle:Product'),
+      'promo'      => $em->getRepository('TrailWarehouseAppBundle:Promo'),
+      'coordinate' => $em->getRepository('TrailWarehouseAppBundle:Coordinate'),
     ];
   }
 
   /**
    * Route 'app_order_coordinates'
    */
-  public function coordinatesAction(Request $request, SessionInterface $session)
+  public function coordinatesAction(Request $request, SessionInterface $session, EntityManagerInterface $em, UserInterface $user)
   {
-    $form = $this->createForm(CoordinateType::class, new Coordinate());
+    $checkout = $session->get('checkout');
+    if (!$checkout) {
+      return $this->redirectToRoute('app_cart');
+    }
+    $checkout = false;
+    $coordinate = new Coordinate();
+    $form = $this->createForm(CoordinateType::class, $coordinate);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() AND $form->isValid()) {
-
+      $checkout = true;
+      if (false === $this->repo['coordinate']->isDoublon($coordinate->setUser($user))) {
+        $em->persist($coordinate);
+        $em->flush();
+      }
     }
-
     $data = [
       'coordinate_form' => $form->createView(),
     ];
-    return $this->render('TrailWarehouseAppBundle:Order:coordintes.html.twig', $data);
+    return $this->render('TrailWarehouseAppBundle:Order:coordinates.html.twig', $data);
   }
 
   /**
