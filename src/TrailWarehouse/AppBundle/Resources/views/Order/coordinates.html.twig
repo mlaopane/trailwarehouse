@@ -87,18 +87,6 @@
                 </div>
                 <!-- City # -->
 
-                <!-- # Type -->
-                <div class="form-group mb-4">
-                  <div class="d-flex justify-content-start align-items-baseline">
-                    {{ form_label(coordinate_form.type) }}
-                  </div>
-                  <div class="input-group">
-                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                    {{ form_widget(coordinate_form.type, {'attr': {'class': 'form-control', 'placeholder': 'Livraison/Facturation'}}) }}
-                  </div>
-                </div>
-                <!-- Type # -->
-
                 <!-- # Submit -->
                 <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
                   {{ form_widget(coordinate_form.save, {'attr': {'class':'btn btn-confirm w-100'}}) }}
