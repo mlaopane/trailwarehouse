@@ -27,7 +27,14 @@ class CommonRepository extends EntityRepository
   }
 
   /**
-   * Get one Entity
+   * Get one Entity by id
+   */
+  public function getOne($id, $as_array = true) {
+    return $this->getOneBy('id', $id, $as_array);
+  }
+
+  /**
+   * Get one Entity by field
    *
    * @return Array
    */
@@ -41,12 +48,18 @@ class CommonRepository extends EntityRepository
     return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
   }
 
-  public function get($id, $as_array = true) {
-    return $this->getOneBy('id', $id, $as_array);
-  }
-
-  public function getOne($id, $as_array = true) {
-    return $this->getOneBy('id', $id, $as_array);
+  /**
+  * Get one Entity by array
+  *
+  * @return Array
+  */
+  public function getOneByArray(array $parameters, $as_array = true) {
+    $builder = $this->createQueryBuilder('entity');
+    foreach ($parameters as $field => $value) {
+      $builder->where('entity.'.$field.' = :'.$field)->setParameter($field, $value);
+    }
+    $builder->setMaxResults(1)->getQuery();
+    return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
   }
 
   /**
