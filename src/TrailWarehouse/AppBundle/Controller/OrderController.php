@@ -13,6 +13,7 @@ use TrailWarehouse\AppBundle\Entity\Order;
 use TrailWarehouse\AppBundle\Entity\Product;
 use TrailWarehouse\AppBundle\Entity\Coordinate;
 use TrailWarehouse\AppBundle\Entity\OrderProduct;
+use TrailWarehouse\AppBundle\Form\OrderType;
 use TrailWarehouse\AppBundle\Form\CoordinateType;
 
 class OrderController extends Controller
@@ -32,28 +33,48 @@ class OrderController extends Controller
   /**
    * Route 'app_order_coordinates'
    */
-  public function coordinatesAction(Request $request, SessionInterface $session, EntityManagerInterface $em, UserInterface $user)
+  public function coordinatesAction(Request $request, SessionInterface $session, UserInterface $user)
   {
-    $checkout = $session->get('checkout');
-    if (!$checkout) {
+    if (false === $session->get('checkout')) {
       return $this->redirectToRoute('app_cart');
     }
-    $checkout = false;
+    $session->set('checkout', false);
+
+    $form['coordinate'] = $this->createForm(CoordinateType::class, new Coordinate(), [
+      'action' => $this->generateUrl('app_order_add_address')
+    ]);
+
+    $form['order'] = $this->createForm(OrderType::class, new Order(), [
+      'action' => $this->generateUrl('app_order_set_address')
+    ]);
+
+    $data = [
+      'coordinate_form' => $form['coordinate']->createView(),
+      'order_form'      => $form['order']->createView(),
+    ];
+
+    return $this->render('TrailWarehouseAppBundle:Order:coordinates.html.twig', $data);
+  }
+
+  public function addAddressAction(Request $request, SessionInterface $session, EntityManagerInterface $em, UserInterface $user)
+  {
     $coordinate = new Coordinate();
     $form = $this->createForm(CoordinateType::class, $coordinate);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() AND $form->isValid()) {
-      $checkout = true;
-      if (false === $this->repo['coordinate']->isDoublon($coordinate->setUser($user))) {
+      $session->set('checkout', true);
+      if ($this->repo['coordinate']->isDoublon($coordinate->setUser($user))) {
+        $this->addFlash('warning', "Cette adresse existe déjà/nVeuillez choisir un titre différent");
+      }
+      else {
         $em->persist($coordinate);
         $em->flush();
+        $this->addFlash('success', "Adresse ajoutée !");
+        return $this->redirectToRoute('app_order_coordinates');
       }
     }
-    $data = [
-      'coordinate_form' => $form->createView(),
-    ];
-    return $this->render('TrailWarehouseAppBundle:Order:coordinates.html.twig', $data);
+    return $this->redirectToRoute('app_cart');
   }
 
   /**

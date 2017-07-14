@@ -182,7 +182,6 @@ class User implements AdvancedUserInterface, \Serializable
     public function generateHash()
     {
         $hash = password_hash($this->plainPassword, PASSWORD_BCRYPT);
-        // $hash = $encoder->encodePassword($this, $this->plainPassword);
         $this->setPassword($hash);
     }
 

@@ -25,6 +25,11 @@
       </div>
       <!-- Heading # -->
 
+      <!-- # Flashes -->
+      <div class="d-flex block mb-3">
+        {{ include('TrailWarehouseAppBundle:Error:alerts.html.twig') }}
+      </div>
+
       <div class="page-content mx-auto px-3 row">
         <div class="col-12 col-md-6 col-xl-5">
 
@@ -106,8 +111,25 @@
         </div>
 
         <div class="col-12 col-md-6 col-xl-7">
-          <div id="user-coordindates">
-
+          <div id="addresses">
+            <div class="block">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="mb-0">Mes adresses</h3>
+                </div>
+                {% for coordinate in app.user.coordinates %}
+                  <div class="card-block">
+                    <h4 class="card-title font-weight-bold">{{ coordinate.title }}</h4>
+                    <dl class="card-text">
+                      <dd>{{ coordinate.address }}</dd>
+                      <dd>{{ coordinate.zipcode }}</dd>
+                      <dd>{{ coordinate.city }}</dd>
+                    </dl>
+                    <a href="" class="card-link">Supprimer</a>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
           </div>
         </div>
       </div>
