@@ -12,7 +12,7 @@
   <main id="page-signup" class="px-7">
 
     <!-- # Form Container -->
-    <div class="form-container mx-auto mb-5">
+    <div class="form-container mx-auto mb-5 two-col">
 
       <!-- # Signup Form -->
       {{ form_start(signup_form) }}
@@ -32,7 +32,7 @@
           <!-- Form errors # -->
 
           <!-- # Col -->
-          <div class="col-12">
+          <div class="col-12 col-lg-6">
 
             <!-- # E-mail -->
             <div class="form-group mb-4">
@@ -66,6 +66,32 @@
               <p class="form-text text-muted justify-self-end">Identique au mot de passe</p>
             </div>
             <!-- Password Confirmation # -->
+
+          </div>
+          <!-- Col # -->
+
+          <!-- # Col -->
+          <div class="col-12 col-lg-6">
+
+            <!-- # Lastname -->
+            <div class="form-group mb-4">
+              {{ form_label(signup_form.lastname) }}
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                {{ form_widget(signup_form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+              </div>
+            </div>
+            <!-- Lastname # -->
+
+            <!-- # Firstname -->
+            <div class="form-group mb-4">
+              {{ form_label(signup_form.firstname) }}
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                {{ form_widget(signup_form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
+              </div>
+            </div>
+            <!-- Firstname # -->
 
           </div>
           <!-- Col # -->

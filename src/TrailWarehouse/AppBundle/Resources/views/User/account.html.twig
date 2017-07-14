@@ -42,7 +42,7 @@
             <div class="form-group mb-4">
               {{ form_label(user_form.lastname) }}
               <div class="input-group">
-                <div class="input-group-addon">@</div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
                 {{ form_widget(user_form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Nom', 'value': user.lastname }}) }}
               </div>
             </div>
@@ -52,7 +52,7 @@
             <div class="form-group mb-4">
               {{ form_label(user_form.firstname) }}
               <div class="input-group">
-                <div class="input-group-addon">@</div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
                 {{ form_widget(user_form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Prénom', 'value': user.firstname }}) }}
               </div>
             </div>
@@ -88,7 +88,7 @@
           <div class="col-12 d-flex flex-column align-items-center align-items-sm-end mb-3">
           <!-- # Submit -->
           <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
-            {{ form_widget(user_form.send, {'attr': {'class':'btn btn-confirm'}}) }}
+            {{ form_widget(user_form.send, {'attr': {'class':'btn btn-primary btn-validation'}}) }}
           </div>
           <!-- Submit # -->
         </div>
