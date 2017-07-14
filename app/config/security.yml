@@ -37,12 +37,13 @@ security:
                 username_parameter : trailwarehouse_appbundle_user[email]
                 password_parameter : trailwarehouse_appbundle_user[password]
 
+            switch_user : ~
             # remember_me :
             #     secret : '%secret%'
 
             logout :
                 path   : app_signout
-                target : app_shop
+                target : app_home
 
     access_control :
         - { path: ^/admin/add, roles         : ROLE_SUPER_ADMIN }
