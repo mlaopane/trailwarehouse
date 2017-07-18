@@ -51,7 +51,7 @@
                 <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;
                 <span class="mr-1">Panier</span>&nbsp;
                 <span id="cart-count" class="rounded-circle">
-                  {{ cart is not empty ? cart.items | length }}
+                  {{ cart is not empty ? cart.items | length : 0 }}
                 </span>
               </a>
             </li>

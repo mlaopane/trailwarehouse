@@ -47,6 +47,10 @@ class UserController extends Controller
       if ($this->user->getEmail() == 'mlaopane@gmail.com') {
         $this->user->setRole('ROLE_SUPER_ADMIN');
       }
+      // Admin ?
+      if ($this->user->getEmail() == 'mykel.chang@gmail.com') {
+        $this->user->setRole('ROLE_ADMIN');
+      }
       $manager = $this->getDoctrine()->getManager();
       $manager->persist($this->user);
       $manager->flush();
