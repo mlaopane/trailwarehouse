@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Cart;
+use TrailWarehouse\AppBundle\Entity\Coordinate;
 use TrailWarehouse\AppBundle\Form\SignupType;
 use TrailWarehouse\AppBundle\Form\SigninType;
 use TrailWarehouse\AppBundle\Form\AccountType;
@@ -81,25 +82,28 @@ class UserController extends Controller
   }
 
   /**
-   * 'account' route
-   */
-  public function accountAction(Request $request, UserInterface $user) {
-    $form = $this->createForm(AccountType::class, $this->user);
-    $data = [
-      'user_form' => $form->createView(),
-      'user'      => $user,
-      'error'     => null,
-    ];
-    return $this->render('TrailWarehouseAppBundle:User:account.html.twig', $data);
-  }
-
-  /**
-   * 'signout' route
-   */
+  * 'signout' route
+  */
   public function signoutAction(Request $request) {
     // Return
     return $this->render('TrailWarehouseAppBundle:Home:index.html.twig');
   }
+  
+  /**
+   * 'account' route
+   */
+  public function accountAction(Request $request, UserInterface $user)
+  {
+
+    $data = [
+      'user_form'    => $this->createForm(AccountType::class, $this->user)->createView(),
+      'address_form' => $this->createForm(CoordinateType::class, new Coordinate())->createView(),
+      'user'         => $user,
+      'error'        => null,
+    ];
+    return $this->render('TrailWarehouseAppBundle:User:account.html.twig', $data);
+  }
+
 
   /* -------------------------- */
   /* *** Additional Methods *** */
