@@ -45,7 +45,9 @@ class OrderController extends Controller
     ]);
 
     $form['order'] = $this->createForm(OrderType::class, new Order(), [
-      'action' => $this->generateUrl('app_order_set_address')
+      'action'    => $this->generateUrl('app_order_set_address'),
+      'user'      => $user,
+      'addresses' => $this->repo['coordinate']->getBy('user', $user),
     ]);
 
     $data = [
@@ -56,6 +58,9 @@ class OrderController extends Controller
     return $this->render('TrailWarehouseAppBundle:Order:coordinates.html.twig', $data);
   }
 
+  /**
+   * Route 'app_order_add_address'
+   */
   public function addAddressAction(Request $request, SessionInterface $session, EntityManagerInterface $em, UserInterface $user)
   {
     $coordinate = new Coordinate();
@@ -75,6 +80,37 @@ class OrderController extends Controller
       }
     }
     return $this->redirectToRoute('app_cart');
+  }
+
+  /**
+   * Route 'app_order_set_address'
+   */
+  public function setAddressAction(Request $request, SessionInterface $session, UserInterface $user)
+  {
+    $order = (new Order())->setUser($user);
+    $form = $this->createForm(OrderType::class, $order, [
+      'action'    => $this->generateUrl('app_order_set_address'),
+      'user'      => $user,
+      'addresses' => $this->repo['coordinate']->getBy('user', $user),
+    ]);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() AND $form->isValid()) {
+      $db_coordinate = $this->repo['coordinate']->getOneByArray([
+        'id'   => $order->getCoordinate()->getId(),
+        'user' => $user
+      ]);
+      if (empty($db_coordinate)) {
+        $this->addFlash('warning', 'Cette adresse ne vous appartient pas');
+        return $this->redirectToRoute('app_order_coordinates');
+      }
+
+      $session->set('order', $order);
+      dump($session->get('order'));
+      die();
+      return $this->redirectToRoute('app_order_payment');
+    }
   }
 
   /**
@@ -99,7 +135,7 @@ class OrderController extends Controller
       return $this->redirectToRoute('app_home');
     }
 
-    $iterator = $cart->getItems()->getIterator();
+    $iterator = $items->getIterator();
     $db_promo = $this->repo['promo']->find($cart->getPromo()->getId());
     $order = (new Order())
       ->setUser($user)
