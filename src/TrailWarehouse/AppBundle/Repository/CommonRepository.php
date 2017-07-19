@@ -22,7 +22,7 @@ class CommonRepository extends EntityRepository
    * @return Entity...
    */
   public function getAll($as_array = true) {
-    $query = $this->createQueryBuilder('entity')->getQuery();
+    $query = $this->getBuilder()->getQuery();
     return $as_array ? $query->getArrayResult() : $query->getResult();
   }
 
@@ -39,7 +39,7 @@ class CommonRepository extends EntityRepository
    * @return Array
    */
   public function getOneBy($field, $value, $as_array = true) {
-    $query = $this->createQueryBuilder('entity')
+    $query = $this->getBuilder()
       ->where('entity.'.$field.' = :value')
       ->setParameter('value', $value)
       ->setMaxResults(1)
@@ -49,16 +49,49 @@ class CommonRepository extends EntityRepository
   }
 
   /**
+   * Get Entities by field
+   *
+   * @return Array
+   */
+  public function getBy($field, $value, $as_array = true)
+  {
+    $query = $this->getBuilder()
+      ->where('entity.'. $field .' = :'. $field)
+      ->setParameter($field, $value)
+      ->getQuery()
+    ;
+    return $as_array ? $query->getArrayResult() : $query->getResult();
+  }
+
+  /**
+   * Get Entities by array of fields
+   *
+   * @return Array
+   */
+  public function getByArray(Array $parameters, $as_array = true)
+  {
+    $builder = $this->getBuilder();
+    foreach ($parameters as $field => $value) {
+      $builder
+        ->andWhere('entity.'. $field .' = :'. $field)
+        ->setParameter($field, $value)
+      ;
+    }
+    return $as_array ? $builder->getQuery()->getArrayResult() : $builder->getQuery()->getResult();
+  }
+
+  /**
   * Get one Entity by array
   *
   * @return Array
   */
   public function getOneByArray(array $parameters, $as_array = true) {
-    $builder = $this->createQueryBuilder('entity');
+    $builder = $this->getBuilder();
     foreach ($parameters as $field => $value) {
-      $builder->where('entity.'.$field.' = :'.$field)->setParameter($field, $value);
+      $condition = 'entity.'.$field.' = :'.$field;
+      $builder->andWhere($condition)->setParameter($field, $value);
     }
-    $builder->setMaxResults(1)->getQuery();
+    $query = $builder->setMaxResults(1)->getQuery();
     return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
   }
 
@@ -70,7 +103,7 @@ class CommonRepository extends EntityRepository
    * @return array
    */
   public function getRand($count = 5, $as_array = true) {
-    $query = $this->createQueryBuilder('entity')
+    $query = $this->getBuilder()
       ->addSelect('RAND() as HIDDEN rand')
       ->addOrderBy('rand')
       ->setMaxResults($count)
@@ -109,5 +142,10 @@ class CommonRepository extends EntityRepository
       ->getQuery()
     ;
     return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
+  }
+
+  protected function getBuilder()
+  {
+    return $this->createQueryBuilder('entity');
   }
 }

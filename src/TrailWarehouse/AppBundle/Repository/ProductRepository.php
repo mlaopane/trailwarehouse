@@ -100,7 +100,7 @@ class ProductRepository extends CommonRepository
    *
    * @return Array of arrays
    */
-  public function getBy(Array $parameters, $as_array = true)
+  public function getByArray(Array $parameters, $as_array = true)
   {
     $builder = $this->getBuilder();
     foreach ($parameters as $field => $value) {
@@ -178,7 +178,7 @@ class ProductRepository extends CommonRepository
    *
    * @return QueryBuilder (with joined entities)
    */
-  private function getBuilder() {
+  protected function getBuilder() {
     return $this->createQueryBuilder('product')
       ->addSelect('family, color, size, image, category, brand')
       ->innerJoin('product.family', 'family')

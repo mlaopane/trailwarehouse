@@ -18,62 +18,6 @@ class FamilyRepository extends CommonRepository
 {
 
   /**
-   * @return Family ...
-   */
-  public function getAll($as_array = true) {
-    $query = $this->getBuilder()->getQuery();
-    return $as_array ? $query->getArrayResult() : $query->getResult();
-  }
-
-  /**
-   * @param string $field
-   * @param mixed $value
-   *
-   * @return Family ...
-   */
-  public function getBy($field, $value, $as_array = true) {
-    $query = $this->getBuilder()
-      ->where('family.'. $field .' = :'. $field)
-      ->setParameter($field, $value)
-      ->getQuery()
-    ;
-    return $as_array ? $query->getArrayResult() : $query->getResult();
-  }
-
-  /**
-   * @param string $field
-   * @param mixed $value
-   *
-   * @return Family ...
-   */
-  public function getOneBy($field, $value, $as_array = true) {
-    $query = $this->getBuilder()
-      ->where('family.'. $field .' = :'. $field)
-      ->setParameter($field, $value)
-      ->setMaxResults(1)
-      ->getQuery()
-    ;
-    return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
-  }
-
-  /**
-  * @param string $entity_name
-  * @param Array $entities
-  * @return Family ...
-  */
-  public function getByArray($entity_name, Array $entities, $as_array = true) {
-    $builder = $this->getBuilder();
-    foreach ($entities as $entity) {
-      $builder
-        ->orWhere('family.'. $entity_name .' = :entity')
-        ->setParameter('entity', $entity)
-      ;
-    }
-    $query = $builder->getQuery();
-    return $as_array ? $query->getArrayResult() : $query->getResult();
-  }
-
-  /**
    * @param Category $category
    * @return Family ...
    */
@@ -123,20 +67,11 @@ class FamilyRepository extends CommonRepository
     ;
     return $as_array ? $query->getArrayResult() : $query->getResult();
   }
-  // public function getBestReviews($count = 5, $as_array = true)
-  // {
-  //   $query = $this->getBuilder('family')
-  //     ->orderBy('family.averageRating', 'desc')
-  //     ->setMaxResults($count)
-  //     ->getQuery()
-  //   ;
-  // return $as_array ? $query->getArrayResult() : $query->getResult();
-  // }
 
   /* ----- Private Methods ----- */
-  private function getBuilder() {
+  protected function getBuilder() {
     return $this->_em->createQueryBuilder()
-      ->select('family')
+      ->addSelect('family')
       ->addSelect('category')
       ->addSelect('brand')
       ->from($this->_entityName, 'family')

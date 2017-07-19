@@ -9,10 +9,18 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use TrailWarehouse\AppBundle\Entity\Product;
 use TrailWarehouse\AppBundle\Controller\Api\CommonController;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProductController extends CommonController
 {
+
+  public function __construct(EntityManagerInterface $em)
+  {
+    $this->repo = [
+      'product' => $em->getRepository('TrailWarehouseAppBundle:Product'),
+    ];
+  }
 
   /**
    * getBy
@@ -31,7 +39,7 @@ class ProductController extends CommonController
         ->find($id)
       ;
     }
-    $response = $this->getRepository()->getBy($args);
+    $response = $this->getRepository()->getByArray($args);
     return new JsonResponse($response);
   }
 
@@ -41,7 +49,7 @@ class ProductController extends CommonController
    */
   public function getByFamilyAction(int $family) {
     $parameters = array_combine(['family'], func_get_args());
-    return new JsonResponse($this->getBy($parameters));
+    return new JsonResponse($this->repo['product']->getByArray($parameters));
   }
 
   /**
@@ -51,7 +59,7 @@ class ProductController extends CommonController
    */
   public function getByColorAction(int $family, int $color) {
    $parameters = array_combine(['family', 'color'], func_get_args());
-   return new JsonResponse($this->getBy($parameters));
+   return new JsonResponse($this->repo['product']->getByArray($parameters));
   }
 
   /**
@@ -61,7 +69,7 @@ class ProductController extends CommonController
    */
   public function getBySizeAction(int $family, int $size) {
     $parameters = array_combine(['family', 'size'], func_get_args());
-    return new JsonResponse($this->getBy($parameters));
+    return new JsonResponse($this->repo['product']->getByArray($parameters));
   }
 
 
@@ -182,17 +190,4 @@ class ProductController extends CommonController
 
   /* ----- Protected Methods ----- */
 
-  /**
-   * @param array $parameters
-   * @return array
-   */
-  protected function getBy(Array $parameters) {
-    foreach ($parameters as $entity_name => $entity_id) {
-      $entities[$entity_name] = $this->getDoctrine()
-        ->getRepository('TrailWarehouseAppBundle:'.ucfirst($entity_name))
-        ->find($entity_id)
-      ;
-    }
-    return $this->getRepository()->getBy($entities);
-  }
 }
