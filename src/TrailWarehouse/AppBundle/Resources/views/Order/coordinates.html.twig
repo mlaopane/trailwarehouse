@@ -31,6 +31,7 @@
       </div>
 
       <div class="page-content mx-auto px-3 row">
+
         <div class="col-12 col-md-6 col-xl-5">
 
           <!-- # Form Container -->
@@ -110,28 +111,84 @@
 
         </div>
 
+        <!-- # Col Addresses -->
         <div class="col-12 col-md-6 col-xl-7">
+
+          <!-- # Select Address -->
           <div id="addresses">
             <div class="block">
+
+              <!-- # Card -->
               <div class="card">
+
+                <!-- # Card Header -->
                 <div class="card-header">
-                  <h3 class="mb-0">Mes adresses</h3>
+                  <h3 class="mb-0">Sélectionner une adresse</h3>
                 </div>
-                {% for coordinate in app.user.coordinates %}
-                  <div class="card-block">
-                    <h4 class="card-title font-weight-bold">{{ coordinate.title }}</h4>
-                    <dl class="card-text">
-                      <dd>{{ coordinate.address }}</dd>
-                      <dd>{{ coordinate.zipcode }}</dd>
-                      <dd>{{ coordinate.city }}</dd>
-                    </dl>
-                    <a href="" class="card-link">Supprimer</a>
+                <!-- Card Header # -->
+
+                <!-- # Card Block -->
+                <div class="card-block">
+
+                  <!-- # Select Address Form -->
+                  <div class="form-container bg-white no-border w-100 mx-auto mb-5">
+                    {{ form_start(order_form, {'attr': {'id':'address-form'}}) }}
+
+                      <div class="btn-group mb-4" data-toggle="buttons" id="address-radio">
+                        {% for child in order_form.coordinate.children %}
+                          <label class="btn btn-alt">
+                            <input
+                              type         = "radio"
+                              id           = "{{ child.vars.id }}"
+                              name         = "{{ child.vars.full_name }}"
+                              value        = "{{ child.vars.value }}"
+                              autocomplete = "off"
+                            >{{ child.vars.label }}
+                          </label>
+                        {% endfor %}
+                      </div>
+
+                      {% do order_form.coordinate.setRendered %}
+
+                      <div id="user-addresses">
+                        <div id="no-address" class="ness-block info mb-5">
+                          <span>Aucune addresse sélectionnée</span>
+                        </div>
+                        {% for address in app.user.coordinates %}
+                        <div id="address-{{ address.id }}" class="address ness-block info mb-5 hide">
+                          <h4 class="card-title font-weight-bold">{{ address.title }}</h4>
+                          <dl class="card-text">
+                            <dd>{{ address.address }}</dd>
+                            <dd>{{ address.zipcode }}</dd>
+                            <dd>{{ address.city | upper }}</dd>
+                          </dl>
+                        </div>
+                        {% endfor %}
+                      </div>
+
+                      <div class="form-group">
+                        {{ form_widget(order_form.send) }}
+                      </div>
+
+
+                      {{ form_rest(order_form) }}
+                    {{ form_end(order_form) }}
                   </div>
-                {% endfor %}
+                  <!-- Select Address Form # -->
+
+                </div>
+                <!-- Card Block # -->
+
               </div>
+              <!-- Card # -->
+
             </div>
           </div>
+          <!-- Select Address # -->
+
         </div>
+        <!-- Col Addresses # -->
+
       </div>
 
   </main>
@@ -141,5 +198,5 @@
 
 {% block additional_javascripts %}
   <script src="{{ asset('js/app-common.js') }}"></script>
-  <script src="{{ asset('js/cart.js') }}"></script>
+  <script src="{{ asset('js/order.js') }}"></script>
 {% endblock %}

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Product;
+use TrailWarehouse\AppBundle\Entity\Coordinate;
 use TrailWarehouse\AppBundle\Entity\OrderProduct;
 
 /**
@@ -32,6 +33,14 @@ class Order
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @var Coordinate $coordinate
+     *
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Coordinate")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $coordinate;
 
     /**
      * @var \DateTime
@@ -251,5 +260,29 @@ class Order
     public function getPromo()
     {
         return $this->promo;
+    }
+
+    /**
+     * Set coordinate
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Coordinate $coordinate
+     *
+     * @return Order
+     */
+    public function setCoordinate(\TrailWarehouse\AppBundle\Entity\Coordinate $coordinate)
+    {
+        $this->coordinate = $coordinate;
+
+        return $this;
+    }
+
+    /**
+     * Get coordinate
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Coordinate
+     */
+    public function getCoordinate()
+    {
+        return $this->coordinate;
     }
 }

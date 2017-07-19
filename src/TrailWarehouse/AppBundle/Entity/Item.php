@@ -14,8 +14,6 @@ class Item
 {
     /**
      * @var Product $product
-     *
-     * @ORM\OneToOne(targetEntity="Product")
      */
     private $product;
 

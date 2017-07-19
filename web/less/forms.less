@@ -51,6 +51,23 @@ button {
   border-radius: 3px;
   cursor: pointer;
   font-family: 'Fira Sans';
+  &:focus, &.focus {
+    outline: 0 !important;
+    box-shadow: none;
+  }
+  &-alt {
+    background: @blue;
+    color: white;
+    border: 1px solid @darkblue;
+    &:hover, &.active {
+      background: @darkblue;
+      border: 1px solid @darkblue;
+      color: @whitegrey;
+      a {
+        color: @whitegrey;
+      }
+    }
+  }
   &-default {
     background: @lightgrey;
     color: @darkgrey;
@@ -61,7 +78,7 @@ button {
     background: @lightgrey;
     color: @darkgrey;
     border: 1px solid @grey;
-    &:hover {
+    &:hover, &.active {
       background: @darkgrey;
       border: 1px solid @blackgrey;
       a {
@@ -79,7 +96,7 @@ button {
       display: block;
       width: 100%;
     }
-    &:hover {
+    &:hover, &.active {
       background: @bg-btn-confirm-hover;
       border: 1px solid darken(@bg-btn-confirm-hover, 5%);
       a {
@@ -97,7 +114,7 @@ button {
       display: block;
       width: 100%;
     }
-    &:hover {
+    &:hover, &.active {
       background: @bg-btn-action-hover;
       border: 1px solid darken(@bg-btn-action-hover, 5%);
       color: white;
