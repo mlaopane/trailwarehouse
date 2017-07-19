@@ -107,8 +107,6 @@ class OrderController extends Controller
       }
 
       $session->set('order', $order);
-      dump($session->get('order'));
-      die();
       return $this->redirectToRoute('app_order_payment');
     }
   }
