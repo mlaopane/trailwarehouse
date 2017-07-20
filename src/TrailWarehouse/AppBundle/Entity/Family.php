@@ -55,30 +55,31 @@ class Family
     private $category;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="FamilyColor", mappedBy="family")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $colors;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(name="slug", type="string", length=255)
-     *
-     */
+    * @var string
+    *
+    * @Gedmo\Slug(fields={"name"})
+    * @ORM\Column(name="slug", type="string", length=255)
+    *
+    */
     private $slug;
 
     /**
      * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="FamilyColor", mappedBy="family")
+     */
+    private $colors;
+
+    /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Product", mappedBy="family")
      */
     private $products;
 
     /**
      * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Review", mappedBy="family")
      */
     private $reviews;

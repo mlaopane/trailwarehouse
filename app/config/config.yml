@@ -81,127 +81,80 @@ swiftmailer:
     spool: { type: memory }
 
 easy_admin :
-    site_name     : '<em style="font-size:1.8rem;">Trail&nbsp;Warehouse&nbsp;Admin</em>'
+    site_name : '<em style="font-size:1.8rem;">Trail&nbsp;Warehouse&nbsp;Admin</em>'
     design :
-        brand_color : '#0EAA80'
-    entities      :
+        brand_color : 'hsl(348, 65%, 50%)'
+        color_scheme : 'dark'
+        assets :
+            favicon :
+                path : 'assets/images/feet.png'
+                mime_type : 'image/png'
+            css :
+                - 'css/admin.css'
+    list         :
+        title    : 'Liste des %%entity_label%%'
+    show         :
+        title    : '%%entity_label%% (#%%entity_id%%)'
+    formats      :
+        datetime : 'd/m/Y H:i:s'
+        number   : '%.2f'
+
+    entities :
         User      :
             class : TrailWarehouse\AppBundle\Entity\User
+            label : 'Utilisateurs'
+            help  : 'Rôles disponibles : <em class="txt-secondary">ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN</em>'
         Brand     :
             class : TrailWarehouse\AppBundle\Entity\Brand
+            label : 'Marques'
+            list :
+              fields :
+                - id
+                - { property : 'name', label : 'Nom', type : 'string' }
         Category  :
             class : TrailWarehouse\AppBundle\Entity\Category
+            label : 'Catégories'
+            list :
+              fields :
+                - id
+                - { property : 'name', label : 'Nom', type : 'string' }
         Family    :
             class : TrailWarehouse\AppBundle\Entity\Family
+            label : 'Familles'
+            list :
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom', type : 'string' }
+                    - { property : 'brand', label : 'Marque', type : 'association' }
+                    - { property : 'category', label : 'Catégorie', type : 'association' }
+                    - { property : 'products', label : 'Produits' }
+                    - { property : 'colors', label : 'Visuels' }
+                    - { property : 'reviews', label : 'Notes' }
         Product   :
             class : TrailWarehouse\AppBundle\Entity\Product
+            label : 'Produits'
         Order     :
             class : TrailWarehouse\AppBundle\Entity\Order
+            label : 'Commandes'
+        Promo     :
+            class : TrailWarehouse\AppBundle\Entity\Promo
+            label : 'Codes promo'
+            list :
+                fields :
+                    - id
+                    - { property : 'code', label : 'Code', type : 'string' }
+                    - { property : 'value', label : 'Valeur', type : 'float' }
+                    - { property : 'isNew', label : 'Nouveau', type : 'boolean' }
+                    - { property : 'isActive', label : 'Actif', type : 'boolean' }
+                    - { property : 'isExpired', label : 'Expiré', type : 'boolean' }
+                    - { property : 'start', label : 'Début', type : 'datetime' }
+                    - { property : 'end', label : 'Fin', type : 'datetime' }
         Review    :
             class : TrailWarehouse\AppBundle\Entity\Review
+            label : 'Notes'
         Vat       :
             class : TrailWarehouse\AppBundle\Entity\Vat
-
-imports:
-    - { resource: parameters.yml }
-    - { resource: security.yml }
-    - { resource: services.yml }
-
-# Put parameters here that don't need to change on each machine where the app is deployed
-# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    locale: en
-
-framework:
-    #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
-    secret: '%secret%'
-    router:
-        resource: '%kernel.root_dir%/config/routing.yml'
-        strict_requirements: ~
-    form: ~
-    csrf_protection: ~
-    validation: { enable_annotations: true }
-    #serializer: { enable_annotations: true }
-    templating:
-        engines: ['twig']
-    default_locale: '%locale%'
-    trusted_hosts: ~
-    session:
-        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id:  session.handler.native_file
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
-    fragments: ~
-    http_method_override: true
-    assets: ~
-    php_errors:
-        log: true
-
-# Twig Configuration
-twig:
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
-
-# Doctrine Configuration
-doctrine:
-    dbal:
-        driver: pdo_mysql
-        host: '%database_host%'
-        port: '%database_port%'
-        dbname: '%database_name%'
-        user: '%database_user%'
-        password: '%database_password%'
-        charset: utf8mb4
-        default_table_options:
-          charset: utf8mb4
-          collate: utf8mb4_unicode_ci
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/../var/data/data.sqlite"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #path: '%database_path%'
-
-    orm:
-        auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-        dql:
-            numeric_functions:
-                Rand: TrailWarehouse\AppBundle\DQL\RandFunction
-
-# "Stof\DoctrineExtensionsBundle" Configuration
-stof_doctrine_extensions:
-    orm:
-        default:
-            sluggable: true
-
-# Swiftmailer Configuration
-swiftmailer:
-    transport: '%mailer_transport%'
-    host: '%mailer_host%'
-    username: '%mailer_user%'
-    password: '%mailer_password%'
-    spool: { type: memory }
-
-easy_admin :
-    site_name     : '<em style="font-size:1.8rem;">Trail&nbsp;Warehouse&nbsp;Admin</em>'
-    design :
-        brand_color : '#0EAA80'
-    entities      :
-        User      :
-            class : TrailWarehouse\AppBundle\Entity\User
-        Brand     :
-            class : TrailWarehouse\AppBundle\Entity\Brand
-        Category  :
-            class : TrailWarehouse\AppBundle\Entity\Category
-        Family    :
-            class : TrailWarehouse\AppBundle\Entity\Family
-        Product   :
-            class : TrailWarehouse\AppBundle\Entity\Product
-        Order     :
-            class : TrailWarehouse\AppBundle\Entity\Order
-        Review    :
-            class : TrailWarehouse\AppBundle\Entity\Review
-        Vat       :
-            class : TrailWarehouse\AppBundle\Entity\Vat
+            label : 'Taux'
+        Image     :
+            class : TrailWarehouse\AppBundle\Entity\Image
+            label : 'Images'

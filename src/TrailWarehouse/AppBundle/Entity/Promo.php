@@ -158,9 +158,33 @@ class Promo
         return $this->end;
     }
 
+    /**
+     *
+     * @return bool
+     */
+    public function isNew()
+    {
+        $now = new \DateTime();
+        return $now <= $this->start;
+    }
+
+    /**
+     *
+     * @return bool
+     */
     public function isActive()
     {
         $now = new \DateTime();
         return $this->start <= $now AND $now <= $this->end;
+    }
+
+    /**
+     *
+     * @return bool
+     */
+    public function isExpired()
+    {
+        $now = new \DateTime();
+        return $this->end <= $now;
     }
 }
