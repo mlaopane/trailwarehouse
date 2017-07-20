@@ -11,5 +11,4 @@ use Doctrine\ORM\Query;
  */
 class CategoryRepository extends CommonRepository
 {
-
 }

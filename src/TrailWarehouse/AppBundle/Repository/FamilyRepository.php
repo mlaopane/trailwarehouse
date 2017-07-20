@@ -16,7 +16,6 @@ use Doctrine\ORM\Query;
  */
 class FamilyRepository extends CommonRepository
 {
-
   /**
    * @param Category $category
    * @return Family ...

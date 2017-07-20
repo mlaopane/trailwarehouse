@@ -135,8 +135,10 @@ class OrderController extends Controller
 
     $iterator = $items->getIterator();
     $db_promo = $this->repo['promo']->find($cart->getPromo()->getId());
-    $order = (new Order())
-      ->setUser($user)
+    $today = new \DateTime();
+    $order = $session->get('order')
+      ->setCreationDate($today)
+      ->setSendingDate($today->add(new DateInterval('P1D')))
       ->setPromo($db_promo)
       ->setTotal($cart->getTotal())
     ;

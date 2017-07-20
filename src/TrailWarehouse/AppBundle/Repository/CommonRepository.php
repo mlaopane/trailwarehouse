@@ -13,8 +13,15 @@ use Doctrine\ORM\EntityRepository;
  *
  * @author  Mickael LAO-PANE <mlaopane@gmail.com>
  */
-class CommonRepository extends EntityRepository
+abstract class CommonRepository extends EntityRepository
 {
+  protected $entity_name;
+
+  public function __construct($em, \Doctrine\ORM\Mapping\ClassMetadata $class)
+  {
+    parent::__construct($em, $class);
+    $this->entity_name = lcfirst(str_replace([__NAMESPACE__, '\\', 'Repository'], '', static::class));
+  }
 
   /**
    * Get all Entities
@@ -40,7 +47,7 @@ class CommonRepository extends EntityRepository
    */
   public function getOneBy($field, $value, $as_array = true) {
     $query = $this->getBuilder()
-      ->where('entity.'.$field.' = :value')
+      ->where($this->entity_name.'.'.$field.' = :value')
       ->setParameter('value', $value)
       ->setMaxResults(1)
       ->getQuery()
@@ -56,7 +63,7 @@ class CommonRepository extends EntityRepository
   public function getBy($field, $value, $as_array = true)
   {
     $query = $this->getBuilder()
-      ->where('entity.'. $field .' = :'. $field)
+      ->where($this->entity_name.'.'. $field .' = :'. $field)
       ->setParameter($field, $value)
       ->getQuery()
     ;
@@ -73,7 +80,7 @@ class CommonRepository extends EntityRepository
     $builder = $this->getBuilder();
     foreach ($parameters as $field => $value) {
       $builder
-        ->andWhere('entity.'. $field .' = :'. $field)
+        ->andWhere($this->entity_name.'.'. $field .' = :'. $field)
         ->setParameter($field, $value)
       ;
     }
@@ -88,7 +95,7 @@ class CommonRepository extends EntityRepository
   public function getOneByArray(array $parameters, $as_array = true) {
     $builder = $this->getBuilder();
     foreach ($parameters as $field => $value) {
-      $condition = 'entity.'.$field.' = :'.$field;
+      $condition = $this->entity_name.'.'.$field.' = :'.$field;
       $builder->andWhere($condition)->setParameter($field, $value);
     }
     $query = $builder->setMaxResults(1)->getQuery();
@@ -135,7 +142,7 @@ class CommonRepository extends EntityRepository
   public function getOneRandBy($field, $value, $as_array = true) {
     $query = $this->createQueryBuilder('entity')
       ->addSelect('RAND() as HIDDEN rand')
-      ->where('entity.'.$field.' = :value')
+      ->where($this->entity_name.'.'.$field.' = :value')
       ->setParameter('value', $value)
       ->addOrderBy('rand')
       ->setMaxResults(1)
@@ -146,6 +153,6 @@ class CommonRepository extends EntityRepository
 
   protected function getBuilder()
   {
-    return $this->createQueryBuilder('entity');
+    return $this->_em->createQueryBuilder($this->entity_name);
   }
 }
