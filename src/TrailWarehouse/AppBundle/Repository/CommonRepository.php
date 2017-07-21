@@ -153,6 +153,6 @@ abstract class CommonRepository extends EntityRepository
 
   protected function getBuilder()
   {
-    return $this->_em->createQueryBuilder($this->entity_name);
+    return $this->createQueryBuilder($this->entity_name);
   }
 }
