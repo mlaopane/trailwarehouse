@@ -80,7 +80,6 @@ class Order
 
     public function __construct()
     {
-        $this->creationDate = new \DateTime();
     }
 
     /* ---------- Getters & Setters ---------- */
