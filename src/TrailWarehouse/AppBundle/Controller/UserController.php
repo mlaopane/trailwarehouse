@@ -15,6 +15,7 @@ use TrailWarehouse\AppBundle\Entity\Coordinate;
 use TrailWarehouse\AppBundle\Form\SignupType;
 use TrailWarehouse\AppBundle\Form\SigninType;
 use TrailWarehouse\AppBundle\Form\AccountType;
+use TrailWarehouse\AppBundle\Form\CoordinateType;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -92,7 +93,7 @@ class UserController extends Controller
     // Return
     return $this->render('TrailWarehouseAppBundle:Home:index.html.twig');
   }
-  
+
   /**
    * 'account' route
    */
