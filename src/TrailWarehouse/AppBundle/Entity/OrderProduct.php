@@ -33,7 +33,7 @@ class OrderProduct
     /**
      * @var Product $product
      *
-     * @ORM\ManyToOne(targetEntity="Product")
+     * @ORM\ManyToOne(targetEntity="Product", cascade={"persist"})
      */
     private $product;
 
