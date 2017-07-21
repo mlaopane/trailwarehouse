@@ -112,6 +112,16 @@ class Color
     }
 
     /**
+     * Get echantillon
+     *
+     * @return string
+     */
+    public function getEchantillon()
+    {
+        return $this->value;
+    }
+
+    /**
      * Set slug
      *
      * @param string $slug

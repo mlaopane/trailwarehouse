@@ -39,13 +39,6 @@ class Image
     private $src;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="alt", type="string", length=191)
-     */
-    private $alt;
-
-    /**
      * @var Family
      *
      * @ORM\ManyToOne(targetEntity="Family")
@@ -118,30 +111,6 @@ class Image
     public function getSrc()
     {
         return $this->src;
-    }
-
-    /**
-     * Set alt
-     *
-     * @param string $alt
-     *
-     * @return Image
-     */
-    public function setAlt($alt)
-    {
-        $this->alt = $alt;
-
-        return $this;
-    }
-
-    /**
-     * Get alt
-     *
-     * @return string
-     */
-    public function getAlt()
-    {
-        return $this->alt;
     }
 
     /**

@@ -1,7 +1,65 @@
 // out : ../css/admin.css
 
 @import "../bower_components/ness/less/color.less";
+@import "../bower_components/ness/less/block.less";
+@import "../bower_components/ness/less/contextual.less";
+@import "../bower_components/ness/less/flex.less";
 @import "glyphicons.less";
 @import "breakpoints.less";
 @import "variables.less";
 @import "colors.less";
+
+.easyadmin
+{
+
+  .value {
+    padding: 0px 4px;
+  }
+
+  .echantillon {
+    border: 1px solid black;
+    height: 24px;
+    width: 24px;
+  }
+
+  &.list, &.show, &.view, &.edit
+  {
+    .table-responsive {
+    }
+    // Table
+    table
+    {
+      // Head
+      thead
+      {
+        tr {
+          th {
+            background: @darkgrey;
+            border-bottom: 2px solid hsl(348, 65%, 50%);
+            color: white;
+            a, span {
+              color: white;
+              &:hover {
+                background: lighten(@grey, 5%);
+              }
+            }
+          }
+        }
+      }
+      // Body
+      tbody
+      {
+        tr {
+          &:nth-child(odd) {
+            background: white;
+          }
+          &:nth-child(even) {
+            background: hsl(200, 40%, 98%);
+          }
+        }
+      }
+    }
+  }
+
+
+}

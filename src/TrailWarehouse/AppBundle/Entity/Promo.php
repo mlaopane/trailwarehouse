@@ -109,6 +109,15 @@ class Promo
         return $this->value;
     }
 
+    /**
+     * Get percentage
+     *
+     * @return string
+     */
+    public function getPercentage()
+    {
+        return $this->value * 100;
+    }
 
     /**
      * Set start

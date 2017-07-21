@@ -1,0 +1,15 @@
+<div class="">
+
+  {% if field_options.property is same as ('price') %}
+    {% set currency = '&nbsp;&euro;' %}
+  {% else %}
+    {% set currency = '' %}
+  {% endif %}
+
+  {% if field_options.format %}
+    <span>{{ field_options.format|format(value) }}{{ currency|raw }}</span>
+  {% else %}
+    <span>{{ value|number_format(2) }}</span>
+  {% endif %}
+
+</div>

@@ -1,0 +1,19 @@
+<div>
+
+  {% if field_options.property is same as ('echantillon') %}
+
+    <div class="echantillon" style="background: {{ value }}"></div>
+
+  {% else %}
+
+    <div class="value">
+    {% if view == 'show' %}
+      <span>{{ value|nl2br }}</span>
+    {% else %}
+      <span>{{ value|easyadmin_truncate }}</span>
+    {% endif %}
+    </div>
+
+  {% endif %}
+
+</div>

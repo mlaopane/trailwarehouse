@@ -81,23 +81,25 @@ swiftmailer:
     spool: { type: memory }
 
 easy_admin :
+
     site_name : '<em style="font-size:1.8rem;">Trail&nbsp;Warehouse&nbsp;Admin</em>'
+
     design :
         brand_color : 'hsl(348, 65%, 50%)'
         color_scheme : 'dark'
         assets :
             favicon :
-                path : 'assets/images/feet.png'
+                path : 'images/feet.png'
                 mime_type : 'image/png'
             css :
                 - 'css/admin.css'
+
     list         :
         title    : 'Liste des %%entity_label%%'
     show         :
         title    : '%%entity_label%% (#%%entity_id%%)'
     formats      :
-        datetime : 'd/m/Y H:i:s'
-        number   : '%.2f'
+        datetime : 'Y, M, j @ H:i:s'
 
     entities :
         User      :
@@ -133,6 +135,33 @@ easy_admin :
         Product   :
             class : TrailWarehouse\AppBundle\Entity\Product
             label : 'Produits'
+            list :
+              fields :
+                - id
+                - { property : 'name', label : 'Nom', type : 'string' }
+                - { property : 'family', label : 'Famille', type : 'association' }
+                - { property : 'color', label : 'Couleur', type : 'association' }
+                - { property : 'size', label : 'Taille', type : 'association' }
+                - { property : 'stock', label : 'Stock', type : 'integer' }
+                - { property : 'price', label : 'Prix', type : 'float', format : '%.2f' }
+        Color     :
+            class : TrailWarehouse\AppBundle\Entity\Color
+            label : 'Couleurs'
+            list :
+              fields :
+                - id
+                - { property : 'name', label : 'Nom', type : 'string' }
+                - { property : 'value', label : 'Valeur', type : 'string' }
+                - { property : 'echantillon', label : 'Echantillon', type : 'string' }
+        Size      :
+            class : TrailWarehouse\AppBundle\Entity\Size
+            label : 'Tailles'
+            list :
+              fields :
+                - id
+                - { property : 'value', label : 'Valeur', type : 'string' }
+                - { property : 'unit', label : 'Unité', type : 'string' }
+                - { property : 'unitShortcut', label : 'Raccourci', type : 'string' }
         Order     :
             class : TrailWarehouse\AppBundle\Entity\Order
             label : 'Commandes'
@@ -151,10 +180,15 @@ easy_admin :
                     - { property : 'end', label : 'Fin', type : 'datetime' }
         Review    :
             class : TrailWarehouse\AppBundle\Entity\Review
-            label : 'Notes'
+            label : 'Avis'
         Vat       :
             class : TrailWarehouse\AppBundle\Entity\Vat
             label : 'Taux'
+            list :
+                fields :
+                    - id
+                    - { property : 'country', label : 'Pays', type : 'string' }
+                    - { property : 'value', label : 'Valeur', type : 'float' }
         Image     :
             class : TrailWarehouse\AppBundle\Entity\Image
             label : 'Images'
