@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use TrailWarehouse\AppBundle\Entity\Cart;
+use TrailWarehouse\AppBundle\Entity\Item;
+use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Promo;
 use TrailWarehouse\AppBundle\Entity\Order;
 use TrailWarehouse\AppBundle\Entity\Product;
@@ -20,20 +22,37 @@ class OrderController extends Controller
 {
 
   protected $repo;
+  protected $order;
+  protected $cart;
 
-  public function __construct(EntityManagerInterface $em)
+  public function __construct(EntityManagerInterface $em, SessionInterface $session)
   {
+    /* Init repositories */
     $this->repo = [
+      'user'       => $em->getRepository('TrailWarehouseAppBundle:User'),
       'product'    => $em->getRepository('TrailWarehouseAppBundle:Product'),
       'promo'      => $em->getRepository('TrailWarehouseAppBundle:Promo'),
       'coordinate' => $em->getRepository('TrailWarehouseAppBundle:Coordinate'),
     ];
+
+    /* Init Cart IF it exists in the session */
+    if (empty($this->cart = $session->get('cart'))) {
+      return $this->redirectToRoute('app_cart');
+    }
+
+    /* Init Order -> Create a new one if it doesn't exist in the session */
+    if (empty($this->order = $session->get('order'))) {
+      $this->order = new Order();
+      $session->set('order', $this->order);
+    }
   }
+
+  /* ----- Routes ----- */
 
   /**
    * Route 'app_order_coordinates'
    */
-  public function coordinatesAction(Request $request, SessionInterface $session, UserInterface $user)
+  public function coordinatesAction(SessionInterface $session, UserInterface $user)
   {
     if (false === $session->get('checkout')) {
       return $this->redirectToRoute('app_cart');
@@ -47,7 +66,7 @@ class OrderController extends Controller
     $form['order'] = $this->createForm(OrderType::class, new Order(), [
       'action'    => $this->generateUrl('app_order_set_address'),
       'user'      => $user,
-      'addresses' => $this->repo['coordinate']->getBy('user', $user),
+      'addresses' => $this->repo['coordinate']->findByUser($user),
     ]);
 
     $data = [
@@ -76,6 +95,7 @@ class OrderController extends Controller
         $em->persist($coordinate);
         $em->flush();
         $this->addFlash('success', "Adresse ajoutée !");
+        $session->set('checkout', true);
         return $this->redirectToRoute('app_order_coordinates');
       }
     }
@@ -87,16 +107,17 @@ class OrderController extends Controller
    */
   public function setAddressAction(Request $request, SessionInterface $session, UserInterface $user)
   {
-    $order = (new Order())->setUser($user);
+    $order = $session->get('order');
     $form = $this->createForm(OrderType::class, $order, [
       'action'    => $this->generateUrl('app_order_set_address'),
       'user'      => $user,
-      'addresses' => $this->repo['coordinate']->getBy('user', $user),
+      'addresses' => $this->repo['coordinate']->findByUser($user),
     ]);
 
     $form->handleRequest($request);
 
-    if ($form->isSubmitted() AND $form->isValid()) {
+    if ($form->isSubmitted() AND $form->isValid())
+    {
       $db_coordinate = $this->repo['coordinate']->getOneByArray([
         'id'   => $order->getCoordinate()->getId(),
         'user' => $user
@@ -105,9 +126,8 @@ class OrderController extends Controller
         $this->addFlash('warning', 'Cette adresse ne vous appartient pas');
         return $this->redirectToRoute('app_order_coordinates');
       }
-
       $session->set('order', $order);
-      return $this->redirectToRoute('app_order_payment');
+      return $this->redirectToRoute('app_order_create');
     }
   }
 
@@ -125,47 +145,96 @@ class OrderController extends Controller
   /**
    * Route 'app_order_create'
    */
-  public function createAction(Request $request, SessionInterface $session, EntityManagerInterface $em, UserInterface $user)
+  public function createAction(SessionInterface $session, EntityManagerInterface $em, UserInterface $user)
   {
     $cart  = $session->get('cart');
-    $items = $cart->getItems();
-    if (empty($cart) OR $items->count() === 0) {
-      return $this->redirectToRoute('app_home');
+    $order = $session->get('order');
+
+    if (empty($cart) OR $cart->getItems()->count() < 1 OR empty($order->getCoordinate())) {
+      return $this->redirectToRoute('app_cart');
     }
 
-    $iterator = $items->getIterator();
-    $db_promo = $this->repo['promo']->find($cart->getPromo()->getId());
-    $today = new \DateTime();
-    $order = $session->get('order')
-      ->setCreationDate($today)
-      ->setSendingDate($today->add(new DateInterval('P1D')))
-      ->setPromo($db_promo)
+    $user = $this->repo['user']->find($user->getId());
+    $address = $this->repo['coordinate']->find($order->getCoordinate()->getId());
+
+    $this->persistOrder($order->setUser($user)->setCoordinate($address), $cart, $em);
+    if (false === $this->persistOrderProducts($order, $cart, $em)) {
+      return $this->redirectToRoute('app_cart');
+    }
+
+    $em->flush();
+    $this->addFlash('success', 'Votre commande a été finalisée avec succès !');
+
+    return $this->redirectToRoute('app_order_success');
+  }
+
+  /**
+   * Route 'app_order_success'
+   */
+  public function successAction(SessionInterface $session)
+  {
+    $session->remove('order');
+    $session->remove('cart');
+    return $this->redirectToRoute('app_account');
+  }
+
+
+  /* ----- Utilities ----- */
+
+  /**
+   * @return An order initialized from the cart
+   */
+  private function persistOrder(Order $order, Cart $cart, EntityManagerInterface $em)
+  {
+    $creation_date = new \DateTime();
+    $sending_date = (new \DateTime())->add(new \DateInterval('P1D'));
+    $order = $order
+      ->setCreationDate($creation_date)
+      ->setSendingDate($sending_date)
+      ->setPromo($cart->getPromo())
       ->setTotal($cart->getTotal())
     ;
+    return $em->persist($order);
+  }
+
+  /**
+   *
+   */
+  private function persistOrderProducts(Order $order, Cart $cart, EntityManagerInterface $em)
+  {
+    $iterator = $cart->getItems()->getIterator();
 
     while($iterator->valid())
     {
       $item = $iterator->current();
       $db_product = $this->repo['product']->find($item->getProduct()->getId());
+
       if ($db_product->getStock() < $item->getQuantity()) {
         $this->addFlash('failure', "Le produit <span class=\"font-weight-bold\">". $db_product->getName() ."</strong> n'est plus disponible pour la quantité demandée");
-        return $this->redirectToRoute('app_cart');
+        return false;
       }
-      $order_product = (new OrderProduct())
-        ->setOrder($order)
-        ->setProduct($db_product)
-        ->setQuantity($item->getQuantity())
-        ->setTotal($item->getTotal())
-      ;
-      $em->persist($order_product);
+
+      $em->persist($this->createOrderProduct($order, $item));
       $iterator->next();
     }
 
-    $em->persist($order);
-    $em->flush();
-    $cart = new Cart();
+    return true;
+  }
 
-    return $this->redirectToRoute('app_account');
+  /**
+   * @return An OrderProduct created from an $order and an $item
+   */
+  private function createOrderProduct(Order $order, Item $item)
+  {
+    $product   = $this->repo['product']->find($item->getProduct()->getId());
+    $quantity  = $item->getQuantity();
+    $new_stock = $product->getStock() - $quantity;
+    return (new OrderProduct())
+      ->setOrder($order)
+      ->setProduct($product->setStock($new_stock))
+      ->setQuantity($quantity)
+      ->setTotal($item->getTotal())
+    ;
   }
 
 }

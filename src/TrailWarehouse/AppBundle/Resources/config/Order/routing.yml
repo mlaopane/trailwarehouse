@@ -18,8 +18,8 @@ app_order_add_address    :
 
 app_order_set_address    :
   path                   : /associer-adresse
+  methods                : [POST]
   defaults               :
-    methods              : [POST]
     _controller          : TrailWarehouseAppBundle:Order:setAddress
 
 app_order_payment        :
@@ -31,3 +31,8 @@ app_order_create         :
   path                   : /creation
   defaults               :
     _controller          : TrailWarehouseAppBundle:Order:create
+
+app_order_success        :
+  path                   : /commande-ok
+  defaults               :
+    _controller          : TrailWarehouseAppBundle:Order:success
