@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 use FOS\UserBundle\Model\UserInterface;
+use TrailWarehouse\AppBundle\Entity\Coordinate;
 
 class OrderType extends AbstractType
 {
@@ -24,21 +25,35 @@ class OrderType extends AbstractType
       $addresses = $options['addresses'];
       $attr = ['class' => 'mb-3'];
       $builder
-        ->add('coordinate', EntityType::class, [
-          'class'         => 'TrailWarehouseAppBundle:Coordinate',
-          'label'         => 'Adresse',
-          'attr'          => $attr,
-          'expanded'      => true,
-          'choice_label'  => function ($coordinate) {
-            return ucfirst(mb_strtolower($coordinate->getTitle(), 'UTF-8'));
+        ->add('coordinate', ChoiceType::class, [
+          'label'        => 'Adresse',
+          'attr'         => $attr,
+          'expanded'     => true,
+          'choices'      => $addresses,
+          'choice_label' => function($address, $key, $index) {
+            return ucfirst($address->getTitle());
           },
-          'query_builder' => function ($er) use ($user) {
-            return $er->createQueryBuilder('address')
-              ->where('address.user = :user')
-              ->setParameter('user', $user)
-            ;
+          'choice_value' => function($address) {
+            if (!empty($address)) {
+              return $address->getId();
+            }
           },
         ])
+        // ->add('coordinate', EntityType::class, [
+        //   'class'         => 'TrailWarehouseAppBundle:Coordinate',
+        //   'label'         => 'Adresse',
+        //   'attr'          => $attr,
+        //   'expanded'      => true,
+        //   'choice_label'  => function ($coordinate) {
+        //     return ucfirst(mb_strtolower($coordinate->getTitle(), 'UTF-8'));
+        //   },
+        //   'query_builder' => function ($er) use ($user) {
+        //     return $er->createQueryBuilder('address')
+        //       ->where('address.user = :user')
+        //       ->setParameter('user', $user)
+        //     ;
+        //   },
+        // ])
         ->add('send', SubmitType::class, [
           'label' => 'Valider',
           'attr'  => ['class' => 'btn btn-confirm w-100'],
