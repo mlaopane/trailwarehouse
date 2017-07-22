@@ -11,4 +11,11 @@ use TrailWarehouse\AppBundle\Repository\CommonRepository;
  */
 class OrderRepository extends CommonRepository
 {
+  protected function getBuilder()
+  {
+    return $this->createQueryBuilder('tw_order')
+      ->innerJoin('tw_order.user', 'user')
+      ->leftJoin('tw_order.coordinate', 'coordinate')
+    ;
+  }
 }
