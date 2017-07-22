@@ -20,7 +20,7 @@ abstract class CommonRepository extends EntityRepository
   public function __construct($em, \Doctrine\ORM\Mapping\ClassMetadata $class)
   {
     parent::__construct($em, $class);
-    $this->entity_name = lcfirst(str_replace([__NAMESPACE__, '\\', 'Repository'], '', static::class));
+    $this->entity_name = 'tw_'.lcfirst(str_replace([__NAMESPACE__, '\\', 'Repository'], '', static::class));
   }
 
   /**
@@ -151,6 +151,9 @@ abstract class CommonRepository extends EntityRepository
     return $as_array ? $query->getOneOrNullResult(Query::HYDRATE_ARRAY) : $query->getOneOrNullResult();
   }
 
+  /**
+   * @return QueryBuilder
+   */
   protected function getBuilder()
   {
     return $this->createQueryBuilder($this->entity_name);
