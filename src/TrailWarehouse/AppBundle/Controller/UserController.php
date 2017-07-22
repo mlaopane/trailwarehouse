@@ -26,8 +26,14 @@ class UserController extends Controller
   /* --------------------- */
 
   protected $user;
+  protected $repo;
 
-  public function __construct() {
+  public function __construct(EntityManagerInterface $em)
+  {
+    $this->repo = [
+      'user'  => $em->getRepository('TrailWarehouseAppBundle:User'),
+      'order' => $em->getRepository('TrailWarehouseAppBundle:Order'),
+    ];
     $this->user = new User();
   }
 
@@ -39,24 +45,26 @@ class UserController extends Controller
    * 'signup' route
    * @param Request $request
    */
-  public function signupAction(Request $request) {
+  public function signupAction(Request $request)
+  {
     $form = $this->createForm(SignupType::class, $this->user);
     $form->handleRequest($request);
     // Form submitted ?
-    if ($form->isSubmitted() AND $form->isValid()) {
-      // Super Admin ?
-      if ($this->user->getEmail() == 'mlaopane@gmail.com') {
-        $this->user->setRole('ROLE_SUPER_ADMIN');
-      }
-      // Admin ?
-      if ($this->user->getEmail() == 'mykel.chang@gmail.com') {
-        $this->user->setRole('ROLE_ADMIN');
-      }
+    if ($form->isSubmitted() AND $form->isValid())
+    {
       $manager = $this->getDoctrine()->getManager();
       $manager->persist($this->user);
       $manager->flush();
-      // Redirect to the Shop
       return $this->redirectToRoute('app_home');
+
+      /* Auto-login after rrgistration */
+      // return $this
+      //   ->get('security.authentication.guard_handler')
+      //   ->authenticateUserAndHandleSuccess(
+      //     $user,
+      //     $request,
+      //     $this->get('app.security.login_form_authenticator')
+      //   );
     }
     // Display the form to sign up
     $data = [
@@ -87,8 +95,8 @@ class UserController extends Controller
   }
 
   /**
-  * 'signout' route
-  */
+   * 'signout' route
+   */
   public function signoutAction(Request $request) {
     // Return
     return $this->render('TrailWarehouseAppBundle:Home:index.html.twig');
@@ -99,12 +107,17 @@ class UserController extends Controller
    */
   public function accountAction(Request $request, UserInterface $user)
   {
-
     $data = [
-      'user_form'    => $this->createForm(AccountType::class, $this->user)->createView(),
+      'user_form'    => $this->createForm(AccountType::class, $user)->createView(),
       'address_form' => $this->createForm(CoordinateType::class, new Coordinate())->createView(),
       'user'         => $user,
+      'orders'       => $this->repo['order']->getBy('user', $user),
       'error'        => null,
+      'tabs'         => [
+        [ 'label' => 'Mon profil', 'class' => 'active' ],
+        [ 'label' => 'Mes commandes' ],
+        [ 'label' => 'Mes adresses'],
+      ],
     ];
     return $this->render('TrailWarehouseAppBundle:User:account.html.twig', $data);
   }
