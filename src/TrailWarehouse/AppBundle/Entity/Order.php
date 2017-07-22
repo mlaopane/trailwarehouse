@@ -29,7 +29,7 @@ class Order
     /**
      * @var User $user
      *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

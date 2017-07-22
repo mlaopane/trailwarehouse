@@ -7,7 +7,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use TrailWarehouse\AppBundle\Entity\Order;
 use TrailWarehouse\AppBundle\Entity\Coordinate;
+use TrailWarehouse\AppBundle\Entity\Review;
 
 /**
 * User
@@ -107,6 +109,13 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * @var ArrayCollection
     *
+    * @ORM\OneToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Order", mappedBy="user")
+    */
+    private $orders;
+
+    /**
+    * @var ArrayCollection
+    *
     * @ORM\OneToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Review", mappedBy="user")
     */
     private $reviews;
@@ -114,10 +123,13 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * Constructor
     */
-    public function __construct() {
+    public function __construct()
+    {
         $this->coordinates  = new ArrayCollection();
+        $this->orders       = new ArrayCollection();
         $this->reviews      = new ArrayCollection();
         $this->creationDate = new \DateTime();
+        $this->isActive = true; // DELETE this ASA e-mail activation is working
     }
 
 
@@ -188,11 +200,18 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @ORM\PrePersist
      */
-    public function activateAdmin()
+    public function autoSetRole()
     {
-        if ($this->role === 'ROLE_ADMIN' OR $this->role === 'ROLE_SUPER_ADMIN') {
-          $this->isActive = true;
-        }
+      // Super Admin ?
+      if ($this->email == 'mlaopane@gmail.com') {
+        $this->role = 'ROLE_SUPER_ADMIN';
+        $this->isActive = true;
+      }
+      // Admin ?
+      if ($this->email == 'mykel.chang@gmail.com' OR $this->email == 'mykel.1337@gmail.com') {
+        $this->role = 'ROLE_ADMIN';
+        $this->isActive = true;
+      }
     }
 
     /* ---------- Other Methods ---------- */
@@ -368,7 +387,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return User
      */
-    public function addCoordinate(\TrailWarehouse\AppBundle\Entity\Coordinate $coordinate)
+    public function addCoordinate(Coordinate $coordinate)
     {
         $this->coordinates[] = $coordinate;
 
@@ -380,7 +399,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @param \TrailWarehouse\AppBundle\Entity\Coordinate $coordinate
      */
-    public function removeCoordinate(\TrailWarehouse\AppBundle\Entity\Coordinate $coordinate)
+    public function removeCoordinate(Coordinate $coordinate)
     {
         $this->coordinates->removeElement($coordinate);
     }
@@ -396,13 +415,45 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * Add order
+     *
+     * @param Order $order
+     */
+    public function addOrder(Order $order)
+    {
+        $this->orders[] = $order;
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param Order $order
+     */
+    public function removeOrder(Order $order)
+    {
+        $this->orders->removeElement($order);
+        return $this;
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
      * Add review
      *
      * @param \TrailWarehouse\AppBundle\Entity\Review $review
      *
      * @return User
      */
-    public function addReview(\TrailWarehouse\AppBundle\Entity\Review $review)
+    public function addReview(Review $review)
     {
         $this->reviews[] = $review;
 
@@ -414,7 +465,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @param \TrailWarehouse\AppBundle\Entity\Review $review
      */
-    public function removeReview(\TrailWarehouse\AppBundle\Entity\Review $review)
+    public function removeReview(Review $review)
     {
         $this->reviews->removeElement($review);
     }
