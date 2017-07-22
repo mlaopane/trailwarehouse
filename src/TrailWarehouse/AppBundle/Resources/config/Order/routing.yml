@@ -1,38 +1,45 @@
 # /commande
 
-app_order                :
-  path                   : /
-  defaults               :
-    _controller          : TrailWarehouseAppBundle:Order:index
+app_order             :
+  path                : /
+  defaults            :
+    _controller       : TrailWarehouseAppBundle:Order:index
 
-app_order_coordinates    :
-  path                   : /coordonnees
-  defaults               :
-    _controller          : TrailWarehouseAppBundle:Order:coordinates
+app_order_coordinates :
+  path                : /coordonnees
+  defaults            :
+    _controller       : TrailWarehouseAppBundle:Order:coordinates
 
-app_order_add_address    :
-  path                   : /ajouter-adresse
-  methods                : [POST]
-  defaults               :
-    _controller          : TrailWarehouseAppBundle:Order:addAddress
+app_order_add_address :
+  path                : /ajouter-adresse
+  methods             : [POST]
+  defaults            :
+    _controller       : TrailWarehouseAppBundle:Order:addAddress
 
-app_order_set_address    :
-  path                   : /associer-adresse
-  methods                : [POST]
-  defaults               :
-    _controller          : TrailWarehouseAppBundle:Order:setAddress
+app_order_set_address :
+  path                : /associer-adresse
+  methods             : [POST]
+  defaults            :
+    _controller       : TrailWarehouseAppBundle:Order:setAddress
 
-app_order_payment        :
-  path                   : /paiement
-  defaults               :
-    _controller          : TrailWarehouseAppBundle:Order:payment
+app_order_payment     :
+  path                : /paiement
+  defaults            :
+    _controller       : TrailWarehouseAppBundle:Order:payment
 
-app_order_create         :
-  path                   : /creation
-  defaults               :
-    _controller          : TrailWarehouseAppBundle:Order:create
+app_order_create      :
+  path                : /creation
+  defaults            :
+    _controller       : TrailWarehouseAppBundle:Order:create
 
-app_order_success        :
-  path                   : /commande-ok
-  defaults               :
-    _controller          : TrailWarehouseAppBundle:Order:success
+app_order_success     :
+  path                : /commande-ok
+  defaults            :
+    _controller       : TrailWarehouseAppBundle:Order:success
+
+app_order_bill        :
+  path                : /facture/consulter/{order_id}
+  defaults            :
+    _controller       : TrailWarehouseAppBundle:Order:bill
+  requirements        :
+      id_commande     : '\d+'
