@@ -1,6 +1,10 @@
 imports:
     - { resource: config.yml }
 
+parameters:
+    wkhtmltopdf: 'E:\__Programs\wkhtmltopdf\bin\wkhtmltopdf.exe'
+    wkhtmltoimage: 'E:\__Programs\wkhtmltopdf\bin\wkhtmltoimage.exe'
+
 framework:
     router:
         resource: '%kernel.root_dir%/config/routing_dev.yml'
