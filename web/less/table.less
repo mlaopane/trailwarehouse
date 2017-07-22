@@ -1,0 +1,95 @@
+// out: ../css/table.css
+
+@import "../bower_components/ness/less/color.less";
+
+.ness-table-container {
+  align-self: stretch;
+  border: 1px solid @table-border-color;
+  margin: 10px auto;
+  overflow-x: auto;
+  width: 100%;
+  &.half { width: 50% }
+  &.xs { width: 280px }
+  &.sm { width: 450px }
+  &.md { width: 720px }
+  &.lg { width: 950px }
+  // Table
+  table {
+    border-collapse: collapse;
+    color: black;
+    font-size: 0.9em;
+    margin: auto;
+    width: 100%;
+    // Table Header
+    thead {
+      tr {
+        background: @thead-tr-bg;
+        border-bottom: 2px solid white;
+        cursor: pointer;
+      }
+    }
+    // Table Body
+    tbody {
+      tr {
+        color: black;
+        cursor: pointer;
+        transition: 0.10s;
+        //
+        &:nth-child(even) { background: @tbody-tr-bg-even }
+        &:nth-child(odd) { background: @tbody-tr-bg-odd }
+        &:hover {
+          background: @tbody-tr-bg-hover;
+          color: @tbody-tr-txt-hover;
+          //
+          a { color: white }
+        }
+        a { text-decoration: none }
+      }
+    }
+    // Cell Header
+    th {
+      color: white;
+      padding: 8px 16px;
+      text-align: left;
+      //
+      &:not(:last-child) {
+        border-right: 1px solid @table-border-color;
+      }
+      &:hover {
+        background: @thead-th-bg-hover;
+      }
+    }
+    // Cell Data
+    td {
+      padding: 8px 16px;
+      //
+      &:not(:last-child) { border-right: 1px solid @table-border-color }
+      &:last-child { cursor: pointer }
+      a:hover { text-shadow: 1px 1px black }
+    }
+    // Center the column content
+    &.col
+    {
+      &-center {
+        th, td { text-align: center; }
+      }
+      &-left {
+        th, td { text-align: left; }
+      }
+      &-right {
+        th, td { text-align: right; }
+      }
+    }
+  } // table
+}
+
+/*** Customize your table ***/
+// thead
+@table-border-color: lighten(@steelgrey, 10%);
+@thead-tr-bg: @darkgrey;
+@thead-th-bg-hover: darken(@thead-tr-bg, 7%); // Overriding isn't necessary
+//tbody
+@tbody-tr-bg-even: @lightgrey;
+@tbody-tr-bg-odd: @white;
+@tbody-tr-bg-hover: @blue;
+@tbody-tr-txt-hover: white;

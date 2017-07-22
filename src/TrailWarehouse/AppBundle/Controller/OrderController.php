@@ -6,7 +6,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Item;
 use TrailWarehouse\AppBundle\Entity\User;
@@ -29,10 +31,12 @@ class OrderController extends Controller
   {
     /* Init repositories */
     $this->repo = [
-      'user'       => $em->getRepository('TrailWarehouseAppBundle:User'),
-      'product'    => $em->getRepository('TrailWarehouseAppBundle:Product'),
-      'promo'      => $em->getRepository('TrailWarehouseAppBundle:Promo'),
-      'coordinate' => $em->getRepository('TrailWarehouseAppBundle:Coordinate'),
+      'user'          => $em->getRepository('TrailWarehouseAppBundle:User'),
+      'product'       => $em->getRepository('TrailWarehouseAppBundle:Product'),
+      'promo'         => $em->getRepository('TrailWarehouseAppBundle:Promo'),
+      'coordinate'    => $em->getRepository('TrailWarehouseAppBundle:Coordinate'),
+      'order'         => $em->getRepository('TrailWarehouseAppBundle:Order'),
+      'order_product' => $em->getRepository('TrailWarehouseAppBundle:OrderProduct'),
     ];
 
     /* Init Cart IF it exists in the session */
@@ -176,6 +180,28 @@ class OrderController extends Controller
     $session->remove('order');
     $session->remove('cart');
     return $this->redirectToRoute('app_account');
+  }
+
+  /**
+   * @ParamConverter("order", options={"mapping": {"order_id": "id"}})
+   */
+  public function billAction(Order $order, $order_id, UserInterface $user)
+  {
+    $template = $this->renderView('TrailWarehouseAppBundle:Order:bill.html.twig', [
+      'order'          => $order,
+      'order_products' => $this->repo['order_product']->getBy('order', $order),
+    ]);
+
+    $filename = "Facture_".$order_id;
+
+    return new Response(
+      $this->get('knp_snappy.pdf')->getOutputFromHtml($template),
+      200,
+      [
+        'Content-Type'        => 'application/pdf',
+        'Content-Disposition' => 'attachment; filename ="'.$filename.'.pdf"',
+      ]
+    );
   }
 
 
