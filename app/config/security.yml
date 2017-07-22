@@ -51,6 +51,6 @@ security:
         - { path: ^/connexion, roles         : IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/inscription, roles       : IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/deconnexion, roles       : IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/espace-perso, roles      : ROLE_USER }
-        - { path: ^/panier/validation, roles : ROLE_USER }
-        - { path: ^/commande/creation, roles : ROLE_USER }
+        - { path: ^/espace-perso, roles      : IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/panier/validation, roles : IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/commande, roles          : IS_AUTHENTICATED_REMEMBERED }
