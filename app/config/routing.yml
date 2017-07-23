@@ -1,5 +1,5 @@
 easy_admin_bundle:
-    resource: "@EasyAdminBundle/Controller/AdminController.php"
+    resource: "@TrailWarehouseAppBundle/Controller/Admin/BackendController.php"
     type:     annotation
     prefix:   /admin
 

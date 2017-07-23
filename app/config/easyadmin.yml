@@ -5,6 +5,8 @@ easy_admin :
     design :
         brand_color : 'hsl(348, 65%, 50%)'
         color_scheme : 'dark'
+        form_theme :
+            - 'easy_admin/form/bootstrap_3_layout.html.twig'
         assets :
             favicon :
                 path : 'images/feet.png'
@@ -14,30 +16,80 @@ easy_admin :
 
     list         :
         title    : 'Liste des %%entity_label%%'
+        actions  :
+            - 'show'
+
     show         :
         title    : '%%entity_label%% (#%%entity_id%%)'
+
+    edit         :
+        title    : '%%entity_label%% (#%%entity_id%%)'
+
     formats      :
         datetime : 'Y, M, j @ H:i:s'
 
     entities :
         User      :
-            class : TrailWarehouse\AppBundle\Entity\User
-            label : 'Utilisateurs'
-            help  : 'Rôles disponibles : <em class="txt-secondary">ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN</em>'
+            class      : TrailWarehouse\AppBundle\Entity\User
+            controller : TrailWarehouse\AppBundle\Controller\Admin\ProductController
+            label      : 'Utilisateurs'
+            help       : 'Rôles disponibles : <em class="txt-secondary">ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN</em>'
+            list       :
+                fields :
+                    - { property : 'lastname', label : "Nom d'usage", type : 'string' }
+                    - { property : 'firstname', label : 'Prénom', type : 'string' }
+                    - { property : 'email', label : 'Email', type : 'string' }
+                    - { property : 'role', label : 'Profil', type : 'association' }
+            edit  :
+                fields :
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Identité' }
+                    - { property : 'lastname', label : "Nom d'usage", type : 'text' }
+                    - { property : 'firstname', label : 'Prénom', type : 'text' }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Identifiants' }
+                    - { property : 'email', label : 'Email', type : 'email' }
+                    - { property : 'plainPassword', label : 'Mot de passe', type : 'password', type_options : { required : false } }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Autres informations' }
+                    - { property : 'role', label : 'Profil', type_options : { expanded : true } }
+            new   :
+                fields :
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Identité' }
+                    - { property : 'lastname', label : "Nom d'usage", type : 'text' }
+                    - { property : 'firstname', label : 'Prénom', type : 'text' }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Identifiants' }
+                    - { property : 'email', label : 'Email', type : 'email' }
+                    - { property : 'plainPassword', label : 'Mot de passe', type : 'password', type_options : { required : true } }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Autres informations' }
+                    - { property : 'role', label : 'Profil', type : 'entity', type_options : { expanded : true, class : 'TrailWarehouse\AppBundle\Entity\Role' } }
+
+        Role      :
+            class : TrailWarehouse\AppBundle\Entity\Role
+            label : 'Rôles'
+            edit :
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom', type : 'text' }
+
         Brand     :
             class : TrailWarehouse\AppBundle\Entity\Brand
             label : 'Marques'
             list :
-              fields :
-                - id
-                - { property : 'name', label : 'Nom', type : 'string' }
+                fields :
+                  - id
+                  - { property : 'name', label : 'Nom', type : 'string' }
+                  - { property : 'slug', label : 'Slug', type : 'string' }
+
         Category  :
             class : TrailWarehouse\AppBundle\Entity\Category
             label : 'Catégories'
             list :
-              fields :
-                - id
-                - { property : 'name', label : 'Nom', type : 'string' }
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom', type : 'string' }
+
         Family    :
             class : TrailWarehouse\AppBundle\Entity\Family
             label : 'Familles'
@@ -51,38 +103,60 @@ easy_admin :
                     - { property : 'colors', label : 'Visuels' }
                     - { property : 'reviews', label : 'Notes' }
         Product   :
-            class : TrailWarehouse\AppBundle\Entity\Product
-            label : 'Produits'
-            list :
-              fields :
-                - id
-                - { property : 'name', label : 'Nom', type : 'string' }
-                - { property : 'family', label : 'Famille', type : 'association' }
-                - { property : 'color', label : 'Couleur', type : 'association' }
-                - { property : 'size', label : 'Taille', type : 'association' }
-                - { property : 'stock', label : 'Stock', type : 'integer' }
-                - { property : 'price', label : 'Prix', type : 'float', format : '%.2f' }
+            class      : TrailWarehouse\AppBundle\Entity\Product
+            controller : TrailWarehouse\AppBundle\Controller\Admin\ProductController
+            label      : 'Produits'
+            list       :
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom', type : 'string' }
+                    - { property : 'image', label : 'Image', type : 'association' }
+                    - { property : 'family', label : 'Famille', type : 'association' }
+                    - { property : 'color', label : 'Couleur', type : 'association' }
+                    - { property : 'size', label : 'Taille', type : 'association' }
+                    - { property : 'stock', label : 'Stock', type : 'integer' }
+                    - { property : 'price', label : 'Prix', type : 'float', format : '%.2f' }
+            edit  :
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'family', label : 'Famille' }
+                    - { property : 'color', label : 'Couleur' }
+                    - { property : 'size', label : 'Taille' }
+                    - { property : 'stock', label : 'Stock' }
+                    - { property : 'price', label : 'Prix' }
+            new   :
+                fields :
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'family', label : 'Famille' }
+                    - { property : 'color', label : 'Couleur' }
+                    - { property : 'size', label : 'Taille' }
+                    - { property : 'price', label : 'Prix', type : 'number', format : '%.2f' }
+                    - { property : 'stock', label : 'Stock' }
+
         Color     :
             class : TrailWarehouse\AppBundle\Entity\Color
             label : 'Couleurs'
             list :
-              fields :
-                - id
-                - { property : 'name', label : 'Nom', type : 'string' }
-                - { property : 'value', label : 'Valeur', type : 'string' }
-                - { property : 'echantillon', label : 'Echantillon', type : 'string' }
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom', type : 'string' }
+                    - { property : 'value', label : 'Valeur', type : 'string' }
+                    - { property : 'echantillon', label : 'Echantillon', type : 'string' }
         Size      :
             class : TrailWarehouse\AppBundle\Entity\Size
             label : 'Tailles'
             list :
-              fields :
-                - id
-                - { property : 'value', label : 'Valeur', type : 'string' }
-                - { property : 'unit', label : 'Unité', type : 'string' }
-                - { property : 'unitShortcut', label : 'Raccourci', type : 'string' }
+                fields :
+                    - id
+                    - { property : 'value', label : 'Valeur', type : 'string' }
+                    - { property : 'unit', label : 'Unité', type : 'string' }
+                    - { property : 'unitShortcut', label : 'Raccourci', type : 'string' }
         Order     :
             class : TrailWarehouse\AppBundle\Entity\Order
             label : 'Commandes'
+            diabled_actions :
+                - 'edit'
         Promo     :
             class : TrailWarehouse\AppBundle\Entity\Promo
             label : 'Codes promo'
