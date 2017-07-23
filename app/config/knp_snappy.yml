@@ -1,0 +1,18 @@
+knp_snappy:
+    pdf:
+        enabled:    true
+        # binary:     /usr/local/bin/wkhtmltopdf #"\"%wkhtmltopdf%\"" for Windows users
+        binary:    "\"%wkhtmltopdf%\""
+        options:
+            no-outline: true
+            page-size: LETTER
+            # Recommended to set UTF-8 as default encoding :)
+            encoding: UTF-8
+    image:
+        enabled:    true
+        binary:     "\"%wkhtmltoimage%\""
+        options:
+            no-outline: true
+            page-size: LETTER
+            # Recommended to set UTF-8 as default encoding :)
+            encoding: UTF-8

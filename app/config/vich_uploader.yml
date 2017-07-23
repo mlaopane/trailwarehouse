@@ -1,0 +1,20 @@
+vich_uploader :
+    db_driver : orm
+
+    mappings :
+        brand_image            :
+            uri_prefix         : /images/brands
+            upload_destination : '%image_url%/brands'
+            namer              :
+                service : vich_uploader.namer_property
+                options : { property : 'slug' }
+        family_image           :
+            uri_prefix         : /images//families
+            upload_destination : '%image_url%/families'
+            namer :
+                service : vich_uploader.namer_origname
+        product_image          :
+            uri_prefix         : /images//products
+            upload_destination : '%image_url%/products'
+            namer :
+                service : vich_uploader.namer_origname
