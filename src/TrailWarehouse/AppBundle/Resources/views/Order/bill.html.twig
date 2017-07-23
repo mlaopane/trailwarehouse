@@ -189,7 +189,7 @@
           {% for order_product in order_products %}
           <tr>
             <td>{{ order_product.product.name }}</td>
-            <td>{{ order_product.product.price }}</td>
+            <td>{{ order_product.product.price|price }}</td>
             <td>{{ order_product.quantity }}</td>
             <td>{{ order_product.total }}</td>
           </tr>

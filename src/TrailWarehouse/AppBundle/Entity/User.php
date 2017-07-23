@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use TrailWarehouse\AppBundle\Entity\Role;
 use TrailWarehouse\AppBundle\Entity\Order;
 use TrailWarehouse\AppBundle\Entity\Coordinate;
 use TrailWarehouse\AppBundle\Entity\Review;
@@ -52,7 +53,6 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * @var string
     *
-    * @Assert\NotBlank()
     * @Assert\Length(
     *   min = 6,
     *   max = 128,
@@ -80,9 +80,10 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * @var string
     *
-    * @ORM\Column(name="role", type="string", length=255)
+    * @ORM\ManyToOne(targetEntity="Role")
+    * @ORM\JoinColumn(nullable=false)
     */
-    private $role = 'ROLE_USER';
+    private $role;
 
     /**
     * @var bool
@@ -121,6 +122,14 @@ class User implements AdvancedUserInterface, \Serializable
     private $reviews;
 
     /**
+     * toString
+     */
+    public function __toString()
+    {
+      return $this->id . " - " . $this->firstname . " " . $this->lastname . " (" . $this->email . ")";
+    }
+
+    /**
     * Constructor
     */
     public function __construct()
@@ -130,13 +139,14 @@ class User implements AdvancedUserInterface, \Serializable
         $this->reviews      = new ArrayCollection();
         $this->creationDate = new \DateTime();
         $this->isActive = true; // DELETE this ASA e-mail activation is working
+        $this->role = new Role('ROLE_USER'); // DELETE this ASA e-mail activation is working
     }
 
 
     /* ---------- AdvancedUserInterface ---------- */
 
     public function getRoles() {
-        return [$this->role];
+        return [$this->role->getName()];
     }
 
     public function getSalt() {
@@ -193,8 +203,9 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function generateHash()
     {
-        $hash = password_hash($this->plainPassword, PASSWORD_BCRYPT);
-        $this->setPassword($hash);
+      $hash = password_hash($this->plainPassword, PASSWORD_BCRYPT);
+      dump($hash);
+      $this->setPassword($hash);
     }
 
     /**
