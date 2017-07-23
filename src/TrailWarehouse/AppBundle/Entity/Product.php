@@ -86,6 +86,13 @@ class Product
      */
     private $stock = 0;
 
+    /**
+     * toString
+     */
+    public function __toString()
+    {
+      return $this->id . " - " . $this->name;
+    }
 
     /* ----- Events ----- */
 

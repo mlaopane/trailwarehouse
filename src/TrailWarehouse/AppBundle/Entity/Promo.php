@@ -50,6 +50,13 @@ class Promo
      */
     private $end;
 
+    /**
+     * toString
+     */
+    public function __toString()
+    {
+      return $this->code . " | ". $this->value;
+    }
 
     /**
      * Get id

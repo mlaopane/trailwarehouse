@@ -77,6 +77,13 @@ class Order
      */
     private $total;
 
+    /**
+     * toString
+     */
+    public function __toString()
+    {
+      return $this->id . " - " . $this->creationDate->format('Y F d H:i:s');
+    }
 
     public function __construct()
     {

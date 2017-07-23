@@ -3,6 +3,7 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Brand
@@ -32,8 +33,28 @@ class Brand
      * @var string
      *
      * @ORM\Column(name="logo", type="string", length=255)
+     * @Gedmo\Slug(fields={"name"})
      */
     private $logo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=191, unique=true)
+     */
+    private $slug;
+
+    /* ----------- */
+
+    /**
+     * toString
+     */
+    public function __toString()
+    {
+      return $this->id . " - " . $this->name;
+    }
+
+    /* ----------- */
 
 
     /**
@@ -92,5 +113,29 @@ class Brand
     public function getLogo()
     {
         return $this->logo;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Brand
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

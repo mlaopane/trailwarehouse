@@ -50,6 +50,13 @@ class Color
      */
     private $slug;
 
+    /**
+     * toString
+     */
+    public function __toString()
+    {
+      return $this->name . " (" . $this->value . ")";
+    }
 
     /* ----- GETTERS & SETTERS ----- */
 

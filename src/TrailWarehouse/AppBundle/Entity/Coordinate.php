@@ -56,6 +56,13 @@ class Coordinate
      */
     private $city;
 
+    /**
+     * toString
+     */
+    public function __toString()
+    {
+      return $this->id . " - " . $this->address . ", " . $this->zipcode . " " . $this->city;
+    }
 
     /**
      * Get id
@@ -124,8 +131,7 @@ class Coordinate
      */
     public function setCity($city)
     {
-        $this->city = $city;
-
+        $this->city = mb_strtoupper($city, 'UTF-8');
         return $this;
     }
 

@@ -58,7 +58,7 @@ class Family
     * @var string
     *
     * @Gedmo\Slug(fields={"name"})
-    * @ORM\Column(name="slug", type="string", length=255)
+    * @ORM\Column(name="slug", type="string", length=191)
     *
     */
     private $slug;
@@ -91,6 +91,13 @@ class Family
      */
     private $averageRating = 0;
 
+    /**
+     * toString
+     */
+    public function __toString()
+    {
+      return $this->name . " (" . $this->brand->getName() . ")";
+    }
 
     /**
     * Constructor

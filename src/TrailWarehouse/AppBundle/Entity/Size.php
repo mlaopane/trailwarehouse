@@ -63,6 +63,13 @@ class Size
      */
     private $slug;
 
+    /**
+     * toString
+     */
+    public function __toString()
+    {
+      return $this->value . html_entity_decode("&nbsp;") . (string) $this->unitShortcut;
+    }
 
     /**
      * Get id
