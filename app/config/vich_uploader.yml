@@ -2,12 +2,17 @@ vich_uploader :
     db_driver : orm
 
     mappings :
+
         brand_image            :
             uri_prefix         : /images/brands
             upload_destination : '%image_url%/brands'
             namer              :
                 service : vich_uploader.namer_property
                 options : { property : 'slug' }
+            inject_on_load   : true
+            delete_on_update : true
+            delete_on_remove : true
+
         family_image           :
             uri_prefix         : /images//families
             upload_destination : '%image_url%/families'

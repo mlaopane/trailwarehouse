@@ -1,10 +1,6 @@
 imports:
     - { resource: config.yml }
 
-parameters:
-    wkhtmltopdf: 'http://trailwarejouse.nulledge.fr/vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386'
-    wkhtmltoimage: 'http://trailwarejouse.nulledge.fr/vendor/h4cc/wkhtmltoimage-i386/bin/wkhtmltoimage-i386'
-
 #doctrine:
 #    orm:
 #        metadata_cache_driver: apc
