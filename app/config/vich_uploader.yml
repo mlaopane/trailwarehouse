@@ -1,11 +1,15 @@
+parameters :
+    vich_uploader.mappings.brand_image  : /images/brands
+    vich_uploader.mappings.family_image : /images/families
+
 vich_uploader :
     db_driver : orm
 
     mappings :
 
         brand_image            :
-            uri_prefix         : /images/brands
-            upload_destination : '%image_url%/brands'
+            uri_prefix         : '%vich_uploader.mappings.brand_image%'
+            upload_destination : '%images_dir%/brands'
             namer              :
                 service : vich_uploader.namer_property
                 options : { property : 'slug' }
@@ -14,13 +18,7 @@ vich_uploader :
             delete_on_remove : true
 
         family_image           :
-            uri_prefix         : /images//families
-            upload_destination : '%image_url%/families'
-            namer :
-                service : vich_uploader.namer_origname
-
-        product_image          :
-            uri_prefix         : /images//products
-            upload_destination : '%image_url%/products'
+            uri_prefix         : '%vich_uploader.mappings.family_image%'
+            upload_destination : '%images_dir%/families'
             namer :
                 service : vich_uploader.namer_origname
