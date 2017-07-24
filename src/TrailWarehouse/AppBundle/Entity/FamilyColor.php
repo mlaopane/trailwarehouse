@@ -43,7 +43,7 @@ class FamilyColor
     /**
      * @var Image
      *
-     * @ORM\ManyToOne(targetEntity="Image")
+     * @ORM\ManyToOne(targetEntity="Image", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $image;

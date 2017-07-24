@@ -132,14 +132,14 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * Constructor
     */
-    public function __construct()
+    public function __construct(Role $role = null)
     {
         $this->coordinates  = new ArrayCollection();
         $this->orders       = new ArrayCollection();
         $this->reviews      = new ArrayCollection();
         $this->creationDate = new \DateTime();
         $this->isActive = true; // DELETE this ASA e-mail activation is working
-        $this->role = new Role('ROLE_USER'); // DELETE this ASA e-mail activation is working
+        $this->role = $role; // DELETE this ASA e-mail activation is working
     }
 
 

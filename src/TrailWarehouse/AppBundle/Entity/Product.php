@@ -65,14 +65,6 @@ class Product
     private $size;
 
     /**
-     * @var Image
-     *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Image", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $image;
-
-    /**
      * @var float
      *
      * @ORM\Column(name="price", type="decimal", precision=7, scale=2)
@@ -126,20 +118,23 @@ class Product
      */
     public function generateName()
     {
-      $data = [
-        'brand'  => ucfirst($this->getFamily()->getBrand()->getName()),
-        'family' => ucfirst($this->getFamily()->getName()),
-        'color'  => ucfirst($this->color->getName()),
-        'size'   => ucfirst($this->size->getValue()),
-      ];
-      $name =
-        $data['brand']
-        . ' - ' . $data['family']
-        . ' (' . $data['size']
-        . ((empty($data['color'])) ? (')') : (' | ' . $data['color'] . ')'))
+      if (empty($this->name))
+      {
+        $data = [
+          'brand'  => ucfirst($this->getFamily()->getBrand()->getName()),
+          'family' => ucfirst($this->getFamily()->getName()),
+          'color'  => ucfirst($this->color->getName()),
+          'size'   => ucfirst($this->size->getValue()),
+          'unit'   => $this->size->getUnitShortcut(),
+        ];
 
-      ;
-      $this->setName($name);
+        $name = $data['brand']
+          . " - " . $data['family']
+          . " (" . $data['color'] . " | " . $data['size'] . $data['unit'] .")"
+        ;
+
+        $this->setName($name);
+      }
       return $this;
     }
 
@@ -321,28 +316,4 @@ class Product
         return $this->size;
     }
 
-
-    /**
-     * Set image
-     *
-     * @param Image $image
-     *
-     * @return Product
-     */
-    public function setImage(Image $image)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return Image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
 }
