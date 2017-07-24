@@ -396,7 +396,7 @@
         <div class="row">
             {% if form.delete is defined %}
             <div class="col-sm-3 col-md-2">
-                {{ form_row(form.delete, { label: 'action.delete' }) }}
+                {{ form_row(form.delete, { label: 'Cocher pour supprimer' }) }}
             </div>
             {% endif %}
             <div class="{{ form.delete is defined ? 'col-sm-9 col-md-10' : 'col-sm-12' }}">
@@ -417,16 +417,15 @@
     <div class="easyadmin-vich-image">
         {{ form_widget(form.file) }}
         {% if form.delete is defined %}
-            {{ form_row(form.delete, { label: 'action.delete' }) }}
+            {{ form_row(form.delete, { label: 'Cocher pour supprimer' }) }}
         {% endif %}
 
         {% if download_uri|default('') is not empty %}
             {% set _lightbox_id = 'easyadmin-lightbox-' ~ id %}
-
             <a href="#" class="easyadmin-thumbnail" data-featherlight="#{{ _lightbox_id }}" data-featherlight-close-on-click="anywhere">
                 <img src="{{ asset(download_uri) }}">
             </a>
-
+            <div style="padding-top: 8px"><a href="{{ download_uri }}" download>Télécharger</a></div>
             <div id="{{ _lightbox_id }}" class="easyadmin-lightbox">
                 <img src="{{ asset(download_uri) }}">
             </div>
@@ -492,7 +491,7 @@
                     {% block item_actions %}
                         {# the 'save' action is hardcoded for the 'edit' and 'new' views #}
                         <button type="submit" class="btn btn-primary action-save">
-                            <i class="fa fa-save"></i> {{ 'action.save'|trans(_trans_parameters, _translation_domain) }}
+                            <i class="fa fa-save"></i> {{ 'Sauvegarder'|trans(_trans_parameters, _translation_domain) }}
                         </button>
 
                         {% set _entity_actions = (easyadmin.view == 'new')
