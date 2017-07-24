@@ -31,19 +31,7 @@
             </li>
             <!-- Guest Nav Items # -->
           {% endif %}
-          {% if app.user is not empty %}
-            <!-- # User Nav Items -->
-            <li class="nav-item">
-              <a href="{{ path('app_account') }}" title="Inscription">
-                <span class="glyphicon glyphicon-pencil"></span><span>Mon compte</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ path('app_signout') }}" title="Connexion">
-                <span class="glyphicon glyphicon-user"></span>&nbsp;<span>Déconnexion</span>
-              </a>
-            </li>
-          {% endif %}
+
           {% if app.user is empty or app.user.role == 'ROLE_USER' %} {# Cart #}
             <!-- # Client Nav Items -->
             <li class="nav-item">
@@ -59,7 +47,21 @@
           {% else %} {# Administration #}
             <li class="nav-item">
               <a href="{{ path('easyadmin') }}" title="Administration">
-                <span>Administration</span>
+                <span class="glyphicon glyphicon-cloud"></span>&nbsp;<span>Administration</span>
+              </a>
+            </li>
+          {% endif %}
+
+          {% if app.user is not empty %}
+            <!-- # User Nav Items -->
+            <li class="nav-item">
+              <a href="{{ path('app_account') }}" title="Inscription">
+                <span class="glyphicon glyphicon-user"></span><span>Mon compte</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ path('app_signout') }}" title="Connexion">
+                <span class="glyphicon glyphicon-log-out"></span>&nbsp;<span>Déconnexion</span>
               </a>
             </li>
           {% endif %}

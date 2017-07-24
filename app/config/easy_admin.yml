@@ -39,7 +39,7 @@ easy_admin :
                   - { entity : 'Vat', icon : 'percent' }
                   - { entity : 'Promo', icon : 'barcode' }
             - label : "____________________"
-            - 'Review'
+            - { entity : 'Review', icon : 'sticky-note' }
             - label : "____________________"
             - { label : 'Retour au site', icon : 'hand-o-left', route : 'app_home' }
 
