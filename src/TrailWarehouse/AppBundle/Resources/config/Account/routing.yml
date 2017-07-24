@@ -1,0 +1,6 @@
+# /espace-perso
+
+app_account :
+    path:     /
+    defaults:
+        _controller: TrailWarehouseAppBundle:Account:index
