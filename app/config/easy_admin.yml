@@ -3,7 +3,7 @@ easy_admin :
     site_name : '<em style="font-size:1.8rem;">Trail&nbsp;Warehouse&nbsp;Admin</em>'
 
     design :
-        brand_color : 'hsl(348, 65%, 50%)'
+        brand_color : 'hsl(163, 60%, 43%)'
         color_scheme : 'dark'
         form_theme :
             - 'easy_admin/form/bootstrap_3_layout.html.twig'
@@ -13,24 +13,63 @@ easy_admin :
                 mime_type : 'image/png'
             css :
                 - 'css/admin.css'
+        menu :
+            - label : ""
+            - { entity : 'Brand', icon : 'bold' }
+            - label : "____________________"
+            - { entity : 'Category', icon : 'th-large' }
+            - label : "____________________"
+            - label : "Production"
+              icon : book
+              children :
+                  - { entity : 'Family', icon : 'th-list' }
+                  - { entity : 'FamilyColor', icon : 'image' }
+                  - { entity : 'Product', icon : 'leaf' }
+            - label : "____________________"
+            - label : "Membres"
+              icon : "user"
+              children :
+                  - { entity : 'User', icon : 'th-list' }
+                  - { entity : 'Role', icon : 'shield' }
+            - label : "____________________"
+            - label : "Facturation"
+              icon : money
+              children :
+                  - { entity : 'Order', icon : 'tablet' }
+                  - { entity : 'Vat', icon : 'percent' }
+                  - { entity : 'Promo', icon : 'barcode' }
+            - label : "____________________"
+            - 'Review'
 
-    list         :
-        title    : 'Liste des %%entity_label%%'
-        actions  :
+    list :
+        title : 'Liste des %%entity_label%%'
+        max_results : 20
+        actions :
             - { name : 'new', icon : 'plus', label : 'Ajouter' }
             - { name : 'show', icon : '', label : 'Voir' }
             - { name : 'edit', icon : '', label : 'Modifier' }
             - { name : 'delete', icon : '', label : 'Supprimer' }
             - { name : 'search', icon : 'search', label : 'Rechercher' }
 
-    show         :
-        title    : '%%entity_label%% (#%%entity_id%%)'
+    show :
+        title : '%%entity_label%% (#%%entity_id%%)'
+        max_results : 20
 
-    edit         :
-        title    : '%%entity_label%% (#%%entity_id%%)'
+    edit :
+        title   : 'Modification : ID #%%entity_id%%'
+        actions :
+            - { name : 'delete', icon : 'trash', css_class : 'btn btn-danger', label : 'Supprimer' }
+            - { name : 'new', icon : 'plus', css_class : 'btn btn-blue', label : 'Nouveau' }
+            - { name : 'list', icon : 'hand-o-left', css_class : 'btn btn-blue', label : 'Retour' }
 
-    formats      :
+    new :
+        title   : "Création d'un nouvel élément"
+        actions :
+            - { name : 'list', icon : 'hand-o-left', css_class : 'btn btn-blue', label : 'Retour' }
+
+    formats :
         datetime : 'Y, M, j @ H:i:s'
+
 
     entities :
         User      :
@@ -42,9 +81,20 @@ easy_admin :
                 fields :
                     - id
                     - { property : 'fullname', label : "Nom complet", type : 'string' }
+                    - { property : 'email', label : "E-mail", type : 'email' }
+                    - { property : 'role', label : 'Profil', type : 'association' }
+                    - { property : 'isActive', label : 'active', type : 'toggle' }
+            show       :
+                fields :
+                    - id
+                    - { property : 'firstname', label : "Prénom", type : 'string' }
+                    - { property : 'lastname', label : "Nom d'usage", type : 'string' }
+                    - { property : 'email', label : "E-mail", type : 'email' }
+                    - { property : 'password', label : "Mot de passe crypté", type : 'string' }
                     - { property : 'role', label : 'Profil', type : 'association' }
                     - { property : 'isActive', label : 'active', type : 'toggle' }
             edit  :
+                title : "Modification de l'utilisateur #%%entity_id%%"
                 fields :
                     - { type: 'group', css_class: 'col-sm-6', label: 'Identité' }
                     - { property : 'lastname', label : "Nom d'usage", type : 'text' }
@@ -56,8 +106,10 @@ easy_admin :
 
                     - { type: 'group', css_class: 'col-sm-6', label: 'Autres informations' }
                     - { property : 'role', label : 'Profil', type_options : { expanded : true } }
+                    - { type : 'divider' }
                     - { property : 'isActive', label : 'Actif' }
             new   :
+                title : "Création d'un nouvel utilisateur"
                 fields :
                     - { type: 'group', css_class: 'col-sm-6', label: 'Identité' }
                     - { property : 'lastname', label : "Nom d'usage", type : 'text' }
@@ -82,17 +134,26 @@ easy_admin :
         Brand     :
             class : TrailWarehouse\AppBundle\Entity\Brand
             label : 'Marques'
-            image_base_path : '%web_url%'
+            image_base_path :
             list :
                 fields :
                   - id
                   - { property : 'name', label : 'Nom', type : 'string' }
-                  - { property : 'logo', label : 'Logo', type : 'image' }
+                  - { property : 'imageName', label : 'Logo', type : 'image', base_path : '%vich_uploader.mappings.brand_image%' }
+            show :
+                fields :
+                  - id
+                  - { property : 'name', label : 'Nom', type : 'string' }
+                  - { property : 'imageName', label : 'Logo', type : 'image', base_path : '%vich_uploader.mappings.brand_image%' }
                   - { property : 'slug', label : 'Slug', type : 'string' }
             edit :
                 fields :
                   - { property : 'name', label : 'Nom' }
-                  - { property : 'logo', label : 'Logo', type : 'file' }
+                  - { property : 'imageFile', label : 'Logo', type : 'vich_image', base_path : '%vich_uploader.mappings.brand_image%' }
+            new  :
+                fields :
+                  - { property : 'name', label : 'Nom' }
+                  - { property : 'imageFile', label : 'Logo', type : 'vich_image', base_path : '%vich_uploader.mappings.brand_image%' }
 
         Category  :
             class : TrailWarehouse\AppBundle\Entity\Category
@@ -114,6 +175,34 @@ easy_admin :
                     - { property : 'products', label : 'Produits' }
                     - { property : 'colors', label : 'Visuels' }
                     - { property : 'reviews', label : 'Notes' }
+            edit :
+                fields :
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'brand', label : 'Marque' }
+                    - { property : 'category', label : 'Catégorie' }
+                    - { property : 'products', label : 'Produits' }
+                    - { property : 'colors', label : 'Couleurs' }
+
+        FamilyColor    :
+            class : TrailWarehouse\AppBundle\Entity\FamilyColor
+            label : 'Visuels'
+            list :
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom', type : 'string' }
+                    - { property : 'brand', label : 'Marque', type : 'association' }
+                    - { property : 'category', label : 'Catégorie', type : 'association' }
+                    - { property : 'products', label : 'Produits' }
+                    - { property : 'colors', label : 'Visuels' }
+                    - { property : 'reviews', label : 'Notes' }
+            edit :
+                fields :
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'brand', label : 'Marque' }
+                    - { property : 'category', label : 'Catégorie' }
+                    - { property : 'products', label : 'Produits' }
+                    - { property : 'colors', label : 'Couleurs' }
+
         Product   :
             class      : TrailWarehouse\AppBundle\Entity\Product
             controller : TrailWarehouse\AppBundle\Controller\Admin\ProductController
@@ -126,7 +215,7 @@ easy_admin :
                     - { property : 'color', label : 'Couleur', type : 'association' }
                     - { property : 'size', label : 'Taille', type : 'association' }
                     - { property : 'stock', label : 'Stock', type : 'integer' }
-                    - { property : 'price', label : 'Prix', type : 'float', format : '%.2f' }
+                    - { property : 'price', label : 'Prix', format: '%.2f'  }
             edit  :
                 fields :
                     - { property : 'name', label : 'Nom', help : 'Généré automatiquement si laissé vide', type_options : { required : false } }
@@ -134,14 +223,14 @@ easy_admin :
                     - { property : 'color', label : 'Couleur' }
                     - { property : 'size', label : 'Taille' }
                     - { property : 'stock', label : 'Stock' }
-                    - { property : 'price', label : 'Prix' }
+                    - { property : 'price', label : 'Prix', type : 'money', type_options : { currency : 'EUR' } }
             new   :
                 fields :
                     - { property : 'name', label : 'Nom' }
                     - { property : 'family', label : 'Famille' }
                     - { property : 'color', label : 'Couleur' }
                     - { property : 'size', label : 'Taille' }
-                    - { property : 'price', label : 'Prix', type : 'number', format : '%.2f' }
+                    - { property : 'price', label : 'Prix' }
                     - { property : 'stock', label : 'Stock' }
 
         Color     :
@@ -153,6 +242,7 @@ easy_admin :
                     - { property : 'name', label : 'Nom', type : 'string' }
                     - { property : 'value', label : 'Valeur', type : 'string' }
                     - { property : 'echantillon', label : 'Echantillon', type : 'string' }
+
         Size      :
             class : TrailWarehouse\AppBundle\Entity\Size
             label : 'Tailles'
@@ -162,11 +252,30 @@ easy_admin :
                     - { property : 'value', label : 'Valeur', type : 'string' }
                     - { property : 'unit', label : 'Unité', type : 'string' }
                     - { property : 'unitShortcut', label : 'Raccourci', type : 'string' }
+
         Order     :
             class : TrailWarehouse\AppBundle\Entity\Order
             label : 'Commandes'
             disabled_actions :
                 - 'edit'
+            list :
+                fields :
+                    - id
+                    - { property : 'user', label : 'Client' }
+                    - { property : 'creationDate', label : "Date création" }
+                    - { property : 'sendingDate', label : "Date d'envoi" }
+                    - { property : 'deliveryDate', label : "Date de livraison" }
+                    - { property : 'total', label : "Total", format: '%.2f €' }
+            show :
+                fields :
+                    - id
+                    - { property : 'user', label : 'Client' }
+                    - { property : 'coordinate', label : "Addrese de livraison" }
+                    - { property : 'creationDate', label : "Date création" }
+                    - { property : 'sendingDate', label : "Date d'envoi" }
+                    - { property : 'deliveryDate', label : "Date de livraison" }
+                    - { property : 'total', label : "Total", format: '%.2f €' }
+
         Promo     :
             class : TrailWarehouse\AppBundle\Entity\Promo
             label : 'Codes promo'
@@ -180,17 +289,16 @@ easy_admin :
                     - { property : 'isExpired', label : 'Expiré', type : 'boolean' }
                     - { property : 'start', label : 'Début', type : 'datetime' }
                     - { property : 'end', label : 'Fin', type : 'datetime' }
+
         Review    :
             class : TrailWarehouse\AppBundle\Entity\Review
             label : 'Avis'
+
         Vat       :
             class : TrailWarehouse\AppBundle\Entity\Vat
-            label : 'Taux'
+            label : 'TVA'
             list :
                 fields :
                     - id
                     - { property : 'country', label : 'Pays', type : 'string' }
                     - { property : 'value', label : 'Valeur', type : 'float' }
-        Image     :
-            class : TrailWarehouse\AppBundle\Entity\Image
-            label : 'Images'
