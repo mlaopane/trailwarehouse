@@ -23,8 +23,8 @@ easy_admin :
               icon : book
               children :
                   - { entity : 'Family', icon : 'th-list' }
-                  - { entity : 'FamilyColor', icon : 'image' }
                   - { entity : 'Product', icon : 'leaf' }
+                  - { entity : 'FamilyColor', icon : 'image' }
             - label : "____________________"
             - label : "Membres"
               icon : "user"
@@ -40,6 +40,8 @@ easy_admin :
                   - { entity : 'Promo', icon : 'barcode' }
             - label : "____________________"
             - 'Review'
+            - label : "____________________"
+            - { label : 'Retour au site', icon : 'hand-o-left', route : 'app_home' }
 
     list :
         title : 'Liste des %%entity_label%%'
