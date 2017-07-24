@@ -1643,3 +1643,31 @@
 .easyadmin.edit table tbody tr:nth-child(even) {
   background: #f8fbfc;
 }
+.easyadmin .actions a {
+  padding: 0px 8px;
+  transition: .10s;
+}
+.easyadmin .action-new:not(.btn) {
+  background: #0EAA80;
+}
+.easyadmin .action-show:not(.btn) {
+  color: #1173d4;
+}
+.easyadmin .action-show:not(.btn):hover {
+  color: #0f61b3;
+}
+.easyadmin .action-edit:not(.btn) {
+  color: #1173d4;
+}
+.easyadmin .action-edit:not(.btn):hover {
+  color: #0f61b3;
+}
+.easyadmin .action-delete:not(.btn) {
+  color: #d41121;
+}
+.easyadmin .action-delete:not(.btn):hover {
+  color: #b30f1c;
+}
+.easyadmin .easyadmin-lightbox {
+  text-align: center;
+}

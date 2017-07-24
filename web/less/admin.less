@@ -61,5 +61,40 @@
     }
   }
 
+  .actions {
+    a {
+      padding: 0px 8px;
+      transition: .10s;
+    }
+  }
+
+  .action
+  {
+    &-new:not(.btn) {
+      background: @primary;
+    }
+    &-show:not(.btn) {
+      color: darken(@blue, 10%);
+      &:hover {
+        color: darken(@blue, 17%);
+      }
+    }
+    &-edit:not(.btn) {
+      color: darken(@blue, 10%);
+      &:hover {
+        color: darken(@blue, 17%);
+      }
+    }
+    &-delete:not(.btn) {
+      color: darken(@red, 10%);
+      &:hover {
+        color: darken(@red, 17%);
+      }
+    }
+  }
+
+  .easyadmin-lightbox {
+    text-align: center;
+  }
 
 }
