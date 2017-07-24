@@ -13,10 +13,9 @@ app_signin :
 app_signout :
     path:     /deconnexion
 
-app_account :
-    path:     /espace-perso
-    defaults:
-        _controller: TrailWarehouseAppBundle:User:account
+app_account_root :
+    resource : "@TrailWarehouseAppBundle/Resources/config/Account/routing.yml"
+    prefix   : /espace-perso
 
 app_shop_root :
     resource : "@TrailWarehouseAppBundle/Resources/config/Shop/routing.yml"
