@@ -32,9 +32,9 @@ class UserController extends Controller
   {
     $this->repo = [
       'user'  => $em->getRepository('TrailWarehouseAppBundle:User'),
-      'order' => $em->getRepository('TrailWarehouseAppBundle:Order'),
+      'role'  => $em->getRepository('TrailWarehouseAppBundle:Role'),
     ];
-    $this->user = new User();
+    $this->user = new User($this->repo['role']->findOneByName('ROLE_USER'));
   }
 
   /* -------------- */
@@ -45,19 +45,18 @@ class UserController extends Controller
    * 'signup' route
    * @param Request $request
    */
-  public function signupAction(Request $request)
+  public function signupAction(Request $request, EntityManagerInterface $em)
   {
     $form = $this->createForm(SignupType::class, $this->user);
     $form->handleRequest($request);
     // Form submitted ?
     if ($form->isSubmitted() AND $form->isValid())
     {
-      $manager = $this->getDoctrine()->getManager();
-      $manager->persist($this->user);
-      $manager->flush();
+      $em->persist($this->user);
+      $em->flush();
       return $this->redirectToRoute('app_home');
 
-      /* Auto-login after rrgistration */
+      /* Auto-login after registration */
       // return $this
       //   ->get('security.authentication.guard_handler')
       //   ->authenticateUserAndHandleSuccess(
@@ -76,8 +75,8 @@ class UserController extends Controller
   /**
    * 'signin' route
    */
-  public function signinAction(Request $request, AuthenticationUtils $authUtils, UserInterface $user = null) {
-
+  public function signinAction(Request $request, AuthenticationUtils $authUtils, UserInterface $user = null)
+  {
     if ($user) {
       return $this->redirectToRoute('app_account');
     }
@@ -97,29 +96,10 @@ class UserController extends Controller
   /**
    * 'signout' route
    */
-  public function signoutAction(Request $request) {
+  public function signoutAction(Request $request)
+  {
     // Return
     return $this->render('TrailWarehouseAppBundle:Home:index.html.twig');
-  }
-
-  /**
-   * 'account' route
-   */
-  public function accountAction(Request $request, UserInterface $user)
-  {
-    $data = [
-      'user_form'    => $this->createForm(AccountType::class, $user)->createView(),
-      'address_form' => $this->createForm(CoordinateType::class, new Coordinate())->createView(),
-      'user'         => $user,
-      'orders'       => $this->repo['order']->getBy('user', $user),
-      'error'        => null,
-      'tabs'         => [
-        [ 'label' => 'Mon profil', 'class' => 'active' ],
-        [ 'label' => 'Mes commandes' ],
-        [ 'label' => 'Mes adresses'],
-      ],
-    ];
-    return $this->render('TrailWarehouseAppBundle:User:account.html.twig', $data);
   }
 
 
