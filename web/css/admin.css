@@ -17,6 +17,9 @@
 .ness-bg-darkblue:hover {
   background: #08335e;
 }
+.ness-bg-darkred {
+  background: #a50d1a;
+}
 .ness-bg-darkgrey {
   background: #505c62;
 }
@@ -77,6 +80,9 @@
 }
 .ness-text-yellow {
   color: #ffe02e;
+}
+.ness-text-white {
+  color: white;
 }
 /*** BLOCKS ***/
 .ness-block {
@@ -1643,6 +1649,9 @@
 .easyadmin.edit table tbody tr:nth-child(even) {
   background: #f8fbfc;
 }
+.easyadmin .sidebar-menu .header {
+  color: #11cb99;
+}
 .easyadmin .actions a {
   padding: 0px 8px;
   transition: .10s;
@@ -1667,6 +1676,12 @@
 }
 .easyadmin .action-delete:not(.btn):hover {
   color: #b30f1c;
+}
+.easyadmin .action-list:not(.btn) {
+  color: #d8dcdf;
+}
+.easyadmin .action-list:not(.btn):hover {
+  color: #c4cbcf;
 }
 .easyadmin .easyadmin-lightbox {
   text-align: center;

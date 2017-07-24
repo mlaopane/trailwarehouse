@@ -61,6 +61,12 @@
     }
   }
 
+  .sidebar-menu {
+    .header {
+      color: lighten(@bluegreen, 7%);
+    }
+  }
+
   .actions {
     a {
       padding: 0px 8px;
@@ -89,6 +95,12 @@
       color: darken(@red, 10%);
       &:hover {
         color: darken(@red, 17%);
+      }
+    }
+    &-list:not(.btn) {
+      color: darken(@lightgrey, 10%);
+      &:hover {
+        color: darken(@lightgrey, 17%);
       }
     }
   }
