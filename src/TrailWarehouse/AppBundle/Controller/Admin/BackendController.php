@@ -8,7 +8,7 @@ class BackendController extends EasyAdminController
 {
   public function preUpdateEntity($entity)
   {
-    $this->updateSlug($entity);
+    // $this->updateSlug($entity);
   }
 
   private function updateSlug($entity)
