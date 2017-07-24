@@ -41,26 +41,17 @@ class Brand
     private $slug;
 
     /**
+    * @var string
     *
-    * @Vich\UploadableField(mapping="brand_image", fileNameProperty="imageName", size="imageSize")
-    *
-    * @var File
+    * @ORM\Column(type="string", length=255)
     */
-    private $imageFile;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255)
-     */
     private $imageName;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $imageSize;
+    * @var File
+    * @Vich\UploadableField(mapping="brand_image", fileNameProperty="imageName")
+    */
+    private $imageFile;
 
     /**
      * @ORM\Column(type="datetime")
@@ -158,7 +149,7 @@ class Brand
         if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->$updatedDate = new \DateTimeImmutable();
+            $this->updatedDate = new \DateTimeImmutable();
         }
 
         return $this;
@@ -193,33 +184,13 @@ class Brand
     }
 
     /**
-     * @param integer $imageSize
-     *
-     * @return Product
-     */
-    public function setImageSize($imageSize)
-    {
-        $this->imageSize = $imageSize;
-
-        return $this;
-    }
-
-    /**
-     * @return integer|null
-     */
-    public function getImageSize()
-    {
-        return $this->imageSize;
-    }
-
-    /**
      * Set updatedDate
      *
      * @param \DateTime $updatedDate
      *
      * @return Brand
      */
-    public function setUpdatedAt($updatedDate)
+    public function setUpdatedDate($updatedDate)
     {
         $this->$updatedDate = $updatedDate;
 
@@ -231,8 +202,8 @@ class Brand
      *
      * @return \DateTime
      */
-    public function getUpdatedAt()
+    public function getUpdatedDate()
     {
-        return $this->updatedAt;
+        return $this->updatedDate;
     }
 }
