@@ -160,7 +160,9 @@
             {% else %}
                 <tr>
                     <td class="no-results" colspan="{{ _list_item_actions|length > 0 ? fields|length + 1 : fields|length }}">
-                        {{ 'search.no_results'|trans(_trans_parameters, 'EasyAdminBundle') }}
+                      <div class="ness-block warning">
+                        <span>{{ 'Aucun résultat'|trans(_trans_parameters, 'EasyAdminBundle') }}</span>
+                      </div>
                     </td>
                 </tr>
             {% endfor %}

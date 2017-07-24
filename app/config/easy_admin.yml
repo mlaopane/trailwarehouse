@@ -217,7 +217,7 @@ easy_admin :
                     - { property : 'color', label : 'Couleur', type : 'association' }
                     - { property : 'size', label : 'Taille', type : 'association' }
                     - { property : 'stock', label : 'Stock', type : 'integer' }
-                    - { property : 'price', label : 'Prix', format: '%.2f'  }
+                    - { property : 'price', label : 'Prix', format: '%.2f €'  }
             edit  :
                 fields :
                     - { property : 'name', label : 'Nom', help : 'Généré automatiquement si laissé vide', type_options : { required : false } }
@@ -295,6 +295,21 @@ easy_admin :
         Review    :
             class : TrailWarehouse\AppBundle\Entity\Review
             label : 'Avis'
+            help : 'Cliquez sur "Voir" pour accéder au commentaire associé'
+            disabled_actions : ['edit', 'new']
+            list :
+                fields :
+                    - id
+                    - { property : 'family', label : "Famille" }
+                    - { property : 'rating', label : "Note", format : "%u / 5" }
+                    - { property : 'creationDate', label : "Date du commentaire" }
+            show :
+                fields :
+                    - id
+                    - { property : 'family', label : "Famille" }
+                    - { property : 'rating', label : "Note", format : "%u / 5" }
+                    - { property : 'commentary', label : "Commentaire" }
+                    - { property : 'creationDate', label : "Date du commentaire" }
 
         Vat       :
             class : TrailWarehouse\AppBundle\Entity\Vat
@@ -303,4 +318,8 @@ easy_admin :
                 fields :
                     - id
                     - { property : 'country', label : 'Pays', type : 'string' }
-                    - { property : 'value', label : 'Valeur', type : 'float' }
+                    - { property : 'value', label : 'Valeur', format : '%.2f' }
+            edit :
+                fields :
+                    - { property : 'country', label : 'Pays', type : 'string' }
+                    - { property : 'value', label : 'Valeur', type : 'percent' }
