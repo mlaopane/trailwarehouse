@@ -3,7 +3,7 @@ easy_admin :
     site_name : '<em style="font-size:1.8rem;">Trail&nbsp;Warehouse&nbsp;Admin</em>'
 
     design :
-        brand_color : 'hsl(163, 60%, 43%)'
+        brand_color : 'hsl(165, 65%, 40%)'
         color_scheme : 'dark'
         form_theme :
             - 'easy_admin/form/bootstrap_3_layout.html.twig'
@@ -31,6 +31,7 @@ easy_admin :
               children :
                   - { entity : 'User', icon : 'user' }
                   - { entity : 'Role', icon : 'shield' }
+                  - { entity : 'Address', icon : 'address-card' }
             - label : "____________________"
             - label : "Facturation"
               icon : money
@@ -65,6 +66,7 @@ easy_admin :
         title   : 'Modification : ID #%%entity_id%%'
         actions :
             - { name : 'delete', icon : 'trash', css_class : 'btn btn-danger', label : 'Supprimer' }
+            - { name : 'show', icon : 'eye', css_class : 'btn btn-blue', label : 'Voir' }
             - { name : 'new', icon : 'plus', css_class : 'btn btn-blue', label : 'Nouveau' }
             - { name : 'list', icon : 'hand-o-left', css_class : 'btn btn-blue', label : 'Retour' }
 
@@ -99,8 +101,7 @@ easy_admin :
                     - { property : 'password', label : "Mot de passe crypté", type : 'string' }
                     - { property : 'role', label : 'Profil', type : 'association' }
                     - { property : 'isActive', label : 'active', type : 'toggle' }
-            edit  :
-                title : "Modification de l'utilisateur #%%entity_id%%"
+            form  :
                 fields :
                     - { type: 'group', css_class: 'col-sm-6', label: 'Identité' }
                     - { property : 'lastname', label : "Nom d'usage", type : 'text' }
@@ -114,28 +115,49 @@ easy_admin :
                     - { property : 'role', label : 'Profil', type_options : { expanded : true } }
                     - { type : 'divider' }
                     - { property : 'isActive', label : 'Actif' }
+            edit  :
+                title : "Modification de l'utilisateur #%%entity_id%%"
             new   :
                 title : "Création d'un nouvel utilisateur"
-                fields :
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Identité' }
-                    - { property : 'lastname', label : "Nom d'usage", type : 'text' }
-                    - { property : 'firstname', label : 'Prénom', type : 'text' }
-
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Identifiants' }
-                    - { property : 'email', label : 'Email', type : 'email' }
-                    - { property : 'plainPassword', label : 'Mot de passe', type : 'password', type_options : { required : true } }
-
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Autres informations' }
-                    - { property : 'role', label : 'Profil', type : 'entity', type_options : { expanded : true, class : 'TrailWarehouse\AppBundle\Entity\Role' } }
-                    - { property : 'isActive', label : 'Actif' }
 
         Role      :
             class : TrailWarehouse\AppBundle\Entity\Role
             label : 'Rôles'
+            form :
+                fields :
+                    - { property : 'name', label : 'Nom' }
             edit :
+                title : 'Modification du rôle #%%entity_id%%'
+            new :
+                title : "Création d'un rôle"
+
+        Address      :
+            class : TrailWarehouse\AppBundle\Entity\Address
+            label : 'Addresses'
+            list :
                 fields :
                     - id
-                    - { property : 'name', label : 'Nom', type : 'text' }
+                    - { property : 'street', label : 'N°, Voie' }
+                    - { property : 'zipcode', label : 'Code postal' }
+                    - { property : 'city', label : 'Ville' }
+                    - { property : 'user', label : 'Utilisateur' }
+            show :
+                fields :
+                    - id
+                    - { property : 'street', label : 'N°, Voie' }
+                    - { property : 'zipcode', label : 'Code postal' }
+                    - { property : 'city', label : 'Ville' }
+                    - { property : 'user', label : 'Utilisateur' }
+            form :
+                fields :
+                    - { property : 'user', label : 'Utilisateur' }
+                    - { property : 'street', label : 'N°, Voie' }
+                    - { property : 'zipcode', label : 'Code postal' }
+                    - { property : 'city', label : 'Ville' }
+            edit :
+                title : "Modification de l'adresse #%%entity_id%%"
+            new :
+                title : "Création d'une adresse"
 
         Brand     :
             class : TrailWarehouse\AppBundle\Entity\Brand
@@ -151,14 +173,14 @@ easy_admin :
                   - { property : 'name', label : 'Nom', type : 'string' }
                   - { property : 'imageName', label : 'Logo', type : 'image', base_path : '%vich_uploader.mappings.brand_image%' }
                   - { property : 'slug', label : 'Slug', type : 'string' }
+            form :
+                fields :
+                  - { property : 'name', label : 'Nom' }
+                  - { property : 'imageFile', label : 'Logo (max : 2Mo)', type : 'vich_image', base_path : '%vich_uploader.mappings.brand_image%' }
             edit :
-                fields :
-                  - { property : 'name', label : 'Nom' }
-                  - { property : 'imageFile', label : 'Logo (max : 2Mo)', type : 'vich_image', base_path : '%vich_uploader.mappings.brand_image%' }
+                title : "Modification de la marque #%%entity_id%%"
             new  :
-                fields :
-                  - { property : 'name', label : 'Nom' }
-                  - { property : 'imageFile', label : 'Logo (max : 2Mo)', type : 'vich_image', base_path : '%vich_uploader.mappings.brand_image%' }
+                title : "Création d'une marque"
 
         Category  :
             class : TrailWarehouse\AppBundle\Entity\Category
@@ -166,12 +188,19 @@ easy_admin :
             list :
                 fields :
                     - id
-                    - { property : 'name', label : 'Nom', type : 'string' }
+                    - { property : 'name', label : 'Nom' }
             show :
                 fields :
                     - id
                     - { property : 'name', label : 'Nom' }
                     - { property : 'slug', label : 'Slug' }
+            form :
+                fields :
+                    - { property : 'name', label : 'Nom' }
+            edit :
+                title : "Modification de la catégorie #%%entity_id%%"
+            new  :
+                title : "Création d'une catégorie"
 
         Family    :
             class : TrailWarehouse\AppBundle\Entity\Family
@@ -186,18 +215,16 @@ easy_admin :
                     - { property : 'products', label : 'Produits' }
                     - { property : 'visuels', label : 'Visuels' }
                     - { property : 'reviews', label : 'Notes' }
+            form :
+                fields :
+                    - { property : 'brand', label : 'Marque' }
+                    - { property : 'category', label : 'Catégorie' }
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'description', label : 'Description' }
             edit :
-                fields :
-                    - { property : 'brand', label : 'Marque' }
-                    - { property : 'category', label : 'Catégorie' }
-                    - { property : 'name', label : 'Nom' }
-                    - { property : 'description', label : 'Description' }
+                title : "Modification de la famille %%entity_id%%"
             new  :
-                fields :
-                    - { property : 'brand', label : 'Marque' }
-                    - { property : 'category', label : 'Catégorie' }
-                    - { property : 'name', label : 'Nom' }
-                    - { property : 'description', label : 'Description' }
+                title : "Création d'une famille"
 
         FamilyColor    :
             class : TrailWarehouse\AppBundle\Entity\FamilyColor
@@ -208,16 +235,15 @@ easy_admin :
                     - { property : 'family', label : 'Famille' }
                     - { property : 'color', label : 'Couleur' }
                     - { property : 'imageName', label : 'Visuel (max : 2Mo)', type : 'image', base_path : '%vich_uploader.mappings.family_color_image%' }
-            edit :
+            form :
                 fields :
                   - { property : 'family', label : 'Famille' }
                   - { property : 'color', label : 'Couleur' }
                   - { property : 'imageFile', label : 'Visuel (max : 2Mo)', type : 'vich_image', base_path : '%vich_uploader.mappings.family_color_image%' }
+            edit :
+                title : "Modification du visuel #%%entity_id%%"
             new  :
-                fields :
-                  - { property : 'family', label : 'Famille' }
-                  - { property : 'color', label : 'Couleur' }
-                  - { property : 'imageFile', label : 'Visuel', type : 'vich_image', base_path : '%vich_uploader.mappings.family_color_image%' }
+                title : "Création d'un visuel"
 
         Product   :
             class      : TrailWarehouse\AppBundle\Entity\Product
@@ -232,7 +258,7 @@ easy_admin :
                     - { property : 'size', label : 'Taille', type : 'association' }
                     - { property : 'stock', label : 'Stock', type : 'integer' }
                     - { property : 'price', label : 'Prix', format: '%.2f €'  }
-            edit  :
+            form  :
                 fields :
                     - { property : 'name', label : 'Nom', help : 'Généré automatiquement si laissé vide', type_options : { required : false } }
                     - { property : 'family', label : 'Famille' }
@@ -240,14 +266,10 @@ easy_admin :
                     - { property : 'size', label : 'Taille' }
                     - { property : 'stock', label : 'Stock' }
                     - { property : 'price', label : 'Prix', type : 'money', type_options : { currency : 'EUR' } }
-            new   :
-                fields :
-                    - { property : 'name', label : 'Nom' }
-                    - { property : 'family', label : 'Famille' }
-                    - { property : 'color', label : 'Couleur' }
-                    - { property : 'size', label : 'Taille' }
-                    - { property : 'price', label : 'Prix' }
-                    - { property : 'stock', label : 'Stock' }
+            edit :
+                title : "Modification du produit #%%entity_id%%"
+            new  :
+                title : "Création d'un produit"
 
         Color     :
             class : TrailWarehouse\AppBundle\Entity\Color
@@ -255,9 +277,17 @@ easy_admin :
             list :
                 fields :
                     - id
-                    - { property : 'name', label : 'Nom', type : 'string' }
-                    - { property : 'value', label : 'Valeur', type : 'string' }
-                    - { property : 'echantillon', label : 'Echantillon', type : 'string' }
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'value', label : 'Valeur' }
+                    - { property : 'echantillon', label : 'Echantillon' }
+            form :
+                fields :
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'value', label : 'Valeur' }
+            edit :
+                title : "Modification de la couleur #%%entity_id%%"
+            new  :
+                title : "Création d'une couleur"
 
         Size      :
             class : TrailWarehouse\AppBundle\Entity\Size
@@ -267,7 +297,21 @@ easy_admin :
                     - id
                     - { property : 'value', label : 'Valeur', type : 'string' }
                     - { property : 'unit', label : 'Unité', type : 'string' }
-                    - { property : 'unitShortcut', label : 'Raccourci', type : 'string' }
+            show :
+                fields :
+                    - id
+                    - { property : 'value', label : 'Valeur' }
+                    - { property : 'unit', label : 'Unité' }
+                    - { property : 'unitShortcut', label : 'Raccourci unité' }
+            form :
+                fields :
+                    - { property : 'value', label : 'Valeur' }
+                    - { property : 'unit', label : 'Unité' }
+                    - { property : 'unitShortcut', label : 'Raccourci unité' }
+            edit :
+                title : "Modification de la taille #%%entity_id%%"
+            new  :
+                title : "Création d'une taille"
 
         Order     :
             class : TrailWarehouse\AppBundle\Entity\Order
@@ -305,6 +349,26 @@ easy_admin :
                     - { property : 'isExpired', label : 'Expiré', type : 'boolean' }
                     - { property : 'start', label : 'Début', type : 'datetime' }
                     - { property : 'end', label : 'Fin', type : 'datetime' }
+            show :
+                fields :
+                    - id
+                    - { property : 'code', label : 'Code' }
+                    - { property : 'value', label : 'Valeur' }
+                    - { property : 'isNew', label : 'Nouveau', type : boolean }
+                    - { property : 'isActive', label : 'Actif', type : boolean }
+                    - { property : 'isExpired', label : 'Expiré', type : boolean }
+                    - { property : 'start', label : 'Début' }
+                    - { property : 'end', label : 'Fin' }
+            form :
+                fields :
+                    - { property : 'code', label : 'Code' }
+                    - { property : 'value', label : 'Valeur' }
+                    - { property : 'start', label : 'Début', type : 'datetime' }
+                    - { property : 'end', label : 'Fin', type : 'datetime' }
+            edit :
+                title : "Modification du code promo #%%entity_id%%"
+            new  :
+                title : "Création d'un code promo"
 
         Review    :
             class : TrailWarehouse\AppBundle\Entity\Review
@@ -333,7 +397,16 @@ easy_admin :
                     - id
                     - { property : 'country', label : 'Pays', type : 'string' }
                     - { property : 'value', label : 'Valeur', format : '%.2f' }
-            edit :
+            show :
+                fields :
+                    - id
+                    - { property : 'country', label : 'Pays', type : 'string' }
+                    - { property : 'value', label : 'Valeur', format : '%.2f' }
+            form :
                 fields :
                     - { property : 'country', label : 'Pays', type : 'string' }
                     - { property : 'value', label : 'Valeur', type : 'percent' }
+            edit :
+                title : "Modification de la TVA #%%entity_id%%"
+            new  :
+                title : "Création d'une TVA"
