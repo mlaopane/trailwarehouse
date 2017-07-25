@@ -48,14 +48,18 @@ easy_admin :
         max_results : 20
         actions :
             - { name : 'new', icon : 'plus', label : 'Ajouter' }
-            - { name : 'show', icon : '', label : 'Voir' }
-            - { name : 'edit', icon : '', label : 'Modifier' }
-            - { name : 'delete', icon : '', label : 'Supprimer' }
+            - { name : 'show', icon : 'eye', label : '' }
+            - { name : 'edit', icon : 'pencil', label : '' }
+            - { name : 'delete', icon : 'trash', label : '' }
             - { name : 'search', icon : 'search', label : 'Rechercher' }
 
     show :
         title : '%%entity_label%% (#%%entity_id%%)'
         max_results : 20
+        actions :
+            - { name : 'edit', icon : 'pencil', css_class : 'btn btn-primary', label : 'Modifier' }
+            - { name : 'delete', icon : 'trash', css_class : 'btn btn-danger', label : 'Supprimer' }
+            - { name : 'list', icon : 'hand-o-left', css_class : 'btn btn-blue', label : 'Retour' }
 
     edit :
         title   : 'Modification : ID #%%entity_id%%'
