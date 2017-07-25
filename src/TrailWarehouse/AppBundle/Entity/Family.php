@@ -363,41 +363,6 @@ class Family
     }
 
     /**
-     * Add color
-     *
-     * @param \TrailWarehouse\AppBundle\Entity\Color $color
-     *
-     * @return Family
-     */
-    public function addColor(Color $color)
-    {
-        $this->colors[] = $color;
-
-        return $this;
-    }
-
-    /**
-     * Remove color
-     *
-     * @param \TrailWarehouse\AppBundle\Entity\Color $color
-     */
-    public function removeColor(Color $color)
-    {
-        $this->colors->removeElement($color);
-    }
-
-    /**
-     * Get colors
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getColors()
-    {
-        return $this->colors;
-    }
-
-
-    /**
      * Add visuel
      *
      * @param \TrailWarehouse\AppBundle\Entity\FamilyColor $visuel
