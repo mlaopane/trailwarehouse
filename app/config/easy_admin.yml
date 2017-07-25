@@ -20,16 +20,16 @@ easy_admin :
             - { entity : 'Category', icon : 'th-large' }
             - label : "____________________"
             - label : "Production"
-              icon : book
+              icon : gears
               children :
-                  - { entity : 'Family', icon : 'th-list' }
+                  - { entity : 'Family', icon : 'book' }
                   - { entity : 'Product', icon : 'leaf' }
                   - { entity : 'FamilyColor', icon : 'image' }
             - label : "____________________"
             - label : "Membres"
-              icon : "user"
+              icon : "users"
               children :
-                  - { entity : 'User', icon : 'th-list' }
+                  - { entity : 'User', icon : 'user' }
                   - { entity : 'Role', icon : 'shield' }
             - label : "____________________"
             - label : "Facturation"
@@ -136,7 +136,6 @@ easy_admin :
         Brand     :
             class : TrailWarehouse\AppBundle\Entity\Brand
             label : 'Marques'
-            image_base_path :
             list :
                 fields :
                   - id
@@ -151,11 +150,11 @@ easy_admin :
             edit :
                 fields :
                   - { property : 'name', label : 'Nom' }
-                  - { property : 'imageFile', label : 'Logo', type : 'vich_image', base_path : '%vich_uploader.mappings.brand_image%' }
+                  - { property : 'imageFile', label : 'Logo (max : 2Mo)', type : 'vich_image', base_path : '%vich_uploader.mappings.brand_image%' }
             new  :
                 fields :
                   - { property : 'name', label : 'Nom' }
-                  - { property : 'imageFile', label : 'Logo', type : 'vich_image', base_path : '%vich_uploader.mappings.brand_image%' }
+                  - { property : 'imageFile', label : 'Logo (max : 2Mo)', type : 'vich_image', base_path : '%vich_uploader.mappings.brand_image%' }
 
         Category  :
             class : TrailWarehouse\AppBundle\Entity\Category
@@ -164,26 +163,37 @@ easy_admin :
                 fields :
                     - id
                     - { property : 'name', label : 'Nom', type : 'string' }
+            show :
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'slug', label : 'Slug' }
 
         Family    :
             class : TrailWarehouse\AppBundle\Entity\Family
             label : 'Familles'
             list :
+                help : "Cliquer sur 'Voir/Modifier' pour visualiser/éditer la description d'une famille"
                 fields :
                     - id
                     - { property : 'name', label : 'Nom', type : 'string' }
                     - { property : 'brand', label : 'Marque', type : 'association' }
                     - { property : 'category', label : 'Catégorie', type : 'association' }
                     - { property : 'products', label : 'Produits' }
-                    - { property : 'colors', label : 'Visuels' }
+                    - { property : 'visuels', label : 'Visuels' }
                     - { property : 'reviews', label : 'Notes' }
             edit :
                 fields :
-                    - { property : 'name', label : 'Nom' }
                     - { property : 'brand', label : 'Marque' }
                     - { property : 'category', label : 'Catégorie' }
-                    - { property : 'products', label : 'Produits' }
-                    - { property : 'colors', label : 'Couleurs' }
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'description', label : 'Description' }
+            new  :
+                fields :
+                    - { property : 'brand', label : 'Marque' }
+                    - { property : 'category', label : 'Catégorie' }
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'description', label : 'Description' }
 
         FamilyColor    :
             class : TrailWarehouse\AppBundle\Entity\FamilyColor
@@ -191,19 +201,19 @@ easy_admin :
             list :
                 fields :
                     - id
-                    - { property : 'name', label : 'Nom', type : 'string' }
-                    - { property : 'brand', label : 'Marque', type : 'association' }
-                    - { property : 'category', label : 'Catégorie', type : 'association' }
-                    - { property : 'products', label : 'Produits' }
-                    - { property : 'colors', label : 'Visuels' }
-                    - { property : 'reviews', label : 'Notes' }
+                    - { property : 'family', label : 'Famille' }
+                    - { property : 'color', label : 'Couleur' }
+                    - { property : 'imageName', label : 'Visuel (max : 2Mo)', type : 'image', base_path : '%vich_uploader.mappings.family_color_image%' }
             edit :
                 fields :
-                    - { property : 'name', label : 'Nom' }
-                    - { property : 'brand', label : 'Marque' }
-                    - { property : 'category', label : 'Catégorie' }
-                    - { property : 'products', label : 'Produits' }
-                    - { property : 'colors', label : 'Couleurs' }
+                  - { property : 'family', label : 'Famille' }
+                  - { property : 'color', label : 'Couleur' }
+                  - { property : 'imageFile', label : 'Visuel (max : 2Mo)', type : 'vich_image', base_path : '%vich_uploader.mappings.family_color_image%' }
+            new  :
+                fields :
+                  - { property : 'family', label : 'Famille' }
+                  - { property : 'color', label : 'Couleur' }
+                  - { property : 'imageFile', label : 'Visuel', type : 'vich_image', base_path : '%vich_uploader.mappings.family_color_image%' }
 
         Product   :
             class      : TrailWarehouse\AppBundle\Entity\Product
