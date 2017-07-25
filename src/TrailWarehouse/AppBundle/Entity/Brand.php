@@ -3,8 +3,8 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -67,7 +67,7 @@ class Brand
      */
     public function __toString()
     {
-      return $this->id . " - " . $this->name;
+      return $this->name;
     }
 
     /* ----------- */

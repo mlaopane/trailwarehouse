@@ -61,7 +61,7 @@ class Coordinate
      */
     public function __toString()
     {
-      return $this->id . " - " . $this->address . ", " . $this->zipcode . " " . $this->city;
+      return $this->address . ", " . $this->zipcode . " " . $this->city;
     }
 
     /**
