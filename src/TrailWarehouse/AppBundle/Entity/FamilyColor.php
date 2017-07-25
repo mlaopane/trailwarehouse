@@ -3,6 +3,8 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Color;
 use TrailWarehouse\AppBundle\Entity\Image;
@@ -12,6 +14,7 @@ use TrailWarehouse\AppBundle\Entity\Image;
  *
  * @ORM\Table(name="`family_color`")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\FamilyColorRepository")
+ * @Vich\Uploadable
  */
 class FamilyColor
 {
@@ -41,12 +44,34 @@ class FamilyColor
     private $color;
 
     /**
-     * @var Image
+    * @var string
+    *
+    * @ORM\Column(type="string", length=255)
+    */
+    private $imageName;
+
+    /**
+    * @var File
+    * @Vich\UploadableField(mapping="family_color_image", fileNameProperty="imageName")
+    */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
      *
-     * @ORM\ManyToOne(targetEntity="Image", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
+     * @var \DateTime
      */
-    private $image;
+    private $updatedDate;
+
+
+    /**
+     * toString
+     */
+    public function __toString()
+    {
+      return $this->family->getSlug() . "_" . $this->color->getSlug() . "_" . $this->id;
+    }
+
 
     /* ---------- Getters & Setters ---------- */
 
@@ -59,7 +84,6 @@ class FamilyColor
     {
         return $this->id;
     }
-
 
     /**
      * Set family
@@ -110,26 +134,72 @@ class FamilyColor
     }
 
     /**
-     * Set image
+     * setImageFile
      *
-     * @param Image $image
-     *
-     * @return FamilyColor
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
      */
-    public function setImage(Image $image = null)
+    public function setImageFile(File $image = null)
     {
-        $this->image = $image;
+        $this->imageFile = $image;
+
+        if ($image) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedDate = new \DateTimeImmutable();
+        }
 
         return $this;
     }
 
     /**
-     * Get image
-     *
-     * @return Image
+     * @return File|null
      */
-    public function getImage()
+    public function getImageFile()
     {
-        return $this->image;
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $imageName
+     *
+     * @return Product
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * Set updatedDate
+     *
+     * @param \DateTime $updatedDate
+     *
+     * @return Brand
+     */
+    public function setUpdatedDate($updatedDate)
+    {
+        $this->$updatedDate = $updatedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedDate()
+    {
+        return $this->updatedDate;
     }
 }
