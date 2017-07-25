@@ -94,4 +94,9 @@ class Vat
     {
         return $this->value;
     }
+
+    public function getPercentage()
+    {
+        return $this->value * 100;
+    }
 }

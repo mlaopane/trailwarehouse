@@ -143,7 +143,7 @@ class CartController extends Controller
     }
 
     $session->set('checkout', true);
-    return $this->redirectToRoute('app_order_coordinates');
+    return $this->redirectToRoute('app_order_address');
   }
 
   /* ---------- Private methods ---------- */

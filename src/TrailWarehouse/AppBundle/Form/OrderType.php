@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 use FOS\UserBundle\Model\UserInterface;
-use TrailWarehouse\AppBundle\Entity\Coordinate;
+use TrailWarehouse\AppBundle\Entity\Address;
 
 class OrderType extends AbstractType
 {
@@ -25,7 +25,7 @@ class OrderType extends AbstractType
       $addresses = $options['addresses'];
       $attr = ['class' => 'mb-3'];
       $builder
-        ->add('coordinate', ChoiceType::class, [
+        ->add('address', ChoiceType::class, [
           'label'        => 'Adresse',
           'attr'         => $attr,
           'expanded'     => true,
@@ -39,13 +39,13 @@ class OrderType extends AbstractType
             }
           },
         ])
-        // ->add('coordinate', EntityType::class, [
-        //   'class'         => 'TrailWarehouseAppBundle:Coordinate',
+        // ->add('address', EntityType::class, [
+        //   'class'         => 'TrailWarehouseAppBundle:Address',
         //   'label'         => 'Adresse',
         //   'attr'          => $attr,
         //   'expanded'      => true,
-        //   'choice_label'  => function ($coordinate) {
-        //     return ucfirst(mb_strtolower($coordinate->getTitle(), 'UTF-8'));
+        //   'choice_label'  => function ($address) {
+        //     return ucfirst(mb_strtolower($address->getTitle(), 'UTF-8'));
         //   },
         //   'query_builder' => function ($er) use ($user) {
         //     return $er->createQueryBuilder('address')

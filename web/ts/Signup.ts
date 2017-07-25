@@ -7,7 +7,7 @@ interface Signup {
   password  : string;
 }
 
-interface Coordinate {
+interface Addresses {
   address : string;
   zipcode : string;
   city    : string;
@@ -15,7 +15,7 @@ interface Coordinate {
 }
 
 var SignupForm     : Signup;
-var CoordinateForm : Coordinate;
+var AddressesForm : Addresses;
 
 var $container = $('#trailwarehouse_appbundle_member_coordinates');
 var template = $container.attr('data-prototype');

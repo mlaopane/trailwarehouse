@@ -44,9 +44,9 @@ app_api_user_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_user.yml"
     prefix            : /users
 
-app_api_coordinate_root   :
-    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_coordinate.yml"
-    prefix            : /coordinates
+app_api_address_root   :
+    resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_address.yml"
+    prefix            : /address
 
 app_api_stat_root   :
     resource          : "@TrailWarehouseAppBundle/Resources/config/Api/routing_stat.yml"

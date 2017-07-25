@@ -38,11 +38,18 @@ class OrderProduct
     private $product;
 
     /**
-     * @var Product $product
+     * @var int $quantity
      *
      * @ORM\Column(name="quantity", type="integer")
      */
     private $quantity;
+
+    /**
+     * @var float $unitPrice
+     *
+     * @ORM\Column(name="unit_price", type="decimal", precision=7, scale=2)
+     */
+    private $unitPrice;
 
     /**
      * @var int $total
@@ -158,5 +165,29 @@ class OrderProduct
     public function getTotal()
     {
         return $this->total;
+    }
+
+    /**
+     * Set unitPrice
+     *
+     * @param string $unitPrice
+     *
+     * @return OrderProduct
+     */
+    public function setUnitPrice($unitPrice)
+    {
+        $this->unitPrice = $unitPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get unitPrice
+     *
+     * @return string
+     */
+    public function getUnitPrice()
+    {
+        return $this->unitPrice;
     }
 }

@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use TrailWarehouse\AppBundle\Entity\Role;
 use TrailWarehouse\AppBundle\Entity\Order;
-use TrailWarehouse\AppBundle\Entity\Coordinate;
+use TrailWarehouse\AppBundle\Entity\Address;
 use TrailWarehouse\AppBundle\Entity\Review;
 
 /**
@@ -103,9 +103,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * @var ArrayCollection
     *
-    * @ORM\OneToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Coordinate", mappedBy="user")
+    * @ORM\OneToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Address", mappedBy="user")
     */
-    private $coordinates;
+    private $address;
 
     /**
     * @var ArrayCollection
@@ -134,7 +134,7 @@ class User implements AdvancedUserInterface, \Serializable
     */
     public function __construct(Role $role = null)
     {
-        $this->coordinates  = new ArrayCollection();
+        $this->address  = new ArrayCollection();
         $this->orders       = new ArrayCollection();
         $this->reviews      = new ArrayCollection();
         $this->creationDate = new \DateTime();
@@ -392,37 +392,37 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Add coordinate
+     * Add address
      *
-     * @param \TrailWarehouse\AppBundle\Entity\Coordinate $coordinate
+     * @param \TrailWarehouse\AppBundle\Entity\Address $address
      *
      * @return User
      */
-    public function addCoordinate(Coordinate $coordinate)
+    public function addAddress(Address $address)
     {
-        $this->coordinates[] = $coordinate;
+        $this->address[] = $address;
 
         return $this;
     }
 
     /**
-     * Remove coordinate
+     * Remove address
      *
-     * @param \TrailWarehouse\AppBundle\Entity\Coordinate $coordinate
+     * @param \TrailWarehouse\AppBundle\Entity\Address $address
      */
-    public function removeCoordinate(Coordinate $coordinate)
+    public function removeAddress(Address $address)
     {
-        $this->coordinates->removeElement($coordinate);
+        $this->address->removeElement($address);
     }
 
     /**
-     * Get coordinates
+     * Get address
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCoordinates()
+    public function getAddress()
     {
-        return $this->coordinates;
+        return $this->address;
     }
 
     /**

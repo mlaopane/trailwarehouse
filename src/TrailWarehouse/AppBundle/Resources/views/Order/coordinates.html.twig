@@ -16,7 +16,7 @@
 
 {% block page_main %}
 
-  <!-- # Coordinates -->
+  <!-- # Address -->
   <main id="page-order-address" class="bg-white">
 
       <!-- # Heading -->
@@ -46,25 +46,25 @@
             <!-- # Col -->
             <div class="col-12">
 
-              <!-- # Coordinate Form -->
-              {{ form_start(coordinate_form) }}
+              <!-- # Address Form -->
+              {{ form_start(address_form) }}
 
                 <!-- # Title -->
                 <div class="form-group mb-4">
-                  {{ form_label(coordinate_form.title) }}
+                  {{ form_label(address_form.title) }}
                   <div class="input-group">
                     <div class="input-group-addon">@</div>
-                    {{ form_widget(coordinate_form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre' }}) }}
+                    {{ form_widget(address_form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre' }}) }}
                   </div>
                 </div>
                 <!-- Address # -->
 
                 <!-- # Address -->
                 <div class="form-group mb-4">
-                  {{ form_label(coordinate_form.address) }}
+                  {{ form_label(address_form.address) }}
                   <div class="input-group">
                     <div class="input-group-addon">@</div>
-                    {{ form_widget(coordinate_form.address, {'attr': {'class': 'form-control', 'placeholder': 'Adresse' }}) }}
+                    {{ form_widget(address_form.address, {'attr': {'class': 'form-control', 'placeholder': 'Adresse' }}) }}
                   </div>
                 </div>
                 <!-- Address # -->
@@ -72,11 +72,11 @@
                 <!-- # Zipcode -->
                 <div class="form-group mb-4">
                   <div class="d-flex justify-content-start align-items-baseline">
-                    {{ form_label(coordinate_form.zipcode) }}
+                    {{ form_label(address_form.zipcode) }}
                   </div>
                   <div class="input-group">
                     <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                    {{ form_widget(coordinate_form.zipcode, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
+                    {{ form_widget(address_form.zipcode, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
                   </div>
                 </div>
                 <!-- Zipcode # -->
@@ -84,24 +84,24 @@
                 <!-- # City -->
                 <div class="form-group mb-4">
                   <div class="d-flex justify-content-start align-items-baseline">
-                    {{ form_label(coordinate_form.city) }}
+                    {{ form_label(address_form.city) }}
                   </div>
                   <div class="input-group">
                     <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                    {{ form_widget(coordinate_form.city, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
+                    {{ form_widget(address_form.city, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
                   </div>
                 </div>
                 <!-- City # -->
 
                 <!-- # Submit -->
                 <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
-                  {{ form_widget(coordinate_form.save, {'attr': {'class':'btn btn-confirm w-100'}}) }}
+                  {{ form_widget(address_form.save, {'attr': {'class':'btn btn-confirm w-100'}}) }}
                 </div>
                 <!-- Submit # -->
 
-                {{ form_rest(coordinate_form) }}
+                {{ form_rest(address_form) }}
 
-              {{ form_end(coordinate_form) }}
+              {{ form_end(address_form) }}
 
             </div>
             <!-- Col # -->
@@ -111,7 +111,7 @@
 
         </div>
 
-        <!-- # Col Addresses -->
+        <!-- # Col Address -->
         <div class="col-12 col-md-6 col-xl-7">
 
           <!-- # Select Address -->
@@ -135,7 +135,7 @@
                     {{ form_start(order_form, {'attr': {'id':'address-form'}}) }}
 
                       <div class="btn-group mb-4" data-toggle="buttons" id="address-radio">
-                        {% for child in order_form.coordinate.children %}
+                        {% for child in order_form.address.children %}
                           <label class="btn btn-alt">
                             <input
                               type         = "radio"
@@ -148,13 +148,13 @@
                         {% endfor %}
                       </div>
 
-                      {% do order_form.coordinate.setRendered %}
+                      {% do order_form.address.setRendered %}
 
                       <div id="user-addresses">
                         <div id="no-address" class="ness-block info mb-5">
                           <span>Aucune addresse sélectionnée</span>
                         </div>
-                        {% for address in app.user.coordinates %}
+                        {% for address in app.user.address %}
                         <div id="address-{{ address.id }}" class="address ness-block info mb-5 hide">
                           <h4 class="card-title font-weight-bold">{{ address.title }}</h4>
                           <dl class="card-text">
@@ -187,12 +187,12 @@
           <!-- Select Address # -->
 
         </div>
-        <!-- Col Addresses # -->
+        <!-- Col Address # -->
 
       </div>
 
   </main>
-  <!-- Coordinates # -->
+  <!-- Address # -->
 
 {% endblock %}
 

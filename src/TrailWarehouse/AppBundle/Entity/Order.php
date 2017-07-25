@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Product;
-use TrailWarehouse\AppBundle\Entity\Coordinate;
+use TrailWarehouse\AppBundle\Entity\Address;
 use TrailWarehouse\AppBundle\Entity\OrderProduct;
 
 /**
@@ -30,17 +30,44 @@ class Order
      * @var User $user
      *
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="orders")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
     /**
-     * @var Coordinate $coordinate
+     * @var string $lastname
      *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Coordinate")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $coordinate;
+    private $lastname;
+
+    /**
+     * @var string $lastname
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $firstname;
+
+    /**
+     * @var string $street
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $street;
+
+    /**
+     * @var string $zipcode
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $zipcode;
+
+    /**
+     * @var string $city
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $city;
 
     /**
      * @var \DateTime
@@ -269,26 +296,146 @@ class Order
     }
 
     /**
-     * Set coordinate
+     * Set address
      *
-     * @param \TrailWarehouse\AppBundle\Entity\Coordinate $coordinate
+     * @param \TrailWarehouse\AppBundle\Entity\Address $address
      *
      * @return Order
      */
-    public function setCoordinate(\TrailWarehouse\AppBundle\Entity\Coordinate $coordinate)
+    public function setAddress(\TrailWarehouse\AppBundle\Entity\Address $address)
     {
-        $this->coordinate = $coordinate;
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * Get coordinate
+     * Get address
      *
-     * @return \TrailWarehouse\AppBundle\Entity\Coordinate
+     * @return \TrailWarehouse\AppBundle\Entity\Address
      */
-    public function getCoordinate()
+    public function getAddress()
     {
-        return $this->coordinate;
+        return $this->address;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return Order
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     *
+     * @return Order
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set street
+     *
+     * @param string $street
+     *
+     * @return Order
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * Get street
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * Set zipcode
+     *
+     * @param string $zipcode
+     *
+     * @return Order
+     */
+    public function setZipcode($zipcode)
+    {
+        $this->zipcode = $zipcode;
+
+        return $this;
+    }
+
+    /**
+     * Get zipcode
+     *
+     * @return string
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return Order
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }

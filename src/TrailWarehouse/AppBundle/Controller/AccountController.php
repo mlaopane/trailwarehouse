@@ -12,11 +12,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Form\Form;
 use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Cart;
-use TrailWarehouse\AppBundle\Entity\Coordinate;
+use TrailWarehouse\AppBundle\Entity\Address;
 use TrailWarehouse\AppBundle\Form\SignupType;
 use TrailWarehouse\AppBundle\Form\SigninType;
 use TrailWarehouse\AppBundle\Form\AccountType;
-use TrailWarehouse\AppBundle\Form\CoordinateType;
+use TrailWarehouse\AppBundle\Form\AddressType;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -93,10 +93,10 @@ class AccountController extends Controller
    *
    * @return Form
    */
-  private function handleAddressForm(Request $request, EntityManager $em, User $user, Coordinate $address)
+  private function handleAddressForm(Request $request, EntityManager $em, User $user, Address $address)
   {
-    $address = new Coordinate();
-    $form = $this->createForm(CoordinateType::class, $address, [
+    $address = new Address();
+    $form = $this->createForm(AddressType::class, $address, [
       'action' => $this->generateUrl('account_update'),
     ]);
 

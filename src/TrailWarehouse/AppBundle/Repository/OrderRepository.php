@@ -15,7 +15,7 @@ class OrderRepository extends CommonRepository
   {
     return $this->createQueryBuilder('tw_order')
       ->innerJoin('tw_order.user', 'user')
-      ->leftJoin('tw_order.coordinate', 'coordinate')
+      ->leftJoin('tw_order.address', 'address')
     ;
   }
 }

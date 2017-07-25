@@ -5,10 +5,10 @@ app_order             :
   defaults            :
     _controller       : TrailWarehouseAppBundle:Order:index
 
-app_order_coordinates :
+app_order_address :
   path                : /coordonnees
   defaults            :
-    _controller       : TrailWarehouseAppBundle:Order:coordinates
+    _controller       : TrailWarehouseAppBundle:Order:address
 
 app_order_add_address :
   path                : /ajouter-adresse

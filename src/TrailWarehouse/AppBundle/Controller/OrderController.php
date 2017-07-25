@@ -15,10 +15,10 @@ use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Promo;
 use TrailWarehouse\AppBundle\Entity\Order;
 use TrailWarehouse\AppBundle\Entity\Product;
-use TrailWarehouse\AppBundle\Entity\Coordinate;
+use TrailWarehouse\AppBundle\Entity\Address;
 use TrailWarehouse\AppBundle\Entity\OrderProduct;
 use TrailWarehouse\AppBundle\Form\OrderType;
-use TrailWarehouse\AppBundle\Form\CoordinateType;
+use TrailWarehouse\AppBundle\Form\AddressType;
 
 class OrderController extends Controller
 {
@@ -34,7 +34,7 @@ class OrderController extends Controller
       'user'          => $em->getRepository('TrailWarehouseAppBundle:User'),
       'product'       => $em->getRepository('TrailWarehouseAppBundle:Product'),
       'promo'         => $em->getRepository('TrailWarehouseAppBundle:Promo'),
-      'coordinate'    => $em->getRepository('TrailWarehouseAppBundle:Coordinate'),
+      'address'    => $em->getRepository('TrailWarehouseAppBundle:Address'),
       'order'         => $em->getRepository('TrailWarehouseAppBundle:Order'),
       'order_product' => $em->getRepository('TrailWarehouseAppBundle:OrderProduct'),
     ];
@@ -54,31 +54,31 @@ class OrderController extends Controller
   /* ----- Routes ----- */
 
   /**
-   * Route 'app_order_coordinates'
+   * Route 'app_order_address'
    */
-  public function coordinatesAction(SessionInterface $session, UserInterface $user)
+  public function addressAction(SessionInterface $session, UserInterface $user)
   {
     if (false === $session->get('checkout')) {
       return $this->redirectToRoute('app_cart');
     }
     $session->set('checkout', false);
 
-    $form['coordinate'] = $this->createForm(CoordinateType::class, new Coordinate(), [
+    $form['address'] = $this->createForm(AddressType::class, new Address(), [
       'action' => $this->generateUrl('app_order_add_address')
     ]);
 
     $form['order'] = $this->createForm(OrderType::class, new Order(), [
       'action'    => $this->generateUrl('app_order_set_address'),
       'user'      => $user,
-      'addresses' => $this->repo['coordinate']->findByUser($user),
+      'addresses' => $this->repo['address']->findByUser($user),
     ]);
 
     $data = [
-      'coordinate_form' => $form['coordinate']->createView(),
+      'address_form' => $form['address']->createView(),
       'order_form'      => $form['order']->createView(),
     ];
 
-    return $this->render('TrailWarehouseAppBundle:Order:coordinates.html.twig', $data);
+    return $this->render('TrailWarehouseAppBundle:Order:address.html.twig', $data);
   }
 
   /**
@@ -86,21 +86,21 @@ class OrderController extends Controller
    */
   public function addAddressAction(Request $request, SessionInterface $session, EntityManagerInterface $em, UserInterface $user)
   {
-    $coordinate = new Coordinate();
-    $form = $this->createForm(CoordinateType::class, $coordinate);
+    $address = new Address();
+    $form = $this->createForm(AddressType::class, $address);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() AND $form->isValid()) {
       $session->set('checkout', true);
-      if ($this->repo['coordinate']->isDoublon($coordinate->setUser($user))) {
+      if ($this->repo['address']->isDoublon($address->setUser($user))) {
         $this->addFlash('warning', "Cette adresse existe déjà/nVeuillez choisir un titre différent");
       }
       else {
-        $em->persist($coordinate);
+        $em->persist($address);
         $em->flush();
         $this->addFlash('success', "Adresse ajoutée !");
         $session->set('checkout', true);
-        return $this->redirectToRoute('app_order_coordinates');
+        return $this->redirectToRoute('app_order_address');
       }
     }
     return $this->redirectToRoute('app_cart');
@@ -115,20 +115,20 @@ class OrderController extends Controller
     $form = $this->createForm(OrderType::class, $order, [
       'action'    => $this->generateUrl('app_order_set_address'),
       'user'      => $user,
-      'addresses' => $this->repo['coordinate']->findByUser($user),
+      'addresses' => $this->repo['address']->findByUser($user),
     ]);
 
     $form->handleRequest($request);
 
     if ($form->isSubmitted() AND $form->isValid())
     {
-      $db_coordinate = $this->repo['coordinate']->getOneByArray([
-        'id'   => $order->getCoordinate()->getId(),
+      $db_address = $this->repo['address']->getOneByArray([
+        'id'   => $order->getAddress()->getId(),
         'user' => $user
       ]);
-      if (empty($db_coordinate)) {
+      if (empty($db_address)) {
         $this->addFlash('warning', 'Cette adresse ne vous appartient pas');
-        return $this->redirectToRoute('app_order_coordinates');
+        return $this->redirectToRoute('app_order_address');
       }
       $session->set('order', $order);
       return $this->redirectToRoute('app_order_create');
@@ -154,14 +154,14 @@ class OrderController extends Controller
     $cart  = $session->get('cart');
     $order = $session->get('order');
 
-    if (empty($cart) OR $cart->getItems()->count() < 1 OR empty($order->getCoordinate())) {
+    if (empty($cart) OR $cart->getItems()->count() < 1 OR empty($order->getAddress())) {
       return $this->redirectToRoute('app_cart');
     }
 
     $user = $this->repo['user']->find($user->getId());
-    $address = $this->repo['coordinate']->find($order->getCoordinate()->getId());
+    $address = $this->repo['address']->find($order->getAddress()->getId());
 
-    $this->persistOrder($order->setUser($user)->setCoordinate($address), $cart, $em);
+    $this->persistOrder($order->setUser($user)->setAddress($address), $cart, $em);
     if (false === $this->persistOrderProducts($order, $cart, $em)) {
       return $this->redirectToRoute('app_cart');
     }

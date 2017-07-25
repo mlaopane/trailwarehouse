@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use TrailWarehouse\AppBundle\Entity\User;
 
 /**
- * Coordinate
+ * Address
  *
- * @ORM\Table(name="coordinate")
- * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\CoordinateRepository")
+ * @ORM\Table(name="address")
+ * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\AddressRepository")
  */
-class Coordinate
+class Address
 {
     /**
      * @var int
@@ -30,7 +30,7 @@ class Coordinate
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="coordinates")
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="address")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -38,9 +38,9 @@ class Coordinate
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="street", type="string", length=255)
      */
-    private $address;
+    private $street;
 
     /**
      * @var string
@@ -61,7 +61,7 @@ class Coordinate
      */
     public function __toString()
     {
-      return $this->address . ", " . $this->zipcode . " " . $this->city;
+      return $this->street . ", " . $this->zipcode . " " . $this->city;
     }
 
     /**
@@ -75,35 +75,11 @@ class Coordinate
     }
 
     /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return Coordinate
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
      * Set zipcode
      *
      * @param string $zipcode
      *
-     * @return Coordinate
+     * @return Address
      */
     public function setZipcode($zipcode)
     {
@@ -127,7 +103,7 @@ class Coordinate
      *
      * @param string $city
      *
-     * @return Coordinate
+     * @return Address
      */
     public function setCity($city)
     {
@@ -150,7 +126,7 @@ class Coordinate
      *
      * @param User $user
      *
-     * @return Coordinate
+     * @return Address
      */
     public function setUser(User $user)
     {
@@ -174,7 +150,7 @@ class Coordinate
      *
      * @param string $title
      *
-     * @return Coordinate
+     * @return Address
      */
     public function setTitle($title)
     {
@@ -191,5 +167,29 @@ class Coordinate
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set street
+     *
+     * @param string $street
+     *
+     * @return Address
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * Get street
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
     }
 }
