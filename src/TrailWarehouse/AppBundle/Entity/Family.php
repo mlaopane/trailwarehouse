@@ -68,7 +68,7 @@ class Family
      *
      * @ORM\OneToMany(targetEntity="FamilyColor", mappedBy="family")
      */
-    private $colors;
+    private $visuels;
 
     /**
      * @var ArrayCollection
@@ -396,4 +396,38 @@ class Family
         return $this->colors;
     }
 
+
+    /**
+     * Add visuel
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\FamilyColor $visuel
+     *
+     * @return Family
+     */
+    public function addVisuel(\TrailWarehouse\AppBundle\Entity\FamilyColor $visuel)
+    {
+        $this->visuels[] = $visuel;
+
+        return $this;
+    }
+
+    /**
+     * Remove visuel
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\FamilyColor $visuel
+     */
+    public function removeVisuel(\TrailWarehouse\AppBundle\Entity\FamilyColor $visuel)
+    {
+        $this->visuels->removeElement($visuel);
+    }
+
+    /**
+     * Get visuels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisuels()
+    {
+        return $this->visuels;
+    }
 }
