@@ -77,8 +77,10 @@ class ShopController extends Controller
   {
     $data = [
       'active_category' => ['name' => 'toutes'],
-      'families'        => $this->repo['family']->getAll(),
+      'families'        => $this->repo['family']->findAll(),
     ];
+
+    dump($data['families']);
 
     return $this->render('TrailWarehouseAppBundle:Shop:category.html.twig', $data);
   }
@@ -92,7 +94,7 @@ class ShopController extends Controller
   {
     $data = [
       'active_category' => $category,
-      'families'        => $this->repo['family']->getByCategory($category),
+      'families'        => $this->repo['family']->findByCategory($category),
     ];
 
     return $this->render('TrailWarehouseAppBundle:Shop:category.html.twig', $data);

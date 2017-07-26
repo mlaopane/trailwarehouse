@@ -69,13 +69,11 @@ class FamilyRepository extends CommonRepository
 
   /* ----- Private Methods ----- */
   protected function getBuilder() {
-    return $this->_em->createQueryBuilder()
-      ->addSelect('family')
+    return $this->createQueryBuilder($this->entity_name)
       ->addSelect('category')
       ->addSelect('brand')
-      ->from($this->_entityName, 'family')
-      ->innerJoin('family.category', 'category')
-      ->innerJoin('family.brand', 'brand')
+      ->innerJoin($this->entity_name.'.category', 'category')
+      ->innerJoin($this->entity_name.'.brand', 'brand')
     ;
   }
 

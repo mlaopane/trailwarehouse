@@ -23,7 +23,6 @@ class LoadBrand implements FixtureInterface, OrderedFixtureInterface
       $brand = new Brand();
       $logo = str_replace([" ", "'"], "_", "images/brands/".$name.".png");
       $brand->setName($name);
-      $brand->setLogo($logo);
       $manager->persist($brand);
     }
     $manager->flush();

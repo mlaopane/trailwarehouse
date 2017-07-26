@@ -78,7 +78,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $lastname;
 
     /**
-    * @var string
+    * @var Role
     *
     * @ORM\ManyToOne(targetEntity="Role")
     * @ORM\JoinColumn(nullable=false)
@@ -132,14 +132,14 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * Constructor
     */
-    public function __construct(Role $role = null)
+    public function __construct(Role $role)
     {
         $this->address  = new ArrayCollection();
         $this->orders       = new ArrayCollection();
         $this->reviews      = new ArrayCollection();
         $this->creationDate = new \DateTime();
         $this->isActive = true; // DELETE this ASA e-mail activation is working
-        $this->role = $role; // DELETE this ASA e-mail activation is working
+        $this->role = $role;
     }
 
 
@@ -203,27 +203,9 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function generateHash()
     {
-      $hash = password_hash($this->plainPassword, PASSWORD_BCRYPT);
-      dump($hash);
-      $this->setPassword($hash);
+      $this->password = password_hash($this->plainPassword, PASSWORD_BCRYPT);
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function autoSetRole()
-    {
-      // Super Admin ?
-      if ($this->email == 'mlaopane@gmail.com') {
-        $this->role = 'ROLE_SUPER_ADMIN';
-        $this->isActive = true;
-      }
-      // Admin ?
-      if ($this->email == 'mykel.chang@gmail.com' OR $this->email == 'mykel.1337@gmail.com') {
-        $this->role = 'ROLE_ADMIN';
-        $this->isActive = true;
-      }
-    }
 
     /* ---------- Other Methods ---------- */
 

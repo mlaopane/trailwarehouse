@@ -1,23 +1,35 @@
 # /panier
 
-app_cart :
-  path             : /
-  defaults         :
-    _controller  : TrailWarehouseAppBundle:Cart:index
+app_cart             :
+  path               : /
+  defaults           :
+    _controller      : TrailWarehouseAppBundle:Cart:index
 
-app_cart_add_item :
+app_cart_add_item    :
     path             : /ajouter-item
     methods          : [POST]
     defaults         :
         _controller  : TrailWarehouseAppBundle:Cart:addItem
 
-app_cart_add_promo :
+app_cart_update_item :
+    path             : /modifier-item
+    methods          : [POST]
+    defaults         :
+        _controller  : TrailWarehouseAppBundle:Cart:updateItem
+
+app_cart_remove_item :
+    path             : /supprimer-item
+    methods          : [POST]
+    defaults         :
+        _controller  : TrailWarehouseAppBundle:Cart:removeItem
+
+app_cart_add_promo   :
     path             : /appliquer-code-promo
     methods          : [POST]
     defaults         :
         _controller  : TrailWarehouseAppBundle:Cart:addPromo
 
-app_cart_checkout :
+app_cart_checkout    :
     path             : /validation
     defaults         :
         _controller  : TrailWarehouseAppBundle:Cart:checkout
