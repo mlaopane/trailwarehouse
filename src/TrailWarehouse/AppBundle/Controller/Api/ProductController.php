@@ -19,6 +19,9 @@ class ProductController extends CommonController
   {
     $this->repo = [
       'product' => $em->getRepository('TrailWarehouseAppBundle:Product'),
+      'family' => $em->getRepository('TrailWarehouseAppBundle:Family'),
+      'color' => $em->getRepository('TrailWarehouseAppBundle:Color'),
+      'size' => $em->getRepository('TrailWarehouseAppBundle:Size'),
     ];
   }
 
@@ -34,10 +37,7 @@ class ProductController extends CommonController
 
     foreach ($ids as $i => $id) {
       $field = $args_name[$i];
-      $args[$field] = $em
-        ->getRepository('TrailWarehouseAppBundle:'.ucfirst($field))
-        ->find($id)
-      ;
+      $args[$field] = $repo[$field]->find($id);
     }
     $response = $this->getRepository()->getByArray($args);
     return new JsonResponse($response);

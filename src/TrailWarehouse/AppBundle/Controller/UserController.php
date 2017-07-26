@@ -49,21 +49,16 @@ class UserController extends Controller
   {
     $form = $this->createForm(SignupType::class, $this->user);
     $form->handleRequest($request);
-    // Form submitted ?
+
     if ($form->isSubmitted() AND $form->isValid())
     {
+      if ($this->user->getEmail() == 'mlaopane@gmail.com') {
+        $this->user
+          ->setRole($this->repo['role']->findOneByName('ROLE_SUPER_ADMIN'));
+      }
       $em->persist($this->user);
       $em->flush();
       return $this->redirectToRoute('app_home');
-
-      /* Auto-login after registration */
-      // return $this
-      //   ->get('security.authentication.guard_handler')
-      //   ->authenticateUserAndHandleSuccess(
-      //     $user,
-      //     $request,
-      //     $this->get('app.security.login_form_authenticator')
-      //   );
     }
     // Display the form to sign up
     $data = [

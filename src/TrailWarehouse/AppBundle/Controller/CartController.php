@@ -9,9 +9,11 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use TrailWarehouse\AppBundle\Entity\Item;
 use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Promo;
+use TrailWarehouse\AppBundle\Entity\Product;
 use TrailWarehouse\AppBundle\Form\CartType;
 use TrailWarehouse\AppBundle\Form\PromoType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +21,14 @@ use Doctrine\ORM\EntityManagerInterface;
 class CartController extends Controller
 {
 
-  public function __construct(SessionInterface $session) {
+  protected $repo;
+
+  public function __construct(SessionInterface $session, EntityManagerInterface $em) {
+    $this->repo = [
+      'product' => $em->getRepository('TrailWarehouseAppBundle:Product'),
+      'promo' => $em->getRepository('TrailWarehouseAppBundle:Promo'),
+    ];
+
     $normalizer = new ObjectNormalizer();
     $normalizer->setCircularReferenceHandler(function ($object) {
       return $object->getId();
@@ -60,8 +69,7 @@ class CartController extends Controller
   public function addItemAction(SessionInterface $session, EntityManagerInterface $em)
   {
     $post_item = json_decode(file_get_contents('php://input'));
-    $repository['product'] = $em->getRepository('TrailWarehouseAppBundle:Product');
-    $db_product = $repository['product']->find($post_item->product->id);
+    $db_product = $this->repo['product']->find($post_item->product->id);
     $new_item = new Item($db_product, $post_item->quantity);
 
     if (!$this->isCartable($new_item)) {
@@ -89,8 +97,7 @@ class CartController extends Controller
       // Check Form
       if ($form->isSubmitted() AND $form->isValid()) {
         // Search for a matching Promo in DB
-        $repository['promo'] = $em->getRepository('TrailWarehouseAppBundle:Promo');
-        $promo = $repository['promo']->findOneByCode($form->getData()->getCode());
+        $promo = $this->repo['promo']->findOneByCode($form->getData()->getCode());
 
         // Check Promo and apply if OK
         if (empty($promo)) {
@@ -107,9 +114,34 @@ class CartController extends Controller
     return $this->redirectToRoute('app_cart');
   }
 
-  public function updateItem(Request $request, SessionInterface $session)
+  public function updateItemAction(Request $request, SessionInterface $session, Product $product)
   {
     return $this->json();
+  }
+
+  /**
+   * @ParamConverter("product", options={"mapping": {"product_id": "id"}})
+   */
+  public function removeItemAction( Product $product, $product_id, Request $request, SessionInterface $session)
+  {
+    if (!empty($cart = $session->get('cart')))
+    {
+      if (empty($product)) {
+        $this->addFlash('danger', "Erreur inattendue : le produit ne peut être supprimé");
+      }
+      else {
+        $item = $this->findCartItem($cart, $product);
+        if (empty($item)) {
+          $this->addFlash('warning', "Le produit " . $product->getName() . " n'existe pas dans votre panier");
+        }
+        else {
+          $this->addFlash('success', "Le produit " . $product->getName() . " a été supprimé");
+          $cart->removeItem($item);
+          $session->set('cart', $cart);
+        }
+      }
+    }
+    return $this->redirectToRoute('app_cart');
   }
 
   /**
@@ -175,5 +207,18 @@ class CartController extends Controller
     $product_exists = !empty($item_product = $item->getProduct());
     $quantity_available = $item_quantity <= $item_product->getStock();
     return $product_exists AND $quantity_available;
+  }
+
+  private function findCartItem(Cart $cart, Product $product)
+  {
+    $iterator = $cart->getItems()->getIterator();
+    while ($iterator->valid())
+    {
+      if ($iterator->current()->getProduct()->getId() == $product->getId()) {
+        return $iterator->current();
+      }
+      $iterator->next();
+    }
+    return null;
   }
 }
