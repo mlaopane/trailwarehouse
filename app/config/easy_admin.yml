@@ -228,7 +228,7 @@ easy_admin :
                     - { property : 'size', label : 'Taille', type : 'association' }
                     - { property : 'stock', label : 'Stock', type : 'integer' }
                     - { property : 'price', label : 'Prix', format: '%.2f €'  }
-            edit  :
+            form  :
                 fields :
                     - { property : 'name', label : 'Nom', help : 'Généré automatiquement si laissé vide', type_options : { required : false } }
                     - { property : 'family', label : 'Famille' }
@@ -236,14 +236,6 @@ easy_admin :
                     - { property : 'size', label : 'Taille' }
                     - { property : 'stock', label : 'Stock' }
                     - { property : 'price', label : 'Prix', type : 'money', type_options : { currency : 'EUR' } }
-            new   :
-                fields :
-                    - { property : 'name', label : 'Nom' }
-                    - { property : 'family', label : 'Famille' }
-                    - { property : 'color', label : 'Couleur' }
-                    - { property : 'size', label : 'Taille' }
-                    - { property : 'price', label : 'Prix' }
-                    - { property : 'stock', label : 'Stock' }
 
         Color     :
             class : TrailWarehouse\AppBundle\Entity\Color

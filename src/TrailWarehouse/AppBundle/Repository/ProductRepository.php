@@ -180,13 +180,12 @@ class ProductRepository extends CommonRepository
    */
   protected function getBuilder() {
     return $this->createQueryBuilder('product')
-      ->addSelect('family, color, size, image, category, brand')
+      ->addSelect('family, color, size, category, brand')
       ->innerJoin('product.family', 'family')
       ->innerJoin('family.category', 'category')
       ->innerJoin('family.brand', 'brand')
       ->leftJoin('product.color', 'color')
       ->leftJoin('product.size', 'size')
-      ->leftJoin('product.image', 'image')
     ;
   }
 

@@ -32,7 +32,7 @@
         <div class="image-container flex justify-content-center col-12 col-xl-6 mb-3">
           <div class="wrapper" images-loaded="page.imgLoadedEvents">
             <img id="image"
-              data-ng-src="{% verbatim %}{{ page.ASSET_URL + (page.product.image ? page.product.image.src : 'images/no_picture.png') }}{% endverbatim %}"
+              data-ng-src="{% verbatim %}{{ page.ASSET_URL + (page.product.imageName ? page.product.imageName : 'images/no_picture.png') }}{% endverbatim %}"
               alt="{% verbatim %}{{ page.product.image ? page.product.image.alt : 'illustration produit' }}{% endverbatim %}"
               title="{{ family.name }}">
           </div>
@@ -160,28 +160,34 @@
                                 (page.product.size.value | capitalize)
                                 + (page.product.size.unitShortcut == null ? '' : ' ' + page.product.size.unitShortcut)"></span>
                             </h4>
-                            {% if sizes is not empty %}
                               <div id="sizes-container" class="ness-option-container ness-option-container-sm">
                                 <!-- # Options -->
-                                <ul data-ng-class="'ness-option-group' + (page.loading || !page.product ? ' hide' : '')">
-                                  {% for size in sizes %}
-                                    <li id="size-{{ size.id }}"
-                                      data-ng-class="
-                                      'ness-option ness-option-sm w-100'
-                                      + ((page.sizes && !page.sizes[{{ size.id }}]) || (page.product.stock == 0) ? ' disabled' : '')
-                                      + ((page.product.size.id == {{ size.id }}) && (page.product.stock > 0) ? ' active' : '')"
-                                      data-ng-click="page.getProductBy({{ family.id }}, page.product.color.id, {{ size.id }})">
-                                      <!-- # Size Option -->
-                                      <div class="size-option">
-                                        {{ (size.value | upper) ~ ' ' ~ size.unitShortcut ~ ' ' }}
-                                      </div>
-                                      <!-- Size Option # -->
-                                    </li>
-                                  {% endfor %}
-                                </ul>
+                                {% if sizes is empty %}
+                                  <ul class="ness-option-group">
+                                    <li class="ness-option ness-option-sm w-100">Aucune taille disponible</li>
+                                  </ul>
+                                {% else %}
+                                  <ul data-ng-class="'ness-option-group' + (page.loading || !page.product ? ' hide' : '')">
+                                    {% for size in sizes %}
+                                      <li id="size-{{ size.id }}"
+                                        data-ng-class="
+                                        'ness-option ness-option-sm w-100'
+                                        + ((page.sizes && !page.sizes[{{ size.id }}]) || (page.product.stock == 0) ? ' disabled' : '')
+                                        + ((page.product.size.id == {{ size.id }}) && (page.product.stock > 0) ? ' active' : '')
+                                        + ((!page.sizesLoaded) ? ' hide' : '')"
+                                        data-ng-click="page.getProductBy({{ family.id }}, page.product.color.id, {{ size.id }})">
+                                        <!-- # Size Option -->
+                                        <div class="size-option">
+                                          {{ (size.value | upper) ~ ' ' ~ size.unitShortcut ~ ' ' }}
+                                        </div>
+                                        <!-- Size Option # -->
+                                      </li>
+                                    {% endfor %}
+                                  </ul>
+                                {% endif %}
                                 <!-- Options # -->
                                 <!-- # Loader -->
-                                <div data-ng-class="'loader-container' + (page.sizes.length > 0 ? ' hide' : '')">
+                                <div data-ng-class="'loader-container' + (page.sizesLoaded ? ' hide' : '')">
                                   <div class="loader">
                                     <div class="block"></div>
                                     <div class="block delay"></div>
@@ -191,7 +197,6 @@
                                 </div>
                                 <!-- Loader # -->
                               </div>
-                            {% endif %}
                           </div>
                           <!-- Sizes # -->
 
@@ -206,12 +211,16 @@
                               ">
                               <!-- # Quantity -->
                               <ul data-ng-class="'ness-option-group'">
+                                <li data-ng-class="'ness-option ness-option-sm disabled'
+                                  + ((page.quantities.length >= 1) ? ' hide' : '')"
+                                  data-ng-if="page.quantitiesLoaded">Pas de stock</li>
                                 <li
                                   data-ng-repeat="quantity in page.quantities"
                                   data-ng-class="
                                   'ness-option ness-option-sm'
                                   + (page.product.stock ? '' : ' disabled')
-                                  + (page.quantity == quantity ? ' active' : '')"
+                                  + (page.quantity == quantity ? ' active' : '')
+                                  + (!page.sizesLoaded ? ' hide' : '')"
                                   data-ng-click="page.quantity = quantity">
                                   <div class="quantity-option">
                                     <span data-ng-bind="page.product.stock ? quantity : '-'"></span>
@@ -220,7 +229,7 @@
                               </ul>
                               <!-- Quantity # -->
                               <!-- # Loader -->
-                              <div data-ng-class="'loader-container' + (page.quantities.length > 0 ? ' hide' : '')">
+                              <div data-ng-class="'loader-container' + (page.quantitiesLoaded && page.sizesLoaded ? ' hide' : '')">
                                 <div class="loader">
                                   <div class="block"></div>
                                   <div class="block delay"></div>

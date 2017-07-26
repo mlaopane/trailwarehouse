@@ -2,6 +2,8 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
   page = this;
 
   page.quantities = [];
+  page.sizesLoaded = false;
+  page.quantitiesLoaded = false;
   page.add_in_progress = false;
 
   /**
@@ -18,6 +20,11 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
     $http.get(url).then(function(response) {
       products = response.data;
       page.colors = page.extractColors(products);
+      if (page.colors.length <= 0) {
+        page.product = products[0];
+        page.sizesLoaded = true;
+        page.quantitiesLoaded = true;
+      }
       // Get the product using 1 color from page.colors
       for (let index in page.colors) {
         page.getProductsByColor(family_id, page.colors[index].id);
@@ -36,6 +43,8 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
   page.getProductsByColor = function(family_id, color_id) {
     // IF product doesn't exist OR it is not the active color
     if (!page.product || (page.product.color.id != color_id && page.colors[color_id] != null) ) {
+      page.sizesLoaded = false;
+      page.quantitiesLoaded = false;
       // Request URL
       let url = page.API_URL +
       'family/' + family_id +
@@ -46,6 +55,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
       $http.get(url).then(function(response) {
         products = response.data;
         page.sizes = page.extractSizes(products);
+        page.sizesLoaded = true;
 
         page.product = products[0];
         page.updateQuantities(page.product.stock);
@@ -139,6 +149,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
         }
       }
     }
+    page.quantitiesLoaded = true;
   }
 
   /**
@@ -165,6 +176,24 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
         }
       });
     }
+  }
+
+  /**
+   *
+   */
+  page.udpateItem = function(id) {
+    let url = page.CART_URL + 'modifier-item';
+  }
+
+  /**
+   *
+   */
+  page.removeItem = function(id) {
+    let url = page.CART_URL + 'supprimer-item';
+    let data = { product_id : id }
+    $http.delete(url, data).then(function (response) {
+      console.info(response.data);
+    });
   }
 
   /* Images Loaded */

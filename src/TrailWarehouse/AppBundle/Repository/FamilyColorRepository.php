@@ -22,9 +22,9 @@ class FamilyColorRepository extends CommonRepository
       ->addSelect('family')
       ->addSelect('color')
       ->addSelect('image')
-      ->innerJoin('family_color.family', 'category')
-      ->innerJoin('family_color.color', 'brand')
-      ->innerJoin('family_color.image', 'image')
+      ->innerJoin($this->entity_name.'.family', 'category')
+      ->innerJoin($this->entity_name.'.color', 'brand')
+      ->innerJoin($this->entity_name.'.image', 'image')
     ;
   }
 

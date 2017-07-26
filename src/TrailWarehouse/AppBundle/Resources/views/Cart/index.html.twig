@@ -85,21 +85,28 @@
                     <td class="text-right">{{ item.product.price }}&nbsp;€</td>
                     <td class="text-right">
                       <div class="d-flex justify-content-end">
+
                         <div class="input-number input-group justify-content-start mr-1">
                           <input type="text" class="input-quantity form-control" name="" value="{{ item.quantity }}">
                           <div class="input-group-addon" data-action="decrease">-</div>
                           <div class="input-group-addon" data-action="increase">+</div>
                         </div>
 
-                        <a href="{{ path('app_cart_remove_item', { product_id : item.product.id }) }}"
-                          class="btn btn-danger mr-1 d-flex align-items-center font-size-8 text-white">
-                          Supprimer
-                        </a>
+                        <form action="{{ path('app_cart_remove_item') }}" method="post">
+                          <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                          <button class="btn btn-danger mr-1 d-flex align-items-center font-size-8 text-white">
+                            Supprimer
+                          </button>
+                        </form>
 
-                        <a href="{{ path('app_cart_update_item', { product_id : item.product.id }) }}"
-                          class="btn btn-info mr-1 d-flex align-items-center invisible font-size-8 text-white">
-                          Mettre à jour
-                        </a>
+                        <form action="{{ path('app_cart_update_item') }}" method="post">
+                          <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                          <input type="hidden" name="quantity" value="{{ item.quantity }}">
+                          <button class="btn btn-info mr-1 d-flex align-items-center invisible font-size-8 text-white">
+                            Mettre à jour
+                          </button>
+                        </form>
+
                       </div>
                     </td>
                     <td class="text-right">{{ item.total }}&nbsp;€</td>

@@ -9,14 +9,18 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use TrailWarehouse\AppBundle\Entity\Item;
 use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Promo;
 use TrailWarehouse\AppBundle\Entity\Product;
 use TrailWarehouse\AppBundle\Form\CartType;
+use TrailWarehouse\AppBundle\Form\ItemType;
 use TrailWarehouse\AppBundle\Form\PromoType;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class CartController extends Controller
 {
@@ -53,6 +57,7 @@ class CartController extends Controller
     ]);
 
     $flashbag = $session->getFlashbag();
+
     $data = [
       'promo_form'   => $promo_form->createView(),
       'promo_errors' => $flashbag->get('promo_errors'),
@@ -114,18 +119,57 @@ class CartController extends Controller
     return $this->redirectToRoute('app_cart');
   }
 
-  public function updateItemAction(Request $request, SessionInterface $session, Product $product)
-  {
-    return $this->json();
-  }
-
-  /**
-   * @ParamConverter("product", options={"mapping": {"product_id": "id"}})
-   */
-  public function removeItemAction( Product $product, $product_id, Request $request, SessionInterface $session)
+  public function updateItemAction(Request $request, SessionInterface $session)
   {
     if (!empty($cart = $session->get('cart')))
     {
+      $cart_item = new Item();
+      $form = $this->createForm(ItemType::class, $item);
+
+      if (empty($product)) {
+        $this->addFlash('danger', "Erreur inattendue : le produit ne peut être supprimé");
+      }
+      else {
+        if (empty($item)) {
+          $this->addFlash('warning', "Le produit " . $product->getName() . " n'existe plus dans votre panier");
+        }
+        else {
+          $new_item = (new Item())
+            ->setProduct($product)
+            ->setQuantity($quantity)
+          ;
+          if (!$this->isCartable($new_item)) {
+            $this->addFlash('warning', "Quantité indisponible pour " . $product->getName());
+          }
+          else {
+            $cart = $this->getUpdatedCart($cart, $new_item);
+            $session->set('cart', $cart);
+            $this->addFlash('success', "La quantité pour " . $product->getName() . " a été mise à jour");
+          }
+        }
+      }
+    }
+  }
+
+  public function removeItemAction(Request $request, SessionInterface $session)
+  {
+    if (!empty($cart = $session->get('cart')))
+    {
+      $cart_item = new Item();
+      $form = $this->createFormBuilder($cart_item)
+        ->add('product_id', HiddenType::class, ['mapped' => false])
+        ->add('quantity', TextType::class)
+        ->add('total', HiddenType::class)
+        ->getForm()
+      ;
+      if ($request->isMethod('POST') OR $request->isMethod('DELETE'))
+      {
+        $form->get('product_id')->submit('product_id');
+        $product_id = $form->get('product_id');
+        dump($product_id);
+        die();
+      }
+
       if (empty($product)) {
         $this->addFlash('danger', "Erreur inattendue : le produit ne peut être supprimé");
       }
@@ -209,16 +253,4 @@ class CartController extends Controller
     return $product_exists AND $quantity_available;
   }
 
-  private function findCartItem(Cart $cart, Product $product)
-  {
-    $iterator = $cart->getItems()->getIterator();
-    while ($iterator->valid())
-    {
-      if ($iterator->current()->getProduct()->getId() == $product->getId()) {
-        return $iterator->current();
-      }
-      $iterator->next();
-    }
-    return null;
-  }
 }
