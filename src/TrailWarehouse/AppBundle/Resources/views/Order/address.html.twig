@@ -53,7 +53,7 @@
                 <div class="form-group mb-4">
                   {{ form_label(address_form.title) }}
                   <div class="input-group">
-                    <div class="input-group-addon">@</div>
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-text-width"></span></div>
                     {{ form_widget(address_form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre' }}) }}
                   </div>
                 </div>
@@ -61,10 +61,10 @@
 
                 <!-- # Address -->
                 <div class="form-group mb-4">
-                  {{ form_label(address_form.address) }}
+                  {{ form_label(address_form.street) }}
                   <div class="input-group">
-                    <div class="input-group-addon">@</div>
-                    {{ form_widget(address_form.address, {'attr': {'class': 'form-control', 'placeholder': 'Adresse' }}) }}
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+                    {{ form_widget(address_form.street, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 18, Rue des acacias' }}) }}
                   </div>
                 </div>
                 <!-- Address # -->
@@ -75,8 +75,8 @@
                     {{ form_label(address_form.zipcode) }}
                   </div>
                   <div class="input-group">
-                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                    {{ form_widget(address_form.zipcode, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+                    {{ form_widget(address_form.zipcode, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 75020'}}) }}
                   </div>
                 </div>
                 <!-- Zipcode # -->
@@ -87,8 +87,8 @@
                     {{ form_label(address_form.city) }}
                   </div>
                   <div class="input-group">
-                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                    {{ form_widget(address_form.city, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+                    {{ form_widget(address_form.city, {'attr': {'class': 'form-control', 'placeholder': 'Ex: PARIS'}}) }}
                   </div>
                 </div>
                 <!-- City # -->
@@ -158,7 +158,7 @@
                         <div id="address-{{ address.id }}" class="address ness-block info mb-5 hide">
                           <h4 class="card-title font-weight-bold">{{ address.title }}</h4>
                           <dl class="card-text">
-                            <dd>{{ address.address }}</dd>
+                            <dd>{{ address.street }}</dd>
                             <dd>{{ address.zipcode }}</dd>
                             <dd>{{ address.city | upper }}</dd>
                           </dl>
