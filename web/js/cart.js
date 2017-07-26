@@ -16,6 +16,7 @@ var Cart = {
           if (quantity > 1) {
             $td.find('[data-action=update]').removeClass('invisible');
             $input.val(quantity - 1);
+            $('.form-item').find('input[name=quantity]').val(quantity - 1)
           }
           break;
 
@@ -23,6 +24,7 @@ var Cart = {
           if (quantity < 20) {
             $td.find($('[data-action=update]')).removeClass('invisible');
             $input.val(quantity + 1);
+            $('.form-item').find('input[name=quantity]').val(quantity + 1)
           }
           break;
 

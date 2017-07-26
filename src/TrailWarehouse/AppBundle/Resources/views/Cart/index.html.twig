@@ -92,18 +92,19 @@
                           <div class="input-group-addon" data-action="increase">+</div>
                         </div>
 
-                        <form action="{{ path('app_cart_remove_item') }}" method="post">
+                        <form class="form-item" id="update-product-{{ item.product.id }}" action="{{ path('app_cart_update_item') }}" method="post">
                           <input type="hidden" name="product_id" value="{{ item.product.id }}">
-                          <button class="btn btn-danger mr-1 d-flex align-items-center font-size-8 text-white">
-                            Supprimer
+                          <input type="hidden" name="quantity" value="{{ item.quantity }}">
+                          <button data-action="update" class="btn btn-info mr-1 d-flex align-items-center invisible font-size-8 text-white">
+                            Mettre à jour
                           </button>
                         </form>
 
-                        <form action="{{ path('app_cart_update_item') }}" method="post">
+                        <form class="form-item" id="remove-product-{{ item.product.id }}" action="{{ path('app_cart_remove_item') }}" method="post">
                           <input type="hidden" name="product_id" value="{{ item.product.id }}">
                           <input type="hidden" name="quantity" value="{{ item.quantity }}">
-                          <button class="btn btn-info mr-1 d-flex align-items-center invisible font-size-8 text-white">
-                            Mettre à jour
+                          <button class="btn btn-danger mr-1 d-flex align-items-center font-size-8 text-white">
+                            Supprimer
                           </button>
                         </form>
 

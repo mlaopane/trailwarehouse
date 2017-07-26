@@ -13,6 +13,11 @@ use TrailWarehouse\AppBundle\Entity\Product;
 class Item
 {
     /**
+     * @var int $id
+     */
+    private $id;
+
+    /**
      * @var Product $product
      */
     private $product;
@@ -31,6 +36,7 @@ class Item
       if ($product != null AND $quantity != null) {
         $this->product  = $product;
         $this->quantity = $quantity;
+        $this->id = $this->product->getId();
         $this->total    = $product->getPrice() * $quantity;
       }
     }

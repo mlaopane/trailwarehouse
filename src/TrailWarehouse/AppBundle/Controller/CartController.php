@@ -75,19 +75,20 @@ class CartController extends Controller
   {
     $post_item = json_decode(file_get_contents('php://input'));
     $db_product = $this->repo['product']->find($post_item->product->id);
-    $new_item = new Item($db_product, $post_item->quantity);
+    $item = new Item($db_product, $post_item->quantity);
 
-    if (!$this->isCartable($new_item)) {
+    if (!$this->isCartable($item)) {
       return $this->json(false);
     }
+
     if (empty ($cart = $session->get('cart'))) {
-      $cart = new Cart();
-      $cart->addItem($new_item);
+      $cart = (new Cart())->addItem($item);
     }
     else {
-      $cart = $this->getUpdatedCart($cart, $new_item);
+      $cart = $this->addOrReplaceCartItem($cart, $item);
     }
-    return $this->json($this->serializer->serialize($new_item, 'json'));
+
+    return $this->json($this->serializer->serialize($item, 'json'));
   }
 
   /**
@@ -153,37 +154,23 @@ class CartController extends Controller
 
   public function removeItemAction(Request $request, SessionInterface $session)
   {
-    if (!empty($cart = $session->get('cart')))
+    if (!empty($cart = $session->get('cart')) AND $request->isMethod('POST'))
     {
-      $cart_item = new Item();
-      $form = $this->createFormBuilder($cart_item)
-        ->add('product_id', HiddenType::class, ['mapped' => false])
-        ->add('quantity', TextType::class)
-        ->add('total', HiddenType::class)
-        ->getForm()
-      ;
-      if ($request->isMethod('POST') OR $request->isMethod('DELETE'))
+      if (!empty($_POST['product_id']) AND !empty($_POST['quantity']))
       {
-        $form->get('product_id')->submit('product_id');
-        $product_id = $form->get('product_id');
-        dump($product_id);
-        die();
-      }
-
-      if (empty($product)) {
-        $this->addFlash('danger', "Erreur inattendue : le produit ne peut être supprimé");
-      }
-      else {
-        $item = $this->findCartItem($cart, $product);
-        if (empty($item)) {
-          $this->addFlash('warning', "Le produit " . $product->getName() . " n'existe pas dans votre panier");
+        if (empty($db_product = $this->repo['product']->find($_POST['product_id']))) {
+          $this->addFlash('failure', "Erreur inattendue : le produit ne peut être supprimé");
         }
         else {
-          $this->addFlash('success', "Le produit " . $product->getName() . " a été supprimé");
-          $cart->removeItem($item);
-          $session->set('cart', $cart);
+          $item = new Item($db_product, $_POST['quantity']);
+          if (!empty($cart_item = $this->findCartItem($cart, $item))) {
+            $cart->removeItem($cart_item);
+            $session->set('cart', $cart);
+            $this->addFlash('info', "Le produit " . $db_product->getName() . " a été supprimé");
+          }
         }
       }
+
     }
     return $this->redirectToRoute('app_cart');
   }
@@ -225,16 +212,27 @@ class CartController extends Controller
   /* ---------- Private methods ---------- */
 
   /**
-   * Return a new empty or an updated one if it already exists
+   * Seek for an Item in the provided Cart and returns it if found
+   * @return Cart|NULL
    */
-  private function getUpdatedCart(Cart $cart, Item $new_item) : Cart
+  private function findCartItem(Cart $cart, Item $item)
+  {
+    foreach ($cart_items = $cart->getItems() as $cart_item) {
+      if ($cart_item->getProduct()->getId() == $item->getProduct()->getId()) {
+        return $cart_item;
+      }
+    }
+    return NULL;
+  }
+
+  /**
+   * Return the updated Cart
+   */
+  private function addOrReplaceCartItem(Cart $cart, Item $new_item) : Cart
   {
     // Remove the item from the Cart if it does exist
-    foreach ($cart_items = $cart->getItems() as $cart_item) {
-      if ($cart_item->getProduct()->getId() == $new_item->getProduct()->getId()) {
-        $cart->removeItem($cart_item);
-        break;
-      }
+    if (!empty($this->findCartItem($cart, $new_item))) {
+      $cart->removeItem($new_item);
     }
     $cart->addItem($new_item)->updateTotal();
     return $cart;
