@@ -11,6 +11,7 @@ use TrailWarehouse\AppBundle\Entity\Product;
  *
  * @ORM\Table(name="`order_product`")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\OrderProductRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class OrderProduct
 {
@@ -24,39 +25,65 @@ class OrderProduct
     private $id;
 
     /**
-     * @var Order $order
+     * @var Order
      *
      * @ORM\ManyToOne(targetEntity="Order")
      */
     private $order;
 
     /**
-     * @var Product $product
+     * @var Product
      *
      * @ORM\ManyToOne(targetEntity="Product", cascade={"persist"})
      */
     private $product;
 
     /**
-     * @var int $quantity
+     * @var string
+     *
+     * @ORM\Column(name="product_name", type="string")
+     */
+    private $productName;
+
+    /**
+     * @var int
      *
      * @ORM\Column(name="quantity", type="integer")
      */
     private $quantity;
 
     /**
-     * @var float $unitPrice
+     * @var float
      *
      * @ORM\Column(name="unit_price", type="decimal", precision=7, scale=2)
      */
     private $unitPrice;
 
     /**
-     * @var int $total
+     * @var int
      *
-     * @ORM\Column(name="total", type="integer")
+     * @ORM\Column(name="total", type="decimal", precision=7, scale=2)
      */
     private $total;
+
+
+    /* ---------- Getters & Setters ---------- */
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function updateProductData()
+    {
+      $this->productName = $this->product->getName();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function updatePriceData()
+    {
+      $this->unitPrice = $this->product->getPrice();
+    }
 
 
     /* ---------- Getters & Setters ---------- */
@@ -189,5 +216,29 @@ class OrderProduct
     public function getUnitPrice()
     {
         return $this->unitPrice;
+    }
+
+    /**
+     * Set productName
+     *
+     * @param string $productName
+     *
+     * @return OrderProduct
+     */
+    public function setProductName($productName)
+    {
+        $this->productName = $productName;
+
+        return $this;
+    }
+
+    /**
+     * Get productName
+     *
+     * @return string
+     */
+    public function getProductName()
+    {
+        return $this->productName;
     }
 }

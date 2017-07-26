@@ -33,6 +33,7 @@ class ShopController extends Controller
       'category' => $em->getRepository('TrailWarehouseAppBundle:Category'),
       'family'   => $em->getRepository('TrailWarehouseAppBundle:Family'),
       'product'  => $em->getRepository('TrailWarehouseAppBundle:Product'),
+      'vat'      => $em->getRepository('TrailWarehouseAppBundle:Vat'),
     ];
 
     $normalizer = new ObjectNormalizer();
@@ -44,7 +45,8 @@ class ShopController extends Controller
     $this->serializer = new Serializer($normalizers, $encoders);
 
     if (empty($cart = $session->get('cart'))) {
-      $session->set('cart', new Cart());
+      $vat = $this->repo['vat']->findOneByCountry('fr');
+      $session->set('cart', (new Cart())->setVat($vat));
     }
   }
 

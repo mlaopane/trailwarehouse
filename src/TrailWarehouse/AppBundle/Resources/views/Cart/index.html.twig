@@ -54,7 +54,7 @@
               <!-- # Cart Items -->
               <table id="table-cart" class="ness-table mb-4">
                 <thead>
-                  <tr>
+                  <tr class="font-fira-sans-bold">
                     <th class="">Produit</th>
                     <th class="">Prix unitaire</th>
                     <th class="">Quantité</th>
@@ -65,7 +65,7 @@
                   {% for item in cart.items|sort %}
                   <tr>
                     <td class="text-left">
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex justify-content-start align-items-center">
                         <!-- # Item Image -->
                         <img class="miniature mr-2" src="{{ item.product.imageName is empty ? asset('images/no_picture.png') : item.product.imageName }}" alt="">
                         <!-- Item Image # -->
@@ -92,7 +92,7 @@
                           <div class="input-group-addon" data-action="increase">+</div>
                         </div>
 
-                        <form class="form-item" id="update-product-{{ item.product.id }}" action="{{ path('app_cart_update_item') }}" method="post">
+                        <form class="d-flex" id="update-product-{{ item.product.id }}" action="{{ path('app_cart_update_item') }}" method="post">
                           <input type="hidden" name="hidden-product-id" value="{{ item.product.id }}">
                           <input type="hidden" name="hidden-quantity" value="{{ item.quantity }}">
                           <button data-action="update" class="btn btn-info mr-1 d-flex align-items-center invisible font-size-8 text-white">
@@ -100,7 +100,7 @@
                           </button>
                         </form>
 
-                        <form class="form-item" id="remove-product-{{ item.product.id }}" action="{{ path('app_cart_remove_item') }}" method="post">
+                        <form class="d-flex" id="remove-product-{{ item.product.id }}" action="{{ path('app_cart_remove_item') }}" method="post">
                           <input type="hidden" name="hidden-product-id" value="{{ item.product.id }}">
                           <input type="hidden" name="hidden-quantity" value="{{ item.quantity }}">
                           <button class="btn btn-danger mr-1 d-flex align-items-center font-size-8 text-white">
@@ -138,7 +138,7 @@
                 <!-- Promo Form # -->
 
               </div>
-              <div class="col-12 col-sm-6 col-md-4">
+              <div class="col-12 col-md-6">
 
                 {% if cart.promo is not empty %}
                   <!-- # Active Promo Code -->
@@ -149,9 +149,28 @@
                 {% endif %}
 
                 <!-- # Cart Total -->
-                <div id="cart-total" class="d-flex justify-content-end align-items-baseline mb-3">
-                  <div class="lead mr-2">Total : </div>
-                  <div class="font-weight-bold lead">{{ cart.total }}&nbsp;&euro;</div>
+                <div id="cart-total" class="mb-3">
+                  <!-- # HT -->
+                  <div class="d-flex justify-content-end align-items-baseline mb-1">
+                    <div class="mr-2">Total&nbsp;(HT)&nbsp;:&nbsp;</div>
+                    {% if cart.promo is not empty %}
+                      <div class="mr-2"><strike>{{ (cart.baseTotal / (1 - cart.promo.value))|number_format(2, '.', ',') }}&nbsp;&euro;</strike></div>
+                    {% endif %}
+                    <div class="font-fira-sans-bold">{{ cart.baseTotal|number_format(2, '.', ',') }}&nbsp;&euro;</div>
+                  </div>
+                  <!-- # TVA -->
+                  <div class="d-flex justify-content-end align-items-baseline mb-3">
+                    <div class="mr-2">TVA&nbsp;:&nbsp;</div>
+                    <div class="">{{ (cart.vat.value * 100)|number_format(2, '.', ',') }}%</div>
+                  </div>
+                  <!-- # TTC -->
+                  <div class="d-flex justify-content-end align-items-baseline mb-1">
+                    <div class="lead mr-2">Total&nbsp;(TTC)&nbsp;:&nbsp;</div>
+                    {% if cart.promo is not empty %}
+                      <div class="mr-3"><strike>{{ (cart.finalTotal / (1 - cart.promo.value))|number_format(2, '.', ',') }}&nbsp;&euro;</strike></div>
+                    {% endif %}
+                    <div class="font-fira-sans-bold lead"><span>{{ cart.finalTotal|number_format(2, '.', ',') }}&nbsp;&euro;</span></div>
+                  </div>
                 </div>
                 <!-- Cart Total # -->
 

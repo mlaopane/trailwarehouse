@@ -3,6 +3,7 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Product;
@@ -14,6 +15,7 @@ use TrailWarehouse\AppBundle\Entity\OrderProduct;
  *
  * @ORM\Table(name="`order`")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\OrderRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Order
 {
@@ -27,12 +29,38 @@ class Order
     private $id;
 
     /**
-     * @var User $user
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="orders")
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\NotNull()
      */
     private $user;
+
+    /**
+     * @var Address
+     *
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Address")
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\NotNull()
+     */
+    private $address;
+
+    /**
+     * @var Promo
+     *
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Promo")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $promo;
+
+    /**
+     * @var Promo
+     *
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Vat")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $vat;
 
     /**
      * @var string $lastname
@@ -70,6 +98,20 @@ class Order
     private $city;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="vat_value", type="decimal", precision=5, scale=2)
+     */
+    private $vatValue;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="promo_value", type="decimal", precision=4, scale=2, nullable=true)
+     */
+    private $promoValue;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="creation_date", type="datetime")
@@ -90,19 +132,20 @@ class Order
      */
     private $deliveryDate;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="reduction", type="decimal", precision=4, scale=2, nullable=true)
-     */
-    private $reduction;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="total", type="decimal", precision=8, scale=2)
+     * @ORM\Column(name="base_total", type="decimal", precision=8, scale=2)
      */
-    private $total;
+    private $baseTotal;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="final_total", type="decimal", precision=8, scale=2)
+     */
+    private $finalTotal;
 
     /**
      * toString
@@ -110,6 +153,50 @@ class Order
     public function __toString()
     {
       return $this->id . " - " . $this->creationDate->format('Y F d H:i:s');
+    }
+
+
+    /* ---------- Callbacks ---------- */
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function updateUserData()
+    {
+      $this->firstname = $this->user->getFirstname();
+      $this->lastname  = $this->user->getLastname();
+      $this->email     = $this->user->getEmail();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function updateAddressData()
+    {
+      $this->street  = $this->address->getStreet();
+      $this->zipcode = $this->address->getZipcode();
+      $this->city    = $this->address->getCity();
+
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function updatePromoData()
+    {
+      if (!empty($this->promo)) {
+        $this->promoValue = $this->promo->getValue();
+      }
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function updateVatData()
+    {
+      if (!empty($this->vat)) {
+        $this->vatValue = $this->vat->getValue();
+      }
     }
 
 
@@ -247,6 +334,54 @@ class Order
     }
 
     /**
+     * Set vatValue
+     *
+     * @param string $vatValue
+     *
+     * @return Order
+     */
+    public function setVatValue($vatValue)
+    {
+        $this->vatValue = $vatValue;
+
+        return $this;
+    }
+
+    /**
+     * Get vatValue
+     *
+     * @return string
+     */
+    public function getVatValue()
+    {
+        return $this->vatValue;
+    }
+
+    /**
+     * Set promoValue
+     *
+     * @param string $promoValue
+     *
+     * @return Order
+     */
+    public function setPromoValue($promoValue)
+    {
+        $this->promoValue = $promoValue;
+
+        return $this;
+    }
+
+    /**
+     * Get promoValue
+     *
+     * @return string
+     */
+    public function getPromoValue()
+    {
+        return $this->promoValue;
+    }
+
+    /**
      * Set creationDate
      *
      * @param \DateTime $creationDate
@@ -319,51 +454,51 @@ class Order
     }
 
     /**
-     * Set reduction
+     * Set baseTotal
      *
-     * @param string $reduction
+     * @param string $baseTotal
      *
      * @return Order
      */
-    public function setReduction($reduction)
+    public function setBaseTotal($baseTotal)
     {
-        $this->reduction = $reduction;
+        $this->baseTotal = $baseTotal;
 
         return $this;
     }
 
     /**
-     * Get reduction
+     * Get baseTotal
      *
      * @return string
      */
-    public function getReduction()
+    public function getBaseTotal()
     {
-        return $this->reduction;
+        return $this->baseTotal;
     }
 
     /**
-     * Set total
+     * Set finalTotal
      *
-     * @param string $total
+     * @param string $finalTotal
      *
      * @return Order
      */
-    public function setTotal($total)
+    public function setFinalTotal($finalTotal)
     {
-        $this->total = $total;
+        $this->finalTotal = $finalTotal;
 
         return $this;
     }
 
     /**
-     * Get total
+     * Get finalTotal
      *
      * @return string
      */
-    public function getTotal()
+    public function getFinalTotal()
     {
-        return $this->total;
+        return $this->finalTotal;
     }
 
     /**
@@ -388,5 +523,77 @@ class Order
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set address
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Address $address
+     *
+     * @return Order
+     */
+    public function setAddress(\TrailWarehouse\AppBundle\Entity\Address $address = null)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Address
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set promo
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Promo $promo
+     *
+     * @return Order
+     */
+    public function setPromo(\TrailWarehouse\AppBundle\Entity\Promo $promo = null)
+    {
+        $this->promo = $promo;
+
+        return $this;
+    }
+
+    /**
+     * Get promo
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Promo
+     */
+    public function getPromo()
+    {
+        return $this->promo;
+    }
+
+    /**
+     * Set vat
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\Vat $vat
+     *
+     * @return Order
+     */
+    public function setVat(\TrailWarehouse\AppBundle\Entity\Vat $vat = null)
+    {
+        $this->vat = $vat;
+
+        return $this;
+    }
+
+    /**
+     * Get vat
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\Vat
+     */
+    public function getVat()
+    {
+        return $this->vat;
     }
 }

@@ -30,6 +30,7 @@ class CartController extends Controller
   public function __construct(SessionInterface $session, EntityManagerInterface $em) {
     $this->repo = [
       'product' => $em->getRepository('TrailWarehouseAppBundle:Product'),
+      'vat' => $em->getRepository('TrailWarehouseAppBundle:Vat'),
       'promo' => $em->getRepository('TrailWarehouseAppBundle:Promo'),
     ];
 
@@ -42,7 +43,8 @@ class CartController extends Controller
     $this->serializer = new Serializer($normalizers, $encoders);
 
     if (empty($cart = $session->get('cart'))) {
-      $session->set('cart', new Cart());
+      $vat = $this->repo['vat']->findOneByCountry('fr');
+      $session->set('cart', (new Cart())->setVat($vat));
     }
   }
 
@@ -51,7 +53,6 @@ class CartController extends Controller
    */
   public function indexAction(SessionInterface $session)
   {
-    // Promo Form
     $promo_form = $this->createForm(PromoType::class, new Promo(), [
       'action' => $this->generateUrl('app_cart_add_promo'),
     ]);
@@ -81,7 +82,8 @@ class CartController extends Controller
     }
 
     if (empty ($cart = $session->get('cart'))) {
-      $cart = (new Cart())->addItem($item);
+      $vat = $this->repo['vat']->findByCountry('fr');
+      $cart = (new Cart())->setVat($vat)->addItem($item);
     }
     else {
       $cart = $this->addOrReplaceCartItem($cart, $item);
@@ -162,7 +164,6 @@ class CartController extends Controller
           if (!empty($cart_item = $this->findCartItem($cart, $item))) {
             $cart->removeItem($cart_item);
             $session->set('cart', $cart);
-            $this->addFlash('info', "Le produit " . $db_product->getName() . " a été supprimé");
           }
         }
       }
@@ -188,8 +189,7 @@ class CartController extends Controller
 
       if ($db_stock < $item->getQuantity())
       {
-        $this->addFlash(
-          'cart_warning',
+        $this->addFlash('cart_warning',
           "Au moins l'un des produits n'est plus disponible pour la quantité demandée.<br>
           Votre panier a été mis à jour automatiquement"
         );

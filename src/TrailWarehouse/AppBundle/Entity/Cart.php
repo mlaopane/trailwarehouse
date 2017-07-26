@@ -5,6 +5,7 @@ namespace TrailWarehouse\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use TrailWarehouse\AppBundle\Entity\Item;
+use TrailWarehouse\AppBundle\Entity\Vat;
 use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Promo;
 
@@ -26,10 +27,23 @@ class Cart
     private $promo;
 
     /**
-     * @var integer $total
+     * @var Vat
      *
      */
-    private $total = 0;
+    private $vat;
+
+    /**
+     * @var float
+     *
+     */
+    private $baseTotal = 0.00;
+
+    /**
+     * @var float
+     *
+     */
+    private $finalTotal = 0.00;
+
 
     /**
      * Constructor
@@ -39,6 +53,30 @@ class Cart
         $this->items = new ArrayCollection();
     }
 
+    public function updateTotal()
+    {
+      // Reset the total & baseTotal
+      $this->baseTotal  = 0;
+      $this->finalTotal = 0;
+
+      // IF the Cart has items
+      if ($this->items)
+      {
+        $iterator = $this->items->getIterator();
+        // Update the total with the items' totals
+        while ($iterator->valid()) {
+          $this->baseTotal += $iterator->current()->getTotal();
+          $iterator->next();
+        }
+        // IF there is a promo code to apply
+        if ($this->promo) {
+          $this->baseTotal *= (1 - $this->promo->getValue());
+        }
+        // Calculate the total including VAT
+        $this->finalTotal = $this->baseTotal * (1 + $this->vat->getValue());
+      }
+      return $this;
+    }
 
     /* ---------- Getters & Setters ---------- */
 
@@ -78,29 +116,6 @@ class Cart
     }
 
     /**
-     * Set total
-     *
-     * @param integer $total
-     *
-     * @return Cart
-     */
-    public function setTotal($total)
-    {
-        $this->total = $total;
-        return $this;
-    }
-
-    /**
-     * Get total
-     *
-     * @return integer
-     */
-    public function getTotal()
-    {
-        return $this->total;
-    }
-
-    /**
      * Set promo
      *
      * @param Promo $promo
@@ -123,26 +138,63 @@ class Cart
         return $this->promo;
     }
 
-    public function updateTotal()
+    /**
+     * Set promo
+     *
+     * @param Vat $vat
+     *
+     * @return Cart
+     */
+    public function setVat(Vat $vat)
     {
-      // Reset the total
-      $this->total = 0;
+        $this->vat = $vat;
+        return $this;
+    }
 
-      // IF the Cart has items
-      if ($this->items) {
-        $iterator = $this->items->getIterator();
-        // Update the total with the items' totals
-        while ($iterator->valid()) {
-          $this->total += $iterator->current()->getTotal();
-          $iterator->next();
-        }
-        // IF there is a promo code to apply
-        if ($this->promo) {
-          $this->total *= (1 - $this->promo->getValue());
-        }
-      }
+    /**
+     * Get vat
+     *
+     * @return Vat
+     */
+    public function getVat()
+    {
+        return $this->vat;
+    }
 
-      return $this;
+
+    /**
+     * @param float $baseTotal
+     * @return Cart
+     */
+    public function setBaseTotal($baseTotal)
+    {
+        $this->baseTotal = $baseTotal;
+    }
+
+
+    /**
+     * @return float
+     */
+    public function getBaseTotal()
+    {
+        return $this->baseTotal;
+    }
+
+    /**
+     * @param float $finalTotal
+     * @return Cart
+     */
+    public function setFinalTotal($finalTotal)
+    {
+        $this->finalTotal = $finalTotal;
+    }
+
+    /**
+     * @return float
+     */
+    public function getFinalTotal()
+    {
+        return $this->finalTotal;
     }
 
 }

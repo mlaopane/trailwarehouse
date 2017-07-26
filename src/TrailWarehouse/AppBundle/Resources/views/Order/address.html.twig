@@ -29,6 +29,7 @@
       <div class="d-flex block mb-3">
         {{ include('TrailWarehouseAppBundle:Error:alerts.html.twig') }}
       </div>
+      <!-- Flashes # -->
 
       <div class="page-content mx-auto px-3 row">
 
@@ -54,7 +55,7 @@
                   {{ form_label(address_form.title) }}
                   <div class="input-group">
                     <div class="input-group-addon"><span class="glyphicon glyphicon-text-width"></span></div>
-                    {{ form_widget(address_form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre' }}) }}
+                    {{ form_widget(address_form.title, {'attr': {'class': 'form-control', 'placeholder': 'Ex:: Maison' }}) }}
                   </div>
                 </div>
                 <!-- Address # -->
@@ -133,6 +134,7 @@
                   <!-- # Select Address Form -->
                   <div class="form-container bg-white no-border w-100 mx-auto mb-5">
                     {{ form_start(order_form, {'attr': {'id':'address-form'}}) }}
+                    {{ form_errors(order_form) }}
 
                       <div class="btn-group mb-4" data-toggle="buttons" id="address-radio">
                         {% for child in order_form.address.children %}

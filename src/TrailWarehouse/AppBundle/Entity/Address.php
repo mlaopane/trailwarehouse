@@ -26,6 +26,7 @@ class Address
     /**
     * @var string
     *
+    * @Assert\NotBlank()
     * @ORM\Column(name="title", type="string", length=191)
     */
     private $title;
@@ -39,6 +40,7 @@ class Address
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="street", type="string", length=255)
      */
     private $street;
@@ -46,13 +48,11 @@ class Address
     /**
      * @var string
      *
-     *
      * @Assert\Length(
      *   min = 5,
      *   max = 5,
      *   exactMessage = "Le code postal doit contenir exactement 5 caractères",
      * )
-     *
      * @ORM\Column(name="zipcode", type="string", length=5)
      *
      */
@@ -61,6 +61,7 @@ class Address
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="city", type="string", length=255)
      */
     private $city;

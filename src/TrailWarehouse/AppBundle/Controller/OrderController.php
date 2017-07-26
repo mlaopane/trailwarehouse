@@ -33,8 +33,9 @@ class OrderController extends Controller
     $this->repo = [
       'user'          => $em->getRepository('TrailWarehouseAppBundle:User'),
       'product'       => $em->getRepository('TrailWarehouseAppBundle:Product'),
+      'vat'           => $em->getRepository('TrailWarehouseAppBundle:Vat'),
       'promo'         => $em->getRepository('TrailWarehouseAppBundle:Promo'),
-      'address'    => $em->getRepository('TrailWarehouseAppBundle:Address'),
+      'address'       => $em->getRepository('TrailWarehouseAppBundle:Address'),
       'order'         => $em->getRepository('TrailWarehouseAppBundle:Order'),
       'order_product' => $em->getRepository('TrailWarehouseAppBundle:OrderProduct'),
     ];
@@ -133,6 +134,10 @@ class OrderController extends Controller
       $session->set('order', $order);
       return $this->redirectToRoute('app_order_create');
     }
+
+    $this->addFlash('warning', "Veuillez sélectionner une adresse");
+    $session->set('checkout', true);
+    return $this->redirectToRoute('app_order_address');
   }
 
   /**
@@ -160,7 +165,6 @@ class OrderController extends Controller
 
     $user = $this->repo['user']->find($user->getId());
     $address = $this->repo['address']->find($order->getAddress()->getId());
-
     $this->persistOrder($order->setUser($user)->setAddress($address), $cart, $em);
     if (false === $this->persistOrderProducts($order, $cart, $em)) {
       return $this->redirectToRoute('app_cart');
@@ -212,14 +216,22 @@ class OrderController extends Controller
    */
   private function persistOrder(Order $order, Cart $cart, EntityManagerInterface $em)
   {
-    $creation_date = new \DateTime();
-    $sending_date = (new \DateTime())->add(new \DateInterval('P1D'));
-    $order = $order
+    $creation_date = new \DateTimeImmutable();
+    $sending_date  = (new \DateTimeImmutable())->add(new \DateInterval('P1D'));
+
+    $vat   = $this->repo['vat']->find($cart->getVat()->getId());
+    if (!empty($cart_promo = $cart->getPromo())) {
+      $order->setPromo($this->repo['promo']->find($cart_promo->getId()));
+    }
+
+    $order
       ->setCreationDate($creation_date)
       ->setSendingDate($sending_date)
-      ->setPromo($cart->getPromo())
-      ->setTotal($cart->getTotal())
+      ->setVat($vat)
+      ->setBaseTotal($cart->getBaseTotal())
+      ->setFinalTotal($cart->getFinalTotal())
     ;
+    dump($order);
     return $em->persist($order);
   }
 
@@ -252,12 +264,12 @@ class OrderController extends Controller
    */
   private function createOrderProduct(Order $order, Item $item)
   {
-    $product   = $this->repo['product']->find($item->getProduct()->getId());
+    $product = $this->repo['product']->find($item->getProduct()->getId());
     $quantity  = $item->getQuantity();
-    $new_stock = $product->getStock() - $quantity;
+    $product->setStock($product->getStock() - $quantity);
     return (new OrderProduct())
       ->setOrder($order)
-      ->setProduct($product->setStock($new_stock))
+      ->setProduct($product)
       ->setQuantity($quantity)
       ->setTotal($item->getTotal())
     ;
