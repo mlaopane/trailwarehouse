@@ -19,7 +19,7 @@ class AddressType extends AbstractType
       $class = ['class' => 'form-control col-6 mb-3'];
       $builder
         ->add('title', TextType::class, ['label' => 'Titre*', 'attr' => $class])
-        ->add('street', TextType::class, ['label' => 'N°, Voie*', 'attr' => $class])
+        ->add('street', TextType::class, ['label' => 'Addresse*', 'attr' => $class])
         ->add('zipcode', TextType::class, ['label' => 'Code postal*', 'attr' => $class])
         ->add('city', TextType::class, ['label' => 'Ville*', 'attr' => $class])
         ->add('save', SubmitType::class, ['label' => 'Enregistrer'])

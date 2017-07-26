@@ -3,6 +3,7 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use TrailWarehouse\AppBundle\Entity\User;
 
 /**
@@ -45,7 +46,15 @@ class Address
     /**
      * @var string
      *
-     * @ORM\Column(name="zipcode", type="string", length=255)
+     *
+     * @Assert\Length(
+     *   min = 5,
+     *   max = 5,
+     *   exactMessage = "Le code postal doit contenir exactement 5 caractères",
+     * )
+     *
+     * @ORM\Column(name="zipcode", type="string", length=5)
+     *
      */
     private $zipcode;
 
