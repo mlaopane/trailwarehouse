@@ -11,6 +11,22 @@ app_cart_add_item :
     defaults         :
         _controller  : TrailWarehouseAppBundle:Cart:addItem
 
+app_cart_update_item :
+    path             : /modifier-item/{product_id}
+    # methods          : [POST]
+    defaults         :
+        _controller  : TrailWarehouseAppBundle:Cart:updateItem
+    requirements :
+        product_id : '\d+'
+
+app_cart_remove_item :
+    path             : /supprimer-item/{product_id}
+    # methods          : [DELETE]
+    defaults         :
+        _controller  : TrailWarehouseAppBundle:Cart:removeItem
+    requirements :
+        product_id : '\d+'
+
 app_cart_add_promo :
     path             : /appliquer-code-promo
     methods          : [POST]
