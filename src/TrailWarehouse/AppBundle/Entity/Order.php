@@ -91,16 +91,16 @@ class Order
     private $deliveryDate;
 
     /**
-     * @var Promo
-     * @ORM\OneToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Promo")
-     * @ORM\JoinColumn(nullable=true)
+     * @var float
+     *
+     * @ORM\Column(name="reduction", type="decimal", precision=4, scale=2, nullable=true)
      */
-    private $promo;
+    private $reduction;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="total", type="integer")
+     * @ORM\Column(name="total", type="decimal", precision=8, scale=2)
      */
     private $total;
 
@@ -112,211 +112,18 @@ class Order
       return $this->id . " - " . $this->creationDate->format('Y F d H:i:s');
     }
 
-    public function __construct()
-    {
-    }
 
     /* ---------- Getters & Setters ---------- */
+
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set dateCreation
-     *
-     * @param \DateTime $dateCreation
-     *
-     * @return Purchase
-     */
-    public function setDateCreation($dateCreation)
-    {
-        $this->dateCreation = $dateCreation;
-
-        return $this;
-    }
-
-    /**
-     * Get dateCreation
-     *
-     * @return \DateTime
-     */
-    public function getDateCreation()
-    {
-        return $this->dateCreation;
-    }
-
-    /**
-     * Set user
-     *
-     * @param User $user
-     *
-     * @return Order
-     */
-    public function setUser(User $user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * Set creationDate
-     *
-     * @param \DateTime $creationDate
-     *
-     * @return Order
-     */
-    public function setCreationDate($creationDate)
-    {
-        $this->creationDate = $creationDate;
-
-        return $this;
-    }
-
-    /**
-     * Get creationDate
-     *
-     * @return \DateTime
-     */
-    public function getCreationDate()
-    {
-        return $this->creationDate;
-    }
-
-    /**
-     * Set sendingDate
-     *
-     * @param \DateTime $sendingDate
-     *
-     * @return Order
-     */
-    public function setSendingDate($sendingDate)
-    {
-        $this->sendingDate = $sendingDate;
-
-        return $this;
-    }
-
-    /**
-     * Get sendingDate
-     *
-     * @return \DateTime
-     */
-    public function getSendingDate()
-    {
-        return $this->sendingDate;
-    }
-
-    /**
-     * Set deliveryDate
-     *
-     * @param \DateTime $deliveryDate
-     *
-     * @return Order
-     */
-    public function setDeliveryDate($deliveryDate)
-    {
-        $this->deliveryDate = $deliveryDate;
-
-        return $this;
-    }
-
-    /**
-     * Get deliveryDate
-     *
-     * @return \DateTime
-     */
-    public function getDeliveryDate()
-    {
-        return $this->deliveryDate;
-    }
-
-    /**
-     * Set total
-     *
-     * @param int $total
-     *
-     * @return Order
-     */
-    public function setTotal(int $total)
-    {
-        $this->total = $total;
-        return $this;
-    }
-
-    /**
-     * Get total
-     *
-     * @return int
-     */
-    public function getTotal()
-    {
-        return $this->total;
-    }
-
-    /**
-     * Set promo
-     *
-     * @param \TrailWarehouse\AppBundle\Entity\Promo $promo
-     *
-     * @return Order
-     */
-    public function setPromo(\TrailWarehouse\AppBundle\Entity\Promo $promo = null)
-    {
-        $this->promo = $promo;
-
-        return $this;
-    }
-
-    /**
-     * Get promo
-     *
-     * @return \TrailWarehouse\AppBundle\Entity\Promo
-     */
-    public function getPromo()
-    {
-        return $this->promo;
-    }
-
-    /**
-     * Set address
-     *
-     * @param \TrailWarehouse\AppBundle\Entity\Address $address
-     *
-     * @return Order
-     */
-    public function setAddress(\TrailWarehouse\AppBundle\Entity\Address $address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return \TrailWarehouse\AppBundle\Entity\Address
-     */
-    public function getAddress()
-    {
-        return $this->address;
     }
 
     /**
@@ -437,5 +244,149 @@ class Order
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     *
+     * @return Order
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * Set sendingDate
+     *
+     * @param \DateTime $sendingDate
+     *
+     * @return Order
+     */
+    public function setSendingDate($sendingDate)
+    {
+        $this->sendingDate = $sendingDate;
+
+        return $this;
+    }
+
+    /**
+     * Get sendingDate
+     *
+     * @return \DateTime
+     */
+    public function getSendingDate()
+    {
+        return $this->sendingDate;
+    }
+
+    /**
+     * Set deliveryDate
+     *
+     * @param \DateTime $deliveryDate
+     *
+     * @return Order
+     */
+    public function setDeliveryDate($deliveryDate)
+    {
+        $this->deliveryDate = $deliveryDate;
+
+        return $this;
+    }
+
+    /**
+     * Get deliveryDate
+     *
+     * @return \DateTime
+     */
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
+
+    /**
+     * Set reduction
+     *
+     * @param string $reduction
+     *
+     * @return Order
+     */
+    public function setReduction($reduction)
+    {
+        $this->reduction = $reduction;
+
+        return $this;
+    }
+
+    /**
+     * Get reduction
+     *
+     * @return string
+     */
+    public function getReduction()
+    {
+        return $this->reduction;
+    }
+
+    /**
+     * Set total
+     *
+     * @param string $total
+     *
+     * @return Order
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * Get total
+     *
+     * @return string
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \TrailWarehouse\AppBundle\Entity\User $user
+     *
+     * @return Order
+     */
+    public function setUser(\TrailWarehouse\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \TrailWarehouse\AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
