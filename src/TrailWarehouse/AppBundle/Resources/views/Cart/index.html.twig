@@ -62,7 +62,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for item in cart.items %}
+                  {% for item in cart.items|sort %}
                   <tr>
                     <td class="text-left">
                       <div class="d-flex justify-content-between align-items-center">
@@ -87,22 +87,22 @@
                       <div class="d-flex justify-content-end">
 
                         <div class="input-number input-group justify-content-start mr-1">
-                          <input type="text" class="input-quantity form-control" name="" value="{{ item.quantity }}">
+                          <input type="text" class="input-quantity form-control" name="input-quantity" value="{{ item.quantity }}">
                           <div class="input-group-addon" data-action="decrease">-</div>
                           <div class="input-group-addon" data-action="increase">+</div>
                         </div>
 
                         <form class="form-item" id="update-product-{{ item.product.id }}" action="{{ path('app_cart_update_item') }}" method="post">
-                          <input type="hidden" name="product_id" value="{{ item.product.id }}">
-                          <input type="hidden" name="quantity" value="{{ item.quantity }}">
+                          <input type="hidden" name="hidden-product-id" value="{{ item.product.id }}">
+                          <input type="hidden" name="hidden-quantity" value="{{ item.quantity }}">
                           <button data-action="update" class="btn btn-info mr-1 d-flex align-items-center invisible font-size-8 text-white">
                             Mettre à jour
                           </button>
                         </form>
 
                         <form class="form-item" id="remove-product-{{ item.product.id }}" action="{{ path('app_cart_remove_item') }}" method="post">
-                          <input type="hidden" name="product_id" value="{{ item.product.id }}">
-                          <input type="hidden" name="quantity" value="{{ item.quantity }}">
+                          <input type="hidden" name="hidden-product-id" value="{{ item.product.id }}">
+                          <input type="hidden" name="hidden-quantity" value="{{ item.quantity }}">
                           <button class="btn btn-danger mr-1 d-flex align-items-center font-size-8 text-white">
                             Supprimer
                           </button>

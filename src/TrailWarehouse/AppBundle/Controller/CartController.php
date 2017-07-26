@@ -57,7 +57,6 @@ class CartController extends Controller
     ]);
 
     $flashbag = $session->getFlashbag();
-
     $data = [
       'promo_form'   => $promo_form->createView(),
       'promo_errors' => $flashbag->get('promo_errors'),
@@ -122,47 +121,44 @@ class CartController extends Controller
 
   public function updateItemAction(Request $request, SessionInterface $session)
   {
-    if (!empty($cart = $session->get('cart')))
+    if (!empty($cart = $session->get('cart')) AND $request->isMethod('POST'))
     {
-      $cart_item = new Item();
-      $form = $this->createForm(ItemType::class, $item);
-
-      if (empty($product)) {
-        $this->addFlash('danger', "Erreur inattendue : le produit ne peut être supprimé");
-      }
-      else {
-        if (empty($item)) {
-          $this->addFlash('warning', "Le produit " . $product->getName() . " n'existe plus dans votre panier");
+      if (!empty($_POST['hidden-product-id']) AND !empty($_POST['hidden-quantity']))
+      {
+        if (empty($db_product = $this->repo['product']->getOne((int) $_POST['hidden-product-id'], false))) {
+          $this->addFlash('failure', "Erreur inattendue : le produit ne peut être mis à jour");
         }
         else {
-          $new_item = (new Item())
-            ->setProduct($product)
-            ->setQuantity($quantity)
-          ;
-          if (!$this->isCartable($new_item)) {
-            $this->addFlash('warning', "Quantité indisponible pour " . $product->getName());
+          if ($db_product->getStock() < $_POST['hidden-quantity']) {
+            $item = new Item($db_product, $db_product->getStock());
+            $this->addFlash('warning',
+              "Quantité indisponible !<br>
+              Le panier a été mis à jour en conséquence"
+            );
           }
           else {
-            $cart = $this->getUpdatedCart($cart, $new_item);
-            $session->set('cart', $cart);
-            $this->addFlash('success', "La quantité pour " . $product->getName() . " a été mise à jour");
+            $item = new Item($db_product, $_POST['hidden-quantity']);
+            $this->addFlash('success', "Votre panier a été mis à jour");
           }
+          $new_cart = $this->addOrReplaceCartItem($cart, $item);
+          $session->set('cart', $new_cart);
         }
       }
     }
+    return $this->redirectToRoute('app_cart');
   }
 
   public function removeItemAction(Request $request, SessionInterface $session)
   {
     if (!empty($cart = $session->get('cart')) AND $request->isMethod('POST'))
     {
-      if (!empty($_POST['product_id']) AND !empty($_POST['quantity']))
+      if (!empty($_POST['hidden-product-id']) AND !empty($_POST['hidden-quantity']))
       {
-        if (empty($db_product = $this->repo['product']->find($_POST['product_id']))) {
+        if (empty($db_product = $this->repo['product']->find($_POST['hidden-product-id']))) {
           $this->addFlash('failure', "Erreur inattendue : le produit ne peut être supprimé");
         }
         else {
-          $item = new Item($db_product, $_POST['quantity']);
+          $item = new Item($db_product, $_POST['hidden-quantity']);
           if (!empty($cart_item = $this->findCartItem($cart, $item))) {
             $cart->removeItem($cart_item);
             $session->set('cart', $cart);
@@ -170,7 +166,6 @@ class CartController extends Controller
           }
         }
       }
-
     }
     return $this->redirectToRoute('app_cart');
   }
@@ -215,10 +210,10 @@ class CartController extends Controller
    * Seek for an Item in the provided Cart and returns it if found
    * @return Cart|NULL
    */
-  private function findCartItem(Cart $cart, Item $item)
+  private function findCartItem(Cart $cart, Item $search_item)
   {
     foreach ($cart_items = $cart->getItems() as $cart_item) {
-      if ($cart_item->getProduct()->getId() == $item->getProduct()->getId()) {
+      if ($cart_item->getProduct()->getId() == $search_item->getProduct()->getId()) {
         return $cart_item;
       }
     }
@@ -231,8 +226,8 @@ class CartController extends Controller
   private function addOrReplaceCartItem(Cart $cart, Item $new_item) : Cart
   {
     // Remove the item from the Cart if it does exist
-    if (!empty($this->findCartItem($cart, $new_item))) {
-      $cart->removeItem($new_item);
+    if (!empty($cart_item = $this->findCartItem($cart, $new_item))) {
+      $cart->removeItem($cart_item);
     }
     $cart->addItem($new_item)->updateTotal();
     return $cart;
