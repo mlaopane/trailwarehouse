@@ -65,6 +65,13 @@ class Product
     private $size;
 
     /**
+    * @var string
+    *
+    * @ORM\Column(type="string", length=255, nullable=true)
+    */
+    private $imageName;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="price", type="decimal", precision=7, scale=2)
@@ -316,4 +323,28 @@ class Product
         return $this->size;
     }
 
+
+    /**
+     * Set imageName
+     *
+     * @param string $imageName
+     *
+     * @return Product
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * Get imageName
+     *
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
+    }
 }
