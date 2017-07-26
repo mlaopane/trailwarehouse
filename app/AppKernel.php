@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new TrailWarehouse\AppBundle\TrailWarehouseAppBundle(),
-            new TrailWarehouse\UserBundle\TrailWarehouseUserBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
