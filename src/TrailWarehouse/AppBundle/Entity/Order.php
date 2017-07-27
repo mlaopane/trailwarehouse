@@ -32,7 +32,7 @@ class Order
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="orders")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
 
@@ -40,7 +40,7 @@ class Order
      * @var Address
      *
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Address")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      * @Assert\NotNull()
      */
     private $address;
@@ -49,7 +49,7 @@ class Order
      * @var Promo
      *
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Promo")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $promo;
 

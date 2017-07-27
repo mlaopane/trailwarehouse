@@ -35,6 +35,7 @@ class OrderProduct
      * @var Product
      *
      * @ORM\ManyToOne(targetEntity="Product", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $product;
 
