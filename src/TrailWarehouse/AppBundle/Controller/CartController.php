@@ -74,7 +74,7 @@ class CartController extends Controller
   public function addItemAction(SessionInterface $session, EntityManagerInterface $em)
   {
     $post_item = json_decode(file_get_contents('php://input'));
-    $db_product = $this->repo['product']->find($post_item->product->id);
+    $db_product = $this->repo['product']->find($post_item->product_id);
     $item = new Item($db_product, $post_item->quantity);
 
     if (!$this->isCartable($item)) {
