@@ -5,12 +5,7 @@ app_account :
     defaults:
         _controller: TrailWarehouseAppBundle:Account:index
 
-app_account_update :
-    path:     /
+app_account_remove_address :
+    path:     /supprimer-adresse
     defaults:
-        _controller: TrailWarehouseAppBundle:Account:update
-
-app_account_add_address :
-    path:     /
-    defaults:
-        _controller: TrailWarehouseAppBundle:Account:addAddress
+        _controller: TrailWarehouseAppBundle:Account:removeAddress
