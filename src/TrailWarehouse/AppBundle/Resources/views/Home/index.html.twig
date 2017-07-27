@@ -103,7 +103,7 @@
         {% for brand in brands %}
           <div class="brand image-container wrapper col d-flex justify-content-center align-items-center">
             <a href="#" class="">
-              <img src="{{ vich_uploader_asset(brand, 'imageFile') }}" alt="Logo {{ brand.name }}" class="round img-fluid mx-auto d-block">
+              <img src="{{ vich_uploader_asset(brand, 'imageFile') }}" alt="Logo {{ brand.name|capitalize }}" class="round img-fluid mx-auto d-block">
             </a>
           </div>
         {% endfor %}
