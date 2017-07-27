@@ -105,7 +105,7 @@ class User implements AdvancedUserInterface, \Serializable
     *
     * @ORM\OneToMany(targetEntity="TrailWarehouse\AppBundle\Entity\Address", mappedBy="user")
     */
-    private $address;
+    private $addresses;
 
     /**
     * @var ArrayCollection
@@ -134,7 +134,7 @@ class User implements AdvancedUserInterface, \Serializable
     */
     public function __construct(Role $role)
     {
-        $this->address  = new ArrayCollection();
+        $this->addresses    = new ArrayCollection();
         $this->orders       = new ArrayCollection();
         $this->reviews      = new ArrayCollection();
         $this->creationDate = new \DateTime();
@@ -402,9 +402,9 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAddress()
+    public function getAddresses()
     {
-        return $this->address;
+        return $this->addresses;
     }
 
     /**
