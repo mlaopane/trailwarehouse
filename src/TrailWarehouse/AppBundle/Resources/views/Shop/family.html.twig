@@ -72,8 +72,8 @@
 
                   <!-- # Card Title -->
                   <div class="card-title row">
-                    <h3 class="col-12 col-sm-8">
-                      <span class="">{{ family.name | capitalize }}</span>&nbsp;<span class="font-italic">{{ family.brand.name | ucwords }}</span>
+                    <h3 id="title" class="col-12 col-sm-8">
+                      <span class="font-fira-sans-italic">{{ family.brand.name | ucwords }}</span>&nbsp;-&nbsp;<span class="">{{ family.name | capitalize }}</span>
                     </h3>
 
                     <!-- # Add to cart -->
@@ -100,7 +100,7 @@
                       <div class="col-6 ml-auto">
                         <div id="price" class="font-fira-sans-bold w-100 d-flex justify-content-end align-items-center">
                           <span data-ng-if="!page.quantitiesLoaded">Calcul du prix...</span>
-                          <span data-ng-bind="page.product.price + ' €'"
+                          <span class="lead" data-ng-bind="page.product.price + ' €'"
                             data-ng-if="page.product.price > 0"
                           ></span>
                         </div>
@@ -263,9 +263,11 @@
                           <!-- # Description -->
                           <div id="description" data-ng-class="'col-12' + (page.product ? '' : ' invisible')">
                             {% if family.description is null %}
-                              <p class="blockquote">Détails à venir...</p>
+                              <p class="blockquote font-fira-sans-italic ness-block info">
+                                <span>Aucune description disponible...</span>
+                              </p>
                             {% else %}
-                              <p class="blockquote">{{ family.description }}</p>
+                              <p class="blockquote font-fira-sans-italic">{{ family.description }}</p>
                             {% endif %}
                           </div>
                           <!-- Description # -->
