@@ -60,6 +60,7 @@ class AccountController extends Controller
       'user'         => $user,
       'orders'       => $this->repo['order']->getBy('user', $user),
       'error'        => null,
+      'active_tab'   => $active_tab,
     ];
 
     if (null == $active_tab OR $active_tab <= 0 OR $active_tab > 3) {

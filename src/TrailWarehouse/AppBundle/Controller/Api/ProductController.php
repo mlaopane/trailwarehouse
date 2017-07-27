@@ -37,7 +37,7 @@ class ProductController extends CommonController
 
     foreach ($ids as $i => $id) {
       $field = $args_name[$i];
-      $args[$field] = $repo[$field]->find($id);
+      $args[$field] = $this->repo[$field]->find($id);
     }
     $response = $this->getRepository()->getByArray($args);
     return new JsonResponse($response);
