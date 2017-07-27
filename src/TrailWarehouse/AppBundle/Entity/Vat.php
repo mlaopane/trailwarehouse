@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * VAT
  *
- * @ORM\Table(name="Vat")
+ * @ORM\Table(name="vat")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\VatRepository")
  */
 class Vat
