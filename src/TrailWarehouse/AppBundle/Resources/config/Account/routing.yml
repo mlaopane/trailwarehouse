@@ -4,3 +4,13 @@ app_account :
     path:     /
     defaults:
         _controller: TrailWarehouseAppBundle:Account:index
+
+app_account_update :
+    path:     /
+    defaults:
+        _controller: TrailWarehouseAppBundle:Account:update
+
+app_account_add_address :
+    path:     /
+    defaults:
+        _controller: TrailWarehouseAppBundle:Account:addAddress

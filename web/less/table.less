@@ -5,6 +5,7 @@
 .ness-table-container {
   align-self: stretch;
   border: 1px solid @table-border-color;
+  box-shadow : 0px 0px 3px 1px @blackgrey;
   margin: 10px auto;
   overflow-x: auto;
   width: 100%;
@@ -25,7 +26,9 @@
       tr {
         background: @thead-tr-bg;
         border-bottom: 2px solid white;
+        border-bottom: 3px solid @greenblue;
         cursor: pointer;
+        font-size: 0.95rem,
       }
     }
     // Table Body
@@ -38,10 +41,14 @@
         &:nth-child(even) { background: @tbody-tr-bg-even }
         &:nth-child(odd) { background: @tbody-tr-bg-odd }
         &:hover {
-          background: @tbody-tr-bg-hover;
-          color: @tbody-tr-txt-hover;
+          color: black;
+          a { color: @blue }
+          &:not(.no-hover) {
+            background: @tbody-tr-bg-hover;
+            color: @tbody-tr-txt-hover;
+            a { color: white }
+          }
           //
-          a { color: white }
         }
         a { text-decoration: none }
       }
@@ -49,6 +56,7 @@
     // Cell Header
     th {
       color: white;
+      font-weight: normal;
       padding: 8px 16px;
       text-align: left;
       //
@@ -65,7 +73,7 @@
       //
       &:not(:last-child) { border-right: 1px solid @table-border-color }
       &:last-child { cursor: pointer }
-      a:hover { text-shadow: 1px 1px black }
+      a:hover { text-shadow: initial }
     }
     // Center the column content
     &.col
@@ -85,7 +93,7 @@
 
 /*** Customize your table ***/
 // thead
-@table-border-color: lighten(@steelgrey, 10%);
+@table-border-color: lighten(@steelgrey, 5%);
 @thead-tr-bg: @darkgrey;
 @thead-th-bg-hover: darken(@thead-tr-bg, 7%); // Overriding isn't necessary
 //tbody

@@ -45,14 +45,16 @@ class AccountController extends Controller
   /**
    * 'app_account' route
    */
-  public function indexAction(Request $request, EntityManagerInterface $em, UserInterface $user)
+  public function indexAction(UserInterface $user, Request $request, EntityManagerInterface $em)
   {
-    $user_form    = $this->handleUserForm($request, $em, $user);
-    $address_form = $this->handleAddressForm($request, $em, $user, $address);
+    $form = [
+      'user'    => $this->handleUserForm($user, $request, $em),
+      'address' => $this->handleAddressForm($user, $request, $em),
+    ];
 
     $data = [
-      'user_form'    => $user_form->createView(),
-      'address_form' => $address_form->createView(),
+      'user_form'    => $form['user']->createView(),
+      'address_form' => $form['address']->createView(),
       'user'         => $user,
       'orders'       => $this->repo['order']->getBy('user', $user),
       'error'        => null,
@@ -62,49 +64,52 @@ class AccountController extends Controller
         [ 'label' => 'Mes adresses'],
       ],
     ];
-    return $this->render('TrailWarehouseAppBundle:User:account.html.twig', $data);
+
+    return $this->render('TrailWarehouseAppBundle:Account:index.html.twig', $data);
   }
 
   /**
-   * Initialize the user_form and handle the request
-   * Update the User if necessary
-   *
+   * Handle the User Form
    * @return Form
    */
-  private function handleUserForm(Request $request, EntityManager $em, User $user)
+  private function handleUserForm(UserInterface $user, Request $request, EntityManagerInterface $em)
   {
-    $form = $this->createForm(AccountType::class, $user, [
-      'action' => $this->generateUrl('account_update'),
-    ]);
+    $form = $this->createForm(AccountType::class, $user);
 
     $form->handleRequest($request);
 
-    if ($form->isSubmitted() AND $form->isValid()) {
+    if ($form->isSubmitted() AND $form->isValid())
+    {
       $em->persist($user);
       $em->flush();
+      $this->addFlash('success', "Vos informations ont été mises à jour");
     }
 
     return $form;
   }
 
   /**
-   * Initialize the address_form and handle the request
-   * Update the User if necessary
-   *
+   * Handle the Address Form
    * @return Form
    */
-  private function handleAddressForm(Request $request, EntityManager $em, User $user, Address $address)
+  private function handleAddressForm(User $user, Request $request, EntityManagerInterface $em)
   {
     $address = new Address();
-    $form = $this->createForm(AddressType::class, $address, [
-      'action' => $this->generateUrl('account_update'),
-    ]);
+
+    $form = $this->createForm(AddressType::class, $address);
 
     $form->handleRequest($request);
 
-    if ($form->isSubmitted() AND $form->isValid()) {
-      $em->persist($address->setUser($user));
-      $em->flush();
+    if ($form->isSubmitted() AND $form->isValid())
+    {
+      if ($this->repo['address']->isDoublon($address->setUser($user))) {
+        $this->addFlash('warning', "Cette adresse existe déjà/nVeuillez choisir un Libellé différent");
+      }
+      else {
+        $em->persist($address);
+        $em->flush();
+        $this->addFlash('success', "Adresse ajoutée !");
+      }
     }
 
     return $form;

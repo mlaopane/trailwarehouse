@@ -1,0 +1,41 @@
+{# app > Resources > views > bootstrap > nav_tabs.html.twig #}
+
+{% if tabs is not empty %}
+
+  <div class="p-3">
+
+    {% if type == 'tabs' %}
+
+      <ul class="nav nav-tabs mb-2" role="tablist">
+
+        {% for tab in tabs %}
+          <li class="nav-item">
+            <a class="nav-link {{ (tab.class is defined) ? (tab.class) : ('') }}" href="{{ (tab.label is defined) ? ('#' ~ (tab.label|slug)) : ('#') }}" role="tab" data-toggle="tab">
+              {{ (tab.label) ? (tab.label) : ('Tab ' ~ loop.index) }}
+            </a>
+          </li>
+        {% endfor %}
+
+      </ul>
+
+    {% else %}
+
+      <ul class="nav nav-pills mb-2" role="tablist">
+
+        {% for tab in tabs %}
+          <li class="nav-item mr-1">
+            <a class="nav-link {{ (tab.class is defined) ? (tab.class) : ('') }}" href="{{ (tab.label is defined) ? ('#' ~ (tab.label|slug)) : ('#') }}" role="tab" data-toggle="tab">
+              {{ (tab.label) ? (tab.label) : ('Tab ' ~ loop.index) }}
+            </a>
+          </li>
+        {% endfor %}
+
+      </ul>
+
+    {% endif %}
+
+
+
+  </div>
+
+{% endif %}

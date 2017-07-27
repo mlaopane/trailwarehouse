@@ -17,6 +17,9 @@
 .ness-bg-darkblue:hover {
   background: #08335e;
 }
+.ness-bg-darkred {
+  background: #a50d1a;
+}
 .ness-bg-darkgrey {
   background: #505c62;
 }
@@ -78,9 +81,13 @@
 .ness-text-yellow {
   color: #ffe02e;
 }
+.ness-text-white {
+  color: white;
+}
 .ness-table-container {
   align-self: stretch;
-  border: 1px solid #f1f3f4;
+  border: 1px solid #e3e6e8;
+  box-shadow: 0px 0px 3px 1px #2e3538;
   margin: 10px auto;
   overflow-x: auto;
   width: 100%;
@@ -110,7 +117,9 @@
 .ness-table-container table thead tr {
   background: #505c62;
   border-bottom: 2px solid white;
+  border-bottom: 3px solid #0EAABA;
   cursor: pointer;
+  font-size: 0.95rem;
 }
 .ness-table-container table tbody tr {
   color: black;
@@ -124,10 +133,16 @@
   background: #ffffff;
 }
 .ness-table-container table tbody tr:hover {
+  color: black;
+}
+.ness-table-container table tbody tr:hover a {
+  color: #2b8cee;
+}
+.ness-table-container table tbody tr:hover:not(.no-hover) {
   background: #2b8cee;
   color: white;
 }
-.ness-table-container table tbody tr:hover a {
+.ness-table-container table tbody tr:hover:not(.no-hover) a {
   color: white;
 }
 .ness-table-container table tbody tr a {
@@ -135,11 +150,12 @@
 }
 .ness-table-container table th {
   color: white;
+  font-weight: normal;
   padding: 8px 16px;
   text-align: left;
 }
 .ness-table-container table th:not(:last-child) {
-  border-right: 1px solid #f1f3f4;
+  border-right: 1px solid #e3e6e8;
 }
 .ness-table-container table th:hover {
   background: #404a4f;
@@ -148,13 +164,13 @@
   padding: 8px 16px;
 }
 .ness-table-container table td:not(:last-child) {
-  border-right: 1px solid #f1f3f4;
+  border-right: 1px solid #e3e6e8;
 }
 .ness-table-container table td:last-child {
   cursor: pointer;
 }
 .ness-table-container table td a:hover {
-  text-shadow: 1px 1px black;
+  text-shadow: initial;
 }
 .ness-table-container table.col-center th,
 .ness-table-container table.col-center td {

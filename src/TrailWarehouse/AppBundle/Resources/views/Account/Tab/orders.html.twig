@@ -1,0 +1,91 @@
+{# TrailWarehouse > AppBundle > Resources > views > Account > Tab > orders.html.twig #}
+
+<!-- # Orders -->
+<div id="mes-commandes" class="tab-pane fade ness-block bg-white mx-auto">
+
+    <!-- # Order History -->
+    <div class="mx-auto mb-5">
+
+      <h2>Historique de commandes</h2>
+
+      {% if orders is not defined or orders is empty %}
+
+        <!-- # No Order -->
+        <div class="ness-block info mb-4">
+          <span>Vous n'avez pas encore passé de commande.</span>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+          <span class="mr-1">Visitez notre boutique</span>&nbsp;<strong class="font-weight-normal"><a class="font-brand" href="{{ path('app_home') }}">Trail Warehouse</a></strong>
+        </div>
+        <!-- # No Order -->
+
+      {% else %}
+
+        <!-- # Orders -->
+        <div class="ness-table-container">
+
+          <!-- # Orders Table -->
+          <table id="history-table">
+
+            <thead>
+              <tr>
+                <th>Date de commande</th>
+                <th>Date d'envoi</th>
+                <th>Date de livraison</th>
+                <th>Total (HT)</th>
+                <th>Total (TTC)</th>
+                <th>Facture</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {% for order in orders %}
+                <tr title="Facture n°{{ (order.creationDate | date('YmdHis')) ~ order.id }}" class="no-hover"
+                  data-order-id="{{ order.id }}"
+                  data-toggle="popover"
+                  data-trigger="hover"
+                  data-placement="top"
+                  data-content="Cliquer pour obtenir une facture">
+                  <td>
+                    <div class="d-flex flex-column align-items-start">
+                      <div>Le&nbsp;{{ order.creationDate|date('d/m/Y') }}</div>
+                      <div><span class="text-uppercase">à</span>&nbsp;{{ order.creationDate|date('H:i:s') }}</div>
+                    </div>
+                  <td>
+                    <div class="d-flex flex-column align-items-start">
+                      <div>Le&nbsp;{{ order.sendingDate|date('d/m/Y') }}</div>
+                      <div><span class="text-uppercase">à</span>&nbsp;{{ order.sendingDate|date('H:i:s') }}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex flex-column align-items-start">
+                      <div>Le&nbsp;{{ order.deliveryDate|date('d/m/Y') }}</div>
+                      <div><span class="text-uppercase">à</span>&nbsp;{{ order.deliveryDate|date('H:i:s') }}</div>
+                    </div>
+                  </td>
+                  <td>{{ order.baseTotal|price }}</td>
+                  <td>{{ order.finalTotal|price }}</td>
+                  <td>
+                    <a href="{{ path('app_order_bill', { order_id : order.id }) }}">
+                      Facture n°{{ (order.creationDate | date('YmdHis')) ~ order.id }}
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+
+            </tbody>
+
+          </table>
+          <!-- Orders Table # -->
+
+        </div>
+        <!-- # Orders -->
+
+      {% endif %}
+
+    </div>
+    <!-- Order History # -->
+
+</div>
+<!-- Orders # -->

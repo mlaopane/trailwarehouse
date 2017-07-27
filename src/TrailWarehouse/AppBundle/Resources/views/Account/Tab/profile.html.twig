@@ -1,0 +1,100 @@
+{# TrailWarehouse > AppBundle > Resources > views > Account > Tab > profile.html.twig #}
+
+<!-- # Profile -->
+<div id="mon-profil" class="tab-pane fade ness-block bg-white mx-auto show active">
+
+  <!-- # User Form Container -->
+  <div class="form-container rounded border p-4 mx-auto mb-5">
+
+    <!-- # User Form -->
+    {{ form_start(user_form) }}
+
+    <!-- # Row -->
+    <div class="row">
+
+      <!-- # Form title -->
+      <div class="col-12 mb-2">
+        <h1>Modifier vos informations personnelles</h1>
+      </div>
+      <!-- Form title # -->
+
+      <!-- # Form errors -->
+      {{ form_errors(user_form) }}
+      {% if error is not empty %}
+      <div class="ness-block failure round mx-auto mb-2">
+        <span>{{ error.message }}</span>
+      </div>
+      {% endif %}
+      <!-- Form errors # -->
+
+      <!-- # Col -->
+      <div class="col-12">
+
+        <!-- # Lastname -->
+        <div class="form-group mb-4">
+          {{ form_label(user_form.lastname) }}
+          <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+            {{ form_widget(user_form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Nom', 'value': user.lastname }}) }}
+          </div>
+        </div>
+        <!-- Lastname # -->
+
+        <!-- # Firstname -->
+        <div class="form-group mb-4">
+          {{ form_label(user_form.firstname) }}
+          <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+            {{ form_widget(user_form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Prénom', 'value': user.firstname }}) }}
+          </div>
+        </div>
+        <!-- Firstname # -->
+
+        <!-- # E-mail -->
+        <div class="form-group mb-4">
+          {{ form_label(user_form.email) }}
+          <div class="input-group">
+            <div class="input-group-addon">@</div>
+            {{ form_widget(user_form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail', 'value': user.email }}) }}
+          </div>
+        </div>
+        <!-- E-mail # -->
+
+        <!-- # Password -->
+        <div class="form-group mb-4">
+          {{ form_label(user_form.plainPassword) }}
+          <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+            {{ form_widget(user_form.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+          </div>
+        </div>
+        <!-- Password # -->
+
+      </div>
+      <!-- Col # -->
+
+    </div>
+    <!-- Row # -->
+
+    <!-- # Row -->
+    <div class="row">
+      <div class="col-12 d-flex flex-column align-items-center align-items-sm-end mb-3">
+        <!-- # Submit -->
+        <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
+          {{ form_widget(user_form.send, {'attr': {'class':'btn btn-primary btn-validation'}}) }}
+        </div>
+        <!-- Submit # -->
+      </div>
+    </div>
+    <!-- Row # -->
+
+    {{ form_rest(user_form) }}
+
+    {{ form_end(user_form) }}
+    <!-- User Form # -->
+
+  </div>
+  <!-- User Form Container # -->
+
+</div>
+<!-- Profile # -->
