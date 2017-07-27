@@ -18,7 +18,7 @@
     {% block name %}{% endblock %}
 
     <!-- # News -->
-    <div id="news">
+    <!-- <div id="news"> -->
 
       <!-- # News Carousel -->
       <div id="news-carousel" class="carousel slide" data-ride="carousel">
@@ -69,29 +69,38 @@
     </div>
     <!-- News Diaporama # -->
 
-    <!-- # Sélections du moment -->
-    <div id="selections" class="col-12">
+    {% for category_name, families in selections %}
+      <!-- # Sélections du moment -->
+      <div class="category-selection" class="col-12">
 
-      <!-- # Sélection -->
-      <div class="selection p-3">
-        <div class="row justify-content-center">
-          <h2 class="border-bottom mb-4">Sélection du moment</h2>
-        </div>
-        <div class="ness-diaporama row">
-          {% for i in 1..3 %}
-          <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 d-flex justify-content-center">
-            <div class="image-container wrapper">
-              <img src="{{ asset('images/no_picture.png') }}" alt="" class="rounded mx-auto img-fluid">
-            </div>
+        <!-- # Sélection -->
+        <div class="selection p-3">
+          <div class="row justify-content-center">
+            <h2 class="border-bottom mb-4">Top Ventes {{ category_name|capitalize }}</h2>
           </div>
-          {% endfor %}
+          <div class="row">
+
+            {% for family in families %}
+            <div class="col-12 mb-2 mb-md-0 d-flex justify-content-center">
+              <div class="image-container wrapper">
+                {% if family.visuels|length == 0 %}
+                  <img src="{{ asset('images/no_picture.png') }}" alt="" class="rounded mx-auto img-fluid">
+                {% else %}
+                  <img src="{{ vich_uploader_asset(family.visuels[0], 'imageFile') }}" alt="{{ family.name|capitalize }}">
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+
         </div>
+        <!-- Sélection # -->
 
       </div>
-      <!-- Sélection # -->
+      <!-- Sélections du moment # -->
 
-    </div>
-    <!-- Sélections du moment # -->
+    {% endfor %}
 
     <!-- # Brands -->
     <div id="brands" class="container p-3">

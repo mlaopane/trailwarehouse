@@ -4,7 +4,7 @@ imports:
 parameters :
     wkhtmltopdf   : 'E:\__Programs\wkhtmltopdf\bin\wkhtmltopdf.exe'
     wkhtmltoimage : 'E:\__Programs\wkhtmltopdf\bin\wkhtmltoimage.exe'
-    prefix : '/trailwarehouse'
+    prefix : ''
 
 framework:
     router:

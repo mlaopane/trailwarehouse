@@ -61,7 +61,27 @@ class FamilyRepository extends CommonRepository
       ->groupBy('review.family, family.id')
       ->orderBy('average', 'desc')
       ->setFirstResult(0)
-      ->setMaxResults(5)
+      ->setMaxResults($count)
+      ->getQuery()
+    ;
+    return $as_array ? $query->getArrayResult() : $query->getResult();
+  }
+
+  /**
+   *
+   */
+  public function getBestOfCategory($category, $count = 5, $as_array = true)
+  {
+    $query = $this->createQueryBuilder('family')
+      ->addSelect('visuels')
+      ->innerJoin('family.category', 'category')
+      ->leftJoin('family.visuels', 'visuels')
+      ->leftJoin('family.reviews', 'review')
+      ->where('family.category = :category')
+      ->setParameter('category', $category)
+      ->orderBy('family.averageRating', 'desc')
+      ->setFirstResult(0)
+      ->setMaxResults($count)
       ->getQuery()
     ;
     return $as_array ? $query->getArrayResult() : $query->getResult();
