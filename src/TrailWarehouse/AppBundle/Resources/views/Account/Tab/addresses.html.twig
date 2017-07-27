@@ -45,7 +45,13 @@
       </div>
     </div>
 
-
+    {% if active_tab == 3 %}
+      <!-- # Flashes -->
+      <div class="d-flex block mx-auto mb-3">
+        {{ include('TrailWarehouseAppBundle:Error:alerts.html.twig') }}
+      </div>
+      <!-- Flashes # -->
+    {% endif %}
 
     <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
       <!-- # Form Container -->
@@ -56,14 +62,6 @@
           <h2>Ajouter une adresse</h2>
         </div>
         <!-- Form title # -->
-
-        {% if active_tab == 3 %}
-          <!-- # Flashes -->
-          <div class="d-flex block mx-auto mb-3">
-            {{ include('TrailWarehouseAppBundle:Error:alerts.html.twig') }}
-          </div>
-          <!-- Flashes # -->
-        {% endif %}
 
         {% form_theme address_form with ['form/form_errors.html.twig'] %}
         {{ form_errors(address_form.title) }}

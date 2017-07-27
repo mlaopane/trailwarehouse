@@ -27,6 +27,8 @@
       <!-- Form title # -->
 
       {% form_theme user_form with ['form/form_errors.html.twig'] %}
+      {{ form_errors(user_form) }}
+      {{ form_errors(user_form.email) }}
       {{ form_errors(user_form.plainPassword) }}
 
       <!-- # Col -->
@@ -59,6 +61,7 @@
             <div class="input-group-addon">@</div>
             {{ form_widget(user_form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail', 'value': user.email }}) }}
           </div>
+          <p class="form-text text-muted justify-self-end">E-mail valide (identifiant)</p>
         </div>
         <!-- E-mail # -->
 
@@ -69,6 +72,7 @@
             <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
             {{ form_widget(user_form.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
           </div>
+          <p class="form-text text-muted text-danger justify-self-end"><span class="glyphicon glyphicon-exclamation-sign mr-2"></span>Sera mis à jour si différent</p>
         </div>
         <!-- Password # -->
 
