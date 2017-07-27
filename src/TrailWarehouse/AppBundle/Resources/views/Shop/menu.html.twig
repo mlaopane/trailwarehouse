@@ -1,10 +1,32 @@
 <div class="row">
 
   <!-- # Menu Select -->
-  <nav class="col-12 hidden-md-up py-3">
-    <h4 class="navbar-toggler flex justify-content-center mb-3" data-toggle="collapse" data-target="#menu-select">Sélectionnez une catégorie</h4>
+  <nav class="hidden-md-up col-12 py-3">
+    <h4 class="navbar-toggler flex justify-content-center pb-2" data-toggle="collapse" data-target="#menu-select">
+      {% if active_category is not null %}
+        {% if active_category.name == 'toutes' %}
+          <span class="font-weight-italic">-- Toutes catégories --</span>
+        {% else %}
+          <span class="font-weight-italic">-- {{ active_category.name|capitalize }} --</span>
+        {% endif %}
+      {% else %}
+        <span class="font-weight-italic">Sélectionnez une catégorie</span>
+      {% endif %}
+    </h4>
     <div id="menu-select" class="ness-option-container no-limit collapse">
       <ul class="ness-option-group">
+        <li class="ness-option">
+          <a
+            {% if active_category is not null and active_category.name == 'toutes' %}
+            class="active"
+            {% else %}
+            class="w-100"
+            href="{{ path('app_shop_categories') }}"
+            {% endif %}
+          >
+            <span>Toutes catégories</span>
+          </a>
+        </li>
         {% for category in categories %}
         <li class="ness-option w-100">
           <a
@@ -20,7 +42,7 @@
   <!-- Menu Select # -->
 
   <!-- # Menu List -->
-  <nav class="hidden-sm-down col-12 col-lg-8 col-xl-9">
+  <nav class="hidden-sm-down col-md-7 col-lg-8 col-xl-9">
     <ul>
       <li>
         <a
@@ -53,8 +75,8 @@
   </nav>
   <!-- # Menu List -->
 
-  <!-- # Site Search -->
-  <nav class="col-lg-4 col-xl-3 flex">
+  <!-- # Search Bar -->
+  <nav class="d-flex col-12 col-md-5 col-lg-4 col-xl-3 mb-2 mb-md-0">
     <div id="site-search">
       <form class="ness-form-inline">
         <input class="form-control mr-2" type="search" placeholder="Rechercher...">
@@ -62,6 +84,6 @@
       </form>
     </div>
   </nav>
-  <!-- Site Search # -->
+  <!-- Search Bar # -->
 
 </div>
