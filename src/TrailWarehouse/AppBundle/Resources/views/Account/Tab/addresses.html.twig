@@ -30,7 +30,7 @@
                 <td>{{ address.zipcode }}</td>
                 <td>{{ address.city }}</td>
                 <td>
-                  <a href="{{ path('app_account_remove_address', { id : address.id }) }}">Supprimer</a>
+                  <a href="{{ path('app_account_remove_address', { address_id : address.id }) }}">Supprimer</a>
                 </td>
               </tr>
             {% endfor %}

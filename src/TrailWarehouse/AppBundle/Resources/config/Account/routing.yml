@@ -1,11 +1,16 @@
 # /espace-perso
 
 app_account :
-    path:     /
+    path:     /{active_tab}
     defaults:
         _controller: TrailWarehouseAppBundle:Account:index
+        active_tab: 1
+    requirements:
+        active_tab: '\d+'
 
 app_account_remove_address :
-    path:     /supprimer-adresse
+    path:     /supprimer-adresse/{address_id}
     defaults:
         _controller: TrailWarehouseAppBundle:Account:removeAddress
+    requirements:
+        address_id : '\d+'

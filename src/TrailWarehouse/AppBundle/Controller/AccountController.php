@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Form\Form;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use TrailWarehouse\AppBundle\Entity\User;
 use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Address;
@@ -45,7 +46,7 @@ class AccountController extends Controller
   /**
    * 'app_account' route
    */
-  public function indexAction(UserInterface $user, Request $request, EntityManagerInterface $em)
+  public function indexAction($active_tab = null, UserInterface $user, Request $request, EntityManagerInterface $em)
   {
     $form = [
       'user'    => $this->handleUserForm($user, $request, $em),
@@ -58,14 +59,39 @@ class AccountController extends Controller
       'user'         => $user,
       'orders'       => $this->repo['order']->getBy('user', $user),
       'error'        => null,
-      'tabs'         => [
-        [ 'label' => 'Mes commandes', 'class' => 'active' ],
-        [ 'label' => 'Mon profil' ],
-        [ 'label' => 'Mes adresses'],
-      ],
     ];
 
+    if (null == $active_tab OR $active_tab <= 0 OR $active_tab > 3) {
+      $data['tabs'] = [
+        [ 'label' => 'Mes commandes', 'class' => 'active' ],
+        [ 'label' => 'Mon profil' ],
+        [ 'label' => 'Mes adresses' ],
+      ];
+    }
+    else {
+      $data['tabs'] = [
+        [ 'label' => 'Mes commandes', 'class' => ($active_tab == 1 ? 'active' : '') ],
+        [ 'label' => 'Mon profil', 'class' => ($active_tab == 2 ? 'active' : '') ],
+        [ 'label' => 'Mes adresses', 'class' => ($active_tab == 3 ? 'active' : '') ],
+      ];
+    }
+
     return $this->render('TrailWarehouseAppBundle:Account:index.html.twig', $data);
+  }
+
+  /**
+   * @ParamConverter("address", options={"mapping": {"address_id": "id"}})
+   */
+  public function removeAddress(Address $address, UserInterface $user, Request $request, EntityManagerInterface $em)
+  {
+    $db_address = $this->repo['address']->findOneBy(['id' => $address->getId(), 'user' => $user]);
+    if (empty($db_address)) {
+      $this->addFlash('type', 'Opération non autorisée');
+    }
+    else {
+      $em->remove($db_address);
+      $this->addFlash('success', 'Adresse supprimée');
+    }
   }
 
   /**
