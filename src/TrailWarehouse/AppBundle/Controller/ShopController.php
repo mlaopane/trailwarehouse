@@ -83,8 +83,6 @@ class ShopController extends Controller
       'families'        => $this->repo['family']->findAll(),
     ];
 
-    dump($data['families']);
-
     return $this->render('TrailWarehouseAppBundle:Shop:category.html.twig', $data);
   }
 

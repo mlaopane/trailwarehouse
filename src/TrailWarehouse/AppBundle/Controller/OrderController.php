@@ -120,6 +120,7 @@ class OrderController extends Controller
     ]);
 
     $form->handleRequest($request);
+    $order->setUser($user);
 
     if ($form->isSubmitted() AND $form->isValid())
     {
@@ -127,16 +128,17 @@ class OrderController extends Controller
         'id'   => $order->getAddress()->getId(),
         'user' => $user
       ]);
-      if (empty($db_address)) {
-        $this->addFlash('warning', 'Cette adresse ne vous appartient pas');
-        return $this->redirectToRoute('app_order_address');
+      if (!empty($db_address)) {
+        $session->set('order', $order);
+        return $this->redirectToRoute('app_order_create');
       }
-      $session->set('order', $order);
-      return $this->redirectToRoute('app_order_create');
+      $this->addFlash('warning', 'Cette adresse ne vous appartient pas');
     }
-
-    $this->addFlash('warning', "Veuillez sélectionner une adresse");
+    else {
+      $this->addFlash('warning', "Veuillez sélectionner une adresse");
+    }
     $session->set('checkout', true);
+
     return $this->redirectToRoute('app_order_address');
   }
 
@@ -232,7 +234,6 @@ class OrderController extends Controller
       ->setBaseTotal($cart->getBaseTotal())
       ->setFinalTotal($cart->getFinalTotal())
     ;
-    dump($order);
     return $em->persist($order);
   }
 

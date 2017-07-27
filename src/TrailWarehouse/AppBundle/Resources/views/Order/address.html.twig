@@ -156,7 +156,7 @@
                         <div id="no-address" class="ness-block info mb-5">
                           <span>Aucune addresse sélectionnée</span>
                         </div>
-                        {% for address in app.user.address %}
+                        {% for address in app.user.addresses %}
                         <div id="address-{{ address.id }}" class="address ness-block info mb-5 hide">
                           <h4 class="card-title font-weight-bold">{{ address.title }}</h4>
                           <dl class="card-text">
