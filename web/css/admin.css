@@ -17,9 +17,6 @@
 .ness-bg-darkblue:hover {
   background: #08335e;
 }
-.ness-bg-darkred {
-  background: #a50d1a;
-}
 .ness-bg-darkgrey {
   background: #505c62;
 }
@@ -80,9 +77,6 @@
 }
 .ness-text-yellow {
   color: #ffe02e;
-}
-.ness-text-white {
-  color: white;
 }
 /*** BLOCKS ***/
 .ness-block {
@@ -1257,6 +1251,15 @@
 .font-fira-sans-bold {
   font-family: 'Fira Sans Bold';
 }
+.font-fira-sans-italic {
+  font-family: 'Fira Sans Italic';
+}
+.font-carter-one {
+  font-family: 'Carter One';
+}
+.font-bevan {
+  font-family: 'Bevan';
+}
 /* -------------------- */
 /* Fonts */
 /* Colors */
@@ -1671,8 +1674,7 @@
 }
 .easyadmin .main-header .logo {
   font-family: 'Bevan';
-  font-size: 1.7rem;
-  font-style: italic;
+  font-size: 1.8rem;
   font-weight: normal;
   margin: 0 auto;
   max-width: 480px;

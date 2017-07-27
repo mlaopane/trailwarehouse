@@ -54,10 +54,8 @@ class Order
     private $promo;
 
     /**
-     * @var Promo
+     * @var Vat
      *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Vat")
-     * @ORM\JoinColumn(nullable=true)
      */
     private $vat;
 

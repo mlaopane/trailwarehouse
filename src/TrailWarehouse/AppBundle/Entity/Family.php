@@ -44,13 +44,13 @@ class Family
 
     /**
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Brand")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $brand;
 
     /**
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Category")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $category;
 

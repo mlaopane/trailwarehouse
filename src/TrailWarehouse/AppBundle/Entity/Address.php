@@ -33,7 +33,7 @@ class Address
 
     /**
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="addresses")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;
 

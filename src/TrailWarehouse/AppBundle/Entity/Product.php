@@ -44,7 +44,7 @@ class Product
      * @var Family
      *
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $family;
 
@@ -52,7 +52,7 @@ class Product
      * @var Color
      *
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Color")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $color;
 
@@ -60,7 +60,7 @@ class Product
      * @var Size
      *
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Size")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $size;
 

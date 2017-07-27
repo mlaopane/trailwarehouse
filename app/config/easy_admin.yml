@@ -1,6 +1,6 @@
 easy_admin :
 
-    site_name : '<span>Trail&nbsp;Warehouse&nbsp;Admin</span>'
+    site_name : '<span>TW&nbsp;Admin</span>'
 
     design :
         brand_color : 'hsl(165, 65%%, 40%%)'
@@ -24,6 +24,12 @@ easy_admin :
               children :
                   - { entity : 'Family', icon : 'book' }
                   - { entity : 'Product', icon : 'leaf' }
+            - label : "____________________"
+            - label : "Détails"
+              icon : th-list
+              children :
+                  - { entity : 'Size', icon : 'image' }
+                  - { entity : 'Color', icon : 'paint-brush' }
                   - { entity : 'FamilyColor', icon : 'image' }
             - label : "____________________"
             - label : "Membres"
@@ -230,6 +236,13 @@ easy_admin :
             class : TrailWarehouse\AppBundle\Entity\FamilyColor
             label : 'Visuels'
             list :
+                fields :
+                    - id
+                    - { property : 'family', label : 'Famille' }
+                    - { property : 'color', label : 'Couleur' }
+                    - { property : 'imageName', label : 'Visuel (max : 2Mo)', type : 'image', base_path : '%vich_uploader.mappings.family_color_image%' }
+            show :
+                title : "Visuel #%%entity_id%%"
                 fields :
                     - id
                     - { property : 'family', label : 'Famille' }

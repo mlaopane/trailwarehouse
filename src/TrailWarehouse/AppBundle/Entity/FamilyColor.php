@@ -31,7 +31,7 @@ class FamilyColor
      * @var Family
      *
      * @ORM\ManyToOne(targetEntity="Family", inversedBy="visuels")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $family;
 
@@ -39,7 +39,7 @@ class FamilyColor
      * @var Color
      *
      * @ORM\ManyToOne(targetEntity="Color")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $color;
 

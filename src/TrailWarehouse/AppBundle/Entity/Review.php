@@ -26,16 +26,16 @@ class Review
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", cascade={"persist"}, inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
 
     /**
      * @var Family
      *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", cascade={"persist"}, inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Family", inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $family;
 

@@ -26,14 +26,6 @@ class Size
     private $id;
 
     /**
-     * @var Category
-     *
-     * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\Category")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=100)
