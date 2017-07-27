@@ -77,8 +77,6 @@ class CartController extends Controller
     $db_product = $this->repo['product']->find($post_item->product_id);
     $item = new Item($db_product, $post_item->quantity);
 
-    dump($post_item);
-
     if (!$this->isCartable($item)) {
       return $this->json(false);
     }

@@ -64,7 +64,8 @@ class ShopController extends Controller
   /**
    * Gets the categories then render the menu
    */
-  public function menuAction($active_category = NULL) {
+  public function menuAction($active_category = NULL)
+  {
     $data = [
       'categories'      => $this->repo['category']->findAll(['category' => 'asc']),
       'active_category' => $active_category,
