@@ -59,8 +59,8 @@ class AccountController extends Controller
       'orders'       => $this->repo['order']->getBy('user', $user),
       'error'        => null,
       'tabs'         => [
-        [ 'label' => 'Mon profil', 'class' => 'active' ],
-        [ 'label' => 'Mes commandes' ],
+        [ 'label' => 'Mes commandes', 'class' => 'active' ],
+        [ 'label' => 'Mon profil' ],
         [ 'label' => 'Mes adresses'],
       ],
     ];

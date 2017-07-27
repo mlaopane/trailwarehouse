@@ -1,7 +1,7 @@
 {# TrailWarehouse > AppBundle > Resources > views > Account > Tab > orders.html.twig #}
 
 <!-- # Orders -->
-<div id="mes-commandes" class="tab-pane fade ness-block bg-white mx-auto">
+<div id="mes-commandes" class="tab-pane fade show active ness-block bg-white mx-auto">
 
     <!-- # Order History -->
     <div class="mx-auto mb-5">
@@ -20,6 +20,12 @@
         <!-- # No Order -->
 
       {% else %}
+
+        <!-- # Flashes -->
+        <div class="d-flex block mb-3">
+          {{ include('TrailWarehouseAppBundle:Error:alerts.html.twig') }}
+        </div>
+        <!-- Flashes # -->
 
         <!-- # Orders -->
         <div class="ness-table-container">
