@@ -97,6 +97,15 @@
                     <!-- # Row -->
                     <div class="row">
 
+                      <div class="col-6 ml-auto">
+                        <div id="price" class="font-fira-sans-bold w-100 d-flex justify-content-end align-items-center">
+                          <span data-ng-if="!page.quantitiesLoaded">Calcul du prix...</span>
+                          <span data-ng-bind="page.product.price + ' €'"
+                            data-ng-if="page.product.price > 0"
+                          ></span>
+                        </div>
+                      </div>
+
                       <div class="col-12">
                         <!-- # Stock -->
                         <div id="stock" class="mb-3">
