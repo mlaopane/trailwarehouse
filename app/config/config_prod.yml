@@ -4,6 +4,7 @@ imports:
 parameters :
     wkhtmltopdf   : '%base_dir%/vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386'
     wkhtmltoimage : '%base_dir%/vendor/h4cc/wkhtmltoimage-i386/bin/wkhtmltoimage-i386'
+    prefix : ''
 
 #doctrine:
 #    orm:
