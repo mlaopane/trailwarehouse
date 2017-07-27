@@ -3,7 +3,7 @@ easy_admin :
     site_name : '<em style="font-size:1.8rem;">Trail&nbsp;Warehouse&nbsp;Admin</em>'
 
     design :
-        brand_color : 'hsl(165, 65%, 40%)'
+        brand_color : 'hsl(165, 65%%, 40%%)'
         color_scheme : 'dark'
         form_theme :
             - 'easy_admin/form/bootstrap_3_layout.html.twig'

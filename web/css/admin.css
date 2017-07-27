@@ -1601,6 +1601,9 @@
 .font-size-1 {
   font-size: 0.1rem;
 }
+.easyadmin .main-header .logo {
+  color: #13e75a;
+}
 .easyadmin .value {
   padding: 0px 4px;
 }
