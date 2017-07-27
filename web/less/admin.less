@@ -5,6 +5,7 @@
 @import "../bower_components/ness/less/contextual.less";
 @import "../bower_components/ness/less/flex.less";
 @import "glyphicons.less";
+@import "fonts.less";
 @import "breakpoints.less";
 @import "variables.less";
 @import "colors.less";
@@ -12,8 +13,19 @@
 .easyadmin
 {
 
-  .main-header .logo {
-    font-family: 'Bevan';
+  .main-header {
+    #header-logo {
+      width: inherit;
+      text-align: center;
+    }
+    .logo {
+      font-family: 'Bevan';
+      font-size: 1.7rem;
+      font-style: italic;
+      font-weight: normal;
+      margin: 0 auto;
+      max-width: 480px;
+    }
   }
 
   .value {

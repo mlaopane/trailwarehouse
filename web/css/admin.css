@@ -1193,6 +1193,70 @@
 .glyphicon-menu-up:before {
   content: "\e260";
 }
+@font-face {
+  font-family: 'Bevan';
+  src: url('../fonts/Bevan/Bevan-Regular.ttf');
+}
+@font-face {
+  font-family: 'Carter One';
+  src: url('../fonts/Carter_One/CarterOne.ttf');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('../fonts/Fira_Sans/FiraSans-Regular.ttf');
+}
+@font-face {
+  font-family: 'Fira Sans Bold';
+  src: url('../fonts/Fira_Sans/FiraSans-Bold.ttf');
+}
+@font-face {
+  font-family: 'Fira Sans Italic';
+  src: url('../fonts/Fira_Sans/FiraSans-Italic.ttf');
+}
+@font-face {
+  font-family: 'Fira Sans Bold Italic';
+  src: url('../fonts/Fira_Sans/FiraSans-BoldItalic.ttf');
+}
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('../fonts/Josefin_Sans/JosefinSans-Regular.ttf');
+}
+@font-face {
+  font-family: 'PT Sans';
+  src: url('../fonts/PT_Sans/PT_Sans-Web-Regular.ttf');
+}
+@font-face {
+  font-family: 'PT Sans Bold';
+  src: url('../fonts/PT_Sans/PT_Sans-Web-Bold.ttf');
+}
+@font-face {
+  font-family: 'PT Sans Italic';
+  src: url('../fonts/PT_Sans/PT_Sans-Web-Italic.ttf');
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto/Roboto-Regular.ttf');
+}
+@font-face {
+  font-family: 'Roboto Light';
+  src: url('../fonts/Roboto/Roboto-Light.ttf');
+}
+@font-face {
+  font-family: 'Roboto Bold';
+  src: url('../fonts/Roboto/Roboto-Bold.ttf');
+}
+@font-face {
+  font-family: 'Roboto Italic';
+  src: url('../fonts/Roboto/Roboto-Italic.ttf');
+}
+/* ----- */
+.font-brand {
+  font-family: 'Bevan';
+  font-size: 1.0rem;
+}
+.font-fira-sans-bold {
+  font-family: 'Fira Sans Bold';
+}
 /* -------------------- */
 /* Fonts */
 /* Colors */
@@ -1601,8 +1665,17 @@
 .font-size-1 {
   font-size: 0.1rem;
 }
+.easyadmin .main-header #header-logo {
+  width: inherit;
+  text-align: center;
+}
 .easyadmin .main-header .logo {
   font-family: 'Bevan';
+  font-size: 1.7rem;
+  font-style: italic;
+  font-weight: normal;
+  margin: 0 auto;
+  max-width: 480px;
 }
 .easyadmin .value {
   padding: 0px 4px;
