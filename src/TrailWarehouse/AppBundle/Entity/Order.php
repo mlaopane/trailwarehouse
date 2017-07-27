@@ -33,7 +33,6 @@ class Order
      *
      * @ORM\ManyToOne(targetEntity="TrailWarehouse\AppBundle\Entity\User", inversedBy="orders")
      * @ORM\JoinColumn(nullable=true)
-     * @Assert\NotNull()
      */
     private $user;
 
