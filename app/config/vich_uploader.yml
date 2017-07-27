@@ -1,6 +1,6 @@
 parameters :
-    vich_uploader.mappings.brand_image  : /images/brands
-    vich_uploader.mappings.family_color_image : /images/families
+    vich_uploader.mappings.brand_image  : '%prefix%/images/brands'
+    vich_uploader.mappings.family_color_image : '%prefix%/images/families'
 
 vich_uploader :
     db_driver : orm
