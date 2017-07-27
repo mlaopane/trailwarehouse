@@ -6,7 +6,7 @@ app_order             :
     _controller       : TrailWarehouseAppBundle:Order:index
 
 app_order_address :
-  path                : /coordonnees
+  path                : /selectionner-adresse
   defaults            :
     _controller       : TrailWarehouseAppBundle:Order:address
 

@@ -94,7 +94,7 @@ class OrderController extends Controller
     if ($form->isSubmitted() AND $form->isValid()) {
       $session->set('checkout', true);
       if ($this->repo['address']->isDoublon($address->setUser($user))) {
-        $this->addFlash('warning', "Cette adresse existe déjà/nVeuillez choisir un titre différent");
+        $this->addFlash('warning', "Cette adresse existe déjà/nVeuillez choisir un Libellé différent");
       }
       else {
         $em->persist($address);
@@ -183,6 +183,7 @@ class OrderController extends Controller
   {
     $session->remove('order');
     $session->remove('cart');
+    $session->remove('checkout');
     return $this->redirectToRoute('app_account');
   }
 
