@@ -4,13 +4,19 @@
 <div id="mes-adresses" class="tab-pane ness-block bg-white fade {{ tabs[2].class_pane }} mx-auto">
 
   <div class="row">
-    <div class="col-12 col-md-6">
-      <h3>Ajouter une nouvelle adresse</h3>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-12 col-md-6">
+
+    {% set addresses = app.user.addresses %}
+
+    {% if addresses is empty %}
+      <div class="col-12 col-lg-6 mb-4 mx-auto">
+        <div class="ness-block info">
+          <span>Aucune adresse enregistrée</span>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="col-12 col-lg-6 mb-4 mx-auto">
       <div class="ness-table-container">
         <table>
           <thead>
@@ -23,8 +29,8 @@
             </tr>
           </thead>
           <tbody>
-            {% for address in app.user.addresses %}
-              <tr>
+            {% for address in addresses %}
+              <tr class="no-hover">
                 <td>{{ address.title }}</td>
                 <td>{{ address.street }}</td>
                 <td>{{ address.zipcode }}</td>
@@ -38,7 +44,102 @@
         </table>
       </div>
     </div>
+
+
+
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+      <!-- # Form Container -->
+      <div class="form-container mx-auto mb-5 rounded">
+
+        <!-- # Form title -->
+        <div class="col-12 mb-3">
+          <h2>Ajouter une adresse</h2>
+        </div>
+        <!-- Form title # -->
+
+        {% if active_tab == 3 %}
+          <!-- # Flashes -->
+          <div class="d-flex block mx-auto mb-3">
+            {{ include('TrailWarehouseAppBundle:Error:alerts.html.twig') }}
+          </div>
+          <!-- Flashes # -->
+        {% endif %}
+
+        {% form_theme address_form with ['form/form_errors.html.twig'] %}
+        {{ form_errors(address_form.title) }}
+        {{ form_errors(address_form.zipcode) }}
+
+        <!-- # Col -->
+        <div class="col-12">
+
+          <!-- # Address Form -->
+          {{ form_start(address_form) }}
+
+          <!-- # Title -->
+          <div class="form-group mb-4">
+            {{ form_label(address_form.title) }}
+            <div class="input-group">
+              <div class="input-group-addon"><span class="glyphicon glyphicon-text-width"></span></div>
+              {{ form_widget(address_form.title, {'attr': {'class': 'form-control', 'placeholder': 'Ex:: Maison' }}) }}
+            </div>
+          </div>
+          <!-- Address # -->
+
+          <!-- # Address -->
+          <div class="form-group mb-4">
+            {{ form_label(address_form.street) }}
+            <div class="input-group">
+              <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+              {{ form_widget(address_form.street, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 18, Rue des acacias' }}) }}
+            </div>
+          </div>
+          <!-- Address # -->
+
+          <!-- # Zipcode -->
+          <div class="form-group mb-4">
+            <div class="d-flex justify-content-start align-items-baseline">
+              {{ form_label(address_form.zipcode) }}
+            </div>
+            <div class="input-group">
+              <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+              {{ form_widget(address_form.zipcode, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 75020'}}) }}
+            </div>
+          </div>
+          <!-- Zipcode # -->
+
+          <!-- # City -->
+          <div class="form-group mb-4">
+            <div class="d-flex justify-content-start align-items-baseline">
+              {{ form_label(address_form.city) }}
+            </div>
+            <div class="input-group">
+              <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+              {{ form_widget(address_form.city, {'attr': {'class': 'form-control', 'placeholder': 'Ex: PARIS'}}) }}
+            </div>
+          </div>
+          <!-- City # -->
+
+          <!-- # Submit -->
+          <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-baseline">
+            {{ form_widget(address_form.save, {'attr': {'class':'btn btn-confirm w-100'}}) }}
+          </div>
+          <!-- Submit # -->
+
+          {{ form_rest(address_form) }}
+
+          {{ form_end(address_form) }}
+
+        </div>
+        <!-- Col # -->
+
+      </div>
+      <!-- Form Container # -->
+    </div>
+
   </div>
+
+
+
 
 </div>
 <!-- Address # -->

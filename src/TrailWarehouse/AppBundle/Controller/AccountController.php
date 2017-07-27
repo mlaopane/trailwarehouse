@@ -29,6 +29,7 @@ class AccountController extends Controller
   /* --------------------- */
 
   protected $repo;
+  protected $active_tab = 1;
 
   public function __construct(EntityManagerInterface $em)
   {
@@ -49,6 +50,13 @@ class AccountController extends Controller
    */
   public function indexAction($active_tab = null, UserInterface $user, Request $request, EntityManagerInterface $em)
   {
+    if (null == $active_tab) {
+      $active_tab = $this->active_tab;
+    }
+    elseif ($active_tab <= 0 OR $active_tab > 3) {
+      return $this->redirectToRoute('app_account');
+    }
+
     $form = [
       'user'    => $this->handleUserForm($user, $request, $em),
       'address' => $this->handleAddressForm($user, $request, $em),
@@ -59,24 +67,14 @@ class AccountController extends Controller
       'address_form' => $form['address']->createView(),
       'user'         => $user,
       'orders'       => $this->repo['order']->getBy('user', $user),
-      'error'        => null,
       'active_tab'   => $active_tab,
     ];
 
-    if (null == $active_tab OR $active_tab <= 0 OR $active_tab > 3) {
-      $data['tabs'] = [
-        [ 'label' => 'Mes commandes', 'class' => 'active', 'class_pane' => 'show active' ],
-        [ 'label' => 'Mon profil', 'class' => '', 'class_pane' => '' ],
-        [ 'label' => 'Mes adresses', 'class' => '', 'class_pane' => '' ],
-      ];
-    }
-    else {
-      $data['tabs'] = [
-        [ 'label' => 'Mes commandes', 'class' => ($active_tab == 1 ? 'active' : ''), 'class_pane' => ($active_tab == 1 ? 'show active' : '') ],
-        [ 'label' => 'Mon profil', 'class' => ($active_tab == 2 ? 'active' : ''), 'class_pane' => ($active_tab == 2 ? 'show active' : '') ],
-        [ 'label' => 'Mes adresses', 'class' => ($active_tab == 3 ? 'active' : ''), 'class_pane' => ($active_tab == 3 ? 'show active' : '') ],
-      ];
-    }
+    $data['tabs'] = [
+      [ 'label' => 'Mes commandes', 'class' => ($active_tab == 1 ? 'active' : ''), 'class_pane' => ($active_tab == 1 ? 'show active' : '') ],
+      [ 'label' => 'Mon profil', 'class' => ($active_tab == 2 ? 'active' : ''), 'class_pane' => ($active_tab == 2 ? 'show active' : '') ],
+      [ 'label' => 'Mes adresses', 'class' => ($active_tab == 3 ? 'active' : ''), 'class_pane' => ($active_tab == 3 ? 'show active' : '') ],
+    ];
 
     return $this->render('TrailWarehouseAppBundle:Account:index.html.twig', $data);
   }
@@ -93,6 +91,7 @@ class AccountController extends Controller
     }
     else {
       $em->remove($db_address);
+      $em->flush();
       $this->addFlash('success', 'Adresse supprimée');
     }
     return $this->redirectToRoute('app_account', ['active_tab' => 3]);
@@ -104,7 +103,9 @@ class AccountController extends Controller
    */
   private function handleUserForm(UserInterface $user, Request $request, EntityManagerInterface $em)
   {
-    $form = $this->createForm(AccountType::class, $user);
+    $form = $this->createForm(AccountType::class, $user, [
+      'action' => $this->generateUrl('app_account', [ 'active_tab' => 2 ])
+    ]);
 
     $form->handleRequest($request);
 
@@ -113,7 +114,9 @@ class AccountController extends Controller
       $em->persist($user);
       $em->flush();
       $this->addFlash('success', "Vos informations ont été mises à jour");
+      $this->active_tab = 2;
     }
+
 
     return $form;
   }
@@ -126,21 +129,25 @@ class AccountController extends Controller
   {
     $address = new Address();
 
-    $form = $this->createForm(AddressType::class, $address);
+    $form = $this->createForm(AddressType::class, $address, [
+      'action' => $this->generateUrl('app_account', [ 'active_tab' => 3 ])
+    ]);
 
     $form->handleRequest($request);
 
     if ($form->isSubmitted() AND $form->isValid())
     {
       if ($this->repo['address']->isDoublon($address->setUser($user))) {
-        $this->addFlash('warning', "Cette adresse existe déjà/nVeuillez choisir un Libellé différent");
+        $this->addFlash('warning', "Cette adresse existe déjà !<br>Veuillez choisir un Libellé différent");
       }
       else {
         $em->persist($address);
         $em->flush();
         $this->addFlash('success', "Adresse ajoutée !");
       }
+      $this->active_tab = 3;
     }
+
 
     return $form;
   }
