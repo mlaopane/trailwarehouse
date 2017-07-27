@@ -163,7 +163,7 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
       page.add_in_progress = true;
       let url = page.CART_URL + 'ajouter-item';
       let item = {
-        product_id  : product.id,
+        product_id : product.id,
         quantity : quantity,
       }
       $http.post(url, item).then(function(response) {

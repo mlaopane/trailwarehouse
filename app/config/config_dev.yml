@@ -1,6 +1,5 @@
 imports:
     - { resource: config.yml }
-    - { resource: parameters_dev.yml }
 
 parameters :
     wkhtmltopdf   : 'E:\__Programs\wkhtmltopdf\bin\wkhtmltopdf.exe'
