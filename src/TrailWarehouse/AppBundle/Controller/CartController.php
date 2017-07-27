@@ -74,7 +74,7 @@ class CartController extends Controller
   public function addItemAction(SessionInterface $session, EntityManagerInterface $em)
   {
     $post_item = json_decode(file_get_contents('php://input'));
-    $db_product = $this->repo['product']->find($post_item->product_id);
+    $db_product = $this->repo['product']->getOne($post_item->product_id, false);
     $item = new Item($db_product, $post_item->quantity);
 
     if (!$this->isCartable($item)) {
@@ -133,7 +133,7 @@ class CartController extends Controller
           }
           else {
             $item = new Item($db_product, $_POST['hidden-quantity']);
-            $this->addFlash('success', "Votre panier a été mis à jour");
+            $this->addFlash('info', "Votre panier a été mis à jour");
           }
           $new_cart = $this->addOrReplaceCartItem($cart, $item);
           $session->set('cart', $new_cart);
@@ -157,6 +157,9 @@ class CartController extends Controller
           if (!empty($cart_item = $this->findCartItem($cart, $item))) {
             $cart->removeItem($cart_item);
             $session->set('cart', $cart);
+            if (count($cart->getItems()) > 0) {
+              $this->addFlash('info', "Votre panier a été mis à jour");
+            }
           }
         }
       }

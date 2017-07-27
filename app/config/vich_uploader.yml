@@ -12,7 +12,7 @@ vich_uploader :
             upload_destination : '%images_dir%/brands'
             namer              :
                 service : vich_uploader.namer_origname
-            inject_on_load   : true
+            inject_on_load   : false
             delete_on_update : true
             delete_on_remove : true
 
