@@ -33,9 +33,10 @@ class AccountController extends Controller
   public function __construct(EntityManagerInterface $em)
   {
     $this->repo = [
-      'user'  => $em->getRepository('TrailWarehouseAppBundle:User'),
-      'role'  => $em->getRepository('TrailWarehouseAppBundle:Role'),
-      'order' => $em->getRepository('TrailWarehouseAppBundle:Order'),
+      'user'    => $em->getRepository('TrailWarehouseAppBundle:User'),
+      'address' => $em->getRepository('TrailWarehouseAppBundle:Address'),
+      'role'    => $em->getRepository('TrailWarehouseAppBundle:Role'),
+      'order'   => $em->getRepository('TrailWarehouseAppBundle:Order'),
     ];
   }
 
@@ -63,16 +64,16 @@ class AccountController extends Controller
 
     if (null == $active_tab OR $active_tab <= 0 OR $active_tab > 3) {
       $data['tabs'] = [
-        [ 'label' => 'Mes commandes', 'class' => 'active' ],
-        [ 'label' => 'Mon profil' ],
-        [ 'label' => 'Mes adresses' ],
+        [ 'label' => 'Mes commandes', 'class' => 'active', 'class_pane' => 'show active' ],
+        [ 'label' => 'Mon profil', 'class' => '', 'class_pane' => '' ],
+        [ 'label' => 'Mes adresses', 'class' => '', 'class_pane' => '' ],
       ];
     }
     else {
       $data['tabs'] = [
-        [ 'label' => 'Mes commandes', 'class' => ($active_tab == 1 ? 'active' : '') ],
-        [ 'label' => 'Mon profil', 'class' => ($active_tab == 2 ? 'active' : '') ],
-        [ 'label' => 'Mes adresses', 'class' => ($active_tab == 3 ? 'active' : '') ],
+        [ 'label' => 'Mes commandes', 'class' => ($active_tab == 1 ? 'active' : ''), 'class_pane' => ($active_tab == 1 ? 'show active' : '') ],
+        [ 'label' => 'Mon profil', 'class' => ($active_tab == 2 ? 'active' : ''), 'class_pane' => ($active_tab == 2 ? 'show active' : '') ],
+        [ 'label' => 'Mes adresses', 'class' => ($active_tab == 3 ? 'active' : ''), 'class_pane' => ($active_tab == 3 ? 'show active' : '') ],
       ];
     }
 
@@ -80,9 +81,10 @@ class AccountController extends Controller
   }
 
   /**
+   * 'app_account_remove_address'
    * @ParamConverter("address", options={"mapping": {"address_id": "id"}})
    */
-  public function removeAddress(Address $address, UserInterface $user, Request $request, EntityManagerInterface $em)
+  public function removeAddressAction(Address $address, UserInterface $user, Request $request, EntityManagerInterface $em)
   {
     $db_address = $this->repo['address']->findOneBy(['id' => $address->getId(), 'user' => $user]);
     if (empty($db_address)) {
@@ -92,6 +94,7 @@ class AccountController extends Controller
       $em->remove($db_address);
       $this->addFlash('success', 'Adresse supprimée');
     }
+    return $this->redirectToRoute('app_account', ['active_tab' => 3]);
   }
 
   /**
