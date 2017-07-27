@@ -77,19 +77,14 @@ class CartController extends Controller
     $db_product = $this->repo['product']->find($post_item->product_id);
     $item = new Item($db_product, $post_item->quantity);
 
+    dump($post_item);
+
     if (!$this->isCartable($item)) {
       return $this->json(false);
     }
 
-    if (empty ($cart = $session->get('cart'))) {
-      $vat = $this->repo['vat']->findByCountry('fr');
-      $cart = (new Cart())->setVat($vat)->addItem($item);
-    }
-    else {
-      $cart = $this->addOrReplaceCartItem($cart, $item);
-    }
-
-    return $this->json($this->serializer->serialize($item, 'json'));
+    $session->set('cart', $this->addOrReplaceCartItem($session->get('cart'), $item));
+    return $this->json(true);
   }
 
   /**
@@ -226,7 +221,7 @@ class CartController extends Controller
   private function addOrReplaceCartItem(Cart $cart, Item $new_item) : Cart
   {
     // Remove the item from the Cart if it does exist
-    if (!empty($cart_item = $this->findCartItem($cart, $new_item))) {
+    if (!empty($cart) AND !empty($cart_item = $this->findCartItem($cart, $new_item))) {
       $cart->removeItem($cart_item);
     }
     $cart->addItem($new_item)->updateTotal();

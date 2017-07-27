@@ -162,16 +162,19 @@ app.controller('familyCtrl', ['$scope', '$http', '$filter', function($scope, $ht
     if (product != null && quantity > 0) {
       page.add_in_progress = true;
       let url = page.CART_URL + 'ajouter-item';
-      let item = {
+      let data = {
         product_id : product.id,
         quantity : quantity,
       }
-      $http.post(url, item).then(function(response) {
+      $http.post(url, data).then(function(response) {
         page.add_in_progress = false;
-        let added_item = JSON.parse(response.data);
-        if (added_item) {
-          item.total = item.product.price * item.quantity;
-          page.item = item;
+        let add_ok = JSON.parse(response.data);
+        if (add_ok) {
+          page.item = {
+            product  : product,
+            quantity : quantity,
+            total    : product.price * quantity,
+          }
           $('#item-modal').modal('show');
         }
       });
