@@ -56,7 +56,11 @@
               <div class="card px-2">
                 <a href="{{ path('app_shop_family', {slug: family.slug}) }}">
                   <div class="image-container wrapper row no-gutters justify-content-center px-2">
+                    {% if family.visuels|length > 0 %}
+                    <img src="{{ vich_uploader_asset(family.visuels[0], 'imageFile') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}" class="round img-fluid">
+                    {% else %}
                     <img src="{{ asset('images/no_picture.png') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}" class="round img-fluid">
+                    {% endif %}
                   </div>
                   <h4 class="card-title row no-gutters justify-content-center px-2">{{ family.name | capitalize }} - {{ family.brand.name | upper }}</h4>
                 </a>
