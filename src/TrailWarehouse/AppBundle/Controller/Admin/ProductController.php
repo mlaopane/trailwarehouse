@@ -3,12 +3,13 @@
 namespace TrailWarehouse\AppBundle\Controller\Admin;
 
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as EasyAdminController;
+use TrailWarehouse\AppBundle\Entity\Product;
 
 class ProductController extends EasyAdminController
 {
-  public function createNewEntity($entity)
+  public function createNewEntity()
   {
-    $this->init($entity);
+    return $this->init(new Product());
   }
 
   public function preUpdateEntity($entity)
@@ -25,7 +26,7 @@ class ProductController extends EasyAdminController
     $entity->setImageName($family_colors[0]->getImageName());
     $entity->generateName();
     $entity->generateRef();
-    $em->persist($entity);
-    $em->flush();
+
+    return $entity;
   }
 }
