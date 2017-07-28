@@ -32,12 +32,12 @@
         <div class="image-container flex justify-content-center col-12 col-xl-6 mb-3">
           <div class="wrapper" images-loaded="page.imgLoadedEvents">
             <img id="image"
-              data-ng-src="{% verbatim %}{{ page.ASSET_URL + (page.product.imageName ? page.product.imageName : 'images/no_picture.png') }}{% endverbatim %}"
+              data-ng-src="{% verbatim %}{{ page.ASSET_URL + (page.product.imageName ? 'images/families/' + page.product.imageName : 'images/no_picture.png') }}{% endverbatim %}"
               alt="{% verbatim %}{{ page.product.image ? page.product.image.alt : 'illustration produit' }}{% endverbatim %}"
               title="{{ family.name }}">
           </div>
         </div>
-        <!-- Product # -->
+        <!-- Product Image # -->
 
         <!-- # Product Data -->
         <div class="col-12 col-xl-6 py-2 px-xl-2">

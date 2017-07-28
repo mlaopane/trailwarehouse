@@ -235,6 +235,7 @@ easy_admin :
 
         FamilyColor    :
             class : TrailWarehouse\AppBundle\Entity\FamilyColor
+            controller : TrailWarehouse\AppBundle\Controller\Admin\FamilyColorController
             label : 'Visuels'
             list :
                 fields :
