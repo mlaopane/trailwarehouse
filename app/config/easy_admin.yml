@@ -28,7 +28,7 @@ easy_admin :
             - label : "Détails"
               icon : th-list
               children :
-                  - { entity : 'Size', icon : 'image' }
+                  - { entity : 'Size', icon : 'text-height' }
                   - { entity : 'Color', icon : 'paint-brush' }
                   - { entity : 'FamilyColor', icon : 'image' }
             - label : "____________________"
@@ -42,7 +42,8 @@ easy_admin :
             - label : "Facturation"
               icon : money
               children :
-                  - { entity : 'Order', icon : 'tablet' }
+                  - { entity : 'Order', icon : 'cart' }
+                  - { entity : 'OrderProduct', icon : 'tablet' }
                   - { entity : 'Vat', icon : 'percent' }
                   - { entity : 'Promo', icon : 'barcode' }
             - label : "____________________"
@@ -338,7 +339,8 @@ easy_admin :
                     - { property : 'creationDate', label : "Date création" }
                     - { property : 'sendingDate', label : "Date d'envoi" }
                     - { property : 'deliveryDate', label : "Date de livraison" }
-                    - { property : 'total', label : "Total", format: '%.2f €' }
+                    - { property : 'vatValue', label : "TVA", format: '%.2f €' }
+                    - { property : 'baseTotal', label : "Total (HT)", format: '%.2f €' }
             show :
                 fields :
                     - id
@@ -347,7 +349,35 @@ easy_admin :
                     - { property : 'creationDate', label : "Date création" }
                     - { property : 'sendingDate', label : "Date d'envoi" }
                     - { property : 'deliveryDate', label : "Date de livraison" }
-                    - { property : 'total', label : "Total", format: '%.2f €' }
+                    - { property : 'vatValue', label : "TVA", format: '%.2f €' }
+                    - { property : 'baseTotal', label : "Total (HT)", format: '%.2f €' }
+                    - { property : 'finalTotal', label : "Total (TTC)", format: '%.2f €' }
+
+        OrderProduct :
+            class : TrailWarehouse\AppBundle\Entity\OrderProduct
+            label : 'Détails'
+            disabled_actions :
+                - 'edit'
+            list :
+                fields :
+                    - id
+                    - { property : 'user', label : 'Client' }
+                    - { property : 'creationDate', label : "Date création" }
+                    - { property : 'sendingDate', label : "Date d'envoi" }
+                    - { property : 'deliveryDate', label : "Date de livraison" }
+                    - { property : 'vatValue', label : "TVA", format: '%.2f €' }
+                    - { property : 'baseTotal', label : "Total (HT)", format: '%.2f €' }
+            show :
+                fields :
+                    - id
+                    - { property : 'user', label : 'Client' }
+                    - { property : 'coordinate', label : "Addrese de livraison" }
+                    - { property : 'creationDate', label : "Date création" }
+                    - { property : 'sendingDate', label : "Date d'envoi" }
+                    - { property : 'deliveryDate', label : "Date de livraison" }
+                    - { property : 'vatValue', label : "TVA", format: '%.2f €' }
+                    - { property : 'baseTotal', label : "Total (HT)", format: '%.2f €' }
+                    - { property : 'finalTotal', label : "Total (TTC)", format: '%.2f €' }
 
         Promo     :
             class : TrailWarehouse\AppBundle\Entity\Promo

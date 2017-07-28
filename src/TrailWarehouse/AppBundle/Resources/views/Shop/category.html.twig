@@ -32,7 +32,7 @@
 
     <!-- # Alert -->
     <div class="ness-block warning mb-3">
-      <span>Aucun produit disponible dans {{ active_category.name | capitalize }}</span>
+      <span>Aucune famille existante dans {{ active_category.name | capitalize }}</span>
     </div>
     <!-- Alert # -->
 
@@ -47,47 +47,48 @@
       </div>
       <!-- Category Name # -->
 
-      <div id="families" class="row no-gutters px-0 px-lg-2 px-xl-3 py-3">
+      <div id="families" class="px-0 px-lg-2 px-xl-3 py-3">
+      <!-- <div id="families" class="row no-gutters px-0 px-lg-2 px-xl-3 py-3"> -->
 
-        {% for family in families %}
-          {% if family.products|length > 0 %}
+        <!-- # Card group -->
+        <div class="card-group no-gutters">
+          {% for family in families %}
 
-            <!-- # Family -->
-            <div class="family col-12 col-md-6 col-lg-4 col-xl-3 p-2">
+            <!-- # Card -->
+            <div class="card image-container wrapper col-12 col-lg-4 mb-2">
 
-              <!-- # Card -->
-              <div class="card px-2">
-                <a href="{{ path('app_shop_family', {slug: family.slug}) }}">
+              <!-- # Visuel -->
+              {% if family.visuels|length == 0 %}
+                <img class="card-img-top" src="{{ asset('images/no_picture.png') }}" alt="{{ family.brand.name ~ ' - ' ~ family.name }}">
+              {% else %}
+                <img class="card-img-top" src="{{ vich_uploader_asset(family.visuels[0], 'imageFile') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}">
+              {% endif %}
+              <!-- Visuel # -->
 
-                  <!-- # Card Image Container -->
-                  <div class="card-img-top image-container wrapper px-2">
-
-                    {% if family.visuels|length > 0 %}
-                      <img src="{{ vich_uploader_asset(family.visuels[0], 'imageFile') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}" class="round img-fluid">
-                    {% else %}
-                      <img src="{{ asset('images/no_picture.png') }}" alt="{{ family.name ~ ' - ' ~ family.brand.name }}" class="round img-fluid">
-                    {% endif %}
-
-                  </div>
-                  <!-- Card Image Container # -->
-
-                  <!-- # Card tite -->
-                  <h4 class="font-4 card-title row no-gutters justify-content-center px-2">{{ family.name | capitalize }} - {{ family.brand.name | upper }}</h4>
-                  <!-- Card title # -->
-
-                </a>
+              <!-- # Card block -->
+              <div class="card-block">
+                <h4 class="card-title font-fira-sans-bold">{{ family.name }}</h4>
+                <h5 class="card-subtitle text-muted font-fira-sans-italic py-0 mb-2">{{ family.brand.name }}</h5>
+                {% if family.products|length == 0 %}
+                  <p class="card-text ness-block info"><span>Aucun produit disponible</span></p>
+                {% else %}
+                  <p class="card-text d-flex justify-content-end font-fira-sans-bold">{{ family.products[0].price|price }}</p>
+                {% endif %}
               </div>
-              <!-- Card # -->
+              <!-- Card block # -->
 
             </div>
-            <!-- Family # -->
+            <!-- Card # -->
 
-          {% endif %}
-        {% endfor %}
+          {% endfor %}
+        </div>
+        <!-- Card group # -->
 
       </div>
+      <!-- Families # -->
+
     </div>
-    <!-- Category Families # -->
+    <!-- Families Container # -->
 
   {% endif %}
   </main>
