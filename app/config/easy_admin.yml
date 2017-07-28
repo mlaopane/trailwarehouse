@@ -42,7 +42,7 @@ easy_admin :
             - label : "Facturation"
               icon : money
               children :
-                  - { entity : 'Order', icon : 'cart' }
+                  - { entity : 'Order', icon : 'opencart' }
                   - { entity : 'OrderProduct', icon : 'tablet' }
                   - { entity : 'Vat', icon : 'percent' }
                   - { entity : 'Promo', icon : 'barcode' }
@@ -355,7 +355,7 @@ easy_admin :
 
         OrderProduct :
             class : TrailWarehouse\AppBundle\Entity\OrderProduct
-            label : 'Détails'
+            label : 'Détails de commande'
             disabled_actions :
                 - 'edit'
             list :
