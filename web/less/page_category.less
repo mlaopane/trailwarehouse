@@ -9,15 +9,12 @@
   {
     background: @barely-white;
 
-    .family
+    .card
     {
-      display: flex;
-      justify-content: center;
+      transition: 0.15s;
 
-      .card
-      {
-        transition: 0.15s;
-
+      &.family {
+        cursor: pointer;
         &:hover
         {
           background: lighten(@blue, 42%);
@@ -25,15 +22,14 @@
           box-shadow: 0px 0px 3px 1px @blue;
           z-index: 1;
         }
-
-        .card-title
-        {
-          text-align: center;
-        }
       }
 
+      .card-title
+      {
+        text-align: center;
+      }
     }
-    
+
   }
   #category-name {
     @base-cat: lighten(@blue, 2%);
