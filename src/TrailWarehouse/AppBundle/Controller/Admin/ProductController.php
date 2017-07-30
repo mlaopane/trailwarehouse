@@ -7,9 +7,9 @@ use TrailWarehouse\AppBundle\Entity\Product;
 
 class ProductController extends EasyAdminController
 {
-  public function createNewEntity()
+  public function prePersistEntity($entity)
   {
-    return $this->init(new Product());
+    $this->init($entity);
   }
 
   public function preUpdateEntity($entity)
