@@ -12,7 +12,7 @@
         "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.0.0",
         "coresphere/console-bundle": "^0.5.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
@@ -37,6 +37,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "phpunit/phpunit": "^6.3",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
     },
