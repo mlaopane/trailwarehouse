@@ -3,6 +3,8 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use TrailWarehouse\AppBundle\Entity\Color;
 use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Size;
@@ -13,6 +15,10 @@ use TrailWarehouse\AppBundle\Entity\Image;
  *
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\ProductRepository")
+ * @UniqueEntity(
+ *  fields = {"family", "color", "size"},
+ *  message = "Ce produit existe déjà"
+ * )
  * @ORM\HasLifecycleCallbacks
  */
 class Product
@@ -99,6 +105,7 @@ class Product
      * Generate ref
      *
      * @ORM\PrePersist
+     * @ORM\PreUpdate
      * @return Product
      */
     public function generateRef()
@@ -142,6 +149,7 @@ class Product
 
         $this->setName($name);
       }
+
       return $this;
     }
 

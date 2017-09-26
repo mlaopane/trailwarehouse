@@ -3,6 +3,7 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use TrailWarehouse\AppBundle\Entity\Family;
 
 /**
@@ -11,6 +12,10 @@ use TrailWarehouse\AppBundle\Entity\Family;
  * @ORM\Table(name="review")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\ReviewRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(
+ *  fields = {"user", "family"},
+ *  message = "Vous avez déjà laissé feedback"
+ * )
  */
 class Review
 {

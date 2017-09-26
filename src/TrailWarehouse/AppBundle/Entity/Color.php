@@ -12,7 +12,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="color")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\ColorRepository")
- * @UniqueEntity("slug")
+ * @UniqueEntity(
+ *  fields = {"name", "value"},
+ *  message = "Cette couleur existe déjà"
+ * )
  */
 class Color
 {

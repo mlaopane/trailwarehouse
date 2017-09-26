@@ -3,8 +3,9 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Color;
 use TrailWarehouse\AppBundle\Entity\Image;
@@ -14,6 +15,10 @@ use TrailWarehouse\AppBundle\Entity\Image;
  *
  * @ORM\Table(name="`family_color`")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\FamilyColorRepository")
+ * @UniqueEntity(
+ *  fields = {"family", "color"},
+ *  message = "Cette Couleur existe déjà pour cette Famille"
+ * )
  * @Vich\Uploadable
  */
 class FamilyColor

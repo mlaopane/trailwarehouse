@@ -12,7 +12,10 @@ use TrailWarehouse\AppBundle\Entity\Category;
  *
  * @ORM\Table(name="size")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\SizeRepository")
- * @UniqueEntity("value")
+ * @UniqueEntity(
+ *  fields = {"slug"},
+ *  message = "Taille déjà existante",
+ * )
  */
 class Size
 {

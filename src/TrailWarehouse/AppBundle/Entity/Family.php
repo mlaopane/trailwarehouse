@@ -3,8 +3,9 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 use TrailWarehouse\AppBundle\Entity\Brand;
 use TrailWarehouse\AppBundle\Entity\Category;
 use TrailWarehouse\AppBundle\Entity\Product;
@@ -16,6 +17,10 @@ use TrailWarehouse\AppBundle\Entity\Image;
  *
  * @ORM\Table(name="family")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\FamilyRepository")
+ * @UniqueEntity(
+ *  fields = {"brand", "name"},
+ *  message = "Famille déjà existante pour cette Marque"
+ * )
  */
 class Family
 {
@@ -96,7 +101,7 @@ class Family
      */
     public function __toString()
     {
-      return $this->name . " (" . $this->brand->getName() . ")";
+      return "[" . $this->brand->getName() . "] " . $this->name;
     }
 
     /**

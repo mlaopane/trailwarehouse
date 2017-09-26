@@ -11,7 +11,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\CategoryRepository")
- * @UniqueEntity("name")
+ * @UniqueEntity(
+ *  fields = {"name"},
+ *  message = "Cette catégorie existe déjà"
+ * )
  */
 class Category
 {

@@ -17,7 +17,10 @@ use TrailWarehouse\AppBundle\Entity\Review;
 *
 * @ORM\Table(name="`user`")
 * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\UserRepository")
-* @UniqueEntity(fields={"email"}, message="Adresse électronique déjà utilisée")
+* @UniqueEntity(
+*  fields = {"email"},
+*  message = "Adresse électronique déjà utilisée"
+* )
 * @ORM\HasLifecycleCallbacks()
 */
 class User implements AdvancedUserInterface, \Serializable
@@ -138,8 +141,8 @@ class User implements AdvancedUserInterface, \Serializable
         $this->orders       = new ArrayCollection();
         $this->reviews      = new ArrayCollection();
         $this->creationDate = new \DateTime();
-        $this->isActive = true; // DELETE this ASA e-mail activation is working
-        $this->role = $role;
+        $this->isActive     = true; // Please delete this line ASA e-mail activation is working
+        $this->role         = $role;
     }
 
 

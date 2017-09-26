@@ -5,13 +5,19 @@ namespace TrailWarehouse\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Brand
  *
  * @ORM\Table(name="brand")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\BrandRepository")
+ * @UniqueEntity(
+ *  fields = {"name"},
+ *  message = "Cette marque existe déjà"
+ * )
  * @Vich\Uploadable
  */
 class Brand

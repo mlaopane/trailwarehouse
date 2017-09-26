@@ -4,12 +4,17 @@ namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Promo
  *
  * @ORM\Table(name="promo")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\PromoRepository")
+ * @UniqueEntity(
+ *  fields = {"code"},
+ *  message = "Code déjà utilisé"
+ * )
  */
 class Promo
 {
