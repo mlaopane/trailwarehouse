@@ -24,7 +24,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new TrailWarehouse\AppBundle\TrailWarehouseAppBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
         ];

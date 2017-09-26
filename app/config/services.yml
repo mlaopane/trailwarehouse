@@ -16,7 +16,7 @@ services :
     # this creates a service per class whose id is the fully-qualified class name
     TrailWarehouse\AppBundle\ :
         resource : '../../src/TrailWarehouse/AppBundle/*'
-        exclude  : '../../src/TrailWarehouse/AppBundle/{Entity,Repository,DataFixtures,Tests}'
+        exclude  : '../../src/TrailWarehouse/AppBundle/{Entity,Repository,DataFixtures,Tests,DQL}'
 
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
@@ -24,3 +24,7 @@ services :
         resource : '../../src/TrailWarehouse/AppBundle/Controller'
         public   : true
         tags     : ['controller.service_arguments']
+
+    TrailWarehouse\AppBundle\Services\ :
+        resource : '../../src/TrailWarehouse/AppBundle/Services'
+        public   : true

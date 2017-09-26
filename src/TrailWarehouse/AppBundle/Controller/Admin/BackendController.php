@@ -2,7 +2,7 @@
 
 namespace TrailWarehouse\AppBundle\Controller\Admin;
 
-use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as EasyAdminController;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as EasyAdminController;
 
 class BackendController extends EasyAdminController
 {

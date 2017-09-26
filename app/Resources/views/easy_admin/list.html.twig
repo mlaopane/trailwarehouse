@@ -136,10 +136,13 @@
                     {% for field, metadata in fields %}
                         {% set isSortingField = metadata.property == app.request.get('sortField') %}
                         {% set _column_label =  (metadata.label ?: field|humanize)|trans(_trans_parameters)  %}
-
-                        <td data-label="{{ _column_label }}" class="{{ isSortingField ? 'sorted' }} {{ metadata.dataType|lower }} {{ metadata.css_class }}">
-                            {{ easyadmin_render_field_for_list_view(_entity_config.name, item, metadata) }}
-                        </td>
+                            <td data-label="{{ _column_label }}" class="{{ isSortingField ? 'sorted' }} {{ metadata.dataType|lower }} {{ metadata.css_class }}">
+                              {% if _column_label == 'Echantillon' %}
+                                  <div class="echantillon" style="background:{{ easyadmin_render_field_for_list_view(_entity_config.name, item, metadata) }}"></div>
+                              {% else %}
+                                  {{ easyadmin_render_field_for_list_view(_entity_config.name, item, metadata) }}
+                              {% endif %}
+                            </td>
                     {% endfor %}
 
                     {% if _list_item_actions|length > 0 %}

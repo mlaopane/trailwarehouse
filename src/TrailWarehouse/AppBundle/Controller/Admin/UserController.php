@@ -2,7 +2,7 @@
 
 namespace TrailWarehouse\AppBundle\Controller\Admin;
 
-use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as EasyAdminController;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as EasyAdminController;
 use Doctrine\ORM\EntityManagerInterface;
 use TrailWarehouse\AppBundle\Entity\User;
 
@@ -15,8 +15,8 @@ class UserController extends EasyAdminController
     return new User($default_role);
   }
 
-  public function preUpdateEntity($entity)
+  public function preUpdateEntity($user)
   {
-    $entity->generateHash();
+    $user->generateHash();
   }
 }
