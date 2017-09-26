@@ -10,6 +10,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="role")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\RoleRepository")
+ * @UniqueEntity(
+ *  fields = {"name"},
+ *  message = "Ce Rôle existe déjà"
+ * )
  */
 class Role
 {
@@ -19,10 +23,6 @@ class Role
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @UniqueEntity(
-     *  fields = {"name"},
-     *  message = "Ce Rôle existe déjà"
-     * )
      */
     private $id;
 

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ProductController extends EasyAdminController
 {
-  private $repo;
+  private $repository;
 
   protected function initialize(Request $request)
   {

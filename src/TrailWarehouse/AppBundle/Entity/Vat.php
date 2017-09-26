@@ -10,6 +10,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="vat")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\VatRepository")
+ * @UniqueEntity(
+ *  fields = {"name"},
+ *  message = "Taux déjà existant pour ce pays"
+ * )
  */
 class Vat
 {
@@ -19,10 +23,6 @@ class Vat
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @UniqueEntity(
-     *  fields = {"name"},
-     *  message = "Taux déjà existant pour ce pays"
-     * )
      */
     private $id;
 
