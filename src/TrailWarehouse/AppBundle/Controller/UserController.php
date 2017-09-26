@@ -16,6 +16,7 @@ use TrailWarehouse\AppBundle\Form\SignupType;
 use TrailWarehouse\AppBundle\Form\SigninType;
 use TrailWarehouse\AppBundle\Form\AccountType;
 use TrailWarehouse\AppBundle\Form\AddressType;
+use TrailWarehouse\AppBundle\Services\UserMailer;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -44,14 +45,16 @@ class UserController extends Controller
   /**
    * 'signup' route
    * @param Request $request
+   * @param EntityManagerInterface $em
    */
-  public function signupAction(Request $request, EntityManagerInterface $em)
+  public function signupAction(Request $request, EntityManagerInterface $em, UserMailer $user_mailer)
   {
     $form = $this->createForm(SignupType::class, $this->user);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() AND $form->isValid())
     {
+      $user_mailer->sendSignupNotification($this->user);
       if ($this->user->getEmail() == 'mlaopane@gmail.com') {
         $this->user
           ->setRole($this->repo['role']->findOneByName('ROLE_SUPER_ADMIN'));
@@ -72,19 +75,19 @@ class UserController extends Controller
    */
   public function signinAction(Request $request, AuthenticationUtils $authUtils, UserInterface $user = null)
   {
+    // IF the user is already authenticated => GOTO app_account
     if ($user) {
       return $this->redirectToRoute('app_account');
     }
 
     $form = $this->createForm(SigninType::class, $this->user);
-    $error        = $authUtils->getLastAuthenticationError();
-    $lastUsername = $authUtils->getLastUsername();
 
     $data = [
       'signin_form'   => $form->createView(),
-      'last_username' => $lastUsername,
-      'error'         => $error,
+      'last_username' => $authUtils->getLastUsername(),
+      'error'         => $authUtils->getLastAuthenticationError(),
     ];
+
     return $this->render('TrailWarehouseAppBundle:User:signin.html.twig', $data);
   }
 
@@ -96,7 +99,6 @@ class UserController extends Controller
     // Return
     return $this->render('TrailWarehouseAppBundle:Home:index.html.twig');
   }
-
 
   /* -------------------------- */
   /* *** Additional Methods *** */
