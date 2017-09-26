@@ -1,0 +1,41 @@
+easy_admin :
+    entities :
+        User :
+            class      : TrailWarehouse\AppBundle\Entity\User
+            controller : TrailWarehouse\AppBundle\Controller\Admin\UserController
+            label      : 'Utilisateurs'
+            help       : 'Rôles disponibles : <em class="txt-secondary">ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN</em>'
+            list       :
+                fields :
+                    - id
+                    - { property : 'fullname', label : "Nom complet", type : 'string' }
+                    - { property : 'email', label : "E-mail", type : 'email' }
+                    - { property : 'role', label : 'Profil', type : 'association' }
+                    - { property : 'isActive', label : 'active', type : 'toggle' }
+            show       :
+                fields :
+                    - id
+                    - { property : 'firstname', label : "Prénom", type : 'string' }
+                    - { property : 'lastname', label : "Nom d'usage", type : 'string' }
+                    - { property : 'email', label : "E-mail", type : 'email' }
+                    - { property : 'password', label : "Mot de passe crypté", type : 'string' }
+                    - { property : 'role', label : 'Profil', type : 'association' }
+                    - { property : 'isActive', label : 'active', type : 'toggle' }
+            form  :
+                fields :
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Identité' }
+                    - { property : 'lastname', label : "Nom d'usage", type : 'text' }
+                    - { property : 'firstname', label : 'Prénom', type : 'text' }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Identifiants' }
+                    - { property : 'email', label : 'Email', type : 'email' }
+                    - { property : 'plainPassword', label : 'Mot de passe', type : 'password', type_options : { required : false } }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Autres informations' }
+                    - { property : 'role', label : 'Profil', type_options : { expanded : true } }
+                    - { type : 'divider' }
+                    - { property : 'isActive', label : 'Actif' }
+            edit  :
+                title : "Modification de l'utilisateur #%%entity_id%%"
+            new   :
+                title : "Création d'un nouvel utilisateur"

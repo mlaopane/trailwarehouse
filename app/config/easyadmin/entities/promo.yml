@@ -1,0 +1,35 @@
+easy_admin :
+    entities :
+        Promo     :
+            class : TrailWarehouse\AppBundle\Entity\Promo
+            label : 'Codes promo'
+            list :
+                fields :
+                    - id
+                    - { property : 'code', label : 'Code', type : 'string' }
+                    - { property : 'value', label : 'Valeur', type : 'float' }
+                    - { property : 'isNew', label : 'Nouveau', type : 'boolean' }
+                    - { property : 'isActive', label : 'Actif', type : 'boolean' }
+                    - { property : 'isExpired', label : 'Expiré', type : 'boolean' }
+                    - { property : 'start', label : 'Début', type : 'datetime' }
+                    - { property : 'end', label : 'Fin', type : 'datetime' }
+            show :
+                fields :
+                    - id
+                    - { property : 'code', label : 'Code' }
+                    - { property : 'value', label : 'Valeur' }
+                    - { property : 'isNew', label : 'Nouveau', type : boolean }
+                    - { property : 'isActive', label : 'Actif', type : boolean }
+                    - { property : 'isExpired', label : 'Expiré', type : boolean }
+                    - { property : 'start', label : 'Début' }
+                    - { property : 'end', label : 'Fin' }
+            form :
+                fields :
+                    - { property : 'code', label : 'Code' }
+                    - { property : 'value', label : 'Valeur' }
+                    - { property : 'start', label : 'Début', type : 'datetime' }
+                    - { property : 'end', label : 'Fin', type : 'datetime' }
+            edit :
+                title : "Modification du code promo #%%entity_id%%"
+            new  :
+                title : "Création d'un code promo"

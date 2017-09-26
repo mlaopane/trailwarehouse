@@ -1,0 +1,29 @@
+easy_admin :
+    entities :
+        Address      :
+            class : TrailWarehouse\AppBundle\Entity\Address
+            label : 'Addresses'
+            list :
+                fields :
+                    - id
+                    - { property : 'street', label : 'N°, Voie' }
+                    - { property : 'zipcode', label : 'Code postal' }
+                    - { property : 'city', label : 'Ville' }
+                    - { property : 'user', label : 'Utilisateur' }
+            show :
+                fields :
+                    - id
+                    - { property : 'street', label : 'N°, Voie' }
+                    - { property : 'zipcode', label : 'Code postal' }
+                    - { property : 'city', label : 'Ville' }
+                    - { property : 'user', label : 'Utilisateur' }
+            form :
+                fields :
+                    - { property : 'user', label : 'Utilisateur' }
+                    - { property : 'street', label : 'N°, Voie' }
+                    - { property : 'zipcode', label : 'Code postal' }
+                    - { property : 'city', label : 'Ville' }
+            edit :
+                title : "Modification de l'adresse #%%entity_id%%"
+            new :
+                title : "Création d'une adresse"

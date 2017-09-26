@@ -1,0 +1,25 @@
+easy_admin :
+    entities :
+        Family :
+            class : TrailWarehouse\AppBundle\Entity\Family
+            label : 'Familles'
+            list :
+                help : "Cliquer sur 'Voir/Modifier' pour visualiser/éditer la description d'une famille"
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom', type : 'string' }
+                    - { property : 'brand', label : 'Marque', type : 'association' }
+                    - { property : 'category', label : 'Catégorie', type : 'association' }
+                    - { property : 'products', label : 'Produits' }
+                    - { property : 'visuels', label : 'Visuels' }
+                    - { property : 'reviews', label : 'Notes' }
+            form :
+                fields :
+                    - { property : 'brand', label : 'Marque' }
+                    - { property : 'category', label : 'Catégorie' }
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'description', label : 'Description' }
+            edit :
+                title : "Modification de la famille %%entity_id%%"
+            new  :
+                title : "Création d'une famille"

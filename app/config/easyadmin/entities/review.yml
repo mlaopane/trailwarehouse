@@ -1,0 +1,20 @@
+easy_admin :
+    entities :
+        Review    :
+            class : TrailWarehouse\AppBundle\Entity\Review
+            label : 'Avis'
+            help : 'Cliquez sur "Voir" pour accéder au commentaire associé'
+            disabled_actions : ['edit', 'new']
+            list :
+                fields :
+                    - id
+                    - { property : 'family', label : "Famille" }
+                    - { property : 'rating', label : "Note", format : "%u / 5" }
+                    - { property : 'creationDate', label : "Date du commentaire" }
+            show :
+                fields :
+                    - id
+                    - { property : 'family', label : "Famille" }
+                    - { property : 'rating', label : "Note", format : "%u / 5" }
+                    - { property : 'commentary', label : "Commentaire" }
+                    - { property : 'creationDate', label : "Date du commentaire" }

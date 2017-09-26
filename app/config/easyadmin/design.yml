@@ -1,0 +1,49 @@
+easy_admin:
+    design :
+        brand_color : 'hsl(165, 65%%, 40%%)'
+        color_scheme : 'dark'
+        form_theme :
+            - 'easy_admin/form/bootstrap_3_layout.html.twig'
+        assets :
+            favicon :
+                path : 'images/feet.png'
+                mime_type : 'image/png'
+            css :
+                - 'css/admin.css'
+        menu :
+            - label : ""
+            - { entity : 'Brand', icon : 'bold' }
+            - label : "____________________"
+            - { entity : 'Category', icon : 'th-large' }
+            - label : "____________________"
+            - label : "Production"
+              icon : gears
+              children :
+                  - { entity : 'Family', icon : 'book' }
+                  - { entity : 'Product', icon : 'leaf' }
+            - label : "____________________"
+            - label : "Détails"
+              icon : th-list
+              children :
+                  - { entity : 'Size', icon : 'text-height' }
+                  - { entity : 'Color', icon : 'paint-brush' }
+                  - { entity : 'FamilyColor', icon : 'image' }
+            - label : "____________________"
+            - label : "Membres"
+              icon : "users"
+              children :
+                  - { entity : 'User', icon : 'user' }
+                  - { entity : 'Role', icon : 'shield' }
+                  - { entity : 'Address', icon : 'address-card' }
+            - label : "____________________"
+            - label : "Facturation"
+              icon : money
+              children :
+                  - { entity : 'Order', icon : 'opencart' }
+                  - { entity : 'OrderProduct', icon : 'tablet' }
+                  - { entity : 'Vat', icon : 'percent' }
+                  - { entity : 'Promo', icon : 'barcode' }
+            - label : "____________________"
+            - { entity : 'Review', icon : 'sticky-note' }
+            - label : "____________________"
+            - { label : 'Retour au site', icon : 'hand-o-left', route : 'app_home' }

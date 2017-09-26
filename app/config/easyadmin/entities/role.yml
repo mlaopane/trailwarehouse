@@ -1,0 +1,12 @@
+easy_admin :
+    entities :
+        Role :
+            class : TrailWarehouse\AppBundle\Entity\Role
+            label : 'Rôles'
+            form :
+                fields :
+                    - { property : 'name', label : 'Nom' }
+            edit :
+                title : 'Modification du rôle #%%entity_id%%'
+            new :
+                title : "Création d'un rôle"

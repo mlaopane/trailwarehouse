@@ -1,0 +1,23 @@
+easy_admin :
+    entities :
+        Vat       :
+            class : TrailWarehouse\AppBundle\Entity\Vat
+            label : 'TVA'
+            list :
+                fields :
+                    - id
+                    - { property : 'country', label : 'Pays', type : 'string' }
+                    - { property : 'value', label : 'Valeur', format : '%.2f' }
+            show :
+                fields :
+                    - id
+                    - { property : 'country', label : 'Pays', type : 'string' }
+                    - { property : 'value', label : 'Valeur', format : '%.2f' }
+            form :
+                fields :
+                    - { property : 'country', label : 'Pays', type : 'string' }
+                    - { property : 'value', label : 'Valeur', type : 'percent' }
+            edit :
+                title : "Modification de la TVA #%%entity_id%%"
+            new  :
+                title : "Création d'une TVA"

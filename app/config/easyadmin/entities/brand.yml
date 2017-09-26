@@ -1,0 +1,24 @@
+easy_admin :
+    entities :
+        Brand :
+            class : TrailWarehouse\AppBundle\Entity\Brand
+            label : 'Marques'
+            list :
+                fields :
+                  - id
+                  - { property : 'name', label : 'Nom', type : 'string' }
+                  - { property : 'imageName', label : 'Logo', type : 'image', base_path : '%vich_uploader.mappings.brand_image%' }
+            show :
+                fields :
+                  - id
+                  - { property : 'name', label : 'Nom', type : 'string' }
+                  - { property : 'imageName', label : 'Logo', type : 'image', base_path : '%vich_uploader.mappings.brand_image%' }
+                  - { property : 'slug', label : 'Slug', type : 'string' }
+            form :
+                fields :
+                  - { property : 'name', label : 'Nom' }
+                  - { property : 'imageFile', label : 'Logo (max : 2Mo)', type : 'vich_image', base_path : '%vich_uploader.mappings.brand_image%' }
+            edit :
+                title : "Modification de la marque #%%entity_id%%"
+            new  :
+                title : "Création d'une marque"

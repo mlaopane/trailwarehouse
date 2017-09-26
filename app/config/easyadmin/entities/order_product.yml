@@ -1,0 +1,27 @@
+easy_admin :
+    entities :
+        OrderProduct :
+            class : TrailWarehouse\AppBundle\Entity\OrderProduct
+            label : 'Détails de commande'
+            disabled_actions :
+                - 'edit'
+            list :
+                fields :
+                    - id
+                    - { property : 'user', label : 'Client' }
+                    - { property : 'creationDate', label : "Date création" }
+                    - { property : 'sendingDate', label : "Date d'envoi" }
+                    - { property : 'deliveryDate', label : "Date de livraison" }
+                    - { property : 'vatValue', label : "TVA", format: '%.2f €' }
+                    - { property : 'baseTotal', label : "Total (HT)", format: '%.2f €' }
+            show :
+                fields :
+                    - id
+                    - { property : 'user', label : 'Client' }
+                    - { property : 'coordinate', label : "Addrese de livraison" }
+                    - { property : 'creationDate', label : "Date création" }
+                    - { property : 'sendingDate', label : "Date d'envoi" }
+                    - { property : 'deliveryDate', label : "Date de livraison" }
+                    - { property : 'vatValue', label : "TVA", format: '%.2f €' }
+                    - { property : 'baseTotal', label : "Total (HT)", format: '%.2f €' }
+                    - { property : 'finalTotal', label : "Total (TTC)", format: '%.2f €' }

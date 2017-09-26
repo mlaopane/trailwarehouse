@@ -1,0 +1,19 @@
+easy_admin :
+    entities :
+        Color     :
+            class : TrailWarehouse\AppBundle\Entity\Color
+            label : 'Couleurs'
+            list :
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'value', label : 'Valeur' }
+                    - { property : 'echantillon', label : 'Echantillon' }
+            form :
+                fields :
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'value', label : 'Valeur' }
+            edit :
+                title : "Modification de la couleur #%%entity_id%%"
+            new  :
+                title : "Création d'une couleur"

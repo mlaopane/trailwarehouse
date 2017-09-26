@@ -1,0 +1,36 @@
+easy_admin:
+    site_name : '<span>TW&nbsp;Admin</span>'
+
+    list :
+        title : '%%entity_label%%'
+        max_results : 20
+        actions :
+            - { name : 'new', icon : 'plus', label : 'Ajouter' }
+            - { name : 'show', icon : 'eye', label : '' }
+            - { name : 'edit', icon : 'pencil', label : '' }
+            - { name : 'delete', icon : 'trash', label : '' }
+            - { name : 'search', icon : 'search', label : 'Rechercher' }
+
+    show :
+        title : '%%entity_label%% (#%%entity_id%%)'
+        max_results : 20
+        actions :
+            - { name : 'edit', icon : 'pencil', css_class : 'btn btn-primary', label : 'Modifier' }
+            - { name : 'delete', icon : 'trash', css_class : 'btn btn-danger', label : 'Supprimer' }
+            - { name : 'list', icon : 'hand-o-left', css_class : 'btn btn-blue', label : 'Retour' }
+
+    edit :
+        title   : 'Modification : ID #%%entity_id%%'
+        actions :
+            - { name : 'delete', icon : 'trash', css_class : 'btn btn-danger', label : 'Supprimer' }
+            - { name : 'show', icon : 'eye', css_class : 'btn btn-blue', label : 'Voir' }
+            - { name : 'new', icon : 'plus', css_class : 'btn btn-blue', label : 'Nouveau' }
+            - { name : 'list', icon : 'hand-o-left', css_class : 'btn btn-blue', label : 'Retour' }
+
+    new :
+        title   : "Création d'un nouvel élément"
+        actions :
+            - { name : 'list', icon : 'hand-o-left', css_class : 'btn btn-blue', label : 'Retour' }
+
+    formats :
+        datetime : 'Y, M, j @ H:i:s'

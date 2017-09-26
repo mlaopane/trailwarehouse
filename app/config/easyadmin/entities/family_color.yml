@@ -1,0 +1,27 @@
+easy_admin :
+    entities :
+        FamilyColor :
+            class : TrailWarehouse\AppBundle\Entity\FamilyColor
+            label : 'Visuels'
+            list :
+                fields :
+                    - id
+                    - { property : 'family', label : 'Famille' }
+                    - { property : 'color', label : 'Couleur' }
+                    - { property : 'imageName', label : 'Visuel (max : 2Mo)', type : 'image', base_path : '%vich_uploader.mappings.family_color_image%' }
+            show :
+                title : "Visuel #%%entity_id%%"
+                fields :
+                    - id
+                    - { property : 'family', label : 'Famille' }
+                    - { property : 'color', label : 'Couleur' }
+                    - { property : 'imageName', label : 'Visuel (max : 2Mo)', type : 'image', base_path : '%vich_uploader.mappings.family_color_image%' }
+            form :
+                fields :
+                  - { property : 'family', label : 'Famille' }
+                  - { property : 'color', label : 'Couleur' }
+                  - { property : 'imageFile', label : 'Visuel (max : 2Mo)', type : 'vich_image', base_path : '%vich_uploader.mappings.family_color_image%' }
+            edit :
+                title : "Modification du visuel #%%entity_id%%"
+            new  :
+                title : "Création d'un visuel"

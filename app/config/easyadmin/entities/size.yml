@@ -1,0 +1,25 @@
+easy_admin :
+    entities :
+        Size      :
+            class : TrailWarehouse\AppBundle\Entity\Size
+            label : 'Tailles'
+            list :
+                fields :
+                    - id
+                    - { property : 'value', label : 'Valeur', type : 'string' }
+                    - { property : 'unit', label : 'Unité', type : 'string' }
+            show :
+                fields :
+                    - id
+                    - { property : 'value', label : 'Valeur' }
+                    - { property : 'unit', label : 'Unité' }
+                    - { property : 'unitShortcut', label : 'Raccourci unité' }
+            form :
+                fields :
+                    - { property : 'value', label : 'Valeur' }
+                    - { property : 'unit', label : 'Unité' }
+                    - { property : 'unitShortcut', label : 'Raccourci unité' }
+            edit :
+                title : "Modification de la taille #%%entity_id%%"
+            new  :
+                title : "Création d'une taille"

@@ -1,0 +1,21 @@
+easy_admin :
+    entities :
+        Category :
+            class : TrailWarehouse\AppBundle\Entity\Category
+            label : 'Catégories'
+            list :
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom' }
+            show :
+                fields :
+                    - id
+                    - { property : 'name', label : 'Nom' }
+                    - { property : 'slug', label : 'Slug' }
+            form :
+                fields :
+                    - { property : 'name', label : 'Nom' }
+            edit :
+                title : "Modification de la catégorie #%%entity_id%%"
+            new  :
+                title : "Création d'une catégorie"
