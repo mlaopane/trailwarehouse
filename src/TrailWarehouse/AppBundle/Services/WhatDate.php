@@ -6,7 +6,7 @@ namespace TrailWarehouse\AppBundle\Services;
  * @author Mickaël LAO-PANE
  *
  * It's all about Today !
- * You can fetch : Date, Year, Month, Day, WeekDay (and even the DateTimeImmutable for Paris)
+ * You can fetch : Date, Year, Month, Day, WeekDay (and even the DateTime for Paris)
  */
 class WhatDate
 {
@@ -14,7 +14,7 @@ class WhatDate
     /**
      * provided date
      *
-     * @var \DateTimeImmutable
+     * @var \DateTime
      */
     protected $dateTime;
 
@@ -36,7 +36,7 @@ class WhatDate
      * Initialize base properties
      *
      */
-    public function __construct(\DateTimeImmutable $dateTime = NULL, array $weekDays = [])
+    public function __construct(\DateTime $dateTime = NULL, array $weekDays = [])
     {
         $this->initDateTime($dateTime);
         $this->initWeekDays($weekDays);
@@ -45,7 +45,7 @@ class WhatDate
     protected function initDateTime($dateTime)
     {
         if (NULL === $dateTime) {
-            $this->dateTime = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+            $this->dateTime = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
         }
         else {
             $this->dateTime = $dateTime;
@@ -131,7 +131,7 @@ class WhatDate
     /**
      * Get the value of provided date
      *
-     * @return \DateTimeImmutable
+     * @return \DateTime
      */
     public function getDateTime()
     {
@@ -141,13 +141,13 @@ class WhatDate
     /**
      * Set the value of provided date
      *
-     * @param \DateTimeImmutable dateTime
+     * @param \DateTime dateTime
      *
      * @return self
      */
-    public function setDateTime(\DateTimeImmutable $dateTime)
+    public function setDateTime(\DateTime $dateTime)
     {
-        $this->dateTime = new \DateTimeImmutable($time, new \DateTimeZone('Europe/Paris'));
+        $this->dateTime = $dateTime;
 
         return $this;
     }

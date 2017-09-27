@@ -49,7 +49,7 @@ class WhatDateTest extends TestCase
     public function getDateTime()
     {
         $dateTime = $this->whatDate->getDateTime();
-        $this->assertInstanceOf(\DateTimeImmutable::class, $dateTime);
+        $this->assertInstanceOf(\DateTime::class, $dateTime);
 
         return $dateTime;
     }
