@@ -3,11 +3,10 @@
 namespace TrailWarehouse\AppBundle\Services;
 
 /**
- *
- *
- *
  * @author Mickaël LAO-PANE
  *
+ * It's all about Today !
+ * You can fetch : Date, Year, Month, Day, WeekDay (and even the DateTimeImmutable for Paris)
  */
 class WhatDate
 {
@@ -27,27 +26,48 @@ class WhatDate
     protected $dateFormat = 'Y-m-d';
 
     /**
-     * Week days ENG->FR
+     * Week days
      *
      * @var array
      */
-    protected $weekDays = [
-        'Monday' => 'Lundi',
-        'Tuesday' => 'Mardi',
-        'Wednesday' => 'Mercredi',
-        'Thursday' => 'Jeudi',
-        'Friday' => 'Vendredi',
-        'Saturday' => 'Samedi',
-        'Sunday' => 'Dimanche',
-    ];
+    protected $weekDays;
 
     /**
      * Initialize base properties
      *
      */
-    public function __construct(string $time = 'now')
+    public function __construct(\DateTimeImmutable $dateTime = NULL, array $weekDays = [])
     {
-        $this->dateTime = new \DateTimeImmutable($time, new \DateTimeZone('Europe/Paris'));
+        $this->initDateTime($dateTime);
+        $this->initWeekDays($weekDays);
+    }
+
+    protected function initDateTime($dateTime)
+    {
+        if (NULL === $dateTime) {
+            $this->dateTime = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+        }
+        else {
+            $this->dateTime = $dateTime;
+        }
+    }
+
+    protected function initWeekDays($weekDays)
+    {
+        if (empty($weekDays)) {
+            $this->weekDays = [
+                'Monday'    => 'Lundi',
+                'Tuesday'   => 'Mardi',
+                'Wednesday' => 'Mercredi',
+                'Thursday'  => 'Jeudi',
+                'Friday'    => 'Vendredi',
+                'Saturday'  => 'Samedi',
+                'Sunday'    => 'Dimanche',
+            ];
+        }
+        else {
+            $this->weekDays = $weekDays;
+        }
     }
 
     public function __toString()

@@ -7,6 +7,10 @@ use PHPUnit\Framework\TestCase;
 
 /**
  *
+ * You have to replace the values to match with today's date
+ *
+ * @author Mickaël LAO-PANE
+ *
  */
 class WhatDateTest extends TestCase
 {
@@ -18,16 +22,25 @@ class WhatDateTest extends TestCase
      */
     private $whatDate;
 
-    private $today;
-
     /**
      * Fetch the WhatDate service
-     *
      */
     public function __construct()
     {
         parent::__construct();
+
         $this->whatDate = new WhatDate();
+        $this->initData('2017-09-27', 'Mercredi');
+    }
+
+    protected function initData(string $date, string $weekDay): void
+    {
+        $this->date = $date;
+        $exploded_date = explode('-', $date);
+        $this->year = $exploded_date[0];
+        $this->month = $exploded_date[1];
+        $this->day = $exploded_date[2];
+        $this->weekDay = $weekDay;
     }
 
     /**
@@ -47,7 +60,7 @@ class WhatDateTest extends TestCase
     public function getDate()
     {
         $date = $this->whatDate->getDate();
-        $this->assertEquals('2017-09-26', $date);
+        $this->assertEquals($this->date, $date, "Check your calendar for the actual date");
 
         return $date;
     }
@@ -57,7 +70,7 @@ class WhatDateTest extends TestCase
     public function getYear()
     {
         $year = $this->whatDate->getYear();
-        $this->assertEquals('2017', $year);
+        $this->assertEquals($this->year, $year, "Check your calendar for the actual year (4 digits)");
         return $year;
     }
 
@@ -67,7 +80,7 @@ class WhatDateTest extends TestCase
     public function getMonth()
     {
         $month = $this->whatDate->getMonth();
-        $this->assertEquals('09', $month);
+        $this->assertEquals($this->month, $month, "Check your calendar for the actual month (2 digits)");
 
         return $month;
     }
@@ -78,7 +91,7 @@ class WhatDateTest extends TestCase
     public function getDay()
     {
         $day = $this->whatDate->getDay();
-        $this->assertEquals('27', $day);
+        $this->assertEquals($this->day, $day, "Check your calendar for the actual day (2 digits)");
 
         return $day;
     }
@@ -89,7 +102,7 @@ class WhatDateTest extends TestCase
     public function getWeekDay()
     {
         $weekday = $this->whatDate->getWeekDay();
-        $this->assertEquals('Mardi', $weekday, 'Jour de la semaine en français');
+        $this->assertEquals($this->weekDay, $weekday, "Check your calendar for the actual french week day");
 
         return $weekday;
     }
