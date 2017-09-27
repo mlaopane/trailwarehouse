@@ -92,6 +92,13 @@ class Product
     private $stock = 0;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_stock_update", type="integer")
+     */
+    private $lastStockUpdate;
+
+    /**
      * toString
      */
     public function __toString()
@@ -355,4 +362,29 @@ class Product
     {
         return $this->imageName;
     }
+
+    /**
+     * Get the value of Last Stock Update
+     *
+     * @return \DateTime
+     */
+    public function getLastStockUpdate()
+    {
+        return $this->lastStockUpdate;
+    }
+
+    /**
+     * Set the value of Last Stock Update
+     *
+     * @param \DateTime lastStockUpdate
+     *
+     * @return self
+     */
+    public function setLastStockUpdate(\DateTime $lastStockUpdate)
+    {
+        $this->lastStockUpdate = $lastStockUpdate;
+
+        return $this;
+    }
+
 }
