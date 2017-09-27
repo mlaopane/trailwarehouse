@@ -45,6 +45,8 @@ class RestockerTest extends WebTestCase
         $this->container = static::createClient()->getContainer();
         $this->em = $this->container->get('doctrine.orm.entity_manager');
         $this->repo = $this->em->getRepository('TrailWarehouseAppBundle:Product');
+        $this->restocker = new Restocker($this->em);
+
         $this->initData();
     }
 
@@ -53,10 +55,8 @@ class RestockerTest extends WebTestCase
      */
     public function initData()
     {
-        $this->restocker = new Restocker($this->em);
-        $this->old_stock_1 = $this->repo->find(1)->getStock();
-        $this->old_stock_2 = $this->repo->find(2)->getStock();
-        $this->maxStock = 40;
+        $this->old_stock = $this->repo->find(1)->getStock();
+        $this->maxStock = 50;
     }
 
     /**
@@ -67,12 +67,12 @@ class RestockerTest extends WebTestCase
     public function restock ()
     {
         $this->restocker->restock($this->repo->findAll(), $this->maxStock);
-        $new_stock_1 = $this->repo->find(1)->getStock();
-        $new_stock_2 = $this->repo->find(2)->getStock();
+        $new_stock = $this->repo->find(1)->getStock();
 
-        $this->assertLessThan($new_stock_1, $this->old_stock_1, "The old stock should be lesser than the new stock");
-        $this->assertLessThan($new_stock_2, $this->old_stock_2, "The old stock should be lesser than the new stock");
-        $this->assertEquals($this->maxStock, $new_stock_1, "The new stock should be 87");
-        $this->assertEquals($this->maxStock, $new_stock_2, "The new stock should be 87");
+        $this->assertEquals($new_stock, $this->maxStock, "The new stock should be " . $this->maxStock);
+
+        if ($this->old_stock !== $new_stock) {
+            $this->assertLessThan($new_stock, $this->old_stock, "The old stock should be lesser than the new stock");
+        }
     }
 }
