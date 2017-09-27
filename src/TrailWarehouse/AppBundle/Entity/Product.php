@@ -94,7 +94,7 @@ class Product
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_stock_update", type="integer")
+     * @ORM\Column(name="last_stock_update", type="datetime")
      */
     private $lastStockUpdate;
 
@@ -158,6 +158,19 @@ class Product
       }
 
       return $this;
+    }
+
+    /**
+     * Generate name
+     *
+     * @ORM\PreUpdate
+     * @return Product
+     */
+    public function updateLastStockUpdate()
+    {
+        $this->lastStockUpdate = new \DateTime();
+
+        return $this;
     }
 
     /* ----- Getters & Setters ----- */
