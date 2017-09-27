@@ -47,14 +47,13 @@ class UserController extends Controller
    * @param Request $request
    * @param EntityManagerInterface $em
    */
-  public function signupAction(Request $request, EntityManagerInterface $em, UserMailer $user_mailer)
+  public function signupAction(Request $request, EntityManagerInterface $em)
   {
     $form = $this->createForm(SignupType::class, $this->user);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() AND $form->isValid())
     {
-      $user_mailer->sendSignupNotification($this->user);
       if ($this->user->getEmail() == 'mlaopane@gmail.com') {
         $this->user
           ->setRole($this->repo['role']->findOneByName('ROLE_SUPER_ADMIN'));
