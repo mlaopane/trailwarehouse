@@ -1,6 +1,6 @@
 <?php
 
-namespace TrailWarehouse\AppBundle\Services;
+namespace TrailWarehouse\AppBundle\Service;
 
 /**
  * @author Mickaël LAO-PANE

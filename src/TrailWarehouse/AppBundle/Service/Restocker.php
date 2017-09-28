@@ -1,8 +1,8 @@
 <?php
 
-namespace TrailWarehouse\AppBundle\Services;
+namespace TrailWarehouse\AppBundle\Service;
 
-use TrailWarehouse\AppBundle\Services\WhatDate;
+use TrailWarehouse\AppBundle\Service\WhatDate;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**

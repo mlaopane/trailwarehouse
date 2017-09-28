@@ -25,6 +25,12 @@ services :
         public   : true
         tags     : ['controller.service_arguments']
 
-    TrailWarehouse\AppBundle\Services\ :
-        resource : '../../src/TrailWarehouse/AppBundle/Services'
+    TrailWarehouse\AppBundle\Service\ :
+        resource : '../../src/TrailWarehouse/AppBundle/Service'
         public   : true
+
+    trail_warehouse.restocker_listener:
+        class: TrailWarehouse\AppBundle\EventListener\RestockerListener
+        # class: TrailWarehouse\AppBundle\EventListener\RestockerListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
