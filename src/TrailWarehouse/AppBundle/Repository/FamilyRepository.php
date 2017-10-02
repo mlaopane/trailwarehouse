@@ -6,6 +6,7 @@ use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Category;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
 
 /**
@@ -88,7 +89,8 @@ class FamilyRepository extends CommonRepository
   }
 
   /* ----- Private Methods ----- */
-  protected function getBuilder() {
+  protected function getBuilder(): QueryBuilder
+  {
     return $this->createQueryBuilder($this->entity_name)
       ->addSelect('category')
       ->addSelect('brand')

@@ -4,6 +4,7 @@ namespace TrailWarehouse\AppBundle\Repository;
 use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Product;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\DBAL\Connection;
 
 /**
@@ -155,8 +156,8 @@ class ProductRepository extends CommonRepository
       ->select('size.id, size.value, size.unitShortcut')
       ->from($this->_entityName, 'product')
       ->innerJoin('product.size', 'size')
-      ->where('product.'. $field .' = :'. $field)
-      ->setParameter($field, $value)
+      ->where('product.'. $field .' = :value')
+      ->setParameter('value', $value)
       ->groupBy('product.size')
       ->getQuery()
       ->getArrayResult()
@@ -178,7 +179,8 @@ class ProductRepository extends CommonRepository
    *
    * @return QueryBuilder (with joined entities)
    */
-  protected function getBuilder() {
+  protected function getBuilder(): QueryBuilder
+  {
     return $this->createQueryBuilder('product')
       ->addSelect('family, color, size, category, brand')
       ->innerJoin('product.family', 'family')
