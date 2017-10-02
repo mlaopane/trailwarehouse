@@ -4,7 +4,8 @@ services:
         autoconfigure : true
         public        : false
 
-    trail_warehouse.restocker_listener:
-        class: TrailWarehouse\AppBundle\EventListener\RestockerListener
+    trail_warehouse.restock_listener:
+        class: TrailWarehouse\AppBundle\EventListener\RestockListener
         tags:
             - { name: kernel.event_listener, event: kernel.request }
+        public: true

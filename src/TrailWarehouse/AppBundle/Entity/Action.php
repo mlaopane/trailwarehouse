@@ -3,12 +3,14 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use TrailWarehouse\AppBundle\Service\WhatDate;
 
 /**
  * Action
  *
  * @ORM\Table(name="action")
  * @ORM\Entity(repositoryClass="TrailWarehouse\AppBundle\Repository\ActionRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Action
 {
@@ -35,10 +37,9 @@ class Action
      */
     private $date;
 
-    public function __construct(string $name = NULL, ?\DateTime $date = NULL)
+    public function __construct(string $name = 'default')
     {
         $this->name = $name;
-        $this->date = $date;
     }
 
     /**
@@ -97,5 +98,16 @@ class Action
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     *
+     * @ORM\PrePersist
+     */
+    public function generateDate()
+    {
+        if (NULL === $this->date) {
+            $this->date = (new WhatDate())->getDateTime();
+        }
     }
 }
