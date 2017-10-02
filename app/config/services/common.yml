@@ -1,7 +1,7 @@
 parameters :
-    #parameter_name: value
+    base_dir : '%kernel.project_dir%'
 
-services :
+services:
     # default configuration for services in *this* file
     _defaults :
         # automatically injects dependencies in your services
@@ -15,22 +15,16 @@ services :
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     TrailWarehouse\AppBundle\ :
-        resource : '../../src/TrailWarehouse/AppBundle/*'
-        exclude  : '../../src/TrailWarehouse/AppBundle/{Entity,Repository,DataFixtures,Tests,DQL}'
+        resource : '%base_dir%/src/TrailWarehouse/AppBundle/*'
+        exclude  : '%base_dir%/src/TrailWarehouse/AppBundle/{Entity,Repository,DataFixtures,Tests,DQL}'
 
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
     TrailWarehouse\AppBundle\Controller\ :
-        resource : '../../src/TrailWarehouse/AppBundle/Controller'
+        resource : '%base_dir%/src/TrailWarehouse/AppBundle/Controller'
         public   : true
         tags     : ['controller.service_arguments']
 
     TrailWarehouse\AppBundle\Service\ :
-        resource : '../../src/TrailWarehouse/AppBundle/Service'
+        resource : '%base_dir%/src/TrailWarehouse/AppBundle/Service'
         public   : true
-
-    trail_warehouse.restocker_listener:
-        class: TrailWarehouse\AppBundle\EventListener\RestockerListener
-        # class: TrailWarehouse\AppBundle\EventListener\RestockerListener
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

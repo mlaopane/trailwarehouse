@@ -1,0 +1,10 @@
+knp_snappy:
+    
+    image:
+        enabled:    true
+        binary:     "\"%wkhtmltoimage%\""
+        options:
+            no-outline: true
+            page-size: LETTER
+            # Recommended to set UTF-8 as default encoding :)
+            encoding: UTF-8

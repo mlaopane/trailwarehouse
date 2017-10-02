@@ -1,19 +1,18 @@
-imports:
-    - { resource: parameters.yml }
-    - { resource: security.yml }
-    - { resource: services.yml }
-    - { resource: vich_uploader.yml }
-    - { resource: knp_snappy.yml }
-    - { resource: easyadmin/ }
 
-
-# Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters :
-    locale : en
+    locale     : en
     base_dir   : '%kernel.project_dir%'
     web_dir    : '%base_dir%/web'
     images_dir : '%web_dir%/images'
+
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services/ }
+    - { resource: knp_snappy/ }
+    - { resource: vich_uploader/ }
+    - { resource: easy_admin/ }
 
 framework:
     #esi: ~

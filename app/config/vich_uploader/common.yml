@@ -1,0 +1,7 @@
+parameters :
+    vich_uploader.uri_prefix : /images
+    vich_uploader.mappings.brand_image : '%vich_uploader.uri_prefix%/brands'
+    vich_uploader.mappings.family_color_image : '%vich_uploader.uri_prefix%/families'
+
+vich_uploader :
+    db_driver : orm

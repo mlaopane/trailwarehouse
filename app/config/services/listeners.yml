@@ -1,0 +1,10 @@
+services:
+    _defaults :
+        autowire      : true
+        autoconfigure : true
+        public        : false
+
+    trail_warehouse.restocker_listener:
+        class: TrailWarehouse\AppBundle\EventListener\RestockerListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
