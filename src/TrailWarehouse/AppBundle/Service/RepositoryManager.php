@@ -17,7 +17,7 @@ class RepositoryManager
     protected $em;
 
     /**
-     *
+     * @param EntityManagerInterface em
      */
     public function __construct(EntityManagerInterface $em)
     {

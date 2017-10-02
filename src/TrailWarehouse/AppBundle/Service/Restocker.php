@@ -3,6 +3,7 @@
 namespace TrailWarehouse\AppBundle\Service;
 
 use TrailWarehouse\AppBundle\Service\WhatDate;
+use TrailWarehouse\AppBundle\Entity\Action;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -32,16 +33,15 @@ class Restocker
      */
     public function restock(array $products, $stock = 20): Restocker
     {
-        $actual_month = $this->whatDate->getMonth();
-        $product_whatDate = new WhatDate();
-
         foreach ($products as $product) {
-            $product_whatDate->setDateTime($product->getLastStockUpdate());
-            if ((int) $product_whatDate->getMonth() < (int) $actual_month) {
-                $product->setStock($stock);
-                $this->em->persist($product);
-            }
+            $this->em->persist($product->setStock($stock));
         }
+
+        $this->em->persist(
+            (new Action('restock'))
+                ->setDate((new WhatDate(new \DateTime()))->getDateTime())
+        );
+
         $this->em->flush();
 
         return $this;
