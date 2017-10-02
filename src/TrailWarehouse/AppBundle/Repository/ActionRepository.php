@@ -1,6 +1,7 @@
 <?php
 
 namespace TrailWarehouse\AppBundle\Repository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * ActionRepository
@@ -8,29 +9,35 @@ namespace TrailWarehouse\AppBundle\Repository;
  */
 class ActionRepository extends CommonRepository
 {
-    public function findNewestActionByName(string $name)
+    /**
+     * Find the most recent action specified
+     */
+    public function findNewestActionByName(string $name): ?Action
     {
         return $this->getBuilderByNameAndSort($name, 'DESC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
-    public function findOldestActionByName()
+    /**
+     * Find the oldest action specified
+     */
+    public function findOldestActionByName(string $name): ?Action
     {
         return $this->getBuilderByNameAndSort($name, 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
-    private function getBuilderByNameAndSort(string $name, string $sort = 'ASC')
+    /**
+     * Add name & sort filters to the Query Builder
+     */
+    private function getBuilderByNameAndSort(string $name, string $sort = 'ASC'): QueryBuilder
     {
         return $this->getBuilder()
             ->where($this->getEntityName().'.name = :name')
             ->setParameter('name', $name, 'string')
             ->orderBy($this->getEntityName().'.date', $sort)
-            ->setMaxResults(1)
-        ;
+            ->setMaxResults(1);
     }
 }
