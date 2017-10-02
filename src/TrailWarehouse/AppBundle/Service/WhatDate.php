@@ -33,6 +33,13 @@ class WhatDate implements \ArrayAccess
     protected $weekDays;
 
     /**
+     * For the ArrayAccess methods
+     *
+     * @var array
+     */
+    protected $container;
+
+    /**
      * Initialize base properties
      *
      */
