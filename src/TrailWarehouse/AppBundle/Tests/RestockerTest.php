@@ -4,7 +4,7 @@ namespace TrailWarehouse\AppBundle\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use TrailWarehouse\AppBundle\Services\Restocker;
+use TrailWarehouse\AppBundle\Service\Restocker;
 
 /**
  *

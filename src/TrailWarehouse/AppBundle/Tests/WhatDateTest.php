@@ -2,7 +2,7 @@
 
 namespace TrailWarehouse\AppBundle\Tests;
 
-use TrailWarehouse\AppBundle\Services\WhatDate;
+use TrailWarehouse\AppBundle\Service\WhatDate;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,9 +30,18 @@ class WhatDateTest extends TestCase
         parent::__construct();
 
         $this->whatDate = new WhatDate();
-        $this->initData('2017-09-27', 'Mercredi');
+
+        /* Replace the following arguments with today's values */
+        $this->initData('2017-09-28', 'Jeudi');
     }
 
+    /**
+     *
+     *
+     * @param string date
+     * @param string weekDay
+     *
+     */
     protected function initData(string $date, string $weekDay): void
     {
         $this->date = $date;
