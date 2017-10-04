@@ -1,6 +1,7 @@
 <?php
 
 namespace TrailWarehouse\AppBundle\Repository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * OrderProductRepository
@@ -10,7 +11,7 @@ namespace TrailWarehouse\AppBundle\Repository;
  */
 class OrderProductRepository extends CommonRepository
 {
-  protected function getBuilder()
+  protected function getBuilder(): QueryBuilder
   {
     return $this->createQueryBuilder($this->entity_name)
       ->addSelect('product')

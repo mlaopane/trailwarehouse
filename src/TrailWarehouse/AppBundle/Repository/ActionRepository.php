@@ -2,6 +2,7 @@
 
 namespace TrailWarehouse\AppBundle\Repository;
 use Doctrine\ORM\QueryBuilder;
+use TrailWarehouse\AppBundle\Entity\Action;
 
 /**
  * ActionRepository

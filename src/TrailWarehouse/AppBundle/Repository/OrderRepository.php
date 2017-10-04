@@ -2,6 +2,7 @@
 
 namespace TrailWarehouse\AppBundle\Repository;
 use TrailWarehouse\AppBundle\Repository\CommonRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * OrderRepository
@@ -11,11 +12,11 @@ use TrailWarehouse\AppBundle\Repository\CommonRepository;
  */
 class OrderRepository extends CommonRepository
 {
-  protected function getBuilder()
+  protected function getBuilder(): QueryBuilder
   {
-    return $this->createQueryBuilder('tw_order')
-      ->innerJoin('tw_order.user', 'user')
-      ->leftJoin('tw_order.address', 'address')
+    return $this->createQueryBuilder($this->getEntityName())
+      ->innerJoin($this->getEntityName().'.user', 'user')
+      ->leftJoin($this->getEntityName().'.address', 'address')
     ;
   }
 }
