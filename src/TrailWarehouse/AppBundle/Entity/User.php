@@ -201,13 +201,6 @@ class User implements AdvancedUserInterface, \Serializable
 
     /* ---------- Callbacks ---------- */
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateHash()
-    {
-      $this->password = password_hash($this->plainPassword, PASSWORD_BCRYPT);
-    }
 
 
     /* ---------- Other Methods ---------- */

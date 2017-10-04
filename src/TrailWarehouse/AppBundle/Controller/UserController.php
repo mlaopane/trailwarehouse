@@ -4,103 +4,143 @@ namespace TrailWarehouse\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use TrailWarehouse\AppBundle\Entity\User;
-use TrailWarehouse\AppBundle\Entity\Cart;
-use TrailWarehouse\AppBundle\Entity\Address;
-use TrailWarehouse\AppBundle\Form\SignupType;
-use TrailWarehouse\AppBundle\Form\SigninType;
-use TrailWarehouse\AppBundle\Form\AccountType;
-use TrailWarehouse\AppBundle\Form\AddressType;
-use TrailWarehouse\AppBundle\Services\UserMailer;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface as TknStorage;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken as Tkn;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface as PW_Encoder;
+use Symfony\Component\Form\Form;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\{EntityRepository, EntityManagerInterface};
+use TrailWarehouse\AppBundle\Entity\{User, Cart, Address};
+use TrailWarehouse\AppBundle\Form\{SignupType, SigninType, AccountType, AddressType};
+use TrailWarehouse\AppBundle\Service\RepositoryManager;
 
 class UserController extends Controller
 {
-  /* --------------------- */
-  /* *** Initilization *** */
-  /* --------------------- */
+    /* ---------------------- */
+    /* *** Initialization *** */
+    /* ---------------------- */
 
-  protected $user;
-  protected $repo;
+    /**
+     * @var User
+     */
+    protected $user;
 
-  public function __construct(EntityManagerInterface $em)
-  {
-    $this->repo = [
-      'user'  => $em->getRepository('TrailWarehouseAppBundle:User'),
-      'role'  => $em->getRepository('TrailWarehouseAppBundle:Role'),
-    ];
-    $this->user = new User($this->repo['role']->findOneByName('ROLE_USER'));
-  }
+    /**
+     * @var EntityRepository
+     */
+    protected $repo;
 
-  /* -------------- */
-  /* *** Routes *** */
-  /* -------------- */
+    /**
+     * @var EntityManagerInterface
+     */
+    protected $em;
 
-  /**
-   * 'signup' route
-   * @param Request $request
-   * @param EntityManagerInterface $em
-   */
-  public function signupAction(Request $request, EntityManagerInterface $em)
-  {
-    $form = $this->createForm(SignupType::class, $this->user);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() AND $form->isValid())
+    public function __construct(EntityManagerInterface $em, RepositoryManager $rm)
     {
-      if ($this->user->getEmail() == 'mlaopane@gmail.com') {
-        $this->user
-          ->setRole($this->repo['role']->findOneByName('ROLE_SUPER_ADMIN'));
-      }
-      $em->persist($this->user);
-      $em->flush();
-      return $this->redirectToRoute('app_home');
-    }
-    // Display the form to sign up
-    $data = [
-      'signup_form' => $form->createView(),
-    ];
-    return $this->render('TrailWarehouseAppBundle:User:signup.html.twig', $data);
-  }
-
-  /**
-   * 'signin' route
-   */
-  public function signinAction(Request $request, AuthenticationUtils $authUtils, UserInterface $user = null)
-  {
-    // IF the user is already authenticated => GOTO app_account
-    if ($user) {
-      return $this->redirectToRoute('app_account');
+        $this->em = $em;
+        $this->repo = [
+            'user' => $rm->get('User'),
+            'role' => $rm->get('Role'),
+        ];
+        $this->user = new User($this->repo['role']->findOneByName('ROLE_USER'));
     }
 
-    $form = $this->createForm(SigninType::class, $this->user);
+    /* -------------- */
+    /* *** Routes *** */
+    /* -------------- */
 
-    $data = [
-      'signin_form'   => $form->createView(),
-      'last_username' => $authUtils->getLastUsername(),
-      'error'         => $authUtils->getLastAuthenticationError(),
-    ];
+    /**
+    * 'signup' route
+    * @param Request $request
+    * @param EntityManagerInterface $em
+    */
+    public function signupAction(Request $request, SessionInterface $session, TknStorage $tokenStorage, PW_Encoder $passwordEncoder)
+    {
+        $form = $this->createForm(SignupType::class, $this->user);
+        $form->handleRequest($request);
 
-    return $this->render('TrailWarehouseAppBundle:User:signin.html.twig', $data);
-  }
+        if ($form->isSubmitted() and $form->isValid()) {
+            $this->registerUser($passwordEncoder);
+            $this->autoLoginUser($tokenStorage, $session);
+            return $this->redirectToRoute('app_home');
+        }
 
-  /**
-   * 'signout' route
-   */
-  public function signoutAction(Request $request)
-  {
-    // Return
-    return $this->render('TrailWarehouseAppBundle:Home:index.html.twig');
-  }
+        $data = [
+            'signup_form' => $form->createView(),
+        ];
 
-  /* -------------------------- */
-  /* *** Additional Methods *** */
-  /* -------------------------- */
+        return $this->render('TrailWarehouseAppBundle:User:signup.html.twig', $data);
+    }
+
+    /**
+     * 'signin' route
+     */
+    public function signinAction(AuthenticationUtils $authUtils, UserInterface $user = null)
+    {
+        // IF the user is already authenticated => GOTO app_account
+        if ($user) {
+            return $this->redirectToRoute('app_account');
+        }
+
+        $form = $this->createForm(SigninType::class, $this->user);
+
+        $data = [
+            'signin_form'   => $form->createView(),
+            'last_username' => $authUtils->getLastUsername(),
+            'error'         => $authUtils->getLastAuthenticationError(),
+        ];
+
+        return $this->render('TrailWarehouseAppBundle:User:signin.html.twig', $data);
+    }
+
+    /**
+     * 'signout' route
+     */
+    public function signoutAction(Request $request)
+    {
+        // Return
+        return $this->render('TrailWarehouseAppBundle:Home:index.html.twig');
+    }
+
+    /* -------------------------- */
+    /* *** Additional Methods *** */
+    /* -------------------------- */
+
+    /**
+     * Register the User into the database
+     */
+    private function registerUser(PW_Encoder $passwordEncoder): void
+    {
+        if ($this->user->getEmail() == 'mlaopane@gmail.com') {
+            $this->user->setRole($this->repo['role']->findOneByName('ROLE_SUPER_ADMIN'));
+        }
+        $this->user->setPassword(
+            $passwordEncoder->encodePassword(
+                $this->user,
+                $this->user->getPlainPassword()
+            )
+        );
+        $this->em->persist($this->user);
+        $this->em->flush();
+    }
+
+    /**
+     * Log the user in automatically after registering
+     */
+    private function autoLoginUser(TknStorage $tokenStorage, SessionInterface $session): void
+    {
+        $token = new Tkn(
+            $this->user,
+            $this->user->getPassword(),
+            'main',
+            $this->user->getRoles()
+        );
+        $tokenStorage->setToken($token);
+        $session->set('_security_main', serialize($token));
+    }
 
 }
