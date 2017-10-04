@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use TrailWarehouse\AppBundle\Entity\User;
 
 class SigninType extends AbstractType
 {
@@ -35,7 +36,7 @@ class SigninType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'TrailWarehouse\AppBundle\Entity\User'
+            'data_class' => User::class
         ));
     }
 
