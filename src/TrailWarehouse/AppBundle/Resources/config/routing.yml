@@ -2,8 +2,15 @@
 
 app_signup :
     path:     /inscription
+    methods: 'GET'
     defaults:
         _controller: TrailWarehouseAppBundle:User:signup
+
+app_signup_post :
+    path:     /inscription
+    methods: 'POST'
+    defaults:
+        _controller: TrailWarehouseAppBundle:User:signupProcess
 
 app_signin :
     path:     /connexion

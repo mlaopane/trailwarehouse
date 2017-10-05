@@ -39,6 +39,7 @@ class UserController extends Controller
      */
     protected $em;
 
+
     public function __construct(EntityManagerInterface $em, RepositoryManager $rm)
     {
         $this->em = $em;
@@ -54,26 +55,34 @@ class UserController extends Controller
     /* -------------- */
 
     /**
-    * 'signup' route
-    * @param Request $request
-    * @param EntityManagerInterface $em
-    */
-    public function signupAction(Request $request, SessionInterface $session, TknStorage $tokenStorage, PW_Encoder $passwordEncoder)
+     * 'signup' route
+     * @param Request request
+     */
+    public function signupAction(Request $request)
+    {
+        $form = $this->createForm(SignupType::class, $this->user);
+
+        return $this->renderForm('signup', $form);
+    }
+
+    /**
+     * @param Request request
+     * @param SessionInterface session
+     * @param TokenStorageInterface tokenStorage
+     * @param UserPasswordEncoderInterface passwordEncoder
+     */
+    public function signupProcessAction(Request $request, SessionInterface $session, TknStorage $tokenStorage, PW_Encoder $passwordEncoder)
     {
         $form = $this->createForm(SignupType::class, $this->user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() and $form->isValid()) {
+        if ($form->isValid()) {
             $this->registerUser($passwordEncoder);
             $this->autoLoginUser($tokenStorage, $session);
             return $this->redirectToRoute('app_home');
         }
 
-        $data = [
-            'signup_form' => $form->createView(),
-        ];
-
-        return $this->render('TrailWarehouseAppBundle:User:signup.html.twig', $data);
+        return $this->renderForm('signup', $form);
     }
 
     /**
@@ -141,6 +150,14 @@ class UserController extends Controller
         );
         $tokenStorage->setToken($token);
         $session->set('_security_main', serialize($token));
+    }
+
+    private function renderForm(string $formName, Form $form)
+    {
+        return $this->render(
+            'TrailWarehouseAppBundle:User:'.$formName.'.html.twig',
+            [$formName.'_form' => $form->createView()]
+        );
     }
 
 }
