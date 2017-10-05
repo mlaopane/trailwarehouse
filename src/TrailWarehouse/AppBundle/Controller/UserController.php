@@ -56,6 +56,7 @@ class UserController extends Controller
 
     /**
      * 'signup' route
+     *
      * @param Request request
      */
     public function signupAction(Request $request)
@@ -66,6 +67,8 @@ class UserController extends Controller
     }
 
     /**
+     * 'signupProcess' route
+     *
      * @param Request request
      * @param SessionInterface session
      * @param TokenStorageInterface tokenStorage
@@ -82,7 +85,13 @@ class UserController extends Controller
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->renderForm('signup', $form);
+        $errors = $form->getErrors(true, true);
+
+        return $this->render('TrailWarehouseAppBundle:User:signup.html.twig', [
+            'signup_form' => $form->createView(),
+            'errors' => $errors
+        ]);
+        // return $this->renderForm('signup', $form);
     }
 
     /**

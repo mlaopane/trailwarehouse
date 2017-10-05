@@ -2,9 +2,8 @@
 
 namespace TrailWarehouse\AppBundle\Service;
 
-use TrailWarehouse\AppBundle\Service\WhatDate;
+use TrailWarehouse\AppBundle\Entity\{WhatDate};
 use TrailWarehouse\AppBundle\Service\ActionManager;
-use TrailWarehouse\AppBundle\Entity\Action;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -37,7 +36,7 @@ class Restocker
         foreach ($products as $product) {
             $this->em->persist($product->setStock($stock));
         }
-        
+
         $this->em->flush();
 
         return $this;

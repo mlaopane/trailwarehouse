@@ -1,6 +1,7 @@
 <?php
 
 namespace TrailWarehouse\AppBundle\Service;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 

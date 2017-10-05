@@ -3,7 +3,7 @@
 namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use TrailWarehouse\AppBundle\Service\WhatDate;
+use TrailWarehouse\AppBundle\Entity\WhatDate;
 
 /**
  * Action

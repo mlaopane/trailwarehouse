@@ -3,10 +3,6 @@ services:
 #        class: TrailWarehouse\AppBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
 
-    trail_warehouse.what_date:
-        alias: TrailWarehouse/AppBundle/Service/WhatDate
-        public: true
-
     trail_warehouse.restocker:
         alias: TrailWarehouse/AppBundle/Service/Restocker
         public: true

@@ -3,10 +3,8 @@
 namespace TrailWarehouse\AppBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use TrailWarehouse\AppBundle\Service\WhatDate;
-use TrailWarehouse\AppBundle\Service\ActionManager;
-use TrailWarehouse\AppBundle\Service\RepositoryManager;
-use TrailWarehouse\AppBundle\Entity\Action;
+use TrailWarehouse\AppBundle\Service\{ActionManager, RepositoryManager};
+use TrailWarehouse\AppBundle\Entity\{Action, WhatDate};
 
 /**
  *
@@ -19,26 +17,14 @@ class ActionManager
     private $em;
 
     /**
-     * @var RepositoryManager
-     */
-    private $rm;
-
-    /**
-     * @var WhatDate
-     */
-    private $whatDate;
-
-    /**
      * @var ArrayCollection
      */
     private $actions;
 
 
-    public function __construct(EntityManagerInterface $em, WhatDate $whatDate, RepositoryManager $rm)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->rm = $rm;
-        $this->whatDate = $whatDate;
         $this->actions = new ArrayCollection();
     }
 

@@ -541,4 +541,22 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->firstname . " " . $this->lastname;
     }
+
+    /**
+     * @var \DateTime
+     */
+    private $birthDate;
+
+
+    public function getBirthDate()
+    {
+        return $this->birthDate;
+    }
+
+    public function setBirthDate(\DateTime $birthDate)
+    {
+        $this->birthDate = $birthDate;
+
+        return $this;
+    }
 }

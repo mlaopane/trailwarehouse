@@ -7,6 +7,16 @@
   {{ parent() }} : Inscription
 {% endblock %}
 
+{% block name %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
 
 {% block page_main %}
   <main id="page-signup" class="px-7">
@@ -28,6 +38,9 @@
 
           <!-- # Form errors -->
           {% form_theme signup_form with ['form/form_errors.html.twig'] %}
+          {% for error in errors %}
+            {{ error.message }}
+          {% endfor %}
           {{ form_errors(signup_form) }}
           <!-- Form errors # -->
 
@@ -36,7 +49,7 @@
 
             <!-- # E-mail -->
             <div class="form-group mb-4">
-              {{ form_label(signup_form.email, 'E-mail*') }}
+              {{ form_label(signup_form.email) }}
               <div class="input-group">
                 <div class="input-group-addon">@</div>
                 {{ form_widget(signup_form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail'}}) }}

@@ -2,8 +2,8 @@
 
 namespace TrailWarehouse\AppBundle\EventListener;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use TrailWarehouse\AppBundle\Service\{WhatDate, Restocker, RepositoryManager};
-use TrailWarehouse\AppBundle\Entity\Action;
+use TrailWarehouse\AppBundle\Service\{Restocker, RepositoryManager};
+use TrailWarehouse\AppBundle\Entity\{Action, WhatDate};
 use TrailWarehouse\AppBundle\Service\ActionManager;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -20,7 +20,7 @@ class RestockListener
     /**
      * @var ActioManager
      */
-    protected $actionM;
+    protected $am;
 
     /**
      * @var array
@@ -28,12 +28,14 @@ class RestockListener
     protected $repo;
 
     /**
-     *
+     * @param Restocker restocker
+     * @param RepositoryManager rm
+     * @param ActionManager am
      */
-    public function __construct(Restocker $restocker, RepositoryManager $rm, ActionManager $actionM)
+    public function __construct(Restocker $restocker, RepositoryManager $rm, ActionManager $am)
     {
         $this->restocker = $restocker;
-        $this->actionM = $actionM;
+        $this->am = $am;
         $this->repo = [
             'action' => $rm->get('Action'),
             'product' => $rm->get('Product'),
@@ -55,7 +57,7 @@ class RestockListener
 
         if ($this->restockNeedsUpdate($lastRestock)) {
             $this->restocker->restock($this->repo['product']->findAll(), 30);
-            $this->actionM->add('restock')->register();
+            $this->am->add('restock')->register();
         }
     }
 
