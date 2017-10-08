@@ -1,36 +1,22 @@
 <?php
 namespace TrailWarehouse\AppBundle\Twig;
 
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 class TWExtension extends \Twig_Extension
 {
+    protected $container;
+    protected $twig;
 
-  public function getFunctions() {
-    return [
-        new \Twig_SimpleFunction('ucwords', 'ucwords'),
-    ];
-  }
+    public function __construct(ContainerInterface $container) {
+        $this->container = $container;
+        $this->twig = $container->get('twig');
+    }
 
-  public function getFilters()
-  {
-    return [
-        new \Twig_SimpleFilter('ucwords', 'ucwords'),
-        new \Twig_SimpleFilter('slug', [$this, 'slugFilter']),
-        new \Twig_SimpleFilter('price', [$this, 'priceFilter']),
-    ];
-  }
-
-  public function slugFilter($str, $search = [ " ", "'", "_", "." ], $replace = "-")
-  {
-    return mb_strtolower(str_replace($search, $replace, (string) $str), 'UTF-8');
-  }
-
-  public function priceFilter($price)
-  {
-    return "€ " . number_format($price, 2);
-  }
-
-  public function getName()
-  {
-    return 'tw_extension';
-  }
+    protected function renderForm(string $templateName, array $data)
+    {
+        return $this->twig->render("form/{$templateName}.html.twig", $data);
+    }
 }
