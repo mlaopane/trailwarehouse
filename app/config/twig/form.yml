@@ -1,0 +1,6 @@
+# Twig Configuration
+twig:
+    form_themes:
+        - 'form/form_start.html.twig'
+        - 'form/form_end.html.twig'
+        - 'form/form_errors.html.twig'

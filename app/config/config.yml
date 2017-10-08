@@ -13,6 +13,7 @@ imports:
     - { resource: knp_snappy/ }
     - { resource: vich_uploader/ }
     - { resource: easy_admin/ }
+    - { resource: twig/ }
 
 framework:
     #esi: ~
@@ -38,11 +39,6 @@ framework:
     assets: ~
     php_errors:
         log: true
-
-# Twig Configuration
-twig:
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
 
 # Doctrine Configuration
 doctrine:
