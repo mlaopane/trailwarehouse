@@ -1,0 +1,7 @@
+{%- block form_end -%}
+        {%- if not render_rest is defined or render_rest -%}
+            {{ form_rest(form) }}
+        {%- endif -%}
+        </form>
+    </div>
+{%- endblock form_end -%}
