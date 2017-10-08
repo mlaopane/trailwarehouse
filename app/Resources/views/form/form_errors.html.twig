@@ -1,13 +1,9 @@
 {% block form_errors %}
   {% spaceless %}
     {% if errors|length > 0 %}
-    <div class="ness-block failure mb-3 mx-auto">
-      <ul>
         {% for error in errors %}
-        <li>{{ error.message }}</li>
+        <p class="form-text text-muted text-danger justify-self-end">{{ error.message }}</p>
         {% endfor %}
-      </ul>
-    </div>
     {% endif %}
   {% endspaceless %}
 {% endblock form_errors %}
