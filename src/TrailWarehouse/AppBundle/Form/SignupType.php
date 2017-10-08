@@ -24,13 +24,43 @@ class SignupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          ->add('lastname', TextType::class, ['label' => "Nom d'usage*"])
-          ->add('firstname', TextType::class, ['label' => 'Prénom*'])
-          ->add('email', EmailType::class, ['label' => 'E-mail*'])
+          ->add('lastname', TextType::class, [
+              'label' => "Nom de famille*",
+              'attr' => [
+                  'class' => 'form-control',
+                  'placeholder' => 'Nom de famille',
+              ]
+          ])
+          ->add('firstname', TextType::class, [
+              'label' => 'Prénom*',
+              'attr' => [
+                  'class' => 'form-control',
+                  'placeholder' => 'Prénom',
+              ]
+          ])
+          ->add('email', EmailType::class, [
+              'label' => 'E-mail*',
+              'attr' => [
+                  'class' => 'form-control',
+                  'placeholder' => 'E-mail',
+              ]
+          ])
           ->add('plainPassword', RepeatedType::class, [
             'type'            => PasswordType::class,
-            'first_options'   => ['label' => 'Mot de passe*'],
-            'second_options'  => ['label' => 'Confirmation du mot de passe*'],
+            'first_options'   => [
+                'label' => 'Mot de passe*',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Mot de passe',
+                ]
+            ],
+            'second_options'  => [
+                'label' => 'Confirmation du mot de passe*',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Mot de passe',
+                ]
+            ],
             'invalid_message' => 'Les mots de passe ne correspondent pas',
             'error_bubbling'  => true,
           ])
@@ -38,7 +68,12 @@ class SignupType extends AbstractType
             'mapped'      => false,
             'constraints' => new IsTrue(),
           ])
-          ->add('send', SubmitType::class, ['label' => "Valider l'inscription"])
+          ->add('send', SubmitType::class, [
+              'label' => "Valider l'inscription",
+              'attr' => [
+                'class' => 'btn btn-confirm w-100'
+              ],
+          ])
         ;
     }
 

@@ -21,9 +21,6 @@
 {% block page_main %}
   <main id="page-signup" class="px-7">
 
-    <!-- # Form Container -->
-    <div class="form-container mx-auto mb-5 two-col">
-
       <!-- # Signup Form -->
       {{ form_start(signup_form) }}
 
@@ -37,11 +34,7 @@
           <!-- Form title # -->
 
           <!-- # Form errors -->
-          {% form_theme signup_form with ['form/form_errors.html.twig'] %}
-          {% for error in errors %}
-            {{ error.message }}
-          {% endfor %}
-          {{ form_errors(signup_form) }}
+          {{ showErrors(form) }}
           <!-- Form errors # -->
 
           <!-- # Col -->
@@ -50,33 +43,24 @@
             <!-- # E-mail -->
             <div class="form-group mb-4">
               {{ form_label(signup_form.email) }}
-              <div class="input-group">
-                <div class="input-group-addon">@</div>
-                {{ form_widget(signup_form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail'}}) }}
-              </div>
-              <p class="form-text text-muted justify-self-end">E-mail valide</p>
+              {{ form_addon('@', signup_form.email) }}
+              <p class="form-text text-muted">E-mail valide</p>
             </div>
             <!-- E-mail # -->
 
             <!-- # Password -->
             <div class="form-group mb-4">
               {{ form_label(signup_form.plainPassword.first, 'Mot de passe*') }}
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                {{ form_widget(signup_form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
-              </div>
-              <p class="form-text text-muted justify-self-end">Minimum 6 caractères</p>
+              {{ form_addon(glyphicon('lock'), signup_form.plainPassword.first) }}
+              <p class="form-text text-muted">Minimum 6 caractères</p>
             </div>
             <!-- Password # -->
 
             <!-- # Password Confirmation -->
             <div class="form-group mb-4">
               {{ form_label(signup_form.plainPassword.second, 'Confirmation Mot de passe*') }}
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                {{ form_widget(signup_form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
-              </div>
-              <p class="form-text text-muted justify-self-end">Identique au mot de passe</p>
+              {{ form_addon(glyphicon('lock'), signup_form.plainPassword.second) }}
+              <p class="form-text text-muted">Identique au mot de passe</p>
             </div>
             <!-- Password Confirmation # -->
 
@@ -89,20 +73,14 @@
             <!-- # Lastname -->
             <div class="form-group mb-4">
               {{ form_label(signup_form.lastname) }}
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                {{ form_widget(signup_form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
-              </div>
+              {{ form_addon(glyphicon('user'), signup_form.lastname) }}
             </div>
             <!-- Lastname # -->
 
             <!-- # Firstname -->
             <div class="form-group mb-4">
               {{ form_label(signup_form.firstname) }}
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                {{ form_widget(signup_form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
-              </div>
+              {{ form_addon(glyphicon('user'), signup_form.firstname) }}
             </div>
             <!-- Firstname # -->
 
@@ -112,6 +90,7 @@
         </div>
         <!-- Row # -->
 
+        <!-- # Row -->
         <div class="row">
 
           <div class="col-12 d-flex justify-content-center justify-content-sm-end align-items-center mb-3">
@@ -121,11 +100,12 @@
 
           <!-- # Submit -->
           <div class="col-12 d-flex justify-content-center justify-content-sm-end">
-            {{ form_widget(signup_form.send, {'attr': {'class':'btn btn-confirm w-100'}}) }}
+            {{ form_widget(signup_form.send) }}
           </div>
           <!-- Submit # -->
 
         </div>
+        <!-- Row # -->
 
         <!-- # Rest -->
         {{ form_rest(signup_form) }}
