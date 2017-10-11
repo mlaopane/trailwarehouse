@@ -21,6 +21,8 @@
 {% block page_main %}
   <main id="page-signup" class="px-7">
 
+    <div class="form-container mx-auto mb-5 two-col">
+
       <!-- # Signup Form -->
       {{ form_start(signup_form) }}
 
@@ -33,10 +35,6 @@
           </div>
           <!-- Form title # -->
 
-          <!-- # Form errors -->
-          {{ showErrors(form) }}
-          <!-- Form errors # -->
-
           <!-- # Col -->
           <div class="col-12 col-lg-6">
 
@@ -44,7 +42,7 @@
             <div class="form-group mb-4">
               {{ form_label(signup_form.email) }}
               {{ form_addon('@', signup_form.email) }}
-              <p class="form-text text-muted">E-mail valide</p>
+              {{ form_errors(signup_form.email) }}
             </div>
             <!-- E-mail # -->
 
@@ -52,7 +50,7 @@
             <div class="form-group mb-4">
               {{ form_label(signup_form.plainPassword.first, 'Mot de passe*') }}
               {{ form_addon(glyphicon('lock'), signup_form.plainPassword.first) }}
-              <p class="form-text text-muted">Minimum 6 caractères</p>
+              {{ form_errors(signup_form.plainPassword.first) }}
             </div>
             <!-- Password # -->
 
@@ -60,7 +58,6 @@
             <div class="form-group mb-4">
               {{ form_label(signup_form.plainPassword.second, 'Confirmation Mot de passe*') }}
               {{ form_addon(glyphicon('lock'), signup_form.plainPassword.second) }}
-              <p class="form-text text-muted">Identique au mot de passe</p>
             </div>
             <!-- Password Confirmation # -->
 
@@ -74,6 +71,7 @@
             <div class="form-group mb-4">
               {{ form_label(signup_form.lastname) }}
               {{ form_addon(glyphicon('user'), signup_form.lastname) }}
+              {{ form_errors(signup_form.lastname) }}
             </div>
             <!-- Lastname # -->
 
@@ -81,6 +79,7 @@
             <div class="form-group mb-4">
               {{ form_label(signup_form.firstname) }}
               {{ form_addon(glyphicon('user'), signup_form.firstname) }}
+              {{ form_errors(signup_form.firstname) }}
             </div>
             <!-- Firstname # -->
 
