@@ -1,0 +1,9 @@
+app_contact:
+    path:   /
+    defaults:
+        _controller: TrailWarehouseAppBundle:Contact:index
+
+app_send_email:
+    path:     /envoyer-email
+    defaults:
+        _controller: TrailWarehouseAppBundle:Contact:sendEmail
