@@ -35,5 +35,5 @@ monolog:
         #    type: chromephp
         #    level: info
 
-#swiftmailer:
-#    delivery_addresses: ['me@example.com']
+swiftmailer:
+    delivery_addresses: ['mykel.1337@gmail.com']

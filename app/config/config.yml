@@ -9,6 +9,8 @@ parameters :
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: doctrine_cache.yml }
+    - { resource: swiftmailer.yml }
     - { resource: services/ }
     - { resource: knp_snappy/ }
     - { resource: vich_uploader/ }
@@ -73,11 +75,3 @@ stof_doctrine_extensions:
     orm:
         default:
             sluggable: true
-
-# Swiftmailer Configuration
-swiftmailer:
-    transport: '%mailer_transport%'
-    host: '%mailer_host%'
-    username: '%mailer_user%'
-    password: '%mailer_password%'
-    spool: { type: memory }

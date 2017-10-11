@@ -2,3 +2,5 @@
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    paths:
+        '%base_dir%/src/TrailWarehouse/AppBundle/Resources/views': trail_warehouse

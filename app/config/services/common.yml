@@ -28,3 +28,9 @@ services:
     TrailWarehouse\AppBundle\Service\ :
         resource : '%base_dir%/src/TrailWarehouse/AppBundle/Service'
         public   : true
+
+    Doctrine\Common\Cache\FilesystemCache:
+        alias: 'doctrine_cache.providers.tw_cache'
+
+    trail_warehouse.user_mailer :
+        alias: 'TrailWarehouse\AppBundle\Service\UserMailer'

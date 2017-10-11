@@ -44,6 +44,10 @@ app_admin_root :
     resource : "@TrailWarehouseAppBundle/Resources/config/Admin/routing.yml"
     prefix   : /admin
 
+app_contact :
+    resource : "@TrailWarehouseAppBundle/Resources/config/Contact/routing.yml"
+    prefix   : /contact
+
 app_home_root :
     resource : "@TrailWarehouseAppBundle/Resources/config/Home/routing.yml"
     prefix   : /

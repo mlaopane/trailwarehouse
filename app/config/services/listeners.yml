@@ -8,4 +8,8 @@ services:
         class: TrailWarehouse\AppBundle\EventListener\RestockListener
         tags:
             - { name: kernel.event_listener, event: kernel.request }
-        public: true
+
+    trail_warehouse.interactive_login_listener:
+        class: TrailWarehouse\AppBundle\EventListener\InteractiveLoginListener
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login }
