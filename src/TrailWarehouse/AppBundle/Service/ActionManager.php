@@ -3,8 +3,8 @@
 namespace TrailWarehouse\AppBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use TrailWarehouse\AppBundle\Service\{ActionManager, RepositoryManager};
-use TrailWarehouse\AppBundle\Entity\{Action, WhatDate};
+use TrailWarehouse\AppBundle\Service\{RepositoryManager};
+use TrailWarehouse\AppBundle\Entity\{Action};
 
 /**
  *
@@ -41,7 +41,7 @@ class ActionManager
 
     /**
      * @param string name
-     * @return this
+     * @return ActionManager
      */
     public function add(string $name): ActionManager
     {
@@ -52,7 +52,7 @@ class ActionManager
 
     /**
      * @param void
-     * @return this
+     * @return ActionManager
      */
     public function register(): ActionManager
     {

@@ -3,7 +3,6 @@
 namespace TrailWarehouse\AppBundle\Service;
 
 use TrailWarehouse\AppBundle\Entity\{WhatDate};
-use TrailWarehouse\AppBundle\Service\ActionManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
