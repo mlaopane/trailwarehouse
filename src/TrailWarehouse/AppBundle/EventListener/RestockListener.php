@@ -18,7 +18,7 @@ class RestockListener
     protected $restocker;
 
     /**
-     * @var ActioManager
+     * @var ActionManager
      */
     protected $am;
 
