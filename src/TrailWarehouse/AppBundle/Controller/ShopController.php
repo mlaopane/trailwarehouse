@@ -15,7 +15,6 @@ use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Promo;
 use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Category;
-use TrailWarehouse\AppBundle\Form\CartType;
 use TrailWarehouse\AppBundle\Form\PromoType;
 use TrailWarehouse\AppBundle\Controller\CartController;
 use TrailWarehouse\AppBundle\Service\RepositoryManager;

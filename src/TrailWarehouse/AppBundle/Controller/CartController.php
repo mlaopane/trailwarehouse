@@ -16,22 +16,24 @@ use TrailWarehouse\AppBundle\Entity\Item;
 use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Promo;
 use TrailWarehouse\AppBundle\Entity\Product;
-use TrailWarehouse\AppBundle\Form\CartType;
 use TrailWarehouse\AppBundle\Form\ItemType;
 use TrailWarehouse\AppBundle\Form\PromoType;
+use TrailWarehouse\AppBundle\Service\RepositoryManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Cache\FilesystemCache;
 
 class CartController extends Controller
 {
 
   protected $repo;
 
-  public function __construct(SessionInterface $session, EntityManagerInterface $em) {
+  public function __construct(SessionInterface $session, RepositoryManager $rm, FilesystemCache $cache)
+  {
     $this->repo = [
-      'product' => $em->getRepository('TrailWarehouseAppBundle:Product'),
-      'vat' => $em->getRepository('TrailWarehouseAppBundle:Vat'),
-      'promo' => $em->getRepository('TrailWarehouseAppBundle:Promo'),
+      'product' => $rm->get('Product'),
+      'vat'     => $rm->get('Vat'),
+      'promo'   => $rm->get('Promo'),
     ];
 
     $normalizer = new ObjectNormalizer();

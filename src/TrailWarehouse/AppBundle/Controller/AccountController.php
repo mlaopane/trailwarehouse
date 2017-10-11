@@ -4,22 +4,13 @@ namespace TrailWarehouse\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Form\Form;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use TrailWarehouse\AppBundle\Entity\User;
-use TrailWarehouse\AppBundle\Entity\Cart;
 use TrailWarehouse\AppBundle\Entity\Address;
-use TrailWarehouse\AppBundle\Form\SignupType;
-use TrailWarehouse\AppBundle\Form\SigninType;
 use TrailWarehouse\AppBundle\Form\AccountType;
 use TrailWarehouse\AppBundle\Form\AddressType;
-use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Doctrine\ORM\EntityManager;
+use TrailWarehouse\AppBundle\Service\RepositoryManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AccountController extends Controller
@@ -31,13 +22,13 @@ class AccountController extends Controller
   protected $repo;
   protected $active_tab = 1;
 
-  public function __construct(EntityManagerInterface $em)
+  public function __construct(RepositoryManager $rm)
   {
     $this->repo = [
-      'user'    => $em->getRepository('TrailWarehouseAppBundle:User'),
-      'address' => $em->getRepository('TrailWarehouseAppBundle:Address'),
-      'role'    => $em->getRepository('TrailWarehouseAppBundle:Role'),
-      'order'   => $em->getRepository('TrailWarehouseAppBundle:Order'),
+      'user'    => $rm->get('User'),
+      'address' => $rm->get('Address'),
+      'role'    => $rm->get('Role'),
+      'order'   => $rm->get('Order'),
     ];
   }
 

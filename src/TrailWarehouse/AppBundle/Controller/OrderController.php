@@ -8,17 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use TrailWarehouse\AppBundle\Entity\Cart;
-use TrailWarehouse\AppBundle\Entity\Item;
-use TrailWarehouse\AppBundle\Entity\User;
-use TrailWarehouse\AppBundle\Entity\Promo;
-use TrailWarehouse\AppBundle\Entity\Order;
-use TrailWarehouse\AppBundle\Entity\Product;
-use TrailWarehouse\AppBundle\Entity\Address;
-use TrailWarehouse\AppBundle\Entity\OrderProduct;
-use TrailWarehouse\AppBundle\Form\OrderType;
-use TrailWarehouse\AppBundle\Form\AddressType;
+use TrailWarehouse\AppBundle\Entity\{Cart, Item, Order, Address, OrderProduct};
+use TrailWarehouse\AppBundle\Form\{OrderType, AddressType};
+
 
 class OrderController extends Controller
 {

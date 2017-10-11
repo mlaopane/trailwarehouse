@@ -2,28 +2,21 @@
 
 namespace TrailWarehouse\AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface as TknStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken as Tkn;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface as PW_Encoder;
-use Symfony\Component\Form\Form;
-use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\ORM\{EntityRepository, EntityManagerInterface};
-use TrailWarehouse\AppBundle\Entity\{User, Cart, Address};
-use TrailWarehouse\AppBundle\Form\{SignupType, SigninType, AccountType, AddressType};
+use TrailWarehouse\AppBundle\Entity\{User, Address};
+use TrailWarehouse\AppBundle\Form\{SignupType, SigninType};
 use TrailWarehouse\AppBundle\Service\RepositoryManager;
+use TrailWarehouse\AppBundle\Service\UserMailer;
 
-class UserController extends Controller
+class UserController extends TrailWarehouseController
 {
-    /* ---------------------- */
-    /* *** Initialization *** */
-    /* ---------------------- */
-
     /**
      * @var User
      */
@@ -42,6 +35,7 @@ class UserController extends Controller
 
     public function __construct(EntityManagerInterface $em, RepositoryManager $rm)
     {
+        parent::__construct();
         $this->em = $em;
         $this->repo = [
             'user' => $rm->get('User'),
@@ -50,17 +44,12 @@ class UserController extends Controller
         $this->user = new User($this->repo['role']->findOneByName('ROLE_USER'));
     }
 
-    /* -------------- */
-    /* *** Routes *** */
-    /* -------------- */
-
     /**
-     * 'signup' route
+     * @param UserInterface $user
      *
-     * @param Request request
-     * @param UserInterface user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function signupAction(Request $request, ?UserInterface $user)
+    public function signupAction(UserInterface $user = NULL)
     {
         if ($user) {
             return $this->redirectToRoute('app_account');
@@ -72,15 +61,16 @@ class UserController extends Controller
     }
 
     /**
-     * 'signupProcess' route
+     * @param Request $request
+     * @param SessionInterface $session
+     * @param TknStorage $tokenStorage
+     * @param PW_Encoder $passwordEncoder
+     * @param UserMailer $userMailer
+     * @param UserInterface|NULL $user
      *
-     * @param Request request
-     * @param SessionInterface session
-     * @param TokenStorageInterface tokenStorage
-     * @param UserPasswordEncoderInterface passwordEncoder
-     * @param UserInterface user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function signupProcessAction(Request $request, SessionInterface $session, TknStorage $tokenStorage, PW_Encoder $passwordEncoder, UserInterface $user = null)
+    public function signupProcessAction(Request $request, SessionInterface $session, TknStorage $tokenStorage, PW_Encoder $passwordEncoder, UserMailer $userMailer, UserInterface $user = NULL)
     {
         if ($user) {
             return $this->redirectToRoute('app_account');
@@ -92,6 +82,7 @@ class UserController extends Controller
         if ($form->isValid()) {
             $this->registerUser($passwordEncoder);
             $this->autoLoginUser($tokenStorage, $session);
+            $userMailer->sendWelcome($this->user);
             return $this->redirectToRoute('app_home');
         }
 
@@ -99,7 +90,10 @@ class UserController extends Controller
     }
 
     /**
-     * 'signin' route
+     * @param AuthenticationUtils $authUtils
+     * @param UserInterface|NULL $user
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function signinAction(AuthenticationUtils $authUtils, UserInterface $user = null)
     {
@@ -120,11 +114,10 @@ class UserController extends Controller
     }
 
     /**
-     * 'signout' route
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function signoutAction(Request $request)
+    public function signoutAction()
     {
-        // Return
         return $this->render('TrailWarehouseAppBundle:Home:index.html.twig');
     }
 
@@ -134,6 +127,8 @@ class UserController extends Controller
 
     /**
      * Register the User into the database
+     *
+     * @param PW_Encoder $passwordEncoder
      */
     private function registerUser(PW_Encoder $passwordEncoder): void
     {
@@ -152,6 +147,9 @@ class UserController extends Controller
 
     /**
      * Log the user in automatically after registering
+     *
+     * @param TknStorage $tokenStorage
+     * @param SessionInterface $session
      */
     private function autoLoginUser(TknStorage $tokenStorage, SessionInterface $session): void
     {
@@ -163,17 +161,6 @@ class UserController extends Controller
         );
         $tokenStorage->setToken($token);
         $session->set('_security_main', serialize($token));
-    }
-
-    private function renderForm(string $formName, Form $form)
-    {
-        return $this->render(
-            'TrailWarehouseAppBundle:User:'.$formName.'.html.twig', [
-                'form' => $form,
-                $formName.'_form' => $form->createView(),
-                'errors' => $form->getErrors(true, true),
-            ]
-        );
     }
 
 }
