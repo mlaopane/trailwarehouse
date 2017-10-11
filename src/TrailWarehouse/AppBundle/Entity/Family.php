@@ -6,11 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
-use TrailWarehouse\AppBundle\Entity\Brand;
-use TrailWarehouse\AppBundle\Entity\Category;
-use TrailWarehouse\AppBundle\Entity\Product;
-use TrailWarehouse\AppBundle\Entity\Color;
-use TrailWarehouse\AppBundle\Entity\Image;
+
 
 /**
  * Family

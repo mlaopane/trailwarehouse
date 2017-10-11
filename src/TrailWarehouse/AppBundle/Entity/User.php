@@ -7,10 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use TrailWarehouse\AppBundle\Entity\Role;
-use TrailWarehouse\AppBundle\Entity\Order;
-use TrailWarehouse\AppBundle\Entity\Address;
-use TrailWarehouse\AppBundle\Entity\Review;
 
 /**
 * User

@@ -4,10 +4,6 @@ namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use TrailWarehouse\AppBundle\Entity\Item;
-use TrailWarehouse\AppBundle\Entity\Vat;
-use TrailWarehouse\AppBundle\Entity\User;
-use TrailWarehouse\AppBundle\Entity\Promo;
 
 /**
  * Cart

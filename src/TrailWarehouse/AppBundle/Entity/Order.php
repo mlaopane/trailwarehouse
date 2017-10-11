@@ -4,11 +4,6 @@ namespace TrailWarehouse\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
-use TrailWarehouse\AppBundle\Entity\User;
-use TrailWarehouse\AppBundle\Entity\Product;
-use TrailWarehouse\AppBundle\Entity\Address;
-use TrailWarehouse\AppBundle\Entity\OrderProduct;
 
 /**
  * Order

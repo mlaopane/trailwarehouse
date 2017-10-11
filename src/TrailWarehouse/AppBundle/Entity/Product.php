@@ -8,7 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use TrailWarehouse\AppBundle\Entity\Color;
 use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Size;
-use TrailWarehouse\AppBundle\Entity\Image;
+
 
 /**
  * Product
