@@ -2,7 +2,7 @@
   {% spaceless %}
     {% if errors|length > 0 %}
         {% for error in errors %}
-        <p class="form-text text-muted text-danger justify-self-end">{{ error.message }}</p>
+        <p class="form-text text-muted text-danger mb-0">{{ error.message }}</p>
         {% endfor %}
     {% endif %}
   {% endspaceless %}
