@@ -3,7 +3,6 @@ namespace TrailWarehouse\AppBundle\Twig;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
-use TrailWarehouse\AppBundle\Twig\TWExtension;
 
 class FormExtension extends TWExtension
 {

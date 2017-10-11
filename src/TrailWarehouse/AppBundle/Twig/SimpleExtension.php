@@ -1,7 +1,6 @@
 <?php
 namespace TrailWarehouse\AppBundle\Twig;
 
-use TrailWarehouse\AppBundle\Twig\TWExtension;
 
 class SimpleExtension extends TWExtension
 {
