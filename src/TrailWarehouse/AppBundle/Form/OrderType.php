@@ -12,7 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
-use FOS\UserBundle\Model\UserInterface;
 use TrailWarehouse\AppBundle\Entity\Address;
 
 class OrderType extends AbstractType
@@ -40,21 +39,6 @@ class OrderType extends AbstractType
             }
           },
         ])
-        // ->add('address', EntityType::class, [
-        //   'class'         => 'TrailWarehouseAppBundle:Address',
-        //   'label'         => 'Adresse',
-        //   'attr'          => $attr,
-        //   'expanded'      => true,
-        //   'choice_label'  => function ($address) {
-        //     return ucfirst(mb_strtolower($address->getTitle(), 'UTF-8'));
-        //   },
-        //   'query_builder' => function ($er) use ($user) {
-        //     return $er->createQueryBuilder('address')
-        //       ->where('address.user = :user')
-        //       ->setParameter('user', $user)
-        //     ;
-        //   },
-        // ])
         ->add('send', SubmitType::class, [
           'label' => 'Valider',
           'attr'  => ['class' => 'btn btn-confirm w-100'],

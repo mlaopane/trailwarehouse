@@ -42,8 +42,8 @@ class SignupType extends AbstractType
               'label' => 'E-mail*',
               'attr' => [
                   'class' => 'form-control',
-                  'placeholder' => 'E-mail',
-              ]
+                  'placeholder' => 'xyz@example.com',
+              ],
           ])
           ->add('plainPassword', RepeatedType::class, [
             'type'            => PasswordType::class,
@@ -51,18 +51,17 @@ class SignupType extends AbstractType
                 'label' => 'Mot de passe*',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Mot de passe',
+                    'placeholder' => 'Minimum 6 caractères',
                 ]
             ],
             'second_options'  => [
                 'label' => 'Confirmation du mot de passe*',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Mot de passe',
+                    'placeholder' => '',
                 ]
             ],
             'invalid_message' => 'Les mots de passe ne correspondent pas',
-            'error_bubbling'  => true,
           ])
           ->add('termsAccepted', CheckboxType::class, [
             'mapped'      => false,

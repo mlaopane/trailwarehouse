@@ -5,9 +5,6 @@ namespace TrailWarehouse\AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use TrailWarehouse\AppBundle\Form\FamilyType;
-use TrailWarehouse\AppBundle\Form\ColorType;
-use TrailWarehouse\AppBundle\Form\SizeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
@@ -25,7 +22,6 @@ class ProductType extends AbstractType
           ->add('size', SizeType::class, ['required' => false])
           ->add('image', ImageType::class, ['required' => false])
           ->add('ref', TextType::class, ['required' => false])
-          ->add('save', SubmitType::class)
         ;
     }
 
