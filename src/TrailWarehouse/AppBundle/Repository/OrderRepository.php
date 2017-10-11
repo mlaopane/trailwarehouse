@@ -1,7 +1,7 @@
 <?php
 
 namespace TrailWarehouse\AppBundle\Repository;
-use TrailWarehouse\AppBundle\Repository\CommonRepository;
+
 use Doctrine\ORM\QueryBuilder;
 
 /**

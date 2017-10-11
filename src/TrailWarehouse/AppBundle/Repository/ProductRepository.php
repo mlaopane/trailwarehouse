@@ -5,7 +5,7 @@ use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Product;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\DBAL\Connection;
+
 
 /**
  * ProductRepository
