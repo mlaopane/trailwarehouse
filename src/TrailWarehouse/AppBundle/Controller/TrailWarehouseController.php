@@ -25,7 +25,7 @@ abstract class TrailWarehouseController extends Controller
      *
      * @return Response
      */
-    protected function renderTwig(string $templateName, array $data): Response
+    protected function renderTwig(string $templateName, array $data = []): Response
     {
         return $this->render(
             "TrailWarehouseAppBundle:{$this->viewDir}:{$templateName}.html.twig",
@@ -42,7 +42,7 @@ abstract class TrailWarehouseController extends Controller
     protected function renderForm(string $formName, Form $form): Response
     {
         return $this->render(
-            'TrailWarehouseAppBundle:User:'.$formName.'.html.twig', [
+            "TrailWarehouseAppBundle:{$this->viewDir}:{$formName}.html.twig", [
                 'form' => $form,
                 $formName.'_form' => $form->createView(),
                 'errors' => $form->getErrors(true, true),

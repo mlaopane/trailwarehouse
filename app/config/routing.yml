@@ -3,6 +3,11 @@ easy_admin_bundle:
     type:     annotation
     prefix:   /admin
 
+trail_warehouse_test:
+    resource: "@TrailWarehouseAppBundle/Controller/TestController.php"
+    type: annotation
+    prefix: /test
+
 trail_warehouse_app:
     resource: "@TrailWarehouseAppBundle/Resources/config/routing.yml"
     prefix:   /

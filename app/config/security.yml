@@ -54,3 +54,5 @@ security:
         - { path: ^/espace-perso, roles      : IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/panier/validation, roles : IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/commande, roles          : IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/test/welcome, roles      : IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/test/password, roles     : IS_AUTHENTICATED_REMEMBERED }

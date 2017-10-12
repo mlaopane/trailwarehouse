@@ -92,6 +92,13 @@ class User implements AdvancedUserInterface, \Serializable
     private $isActive = false;
 
     /**
+    * @var bool
+    *
+    * @ORM\Column(name="subscribed_news", type="boolean")
+    */
+    private $hasSubscribedToNews = false;
+
+    /**
     * @var \DateTime
     *
     * @ORM\Column(name="creation_date", type="datetime")
@@ -554,5 +561,10 @@ class User implements AdvancedUserInterface, \Serializable
         $this->birthDate = $birthDate;
 
         return $this;
+    }
+
+    public function hasSubscribedToNews()
+    {
+        return $this->hasSubscribedToNews;
     }
 }
