@@ -34,3 +34,8 @@ services:
 
     trail_warehouse.user_mailer :
         alias: 'TrailWarehouse\AppBundle\Service\UserMailer'
+        public: true
+
+    trail_warehouse.repository_manager :
+        alias: 'TrailWarehouse\AppBundle\Service\RepositoryManager'
+        public: true

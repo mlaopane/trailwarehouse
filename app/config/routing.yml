@@ -8,6 +8,10 @@ trail_warehouse_test:
     type: annotation
     prefix: /test
 
+trail_warehouse_annotation:
+    resource: "@TrailWarehouseAppBundle/Controller"
+    type: annotation
+
 trail_warehouse_app:
     resource: "@TrailWarehouseAppBundle/Resources/config/routing.yml"
     prefix:   /
