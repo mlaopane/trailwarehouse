@@ -42,36 +42,44 @@ class RestockerTest extends WebTestCase
     {
         parent::__construct();
 
+
+
         $this->container = static::createClient()->getContainer();
         $this->em = $this->container->get('doctrine.orm.entity_manager');
-        $this->repo = $this->em->getRepository('TrailWarehouseAppBundle:Product');
+        $this->rm = $this->container->get('trail_warehouse.repository_manager');
+        $this->repo = [
+            'product' => $this->rm->get('Product')
+        ];
         $this->restocker = new Restocker($this->em);
-
-        $this->initData();
+        $this->maxStock = 50;
     }
 
     /**
-     *
+     * @test
      */
-    public function initData()
+    public function productExists()
     {
-        $this->old_stock = $this->repo->find(1)->getStock();
-        $this->maxStock = 50;
+        $product = $this->repo['product']->find(1);
+        $this->assertTrue($product instanceof Product, "/!\\ You should have at least one Product in the database /!\\");
+
+        return $product;
     }
 
     /**
      * Restock products in database and store the history
      *
      * @test
+     * @depends productExists
      */
-    public function restock ()
+    public function restock ($product)
     {
-        $this->restocker->restock($this->repo->findAll(), $this->maxStock);
-        $new_stock = $this->repo->find(1)->getStock();
+        $db_stock = $product->getStock();
+        $this->restocker->restock($this->repo['product']->findAll(), $this->maxStock);
+        $new_stock = $product->getStock();
 
         $this->assertEquals($new_stock, $this->maxStock, "The new stock should be " . $this->maxStock);
 
-        if ($this->old_stock !== $new_stock) {
+        if ($this->db_stock !== $new_stock) {
             $this->assertLessThan($new_stock, $this->old_stock, "The old stock should be lesser than the new stock");
         }
     }
