@@ -1,7 +1,7 @@
 <?php
 
 namespace TrailWarehouse\AppBundle\Repository;
-
+use TrailWarehouse\AppBundle\Entity\Address;
 
 /**
  * AddressRepository
@@ -11,15 +11,21 @@ namespace TrailWarehouse\AppBundle\Repository;
  */
 class AddressRepository extends CommonRepository
 {
-  public function isDoublon($address) {
-    $address = $this->createQueryBuilder($this->entity_name)
-      ->andWhere($this->entity_name.'.user = :user')
-      ->setParameter('user', $address->getUser())
-      ->andWhere($this->entity_name.'.title = :title')
-      ->setParameter('title', $address->getTitle())
-      ->getQuery()
-      ->getArrayResult()
-    ;
-    return !empty($address);
-  }
+    /**
+     * Check if a user has already set an address with this title
+     * @param  Address $address User's Address
+     * @return boolean
+     */
+    public function isDoublon(Address $address): boolean
+    {
+        $address = $this->createQueryBuilder($this->entity_name)
+            ->andWhere($this->entity_name.'.user = :user')
+            ->setParameter('user', $address->getUser())
+            ->andWhere($this->entity_name.'.title = :title')
+            ->setParameter('title', $address->getTitle())
+            ->getQuery()
+            ->getArrayResult()
+        ;
+        return !empty($address);
+    }
 }

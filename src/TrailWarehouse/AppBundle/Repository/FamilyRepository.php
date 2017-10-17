@@ -1,6 +1,7 @@
 <?php
 
 namespace TrailWarehouse\AppBundle\Repository;
+
 use TrailWarehouse\AppBundle\Entity\Brand;
 use TrailWarehouse\AppBundle\Entity\Family;
 use TrailWarehouse\AppBundle\Entity\Category;
@@ -17,86 +18,92 @@ use Doctrine\ORM\Query;
  */
 class FamilyRepository extends CommonRepository
 {
-  /**
-   * @param Category $category
-   * @return Family ...
-   */
-  public function getByCategory(Category $category, $as_array = true) {
-    return $this->getBy('category', $category, $as_array);
-  }
+    public function getByCategory(Category $category, $as_array = true)
+    {
+        return $this->getBy('category', $category, $as_array);
+    }
 
-  /**
-   * @param Brand $brand
-   * @return Family ...
-   */
-  public function getByBrand(Brand $brand, $as_array = true) {
-    return $this->getBy('brand', $brand, $as_array);
-  }
+    public function getByBrand(Brand $brand, $as_array = true)
+    {
+        return $this->getBy('brand', $brand, $as_array);
+    }
 
-  /**
-   * @param Category ... $categories
-   * @return Family ...
-   */
-  public function getByCategories(Array $categories, $as_array = true) {
-    return $this->getByArray('category', $categories, $as_array);
-  }
 
-  /**
-   * @param Brand ... $brands
-   * @return Array (Family)
-   */
-  public function getByBrands(Array $brands, $as_array = true) {
-    return $this->getByArray('brand', $brands, $as_array);
-  }
+    public function getByCategories(array $categories, $as_array = true)
+    {
+        return $this->getByArray('category', $categories, $as_array);
+    }
 
-  /**
-   *
-   */
-  public function getBestReviews($count = 5, $as_array = true)
-  {
-    $query = $this->_em->createQueryBuilder()
-      ->addSelect('family.id', 'family.name')
-      ->addSelect('AVG(review.rating) AS average')
-      ->from('TrailWarehouseAppBundle:Family', 'family')
-      ->leftJoin('family.reviews', 'review')
-      ->groupBy('review.family, family.id')
-      ->orderBy('average', 'desc')
-      ->setFirstResult(0)
-      ->setMaxResults($count)
-      ->getQuery()
-    ;
-    return $as_array ? $query->getArrayResult() : $query->getResult();
-  }
+    /**
+     * [getByBrands description]
+     * @param  array   $brands   [description]
+     * @param  boolean $as_array [description]
+     * @return [type]            [description]
+     */
+    public function getByBrands(array $brands, $as_array = true)
+    {
+        return $this->getByArray('brand', $brands, $as_array);
+    }
 
-  /**
-   *
-   */
-  public function getBestOfCategory($category, $count = 5, $as_array = true)
-  {
-    $query = $this->createQueryBuilder('family')
-      ->addSelect('visuels')
-      ->innerJoin('family.category', 'category')
-      ->leftJoin('family.visuels', 'visuels')
-      ->leftJoin('family.reviews', 'review')
-      ->where('family.category = :category')
-      ->setParameter('category', $category)
-      ->orderBy('family.averageRating', 'desc')
-      ->setFirstResult(0)
-      ->setMaxResults($count)
-      ->getQuery()
-    ;
-    return $as_array ? $query->getArrayResult() : $query->getResult();
-  }
+    /**
+     * [getBestReviews description]
+     * @param  integer $count    [description]
+     * @param  boolean $as_array [description]
+     * @return Family[]|Family
+     */
+    public function getBestReviews($count = 5, $as_array = true)
+    {
+        $query = $this->_em->createQueryBuilder()
+            ->addSelect('family.id', 'family.name')
+            ->addSelect('AVG(review.rating) AS average')
+            ->from('TrailWarehouseAppBundle:Family', 'family')
+            ->leftJoin('family.reviews', 'review')
+            ->groupBy('review.family, family.id')
+            ->orderBy('average', 'desc')
+            ->setFirstResult(0)
+            ->setMaxResults($count)
+            ->getQuery()
+        ;
+        return $as_array ? $query->getArrayResult() : $query->getResult();
+    }
 
-  /* ----- Private Methods ----- */
-  protected function getBuilder(): QueryBuilder
-  {
-    return $this->createQueryBuilder($this->entity_name)
-      ->addSelect('category')
-      ->addSelect('brand')
-      ->innerJoin($this->entity_name.'.category', 'category')
-      ->innerJoin($this->entity_name.'.brand', 'brand')
-    ;
-  }
+    /**
+     * [getBestOfCategory description]
+     * @param  Category $category
+     * @param  integer  $count
+     * @param  boolean  $as_array
+     * @return Family[]|Family
+     */
+    public function getBestOfCategory(Category $category, $count = 5, $as_array = true)
+    {
+        $query = $this->createQueryBuilder('family')
+            ->addSelect('visuels')
+            ->innerJoin('family.category', 'category')
+            ->leftJoin('family.visuels', 'visuels')
+            ->leftJoin('family.reviews', 'review')
+            ->where('family.category = :category')
+            ->setParameter('category', $category)
+            ->orderBy('family.averageRating', 'desc')
+            ->setFirstResult(0)
+            ->setMaxResults($count)
+            ->getQuery()
+        ;
+        return $as_array ? $query->getArrayResult() : $query->getResult();
+    }
 
+    /* ----- Private Methods ----- */
+
+    /**
+     *
+     * @return QueryBuilder
+     */
+    protected function getBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder($this->entity_name)
+            ->addSelect('category')
+            ->addSelect('brand')
+            ->innerJoin($this->entity_name.'.category', 'category')
+            ->innerJoin($this->entity_name.'.brand', 'brand')
+        ;
+    }
 }

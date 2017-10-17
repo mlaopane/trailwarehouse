@@ -17,19 +17,45 @@ use Doctrine\ORM\EntityRepository;
  */
 abstract class CommonRepository extends EntityRepository
 {
+    /**
+     * [protected description]
+     * @var string
+     */
     protected $entity_name;
+
+    /**
+     * Used for the entity alias
+     * @var string
+     */
+    private $prefix = 'trail_warehouse';
+
+    /**
+     * A concatenation of the prefix and the entity class name
+     * @var string
+     */
+    private $alias;
 
     public function __construct($em, \Doctrine\ORM\Mapping\ClassMetadata $class)
     {
         parent::__construct($em, $class);
         $this->entity_name = 'trail_warehouse_'.lcfirst(str_replace([__NAMESPACE__, '\\', 'Repository'], '', static::class));
+        $this->alias = $this->prefix.lcfirst(str_replace([__NAMESPACE__, '\\', 'Repository'], '', static::class));
     }
 
     /**
-    * Get all Entities
-    *
-    * @return array
-    */
+     * Gets the entity alias
+     * @return string
+     */
+    public function getAlias(): string
+    {
+        return $this->alias;
+    }
+
+    /**
+     * Get all the entities
+     * @param  boolean $as_array [description]
+     * @return mixed
+     */
     public function getAll($as_array = true)
     {
         $query = $this->getBuilder()->getQuery();
@@ -37,19 +63,24 @@ abstract class CommonRepository extends EntityRepository
     }
 
     /**
-    * Get one Entity by id
-    */
-    public function getOne($id, $as_array = true)
+     * Get one Entity by id
+     * @param  int     $id       [description]
+     * @param  boolean $as_array [description]
+     * @return [type]            [description]
+     */
+    public function getOne(int $id, $as_array = true)
     {
         return $this->getOneBy('id', $id, $as_array);
     }
 
     /**
-    * Get one Entity by field
-    *
-    * @return Array
-    */
-    public function getOneBy($field, $value, $as_array = true)
+     * Get one Entity by field
+     * @param  string  $field    [description]
+     * @param  mixed   $value    [description]
+     * @param  boolean $as_array [description]
+     * @return [type]            [description]
+     */
+    public function getOneBy(string $field, mixed $value, $as_array = true)
     {
         $query = $this->getBuilder()
           ->where($this->entity_name.'.'.$field.' = :value')
@@ -76,10 +107,11 @@ abstract class CommonRepository extends EntityRepository
     }
 
     /**
-    * Get Entities by array of fields
-    *
-    * @return Array
-    */
+     * Get Entities by array of fields
+     * @param  array   $parameters
+     * @param  boolean $as_array  
+     * @return [type]             
+     */
     public function getByArray(array $parameters, $as_array = true)
     {
         $builder = $this->getBuilder();

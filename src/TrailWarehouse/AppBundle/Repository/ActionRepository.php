@@ -12,6 +12,8 @@ class ActionRepository extends CommonRepository
 {
     /**
      * Find the most recent action specified
+     * @param  string $name Action name
+     * @return Action|NULL
      */
     public function findNewestActionByName(string $name): ?Action
     {
@@ -22,6 +24,8 @@ class ActionRepository extends CommonRepository
 
     /**
      * Find the oldest action specified
+     * @param  string $name Action name
+     * @return Action|NULL
      */
     public function findOldestActionByName(string $name): ?Action
     {
@@ -32,6 +36,9 @@ class ActionRepository extends CommonRepository
 
     /**
      * Add name & sort filters to the Query Builder
+     * @param  string       $name Action's name
+     * @param  string       $sort ASC or DESC
+     * @return QueryBuilder
      */
     private function getBuilderByNameAndSort(string $name, string $sort = 'ASC'): QueryBuilder
     {
