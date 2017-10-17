@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use TrailWarehouse\AppBundle\Entity\Item;
 use TrailWarehouse\AppBundle\Entity\Cart;
@@ -18,13 +19,27 @@ use TrailWarehouse\AppBundle\Entity\Category;
 use TrailWarehouse\AppBundle\Form\PromoType;
 use TrailWarehouse\AppBundle\Controller\CartController;
 use TrailWarehouse\AppBundle\Service\RepositoryManager;
+use TrailWarehouse\AppBundle\Service\SerializerFactory;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ShopController extends Controller
 {
+    /**
+     * Stores useful repositories
+     * @var EntityRepository[]
+     */
     private $repo;
+
+    /**
+     * @var SerializerInterface
+     */
     private $serializer;
 
+    /**
+     * [__construct description]
+     * @param SessionInterface  $session [description]
+     * @param RepositoryManager $rm      [description]
+     */
     public function __construct(SessionInterface $session, RepositoryManager $rm)
     {
         $this->repo = [
@@ -35,22 +50,14 @@ class ShopController extends Controller
             'vat'      => $rm->get('Vat'),
         ];
 
-        $this->initSerializer()->initSession($session);
+        $this->serializer = SerializerFactory::create($normalizers, $encoders);
+        $this->initSession($session);
     }
 
-    private function initSerializer()
-    {
-        $normalizer = new ObjectNormalizer();
-        $normalizer->setCircularReferenceHandler(function ($object) {
-            return $object->getId();
-        });
-        $normalizers = [ $normalizer ];
-        $encoders    = [ new JsonEncoder() ];
-        $this->serializer = new Serializer($normalizers, $encoders);
-
-        return $this;
-    }
-
+    /**
+     * [initSession description]
+     * @param  SessionInterface $session [description]
+     */
     private function initSession(SessionInterface $session)
     {
         if (empty($cart = $session->get('cart'))) {
@@ -75,8 +82,9 @@ class ShopController extends Controller
 
     /**
      * Gets the categories then render the menu
+     * @param  string $active_category [description]
      */
-    public function menuAction($active_category = null)
+    public function menuAction(string $active_category = '')
     {
         $data = [
             'categories'      => $this->repo['category']->findAll(['category' => 'asc']),
@@ -100,9 +108,12 @@ class ShopController extends Controller
 
     /**
      * 'app_shop_category'
-     *
      * @ParamConverter("category", options={"mapping": {"slug": "slug"}})
-    */
+     *
+     * @param  Category               $category [description]
+     * @param  string                 $slug     [description]
+     * @param  EntityManagerInterface $em       [description]
+     */
     public function categoryAction(Category $category, string $slug, EntityManagerInterface $em)
     {
         $data = [
@@ -114,10 +125,11 @@ class ShopController extends Controller
     }
 
     /**
-    * 'app_shop_family'
-    * @param Family $family (from slug)
-    *
-    */
+     * 'app_shop_family'
+     *
+     * @param  Family                 $family (from slug)
+     * @param  EntityManagerInterface $em     [description]
+     */
     public function familyAction(Family $family, EntityManagerInterface $em)
     {
         if ($family->getProducts()->count() == 0) {
