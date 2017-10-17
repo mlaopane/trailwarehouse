@@ -34,7 +34,7 @@ class Templating
      */
     public function render($name, array $parameters = [])
     {
-        return $this->container->get('templating')->render("@trail_warehouse{$name}.html.twig", $parameters);
+        return $this->container->get('templating')->render("@trail_warehouse/{$name}.html.twig", $parameters);
     }
 
     /**
