@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken as Tkn;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface as PW_Encoder;
 use Doctrine\ORM\{EntityRepository, EntityManagerInterface};
-use TrailWarehouse\AppBundle\Entity\{User, Address};
+use TrailWarehouse\AppBundle\Entity\{Role, User, Address};
 use TrailWarehouse\AppBundle\Form\{SignupType, SigninType};
 use TrailWarehouse\AppBundle\Service\RepositoryManager;
 use TrailWarehouse\AppBundle\Service\UserMailer;
@@ -41,7 +41,8 @@ class UserController extends TrailWarehouseController
             'user' => $rm->get('User'),
             'role' => $rm->get('Role'),
         ];
-        $this->user = new User($this->repo['role']->findOneByName('ROLE_USER'));
+        $role_user = $this->repo['role']->findOneByName('ROLE_USER');
+        $this->user = new User($role_user);
     }
 
     /**
@@ -67,8 +68,6 @@ class UserController extends TrailWarehouseController
      * @param PW_Encoder $passwordEncoder
      * @param UserMailer $userMailer
      * @param UserInterface|NULL $user
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function signupProcessAction(Request $request, SessionInterface $session, TknStorage $tokenStorage, PW_Encoder $passwordEncoder, UserMailer $userMailer, UserInterface $user = NULL)
     {
@@ -133,7 +132,8 @@ class UserController extends TrailWarehouseController
     private function registerUser(PW_Encoder $passwordEncoder): void
     {
         if ($this->user->getEmail() == 'mlaopane@gmail.com') {
-            $this->user->setRole($this->repo['role']->findOneByName('ROLE_SUPER_ADMIN'));
+            $role = $this->getRole('ROLE_SUPER_ADMIN');
+            $this->user->setRole($role);
         }
         $this->user->setPassword(
             $passwordEncoder->encodePassword(
@@ -161,6 +161,23 @@ class UserController extends TrailWarehouseController
         );
         $tokenStorage->setToken($token);
         $session->set('_security_main', serialize($token));
+    }
+
+    /**
+     * @param  string $roleName
+     *
+     * @return Role
+     */
+    private function getRole(string $roleName): Role
+    {
+        $role = $this->repo['role']->findOneByName($roleName);
+        if (null === $role) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $role = new Role($roleName);
+            $em->persist($role);
+            $em->flush();
+        }
+        return $role;
     }
 
 }

@@ -1,0 +1,36 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'E:\\__Programs\\nodejs\\node.exe',
+1 verbose cli   'E:\\__Programs\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'server' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.4
+4 verbose run-script [ 'preserver', 'server', 'postserver' ]
+5 info lifecycle trailwarehouse@1.0.0~preserver: trailwarehouse@1.0.0
+6 silly lifecycle trailwarehouse@1.0.0~preserver: no script for preserver, continuing
+7 info lifecycle trailwarehouse@1.0.0~server: trailwarehouse@1.0.0
+8 verbose lifecycle trailwarehouse@1.0.0~server: unsafe-perm in lifecycle true
+9 verbose lifecycle trailwarehouse@1.0.0~server: PATH: E:\__Programs\nodejs\node_modules\npm\bin\node-gyp-bin;E:\__Programs\Xampp\htdocs\__Symfony\trailwarehouse\node_modules\.bin;E:\__Programs\Git\mingw64\bin;E:\__Programs\Git\usr\bin;C:\Users\Myke Admin\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\PROGRAM FILES\BROADCOM\BROADCOM 802.11 NETWORK ADAPTER;C:\Windows\SYSTEM32;C:\Windows;C:\Windows\SYSTEM32\WBEM;C:\Windows\SYSTEM32\WINDOWSPOWERSHELL\V1.0;C:\PROGRAM FILES\WIDCOMM\BLUETOOTH SOFTWARE;C:\PROGRAM FILES\WIDCOMM\BLUETOOTH SOFTWARE\SYSWOW64;C:\Program Files\Broadcom\WHL;C:\Program Files\Broadcom\WHL\syswow64;C:\Program Files\Broadcom\WHL\SysWow64;C:\Program Files\Broadcom\WHL\SysWow64\syswow64;E:\__Programs\Xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Users\Myke Admin\AppData\Roaming\Composer\vendor\bin;C:\Users\Myke Admin\AppData\Roaming\npm;C:\Users\Myke Admin\AppData\Local\atom\bin;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files (x86)\Skype\Phone;E:\__Scripts;E:\__Programs\nodejs;E:\__Programs\Git\usr\bin;E:\__Programs\MongoDB\Server\3.4\bin;E:\__Programs\Python\Scripts;E:\__Programs\Python;C:\Users\Myke Admin\AppData\Local\Programs\Python\Launcher;C:\Users\Myke Admin\AppData\Roaming\Composer\vendor\bin;C:\Users\Myke Admin\AppData\Local\atom\bin;E:\__Programs\Xampp\php;E:\__Programs\Git\;E:\__Executables;E:\__Scripts;E:\__Programs\Microsoft VS Code\bin;C:\Users\Myke Admin\AppData\Roaming\npm;E:\__Programs\php_7_1_11_nts_vc14
+10 verbose lifecycle trailwarehouse@1.0.0~server: CWD: E:\__Programs\Xampp\htdocs\__Symfony\trailwarehouse
+11 silly lifecycle trailwarehouse@1.0.0~server: Args: [ '/d /s /c', 'php bin/console server:run' ]
+12 verbose stack Error: kill ENOSYS
+12 verbose stack     at Object.exports._errnoException (util.js:1020:11)
+12 verbose stack     at process.kill (internal/process.js:191:18)
+12 verbose stack     at process.listener (E:\__Programs\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:86:15)
+12 verbose stack     at emitNone (events.js:91:20)
+12 verbose stack     at process.emit (events.js:185:7)
+12 verbose stack     at processEmit (E:\__Programs\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at processEmit (E:\__Programs\nodejs\node_modules\npm\node_modules\npm-registry-client\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at Signal.wrap.onsignal (internal/process.js:217:44)
+13 verbose cwd E:\__Programs\Xampp\htdocs\__Symfony\trailwarehouse
+14 error Windows_NT 6.1.7601
+15 error argv "E:\\__Programs\\nodejs\\node.exe" "E:\\__Programs\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "server"
+16 error node v6.11.4
+17 error npm  v3.10.10
+18 error code ENOSYS
+19 error errno ENOSYS
+20 error syscall kill
+21 error kill ENOSYS
+22 error If you need help, you may report this error at:
+22 error     <https://github.com/npm/npm/issues>
+23 verbose exit [ 1, true ]

@@ -13,7 +13,7 @@ class OrderProductRepository extends CommonRepository
 {
   protected function getBuilder(): QueryBuilder
   {
-    return $this->createQueryBuilder($this->entity_name)
+    return $this->createQueryBuilder($this->getEntityName())
       ->addSelect('product')
       ->innerJoin($this->entity_name.'.product', 'product')
     ;

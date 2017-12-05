@@ -68,7 +68,7 @@ class ProductRepository extends CommonRepository
    *
    * @return Array
    */
-  public function getOneBy($field, $value, $as_array = true) {
+  public function getOneBy(string $field, $value, $as_array = true) {
     $query = $this->getBuilder()
       ->where('product.'.$field.' = :value')
       ->setParameter('value', $value)
@@ -181,7 +181,7 @@ class ProductRepository extends CommonRepository
    */
   protected function getBuilder(): QueryBuilder
   {
-    return $this->createQueryBuilder('product')
+    return $this->createQueryBuilder($this->getEntityName())
       ->addSelect('family, color, size, category, brand')
       ->innerJoin('product.family', 'family')
       ->innerJoin('family.category', 'category')

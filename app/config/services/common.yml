@@ -32,10 +32,12 @@ services:
     Doctrine\Common\Cache\FilesystemCache:
         alias: 'doctrine_cache.providers.tw_cache'
 
+    # User Mailer
     trail_warehouse.user_mailer :
         alias: 'TrailWarehouse\AppBundle\Service\UserMailer'
         public: true
 
+    # Repository Manager
     trail_warehouse.repository_manager :
         alias: 'TrailWarehouse\AppBundle\Service\RepositoryManager'
         public: true

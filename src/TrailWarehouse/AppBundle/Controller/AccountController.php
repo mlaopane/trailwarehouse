@@ -12,6 +12,7 @@ use TrailWarehouse\AppBundle\Form\AccountType;
 use TrailWarehouse\AppBundle\Form\AddressType;
 use TrailWarehouse\AppBundle\Service\RepositoryManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class AccountController extends Controller
 {

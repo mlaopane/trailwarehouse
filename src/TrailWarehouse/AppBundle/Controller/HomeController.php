@@ -3,20 +3,23 @@
 namespace TrailWarehouse\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
+use TrailWarehouse\AppBundle\Service\RepositoryManager;
 
 class HomeController extends Controller
 {
   private $repo;
 
-  public function __construct(EntityManagerInterface $em)
+  public function __construct(RepositoryManager $rm)
   {
     $this->repo = [
-      'brand'    => $em->getRepository('TrailWarehouseAppBundle:Brand'),
-      'category' => $em->getRepository('TrailWarehouseAppBundle:Category'),
-      'family'   => $em->getRepository('TrailWarehouseAppBundle:Family'),
+      'brand'    => $rm->get('Brand'),
+      'category' => $rm->get('Category'),
+      'family'   => $rm->get('Family'),
     ];
   }
+
 
   public function indexAction(EntityManagerInterface $em)
   {

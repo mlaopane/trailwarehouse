@@ -80,7 +80,7 @@ abstract class CommonRepository extends EntityRepository
      * @param  boolean $as_array [description]
      * @return [type]            [description]
      */
-    public function getOneBy(string $field, mixed $value, $as_array = true)
+    public function getOneBy(string $field, $value, $as_array = true)
     {
         $query = $this->getBuilder()
           ->where($this->entity_name.'.'.$field.' = :value')
@@ -109,8 +109,8 @@ abstract class CommonRepository extends EntityRepository
     /**
      * Get Entities by array of fields
      * @param  array   $parameters
-     * @param  boolean $as_array  
-     * @return [type]             
+     * @param  boolean $as_array
+     * @return [type]
      */
     public function getByArray(array $parameters, $as_array = true)
     {

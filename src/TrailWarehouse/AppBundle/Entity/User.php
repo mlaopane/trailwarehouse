@@ -138,7 +138,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
     * Constructor
     */
-    public function __construct(Role $role)
+    public function __construct(?Role $role)
     {
         $this->addresses    = new ArrayCollection();
         $this->orders       = new ArrayCollection();

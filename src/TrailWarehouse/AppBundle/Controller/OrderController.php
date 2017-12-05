@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use TrailWarehouse\AppBundle\Entity\{Cart, Item, Order, Address, OrderProduct};
 use TrailWarehouse\AppBundle\Form\{OrderType, AddressType};
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class OrderController extends Controller
@@ -21,7 +22,7 @@ class OrderController extends Controller
 
   public function __construct(EntityManagerInterface $em, SessionInterface $session)
   {
-    /* Init repositories */
+    /** Init repositories */
     $this->repo = [
       'user'          => $em->getRepository('TrailWarehouseAppBundle:User'),
       'product'       => $em->getRepository('TrailWarehouseAppBundle:Product'),
