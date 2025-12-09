@@ -2,4 +2,4 @@
 
 Trail Warehouse : A fictive Online Shopping Platform
 
-My "school" project with Symfony 3
+My "school" project with Symfony 3 made in 2017
